@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Santa's Portfolio</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <nav class="navbar">
+      <ul>
+        <li><a href="#" id="herolink">Home</a></li>
+        <li><a href="playground.html">Playground</a></li>
+        <li><a href="aboutme.html">About & Contact</a></li>
+      </ul>
+    </nav>
+    <script src="sketch.js"></script>
+    <script src="script.js"></script>
+
+    <div class="fullscrollsnap">
+      <div class="scrollContainer"><div id="p5jsholder"></div></div>
+      <div class="bgimage"></div>
+
+      <div class="section-title"><h1>Selected Projects</h1></div>
+
+      <div class="project scrollContainer">
+        
+        <img
+          class="project-image"
+          src="assets/caseStudyImages/Price insights.png"
+        />
+
+        
+        <div class="project-description">
+          <h3>Feb 2025</h3>
+          <h1>Price Insights</h1>
+          <h4>
+            Is my property priced right? Helping users make informed decisions
+            when looking at properties for sale/rent
+          </h4>
+          <button
+            onclick="
+              window.open(
+                'https://santruptip.notion.site/Price-Insights-Is-this-property-priced-fairly-2fa23ffa7bea801a84fccaab4987acf0?source=copy_link',
+              )
+            "
+          >
+            Read Case Study
+          </button>
+        </div>
+      </div>
+
+      <div class="project scrollContainer">
+        <img
+          class="project-image"
+          src="assets/caseStudyImages/What's nearby.png"
+        />
+        <div class="project-description">
+          <h3>Aug 2024</h3>
+          <h1>What's nearby</h1>
+          <h4>
+            Helping users understand what the neighbourhood has to offer when
+            they are looking to buy/rent a new place
+          </h4>
+          <button
+            onclick="
+              window.open(
+                'https://santruptip.notion.site/Maps-widget-18323ffa7bea80f8b6fcf96e3886c0a6?pvs=4',
+                '_blank',
+              )
+            "
+          >
+            Read Case Study
+          </button>
+        </div>
+      </div>
+
+      <div class="project scrollContainer">
+        <img
+          class="project-image"
+          src="assets/caseStudyImages/Pivot to compare.png"
+        />
+        <div class="project-description">
+          <h3>Dec 2023</h3>
+          <h1>Table Pivot</h1>
+          <h4>
+            Tool to help manipulate data for better comparison and consumption
+          </h4>
+          <button
+            onclick="
+              window.open(
+                'https://santruptip.notion.site/Table-pivot-d774f1db0def46769dae4d904a20eb55?pvs=4',
+                '_blank',
+              )
+            "
+          >
+            Read Case Study
+          </button>
+        </div>
+      </div>
+
+      <div class="project scrollContainer">
+        <img
+          class="project-image"
+          src="assets/caseStudyImages/Key Driver Analysis.png"
+        />
+        <div class="project-description">
+          <h3>Dec 2023</h3>
+          <h1>Key Driver Analysis</h1>
+          <h4>
+            Helping sales people know where they spent money and if it was
+            useful to increase sales
+          </h4>
+          <button
+            onclick="
+              window.open(
+                'https://santruptip.notion.site/Key-Driver-Analysis-eb3a40b9c6554543a2953cd698f94091?pvs=4',
+                '_blank',
+              )
+            "
+          >
+            Read Case Study
+          </button>
+        </div>
+      </div>
+
+      <br />
+      <hr />
+    <script>
+      const navbar = document.querySelector(".navbar");
+      const projectBeginning = document.querySelector(".projectbeginning");
+
+      const observer1 = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              navbar.classList.add("white-text");
+            } // Change navbar text color to white
+            // } else {
+            //   navbar.classList.remove("white-text"); // Revert to blue
+            // }
+          });
+        },
+        { threshold: 0.5 }, // Trigger when 50% of the .projectbeginning section is visible
+      );
+
+      observer1.observe(projectBeginning);
+
+      const aboutMe = document.querySelector(".aboutme");
+      const observer2 = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              navbar.classList.remove("white-text");
+            } // Change navbar text color to white
+            // } else {
+            //   navbar.classList.remove("white-text"); // Revert to blue
+            // }
+          });
+        },
+        { threshold: 0.5 }, // Trigger when 50% of the .projectbeginning section is visible
+      );
+      observer2.observe(aboutMe);
+
+      const herotext = document.querySelector(".scrollContainer");
+      observer2.observe(herotext);
+
+      const heroLink = document.getElementById("herolink");
+      const heroSection = document.querySelector(".scrollContainer");
+
+      heroLink.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        heroSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
+
+      const workLink = document.getElementById("worklink");
+      const projectSection = document.querySelector(".projectbeginning");
+
+      workLink.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        projectSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
+
+      const resumeLink = document.getElementById("resumelink");
+      const resumeSection = document.querySelector(".resume");
+
+      resumeLink.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        resumeSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
+
+      const playLink = document.getElementById("playlink");
+      const playSection = document.querySelector(".play");
+
+      playLink.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        playSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
+
+      const contactLink = document.getElementById("contactlink");
+      const aboutMeSection = document.querySelector(".aboutme-text");
+
+      contactLink.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        aboutMeSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
+
+      const emailLink = document.getElementById("emailLink");
+
+      emailLink.addEventListener("click", function (e) {
+        e.preventDefault(); // Prevent the default link behavior
+
+        const textToCopy = "santrupti.danagaud@gmail.com";
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          emailLink.textContent = "Copied!";
+
+          setTimeout(() => {
+            emailLink.textContent = "Copy Email";
+          }, 3000);
+        });
+      });
+    </script>
+  </body>
+</html>

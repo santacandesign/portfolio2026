@@ -1,0 +1,396 @@
+html {
+  overflow-x: hidden;
+}
+
+@font-face {
+  font-family: "Libre";
+  src: url("./assets/Libre_Baskerville/LibreBaskerville-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Libre italic";
+  src: url("./assets/Libre_Baskerville/LibreBaskerville-Italic-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: url("./assets/Manrope/Manrope-VariableFont_wght.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+header {
+  margin: 0px auto;
+  padding: 0px 40px;
+  max-width: 900px;
+  justify-content: center;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Manrope", sans-serif;
+  font-weight: 100;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+hr {
+  border: 0.1px solid #522b12;
+}
+
+.bgimage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fffced;
+  background-image: url(assets/bgtexturefinal.jpg);
+  background-repeat: repeat;
+  background-size: cover;
+  background-blend-mode: multiply;
+  z-index: -1; /* Ensure it stays behind all content */
+}
+
+.section-title {
+  text-align: center;
+  font-family: "Libre italic", serif;
+  font-weight: 900;
+  font-size: 24px;
+  color: #111111;
+  margin-top: 20px;
+}
+
+p {
+  color: #111111;
+  font-family: "Manrope", sans-serif;
+  font-size: 18px;
+  margin: 0px;
+  max-width: 400px;
+}
+
+.paragraph-enter {
+  opacity: 1;
+  transform: translate(0%, 40%);
+}
+
+body::before {
+  content: "";
+  position: static;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  pointer-events: none;
+  background-image: url(assets/noisemax.png);
+  background-repeat: repeat;
+  z-index: 1;
+}
+
+#p5jsholder {
+  position: static;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.navbar {
+  padding: 20px;
+  font-family: "Manrope", sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.09rem;
+  padding-right: 74px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: right;
+  gap: 20px;
+}
+
+.navbar a {
+  cursor: pointer;
+  color: #111111;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.navbar a:hover {
+  font-family: "Libre italic", serif;
+  color: #307436;
+}
+
+.navbar.white-text a {
+  color: #ffffff;
+}
+
+.navbar.white-text a:hover {
+  color: #ff4545; /* or any hover color you like on blue */
+}
+
+.project.scrollContainer {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.project {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  box-sizing: border-box; /* ← prevents padding from causing overflow */
+  padding: 40px; /* ← breathing room so content doesn't touch edges */
+  overflow: hidden;
+}
+
+.project-image {
+  width: 50%;
+  height: 100%; /* ← fill the flex container height */
+  max-height: 80vh; /* ← cap it so it never exceeds the viewport */
+  object-fit: contain; /* ← scale proportionally within that space */
+  padding: 0;
+}
+
+.project-description {
+  padding: 12px;
+  color: #111111;
+  max-width: 400px;
+  flex-shrink: 0;
+}
+
+button {
+  cursor: pointer;
+  background-color: #522b12;
+  padding: 16px 16px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fffced;
+  border: none;
+  border-radius: 100px;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease; /* Ensure transition applies when hover is removed */
+}
+
+button:hover {
+  transform: translate(4px, 4px);
+  font-family: "Libre italic", serif;
+  background-color: #5f2a1a;
+  color: #efeddf;
+}
+
+h3 {
+  font-family: "Manrope", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #111111;
+}
+
+h4 {
+  font-family: "Manrope", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #111111;
+}
+
+.playimg {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  width: 100%;
+  object-fit: contain;
+  overflow-y: auto;
+}
+
+.sticky-header {
+  padding: 20px 0;
+}
+
+.playimgcontainer {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  height: 80vh;
+  margin-bottom: 0;
+}
+
+.playimg img {
+  height: auto;
+  max-height: 70%;
+  width: auto;
+  object-fit: contain;
+}
+
+.aboutme {
+  display: flex;
+  flex-direction: row; /* Side by side by default */
+  gap: 40px;
+  align-items: flex-start;
+  padding: 40px 0;
+  max-width: 900px;
+}
+
+.aboutmetext {
+  width: 60%; /* Takes up 60% of the horizontal space */
+}
+
+.aboutmeimgsketch {
+  padding-top: 40px;
+  width: 40%;
+}
+
+.aboutmeimgsketch img {
+  width: 100%; /* Takes up 100% of the 40% div */
+  max-width: 100%; /* Ensures it never overflows */
+  height: auto; /* Keeps the aspect ratio perfect */
+  display: block;
+  border-radius: 24px;
+}
+
+.playimgcontainer a {
+  text-decoration-color: #ffffff;
+}
+
+.aboutme a {
+  cursor: pointer;
+  color: #2a5aeb;
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.icontext {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 4px;
+}
+
+/* .icontext a {
+  text-decoration: none;
+} */
+
+.icontext img {
+  height: 20px;
+  width: 20px;
+}
+
+.blognamebox h3 {
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  color: #2a5aeb;
+  margin: 0;
+}
+
+#islandsection {
+  background-color: #d1eae4;
+}
+
+.islandToHover {
+  transition: filter 0.4s ease;
+}
+
+.islandToHover:hover {
+  transform: translateY(-4px);
+  filter: drop-shadow(0px 12px 8px #314e11);
+  cursor: pointer;
+}
+
+.islandToHover.active {
+  transform: translateY(-6px);
+  filter: drop-shadow(4px 6px 16px #314e11);
+}
+
+.sideproject {
+  display: block;
+  gap: 24px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+.sideproject img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.sideproject h3 {
+  font-family: "Manrope", sans-serif;
+  font-weight: 900;
+  font-size: 16px;
+  color: #111111;
+  text-decoration: underline #111111;
+  margin: 0;
+}
+
+.resumeSection {
+  background-color: #d1eae4;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.company {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: auto;
+}
+
+@media (max-width: 800px) {
+  .project.scrollContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    padding-top: 20px;
+  }
+
+  .project-image {
+    width: 80%;
+    height: auto;
+    padding-left: 0;
+  }
+
+  .aboutme {
+    flex-direction: column-reverse; /* Image/Sketch on top, Text on bottom */
+    align-items: center;
+  }
+
+  .aboutmetext,
+  .aboutmeimgsketch {
+    flex: 0 0 100%; /* Take up full width when stacked */
+    width: 100%;
+  }
+
+  .aboutmeimgsketch {
+    margin-bottom: 40px; /* Space between visual and text */
+  }
+
+  .navbar {
+    margin: 0 auto;
+    padding: 12px;
+    width: 100%;
+  }
+}
