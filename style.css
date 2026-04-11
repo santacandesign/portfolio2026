@@ -25,6 +25,13 @@ html {
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Manrope bold";
+  src: url("assets/Manrope/static/Manrope-Bold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: bold;
+}
+
 header {
   margin: 0px auto;
   padding: 0px 40px;
@@ -45,6 +52,20 @@ hr {
   border: 0.1px solid #522b12;
 }
 
+h1 {
+  font-family: "Libre italic", serif;
+  font-weight: 900;
+  font-size: 32px;
+  color: #111111;
+  margin: 0;
+}
+
+a {
+  color: #522b12;
+  cursor: pointer;
+  font-family: "Libre italic", serif;
+}
+
 .bgimage {
   position: fixed;
   top: 0;
@@ -59,13 +80,13 @@ hr {
   z-index: -1; /* Ensure it stays behind all content */
 }
 
-.section-title {
+.section-title h1 {
   text-align: center;
-  font-family: "Libre italic", serif;
+  font-family: "Libre italic", sans-serif;
   font-weight: 900;
   font-size: 24px;
   color: #111111;
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 p {
@@ -202,6 +223,8 @@ h3 {
   font-size: 16px;
   font-weight: 400;
   color: #111111;
+  margin: 0;
+  padding: 12px 0px;
 }
 
 h4 {
@@ -209,6 +232,14 @@ h4 {
   font-size: 16px;
   font-weight: 400;
   color: #111111;
+  margin: 0;
+  padding: 12px 0px;
+}
+
+.playstyles {
+  max-width: 900px;
+  margin: 16px auto;
+  padding-top: 60px;
 }
 
 .playimg {
@@ -267,14 +298,6 @@ h4 {
 
 .playimgcontainer a {
   text-decoration-color: #ffffff;
-}
-
-.aboutme a {
-  cursor: pointer;
-  color: #2a5aeb;
-  font-size: 20px;
-  font-weight: 700;
-  text-decoration: underline;
 }
 
 .icontext {
@@ -358,7 +381,27 @@ h4 {
   gap: auto;
 }
 
+.company h3 {
+  font-family: "Manrope bold", sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  color: #111111;
+  margin: 0;
+}
+
+.company h4 {
+  font-family: "Manrope", sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  color: #111111;
+  margin: 0;
+}
+
 @media (max-width: 800px) {
+  h1 {
+    font-size: 24px;
+  }
+
   .project.scrollContainer {
     display: flex;
     flex-direction: column;
@@ -392,5 +435,14 @@ h4 {
     margin: 0 auto;
     padding: 12px;
     width: 100%;
+  }
+
+  .playstyles {
+    padding-top: 60px;
+    margin: 16px;
+  }
+
+  .sideproject {
+    padding-bottom: 0;
   }
 }

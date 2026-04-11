@@ -2,7 +2,7 @@ var tick = 0;
 var pollen = [];
 
 function setup() {
-  var flowercanvas = createCanvas(520, 480);
+  var flowercanvas = createCanvas(400, 400);
   flowercanvas.parent("flower-sketch-container");
 }
 
