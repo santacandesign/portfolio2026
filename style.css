@@ -441,6 +441,10 @@ h4 {
     padding-left: 0;
   }
 
+  .project-description {
+    width: 80%;
+  }
+
   .aboutme {
     flex-direction: column-reverse; /* Image/Sketch on top, Text on bottom */
     align-items: center;
