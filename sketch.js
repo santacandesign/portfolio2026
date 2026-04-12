@@ -6,6 +6,7 @@ let circles = [];
 let numCircles = 60;
 let circleRadius = 4;
 let grassBlades = [];
+let butterflies = [];
 
 new p5((sketch) => {
   let papertexture;
@@ -71,6 +72,29 @@ new p5((sketch) => {
           noiseScale: sketch.random(0.9, 4), // edge texture roughness
         });
       }
+    }
+    if (sketch.windowWidth < 470) {
+      butterflyCount = 10;
+    } else {
+      butterflyCount = 30;
+    }
+    for (let i = 0; i < butterflyCount; i++) {
+      butterflies.push({
+        x: sketch.random(sketch.windowWidth),
+        y: sketch.random(sketch.windowHeight * 0.1, sketch.windowHeight * 0.8),
+        speed: sketch.random(2, 6), // flight speed
+        offset: sketch.random(1000), // noise offset for unique path
+        flapOffset: sketch.random(300), // wing flap phase
+        flapSpeed: sketch.random(100, 200), // how fast wings beat
+        size: sketch.random(8, 16), // body + wing size
+        col: sketch.color(
+          // wing colour — earthy tones
+          sketch.random([
+            sketch.color(233, 108, 26), // yellow
+            sketch.color(233, 26, 78), // purple
+          ]),
+        ),
+      });
     }
   };
 
@@ -175,6 +199,90 @@ new p5((sketch) => {
       }
     }
 
+    // butterflies
+    for (let bf of butterflies) {
+      let t = sketch.frameCount * 0.006 * bf.speed;
+
+      // wander path — noise drives x and y independently
+      bf.x += (sketch.noise(bf.offset + t) - 0.5) * 3;
+      bf.y += (sketch.noise(bf.offset + t + 50) - 0.5) * 1.5;
+
+      // wrap around edges
+      if (bf.x < -20) bf.x = sketch.windowWidth + 20;
+      if (bf.x > sketch.windowWidth + 20) bf.x = -20;
+      if (bf.y < 0) bf.y = sketch.windowHeight * 0.8;
+      if (bf.y > sketch.windowHeight) bf.y = 10;
+
+      // flap angle — cosine gives natural easing at top/bottom
+      let flap = sketch.cos(
+        (sketch.frameCount * bf.flapSpeed + bf.flapOffset) * 0.08,
+      );
+      let wingOpen = sketch.abs(flap); // 0 = closed, 1 = fully open
+
+      sketch.push();
+      sketch.translate(bf.x, bf.y);
+
+      // tilt body slightly in direction of travel
+      let drift = sketch.noise(bf.offset + t) - 0.5;
+      sketch.rotate(drift * 0.4);
+
+      // upper wings — larger, main colour
+      for (let side of [-1, 1]) {
+        sketch.push();
+        sketch.scale(side, 1);
+
+        let wx = bf.size * wingOpen * 1.2; // wing spread
+        let wy = bf.size * 0.4;
+
+        sketch.noStroke();
+        sketch.fill(bf.col);
+        sketch.beginShape();
+        sketch.vertex(0, 0);
+        sketch.bezierVertex(
+          wx * 0.2,
+          -wy * 1, // pull hard upward
+          wx * 0.8,
+          -wy * 1.2, // tip control
+          wx * 0.7,
+          -wy * 1.3,
+        );
+        sketch.bezierVertex(wx * 0.6, wy * 0.5, wx * 0.2, wy * 0.2, 0, 0);
+        sketch.endShape(sketch.CLOSE);
+
+        // lower wings — smaller
+        sketch.fill(
+          sketch.red(bf.col),
+          sketch.green(bf.col),
+          sketch.blue(bf.col),
+          180,
+        );
+        sketch.beginShape();
+        sketch.vertex(0, 0);
+        sketch.bezierVertex(
+          wx * 0.3,
+          wy * 0.3,
+          wx * 0.7,
+          wy * 1,
+          wx * 0.5,
+          wy * 0.9,
+        );
+        sketch.bezierVertex(wx * 0.2, wy * 0.8, wx * 0.05, wy * 0.5, 0, 0);
+        sketch.endShape(sketch.CLOSE);
+        sketch.strokeWeight(0.5);
+        sketch.noFill();
+        sketch.line(0, 0, wx * 0.7, -wy * 0.1);
+        sketch.line(0, 0, wx * 0.5, wy * 0.6);
+        sketch.pop();
+      }
+
+      // body
+      sketch.noStroke();
+      sketch.fill(40, 28, 15);
+      sketch.ellipse(0, bf.size * 0.2, bf.size * 0.18, bf.size * 0.35);
+
+      sketch.pop();
+    }
+
     // 2. Format the time string (converting 24h to 12h format)
     let suffix = floorHour >= 12 ? " P.M." : " A.M.";
     let displayHour = floorHour > 12 ? floorHour - 12 : floorHour;
@@ -186,7 +294,7 @@ new p5((sketch) => {
     sketch.stroke(82, 43, 18);
     sketch.strokeWeight(2);
 
-    if (sketch.windowWidth > 1000) {
+    if (sketch.windowWidth > 900) {
       for (let y = 0; y < sketch.windowHeight; y += 2) {
         let wobble = sketch.noise(y * 0.5, sketch.frameCount * 0.001) * 4 - 2; // ±2px jitter
         sketch.point(sketch.mouseX + wobble, y);
@@ -211,7 +319,7 @@ new p5((sketch) => {
     sketch.fill(82, 43, 18);
     sketch.rectMode(sketch.CENTER);
 
-    if (sketch.windowWidth > 1000) {
+    if (sketch.windowWidth > 900) {
       sketch.rect(labelX, labelY, labelWidth, labelHeight, 100);
     }
 
@@ -221,7 +329,7 @@ new p5((sketch) => {
     sketch.textAlign(sketch.CENTER, sketch.CENTER);
     sketch.textSize(14);
     sketch.textFont(jostfont); // Using your loaded jostfont
-    if (sketch.windowWidth > 1000) {
+    if (sketch.windowWidth > 900) {
       sketch.text(label, labelX, labelY);
     }
     sketch.pop();
