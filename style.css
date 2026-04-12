@@ -309,7 +309,7 @@ h4 {
   max-width: 100%; /* Ensures it never overflows */
   height: auto; /* Keeps the aspect ratio perfect */
   display: block;
-  border-radius: 24px;
+  border-radius: 12px;
 }
 
 .playimgcontainer a {
