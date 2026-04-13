@@ -134,7 +134,7 @@ body::before {
   width: 100%;
   box-sizing: border-box;
   z-index: 1000;
-  background-color: #fffced;
+  background-color: #e7e6da;
 }
 
 .navbar::after {
@@ -146,7 +146,7 @@ body::before {
   height: 40px; /* height of the fade zone — match bottom value */
   background: linear-gradient(
     to bottom,
-    #fffced,
+    #e7e6da,
     /* match your navbar background colour */ transparent
   );
   pointer-events: none; /* so it doesn't block clicks below */
@@ -464,7 +464,6 @@ h4 {
     margin: 0 auto;
     padding: 12px;
     width: 100%;
-    background-color: #fffced;
   }
 
   .navbar ul {
