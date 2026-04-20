@@ -1,133 +1,218 @@
 <!doctype html>
 <html lang="en">
-  <header>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="books.css" />
+    <!-- Playfair Display for bookshelf review cards -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
     <title>Santa's Portfolio</title>
     <link rel="icon" type="image/png" href="assets/dragonfly.svg" />
-     <div class="bgimage"></div>
-    <div class="aboutme">
-        <div class="aboutmetext">
-      <h1 style="font-family: &quot;Libre italic&quot;, serif">
-        I’m Santrupti!
-      </h1>
-      <br/> 
-      <h3>
-        I've been a designer for 3.5 years and have worked on all kinds of
-        products ranging from B2B, B2C and my designs have touched over 200k+
-        people per month. <br/> <br/> 
-        I've been into computers since I was in second grade and the
-        first engineer in my family got a computer - I was using everything on
-        it including paint, qbasic and windows movie maker. Everything you could
-        possibly do in a computer I did. I studied electronics and communication
-        in college and loved matlab and VLSI.I want to be on my computer
-        fiddling with things all the time - especially code in unlikely places -
-        using code to make art, music, analysing & plotting my feelings.  I also
-        play a lot of video games and lift weights in my free time. <br/> <br/> 
-        I find myself being more and more fascinated by people these days - how
-        communities form and how people stay close together for years.
-      </h3>
-
-      <br />
-        <h2 style="font-family: &quot;Libre italic&quot;, serif">
-        Contact
-      </h2>
-      <h3> Email : santrupti.danagaud@gmail.com</h3>
-      <h3> Linkedin : <a href="https://www.linkedin.com/in/santruptip/" target="_blank">here</a></h3>
-
-
-      <br /><br />
-      <h2 style="font-family: &quot;Libre italic&quot;, serif">
-        What I’m looking for in my next role
-      </h2>
-      <h3 style="font-family: &quot;Libre italic&quot;, serif">Growth</h3>
-      <h3>
-        I want to have better conversations about product - work with smart
-        people that love their jobs - Growth happens in many ways but more often
-        accelerated growth happens in places where people feel safe to
-        experiment, get acknowledged for their work and work with people who
-        they like being around. There is a lot of subjectivity to who one might
-        like being around but I find the when people feel seen, heard &
-        understood - they are able to bring their best selves to work
-      </h3>
-      <h3 style="font-family: &quot;Libre italic&quot;, serif">
-        Long term commitment
-      </h3>
-      <h3>
-        I want to stick around and grow with a business, understand what it
-        takes to be responsible for a product long term, what truly
-        understanding your users feels like overtime when you keep releasing
-        things that work. I feel like the satisfaction to being in close
-        proximity with a product, seeing it stumble and succeed is
-        irreplaceable.
-      </h3>
-      <h3 style="font-family: &quot;Libre italic&quot;, serif">
-        Work I find interesting + Believe in
-      </h3>
-      <h3>
-        Working on a product and its features I truly believe in. Scope to take
-        on more work and do the main work, the side work to keep the machine
-        well oiled and running like design systems and getting a holistic view
-        of the work
-      </h3>
-
-      <br /><br />
-
-      <div class="workextitle">
-      <h2 style="font-family: &quot;Libre italic&quot;, serif">Work experience</h2>
-
-      </div>
-      <div class="company">
-        <h3>Licious</h3>
-        <h4>May 2025 - Dec 2025</h4>
-        </div>
-        <hr />
-
-        <div class="company">
-        <h3>Propertyguru</h3>
-        <h4>Apr 2024 - Apr 2025</h4>
-        </div>
-        <hr />
-        
-        <div class="company">
-        <h3>Infra Market</h3>
-        <h4>May 2023 - Apr 2024</h4>
-        </div>
-        <hr />
-
-        <div class="company">
-        <h3>Crux intelligence</h3>
-        <h4>Mar 2022 - Mar 2023</h4>
-        </div>
-        <hr />
-        <br/>
-
-              <a href="https://drive.google.com/file/d/1S5e2k3x2rQu9EDIXvkUwphMWmWV_8Juf/view?usp=sharing" target="_blank">
-          View Resume
-      </a>
-
-        <br /><br />
-        </div>
-
-
-      <div class="aboutmeimgsketch">
-      <img
-        src="assets/aboutme/aboutmeimg.jpg"/>
-      <h3>me in a lil meeting with you while reading my about page!</h3>
-      <div id="flower-sketch-container"></div>
-    </div>
-    <script src="aboutmesketch.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/addons/p5.sound.min.js"></script>
-  </header>
+  </head>
   <body>
-      <nav class="navbar">
+    <div class="bgimage"></div>
+
+    <nav class="navbar">
       <ul>
         <li><a href="index.html" id="herolink">Home</a></li>
         <li><a href="playground.html">Playground</a></li>
-        <li><a href="aboutme.html">About & Contact</a></li>
+        <li><a href="aboutme.html">About &amp; Contact</a></li>
       </ul>
     </nav>
+
+    <div class="aboutme">
+      <!-- ── Text column ────────────────────────────────────── -->
+      <div class="aboutmetext">
+        <h1 style="font-family: &quot;Libre italic&quot;, serif">
+          I'm Santrupti!
+        </h1>
+        <br />
+        <h3>
+          I've been a designer for 3.5 years and have worked on all kinds of
+          products ranging from B2B, B2C and my designs have touched over 200k+
+          people per month.<br /><br />
+          I've been into computers since I was in second grade and the first
+          engineer in my family got a computer — I was using everything on it
+          including paint, qbasic and windows movie maker. Everything you could
+          possibly do in a computer I did. I studied electronics and
+          communication in college and loved matlab and VLSI. I want to be on my
+          computer fiddling with things all the time — especially code in
+          unlikely places — using code to make art, music, analysing &amp;
+          plotting my feelings. I also play a lot of video games and lift
+          weights in my free time.<br /><br />
+          I find myself being more and more fascinated by people these days —
+          how communities form and how people stay close together for years.
+        </h3>
+
+        <br />
+        <h2 style="font-family: &quot;Libre italic&quot;, serif">Contact</h2>
+        <h3>Email : santrupti.danagaud@gmail.com</h3>
+        <h3>
+          Linkedin :
+          <a href="https://www.linkedin.com/in/santruptip/" target="_blank"
+            >here</a
+          >
+        </h3>
+
+        <br /><br />
+        <h2 style="font-family: &quot;Libre italic&quot;, serif">
+          What I'm looking for in my next role
+        </h2>
+        <h3 style="font-family: &quot;Libre italic&quot;, serif">Growth</h3>
+        <h3>
+          I want to have better conversations about product — work with smart
+          people that love their jobs. Growth happens in many ways but more
+          often accelerated growth happens in places where people feel safe to
+          experiment, get acknowledged for their work and work with people who
+          they like being around. There is a lot of subjectivity to who one
+          might like being around but I find that when people feel seen, heard
+          &amp; understood — they are able to bring their best selves to work.
+        </h3>
+        <h3 style="font-family: &quot;Libre italic&quot;, serif">
+          Long term commitment
+        </h3>
+        <h3>
+          I want to stick around and grow with a business, understand what it
+          takes to be responsible for a product long term, what truly
+          understanding your users feels like overtime when you keep releasing
+          things that work. I feel like the satisfaction to being in close
+          proximity with a product, seeing it stumble and succeed is
+          irreplaceable.
+        </h3>
+        <h3 style="font-family: &quot;Libre italic&quot;, serif">
+          Work I find interesting + Believe in
+        </h3>
+        <h3>
+          Working on a product and its features I truly believe in. Scope to
+          take on more work and do the main work, the side work to keep the
+          machine well oiled and running — like design systems — and getting a
+          holistic view of the work.
+        </h3>
+
+        <br /><br />
+        <div class="workextitle">
+          <h2 style="font-family: &quot;Libre italic&quot;, serif">
+            Work experience
+          </h2>
+        </div>
+        <div class="company">
+          <h3>Licious</h3>
+          <h4>May 2025 – Dec 2025</h4>
+        </div>
+        <hr />
+        <div class="company">
+          <h3>Propertyguru</h3>
+          <h4>Apr 2024 – Apr 2025</h4>
+        </div>
+        <hr />
+        <div class="company">
+          <h3>Infra Market</h3>
+          <h4>May 2023 – Apr 2024</h4>
+        </div>
+        <hr />
+        <div class="company">
+          <h3>Crux intelligence</h3>
+          <h4>Mar 2022 – Mar 2023</h4>
+        </div>
+        <hr />
+        <br />
+        <a
+          href="https://drive.google.com/file/d/1S5e2k3x2rQu9EDIXvkUwphMWmWV_8Juf/view?usp=sharing"
+          target="_blank"
+          >View Resume</a
+        >
+        <br /><br />
+        <hr />
+        <br /><br />
+
+        <!-- Hidden SVG filter for paper texture -->
+        <svg class="bs-svg-defs" aria-hidden="true">
+          <defs>
+            <filter id="bs-paper" x="0%" y="0%" width="100%" height="100%">
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.9"
+                numOctaves="8"
+                result="noise"
+              />
+              <feDiffuseLighting
+                in="noise"
+                lightingColor="white"
+                surfaceScale="1"
+                result="diffLight"
+              >
+                <feDistantLight azimuth="45" elevation="35" />
+              </feDiffuseLighting>
+            </filter>
+          </defs>
+        </svg>
+
+        <div class="bs-wrap">
+          <h2
+            style="
+              font-family: &quot;Libre italic&quot;, serif;
+              margin-bottom: 4px;
+            "
+          >
+            Books I love
+          </h2>
+
+          <!-- Shelf -->
+          <div class="bs-shelf-outer" id="bsShelfOuter">
+            <button
+              class="bs-arrow bs-arrow-left"
+              id="bsArrowLeft"
+              aria-label="Scroll left"
+            >
+              &#x2039;
+            </button>
+            <button
+              class="bs-arrow bs-arrow-right"
+              id="bsArrowRight"
+              aria-label="Scroll right"
+            >
+              &#x203a;
+            </button>
+            <div class="bs-viewport" id="bsViewport">
+              <div class="bs-books-row" id="bsBooksRow"></div>
+            </div>
+          </div>
+          <div class="bs-plank"></div>
+
+          <!-- Dots -->
+          <div class="bs-dots" id="bsDots"></div>
+
+          <!-- Review -->
+          <div class="bs-review" id="bsReview">
+            <div class="bs-review-empty" id="bsEmpty">
+              Click a spine to know more
+            </div>
+          </div>
+        </div>
+        <!-- /bs-wrap -->
+        <hr />
+        <br /><br />
+
+        <div id="flower-sketch-container"></div>
+      </div>
+      <!-- /aboutmetext -->
+
+      <!-- ── Image column ───────────────────────────────────── -->
+      <div class="aboutmeimgsketch">
+        <img src="assets/aboutme/aboutmeimg.jpg" alt="Santrupti in a meeting" />
+        <h3>me in a lil meeting with you while reading my about page!</h3>
+      </div>
+    </div>
+    <!-- /aboutme -->
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/addons/p5.sound.min.js"></script>
+    <script src="aboutmesketch.js"></script>
+    <script src="books.js"></script>
   </body>
 </html>

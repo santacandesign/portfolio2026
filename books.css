@@ -1,0 +1,419 @@
+/* ============================================================
+   bookshelf.css
+   All styles scoped to .bs-section so they never bleed into
+   the rest of the portfolio.  Prefix: bs-
+   ============================================================ */
+
+/* ── Section shell ─────────────────────────────────────────── */
+.bs-section {
+  --bs-bg: #150c06;
+  --bs-fg: #ede8df;
+  --bs-mid: rgba(237, 232, 223, 0.45);
+  --bs-dim: rgba(237, 232, 223, 0.18);
+
+  background: var(--bs-bg);
+  color: var(--bs-fg);
+  font-family: "Inter", "Helvetica Neue", sans-serif;
+  width: 100%;
+  padding: 64px 24px 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  box-sizing: border-box;
+}
+
+/* Hide the raw SVG defs element */
+.bs-svg-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ── Section heading ──────────────────────────────────────── */
+.bs-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: min(860px, calc(100vw - 80px));
+  margin-bottom: 36px;
+  gap: 6px;
+}
+
+.bs-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--bs-fg);
+  opacity: 0.9;
+}
+
+.bs-sublabel {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--bs-mid);
+}
+
+/* ── Scene ─────────────────────────────────────────────────── */
+.bs-scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* ── Shelf wrap (column: outer → plank) ────────────────────── */
+.bs-shelf-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(860px, calc(100vw - 80px));
+}
+
+/* ── Outer container — sets the visible clipping width ─────── */
+.bs-shelf-outer {
+  position: relative;
+  width: 100%;
+}
+
+/* ── Viewport — clips overflowing books ────────────────────── */
+.bs-viewport {
+  overflow: hidden;
+  padding-top: 22px; /* headroom for leaned book tops */
+}
+
+/* ── Books row — full scrollable width ─────────────────────── */
+.bs-books-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  width: max-content;
+  will-change: transform;
+}
+
+/* ── Shelf plank ───────────────────────────────────────────── */
+.bs-plank {
+  width: calc(100% + 80px);
+  margin-left: -40px;
+  height: 6px;
+  background: var(--bs-fg);
+  opacity: 0.15;
+  border-radius: 1px;
+}
+
+/* ── Scroll arrows ─────────────────────────────────────────── */
+.bs-arrow {
+  position: absolute;
+  top: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #235a1e;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  color: #f5f3ea;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    background 0.2s,
+    opacity 0.3s;
+}
+
+.bs-arrow:hover {
+  background: #265721;
+}
+
+.bs-arrow-left {
+  left: -18px;
+}
+.bs-arrow-right {
+  right: -18px;
+}
+
+.bs-arrow.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Book wrap — carries the organic lean ──────────────────── */
+.bs-book-wrap {
+  flex-shrink: 0;
+  transform-origin: bottom center;
+  transition: transform 500ms ease;
+}
+.bs-book-wrap.open {
+  transform: rotateZ(0deg) !important;
+}
+
+/* ── Book button (perspective container) ───────────────────── */
+.bs-book-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  outline: none;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  gap: 0;
+  transition: width 500ms ease;
+  will-change: auto;
+  /* perspective set via inline style in JS */
+}
+
+.bs-book-btn:focus,
+.bs-book-btn:focus-visible,
+.bs-book-btn:active,
+.bs-book-btn:hover {
+  outline: none;
+  background: none;
+}
+
+/* ── Spine ─────────────────────────────────────────────────── */
+.bs-spine {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+
+  transform-origin: right center;
+  transform: rotateY(0deg);
+  transition: all 500ms ease;
+  will-change: auto;
+  filter: brightness(0.8) contrast(2);
+  transform-style: preserve-3d;
+}
+
+/* ── Cover ─────────────────────────────────────────────────── */
+.bs-cover {
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+
+  transform-origin: left center;
+  transform: rotateY(88.8deg);
+  transition: all 500ms ease;
+  will-change: auto;
+  filter: brightness(0.8) contrast(2);
+  transform-style: preserve-3d;
+}
+
+/* Open animation — Adam Maj hinge */
+.bs-book-btn.open .bs-spine {
+  transform: rotateY(-60deg);
+}
+.bs-book-btn.open .bs-cover {
+  transform: rotateY(30deg);
+}
+
+/* ── Paper texture overlay ─────────────────────────────────── */
+.bs-paper-tex {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.28;
+  filter: url(#bs-paper);
+  z-index: 10;
+  background: white;
+}
+
+/* ── Binding highlight ─────────────────────────────────────── */
+.bs-binding {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 2px,
+    rgba(255, 255, 255, 0.5) 3px,
+    rgba(255, 255, 255, 0.25) 4px,
+    rgba(255, 255, 255, 0.25) 6px,
+    transparent 7px,
+    transparent 9px,
+    rgba(255, 255, 255, 0.25) 9px,
+    transparent 12px
+  );
+}
+
+/* ── Spine title text ──────────────────────────────────────── */
+.bs-spine-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  user-select: none;
+  margin-top: 12px;
+  font-family: "Inter", "Helvetica Neue", sans-serif;
+}
+
+/* Cover SVG / img fills its container */
+.bs-cover svg,
+.bs-cover img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.bs-cover img {
+  object-fit: cover;
+}
+
+/* ── Navigation dots ───────────────────────────────────────── */
+.bs-dots {
+  display: flex;
+  gap: 7px;
+  margin-top: 20px;
+}
+
+.bs-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--bs-dim);
+  cursor: pointer;
+  transition:
+    background 0.3s,
+    transform 0.3s;
+}
+.bs-dot.active {
+  background: var(--bs-fg);
+  transform: scale(1.5);
+}
+
+/* ── Review card area ──────────────────────────────────────── */
+.bs-review {
+  position: relative;
+  width: min(520px, calc(100vw - 80px));
+  min-height: 180px;
+  margin-top: 32px;
+}
+
+.bs-review-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--bs-dim);
+  transition: opacity 0.4s;
+}
+
+/* Individual review card */
+.bs-card {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition:
+    opacity 0.38s ease,
+    transform 0.38s ease;
+}
+.bs-card.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.bs-card.exit-l {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+.bs-card.exit-r {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.bs-card.enter-l {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.bs-card.enter-r {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+.bs-card.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.bs-card-genre {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--bs-mid);
+  margin-bottom: 8px;
+}
+
+.bs-card-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--bs-fg);
+  line-height: 1.15;
+  margin-bottom: 0;
+  max-width: 460px;
+  font-family: "Libre Baskerville", Georgia, serif;
+  font-style: italic;
+}
+
+.bs-card-rule {
+  width: 100%;
+  height: 1px;
+  background: var(--bs-fg);
+  opacity: 0.2;
+  margin: 10px 0;
+}
+
+.bs-card-byline {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--bs-mid);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.bs-stars {
+  display: flex;
+  gap: 3px;
+}
+.bs-star {
+  font-size: 11px;
+}
+.bs-star.on {
+  color: var(--bs-fg);
+}
+.bs-star.off {
+  color: var(--bs-dim);
+}
+
+.bs-card-thoughts {
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--bs-mid);
+  max-width: 460px;
+  font-family: "Manrope", sans-serif;
+  font-style: normal;
+}

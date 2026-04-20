@@ -300,7 +300,7 @@ h4 {
   flex-direction: row; /* Side by side by default */
   gap: 40px;
   align-items: flex-start;
-  padding: 40px 0;
+  padding: 100px 20px;
   max-width: 900px;
 }
 
@@ -422,6 +422,11 @@ h4 {
   margin: 0;
 }
 
+.aboutme {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
 @media (max-width: 800px) {
   h1 {
     font-size: 24px;
@@ -446,8 +451,9 @@ h4 {
   }
 
   .aboutme {
-    flex-direction: column-reverse; /* Image/Sketch on top, Text on bottom */
-    align-items: center;
+    flex-direction: column-reverse;
+    gap: 24px;
+    padding: 20px;
   }
 
   .aboutmetext,
@@ -457,7 +463,8 @@ h4 {
   }
 
   .aboutmeimgsketch {
-    margin-bottom: 40px; /* Space between visual and text */
+    padding-top: 60px;
+    width: 100%;
   }
 
   .navbar {
