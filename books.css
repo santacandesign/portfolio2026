@@ -113,8 +113,8 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #235a1e;
-  border: none;
+  background: #522b12;
+  border: 1px solid #522b12;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -130,6 +130,7 @@
 
 .bs-arrow:hover {
   background: #265721;
+  border: none;
 }
 
 .bs-arrow-left {
