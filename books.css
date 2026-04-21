@@ -150,6 +150,8 @@
   flex-shrink: 0;
   transform-origin: bottom center;
   transition: transform 500ms ease;
+  padding: 8px;
+  margin: -8px;
 }
 .bs-book-wrap.open {
   transform: rotateZ(0deg) !important;
