@@ -179,7 +179,8 @@
 .bs-book-btn:focus-visible,
 .bs-book-btn:active,
 .bs-book-btn:hover {
-  transform: translate(1px, 1px);
+  transform: translate(0px, -12px);
+  transition: 200ms ease;
   outline: none;
   background: none;
 }
