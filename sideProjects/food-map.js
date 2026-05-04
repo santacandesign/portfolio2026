@@ -5,8 +5,7 @@
 /* ----------------------------------------------------------------
    AIRTABLE CONFIG — replace YOUR_AIRTABLE_TOKEN
    ---------------------------------------------------------------- */
-const AIRTABLE_TOKEN =
-  "pat8SgfGwKu0vF1Z2.c55659f350852c8d7d29b633905f3b8bfc5bac013cc42bbb0698270d67262104";
+const AIRTABLE_TOKEN = CONFIG.AIRTABLE_TOKEN;
 const AIRTABLE_BASE = "appwOd745ejdnIRig";
 const AIRTABLE_TABLE = "tblLWu7rFNaDhbbFW";
 
