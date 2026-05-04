@@ -1,0 +1,523 @@
+/* ================================================================
+   Safe Food Guide · Bengaluru
+   New design — mobile-first, full-screen map
+   ================================================================ */
+
+:root {
+  --white: #ffffff;
+  --warm-white: #fffbf8;
+  --ink: #202020;
+  --ink-soft: #5a5a5a;
+  --ink-muted: #9e9e9e;
+  --blue-label: #0b0b40;
+  --border: #e4e4e4;
+  --shadow-sm: 0 2px 2px rgba(0, 0, 0, 0.18);
+  --shadow-md: 0 4px 2px rgba(0, 0, 0, 0.25);
+  --shadow-card: 0 4px 4px rgba(0, 0, 0, 0.18);
+  --card-radius: 20px;
+  --pill-radius: 30px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  font-family: "Manrope", sans-serif;
+  background: #fef1e9;
+}
+
+/* ================================================================
+   MAP — fills everything
+   ================================================================ */
+#map {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: #fef1e9;
+}
+
+/* MapLibre popup */
+.maplibregl-popup-content {
+  border-radius: 8px !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-md) !important;
+  background: var(--white) !important;
+  padding: 6px 10px 6px 8px !important;
+  font-family: "Manrope", sans-serif;
+  min-width: 130px;
+}
+.maplibregl-popup-tip {
+  display: none;
+}
+.maplibregl-popup-close-button {
+  font-size: 14px;
+  color: var(--ink-muted);
+  padding: 4px 6px;
+}
+.popup-name {
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--ink);
+  display: block;
+}
+.popup-loc {
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
+  font-size: 10px;
+  color: var(--ink);
+  display: block;
+  margin-top: 1px;
+}
+
+/* Location pin markers */
+.pin-marker {
+  width: 28px;
+  height: 36px;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+  transition:
+    transform 0.15s,
+    filter 0.15s;
+  transform-origin: center bottom;
+}
+.pin-marker.active {
+  transform: scale(1.35);
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4));
+}
+
+/* ================================================================
+   TOP OVERLAY
+   ================================================================ */
+.top-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+.top-gradient {
+  position: absolute;
+  inset: 0;
+  height: 200px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.8) 57%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+.title-block {
+  position: relative;
+  padding: 44px 20px 0;
+}
+h1 {
+  font-family: "Libre Baskerville", serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 40px;
+  line-height: 1.05;
+  color: var(--ink);
+  text-shadow:
+    -3px -3px 0 #fff,
+    3px -3px 0 #fff,
+    -3px 3px 0 #fff,
+    3px 3px 0 #fff,
+    0 -3px 0 #fff,
+    0 3px 0 #fff,
+    -3px 0 0 #fff,
+    3px 0 0 #fff,
+    0 4px 4px rgba(0, 0, 0, 0.8);
+  /* text-shadow: 0 3px 2px rgba(0, 0, 0, 0.18); */
+  letter-spacing: -0.01em;
+}
+.by-line {
+  font-family: "Manrope", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--ink);
+  margin-top: 8px;
+}
+
+/* ================================================================
+   DISTANCE BADGE
+   ================================================================ */
+.distance-badge {
+  position: fixed;
+  z-index: 20;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 320px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  border-radius: 12px;
+  padding: 6px 14px 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.walk-icon {
+  font-size: 14px;
+}
+.distance-text {
+  display: flex;
+  flex-direction: column;
+}
+.distance-main {
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.distance-sub {
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+  font-size: 10px;
+  color: var(--ink-muted);
+  line-height: 1.3;
+}
+
+/* ================================================================
+   BOTTOM SECTION
+   ================================================================ */
+.bottom-section {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+.bottom-gradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 380px;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.92) 40%,
+    rgba(255, 255, 255, 0.6) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+}
+
+/* ================================================================
+   CAROUSEL
+   ================================================================ */
+.carousel-wrap {
+  position: relative;
+  z-index: 2;
+  pointer-events: auto;
+  height: 230px;
+  overflow: visi;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 4px;
+}
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x; /* no vertical drag */
+  scrollbar-width: none;
+  width: 100%;
+  padding: 20px calc(50vw - 73px) 0;
+  gap: 20px;
+  align-items: flex-end;
+  padding-bottom: 8px;
+}
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Wrapper — snap unit, also the transform unit for fan effect */
+.card-wrap {
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  position: relative;
+  transform-origin: center center;
+  will-change: transform;
+  cursor: pointer;
+  /* size matches the food-card inside */
+  display: flex;
+  align-items: flex-start;
+}
+
+.food-card {
+  width: 130px;
+  height: 130px;
+  border-radius: var(--card-radius);
+  overflow: hidden; /* clips image only */
+  border: 4px solid var(--warm-white);
+  box-shadow: var(--shadow-card);
+  transition:
+    width 0.2s,
+    height 0.2s,
+    box-shadow 0.2s;
+  background: #e8e0d8;
+}
+.food-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+.food-card .card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  background: linear-gradient(135deg, #f0e8d8, #e0d4c0);
+}
+.food-card.active {
+  width: 146px;
+  height: 146px;
+  border-width: 5px;
+}
+
+/* Distance badge — sibling of food-card inside card-wrap,
+   so it sits ON TOP of the image without being clipped */
+.card-distance {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 20px;
+  padding: 3px 10px 4px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  color: #111;
+  white-space: nowrap;
+  display: none;
+  pointer-events: none;
+  z-index: 2;
+}
+.card-distance.visible {
+  display: block;
+}
+
+/* User location dot */
+.user-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #c51ffc;
+  border: 5px solid #fff;
+  box-shadow: 0 0 0 12px #c51ffc;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 4px rgba(197, 31, 252, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 16px rgba(197, 31, 252, 0.08);
+  }
+}
+
+/* ================================================================
+   DISH INFO
+   ================================================================ */
+.dish-info {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 10px 20px 6px;
+  pointer-events: auto;
+}
+.dish-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.dish-name {
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  text-transform: capitalize;
+}
+.dish-arrow {
+  font-size: 14px;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.dish-location {
+  display: block;
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink);
+  text-transform: capitalize;
+  margin-top: 2px;
+}
+
+/* ================================================================
+   FILTER BAR
+   ================================================================ */
+.filter-bar {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 8px 16px 28px;
+  pointer-events: auto;
+  background: transparent;
+}
+.filter-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-pill {
+  background: var(--white);
+  border: none;
+  border-radius: var(--pill-radius);
+  box-shadow: 0 3px 2.5px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: "Manrope", sans-serif;
+  color: var(--ink);
+  transition: all 0.15s;
+}
+.meal-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.meal-type-pill {
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #111;
+  border: none;
+  cursor: pointer;
+}
+.meal-type-pill.active {
+  background: #111;
+  color: var(--white);
+}
+
+.filter-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  flex-shrink: 0;
+  margin: 0 12px;
+}
+
+.sensory-group,
+.seating-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.filter-label {
+  font-family: "Manrope", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--blue-label);
+  white-space: nowrap;
+}
+.sensory-pill {
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #111;
+}
+.sensory-pill.active {
+  background: #111;
+  color: var(--white);
+}
+
+/* Seating toggle */
+.toggle-wrap {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 24px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.toggle-wrap input {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  cursor: pointer;
+  z-index: 2;
+  margin: 0;
+}
+.toggle-track {
+  position: absolute;
+  inset: 0;
+  background: #e0e0e0;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: var(--white);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.toggle-wrap input:checked ~ .toggle-track {
+  background: #0b0b40;
+}
+.toggle-wrap input:checked ~ .toggle-track .toggle-thumb {
+  transform: translateX(18px);
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (min-width: 480px) {
+  /* Centre the app on wider screens */
+  .top-overlay,
+  .bottom-section,
+  .distance-badge {
+    max-width: 430px;
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    width: 430px;
+  }
+  .distance-badge {
+    left: 50%;
+  }
+}

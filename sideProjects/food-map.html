@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Safe Food Guide · Bengaluru</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="food-map.css" />
+  </head>
+  <body>
+    <!-- Full-screen map -->
+    <div id="map"></div>
+
+    <!-- Top gradient + title -->
+    <div class="top-overlay">
+      <div class="top-gradient"></div>
+      <div class="title-block">
+        <h1>Safe food guide</h1>
+        <p class="by-line">by Santa</p>
+      </div>
+    </div>
+
+    <!-- Bottom section: gradient + carousel + info + filters -->
+    <div class="bottom-section">
+      <div class="bottom-gradient"></div>
+
+      <!-- Scrollable fan carousel -->
+      <div class="carousel-wrap">
+        <div class="carousel" id="carousel"></div>
+      </div>
+
+      <!-- Active dish info -->
+      <div class="dish-info" id="dishInfo">
+        <div class="dish-name-row">
+          <span class="dish-name" id="activeDish">—</span>
+          <span class="dish-arrow" id="dishArrow">↗</span>
+        </div>
+        <span class="dish-location" id="activeLocation">—</span>
+      </div>
+
+      <!-- Filter bar -->
+      <div class="filter-bar" id="filterBar">
+        <!-- Meal type pill -->
+        <!-- Meal type pills -->
+        <div class="meal-group">
+          <button
+            class="filter-pill meal-type-pill active"
+            id="mealAll"
+            onclick="setMealType('all', this)"
+          >
+            All
+          </button>
+          <button
+            class="filter-pill meal-type-pill"
+            id="mealBreakfast"
+            onclick="setMealType('Breakfast', this)"
+          >
+            Breakfast
+          </button>
+          <button
+            class="filter-pill meal-type-pill"
+            id="mealSnack"
+            onclick="setMealType('Snack', this)"
+          >
+            Snack
+          </button>
+          <button
+            class="filter-pill meal-type-pill"
+            id="mealDinner"
+            onclick="setMealType('Dinner', this)"
+          >
+            Dinner
+          </button>
+        </div>
+
+        <div class="filter-divider"></div>
+
+        <!-- Sensory pills -->
+        <div class="sensory-group">
+          <span class="filter-label">Sensory</span>
+          <button
+            class="filter-pill sensory-pill"
+            id="seekingBtn"
+            onclick="setSensory('Sensory seeking')"
+          >
+            Seeking
+          </button>
+          <button
+            class="filter-pill sensory-pill"
+            id="avoidingBtn"
+            onclick="setSensory('Sensory avoiding')"
+          >
+            Avoiding
+          </button>
+        </div>
+
+        <div class="filter-divider"></div>
+
+        <!-- Seating toggle -->
+        <div class="seating-group">
+          <span class="filter-label">Seating only</span>
+          <label class="toggle-wrap">
+            <input type="checkbox" id="seatToggle" />
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+    <script src="food-map.js"></script>
+  </body>
+</html>
