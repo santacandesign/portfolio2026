@@ -16,115 +16,237 @@ function getLean(idx) {
   return Math.sin(idx * 2.4 + 0.8) * 2.6 + Math.cos(idx * 1.1 + 0.3) * 1.4;
 }
 
-/* ── Bold flat SVG cover art ────────────────────────────────── */
+/* ── Botanical SVG cover art ────────────────────────────────── */
 function coverSVG(b) {
   const { c0, c1, accent, id } = b;
   const W = b.coverW || DEFAULT_COVER_W;
   const H = b.h || DEFAULT_H;
 
-  /* Generic fallback for books without a hand-crafted design */
+  /* Fallback for any book without a dedicated design */
   function fallback() {
     return `
       <rect width="${W}" height="${H}" fill="${c0}"/>
-      <line x1="0"    y1="${H * 0.3}" x2="${W}" y2="${H * 0.3}"
-        stroke="${accent}" stroke-width="2" opacity="0.35"/>
-      <line x1="0"    y1="${H * 0.7}" x2="${W}" y2="${H * 0.7}"
-        stroke="${accent}" stroke-width="2" opacity="0.35"/>
-      <text x="${W / 2}" y="${H * 0.56}" text-anchor="middle"
-        font-size="56" font-weight="900" fill="${accent}"
-        font-family="sans-serif" opacity="0.15">${b.title.charAt(0)}</text>
-      <rect x="0" y="${H - 38}" width="${W}" height="38" fill="${c1}"/>
-      <text x="12" y="${H - 14}" font-size="7" font-weight="700"
-        fill="${accent}" letter-spacing="2"
-        font-family="sans-serif" opacity="0.6">
-        ${b.author.toUpperCase().slice(0, 22)}
-      </text>`;
+      ${Array.from(
+        { length: 6 },
+        (_, p) =>
+          `<ellipse cx="${W / 2}" cy="${H * 0.38 - 20}" rx="5" ry="15"
+          fill="rgba(255,255,255,0.55)" stroke="${accent}" stroke-width="0.6" opacity="0.65"
+          transform="rotate(${p * 60} ${W / 2} ${H * 0.38})" />`,
+      ).join("")}
+      <circle cx="${W / 2}" cy="${H * 0.38}" r="9" fill="${accent}" opacity="0.2"/>
+      <line x1="${W / 2}" y1="${H * 0.38 + 9}" x2="${W / 2}" y2="${H * 0.7}"
+        stroke="${accent}" stroke-width="1.2" opacity="0.3"/>
+      <text x="${W / 2}" y="18" text-anchor="middle" font-size="6.5" font-weight="600"
+        fill="${accent}" letter-spacing="2" font-family="sans-serif" opacity="0.4">
+        ${b.author.toUpperCase().slice(0, 20)}</text>
+      <text x="${W / 2}" y="${H - 18}" text-anchor="middle" font-size="7.5" font-weight="700"
+        fill="${accent}" letter-spacing="1.5" font-family="sans-serif" opacity="0.55">
+        ${b.title.toUpperCase().slice(0, 18)}</text>`;
   }
 
   const arts = {
-    /* ── Psalm for the Wild-Built ── coral, concentric circles, big P */
+    /* ── Book 1: Chamomile daisy — soft rose pink ─────────────────
+       10 slender white petals, golden pollen dots in centre,
+       thin stem, one side leaf                                    */
     1: `
       <rect width="${W}" height="${H}" fill="${c0}"/>
-      ${Array.from(
-        { length: 16 },
-        (_, i) =>
-          `<line x1="0" y1="${14 + i * 13}" x2="${W}" y2="${14 + i * 13}"
-          stroke="rgba(255,255,255,0.1)" stroke-width="0.7"/>`,
-      ).join("")}
-      <circle cx="${W / 2}" cy="${H * 0.46}" r="58"
-        fill="none" stroke="${accent}" stroke-width="2.5"/>
-      <circle cx="${W / 2}" cy="${H * 0.46}" r="40"
-        fill="none" stroke="${accent}" stroke-width="1" opacity="0.35"/>
-      <text x="${W / 2}" y="${H * 0.52}" text-anchor="middle"
-        font-size="62" font-weight="900" fill="${accent}"
-        font-family="sans-serif" opacity="0.93">P</text>
-      <rect x="0" y="${H - 42}" width="${W}" height="42" fill="${c1}"/>
-      <text x="13" y="${H - 14}" font-size="7.5" font-weight="700"
-        fill="rgba(255,255,255,0.55)" letter-spacing="2"
-        font-family="sans-serif">BECKY CHAMBERS</text>`,
 
-    /* ── Whole Numbers and Half Truths ── cobalt, dot grid, big ½ */
+      <!-- author -->
+      <text x="${W / 2}" y="20" text-anchor="middle"
+        font-size="6.5" font-weight="600" fill="${accent}"
+        letter-spacing="2" font-family="sans-serif" opacity="0.4">BECKY CHAMBERS</text>
+
+      <!-- 10 petals -->
+      ${Array.from(
+        { length: 10 },
+        (_, p) =>
+          `<ellipse cx="${W / 2}" cy="${H * 0.38 - 24}" rx="4.5" ry="16"
+          fill="rgba(255,255,255,0.65)" stroke="${accent}" stroke-width="0.5" opacity="0.75"
+          transform="rotate(${p * 36} ${W / 2} ${H * 0.38})" />`,
+      ).join("")}
+
+      <!-- flower centre -->
+      <circle cx="${W / 2}" cy="${H * 0.38}" r="11" fill="${accent}" opacity="0.18"/>
+      <circle cx="${W / 2}" cy="${H * 0.38}" r="7"  fill="${accent}" opacity="0.14"/>
+
+      <!-- pollen dots -->
+      ${Array.from({ length: 9 }, (_, d) => {
+        const a = (d * 40 * Math.PI) / 180;
+        return `<circle cx="${W / 2 + Math.cos(a) * 4.5}" cy="${H * 0.38 + Math.sin(a) * 4.5}"
+          r="1" fill="${accent}" opacity="0.35"/>`;
+      }).join("")}
+      <circle cx="${W / 2}" cy="${H * 0.38}" r="2" fill="${accent}" opacity="0.3"/>
+
+      <!-- stem -->
+      <line x1="${W / 2}" y1="${H * 0.38 + 11}" x2="${W / 2}" y2="${H * 0.72}"
+        stroke="${accent}" stroke-width="1.2" opacity="0.28"/>
+
+      <!-- leaf -->
+      <path d="M ${W / 2} ${H * 0.58} Q ${W / 2 + 20} ${H * 0.51} ${W / 2 + 17} ${H * 0.43}"
+        fill="${accent}" opacity="0.1" stroke="${accent}" stroke-width="0.8"/>
+
+      <!-- divider + title -->
+      <line x1="18" y1="${H - 54}" x2="${W - 18}" y2="${H - 54}"
+        stroke="${accent}" stroke-width="0.5" opacity="0.18"/>
+      <text x="${W / 2}" y="${H - 36}" text-anchor="middle"
+        font-size="7.5" font-weight="700" fill="${accent}"
+        letter-spacing="1.5" font-family="sans-serif" opacity="0.55">PSALM FOR THE</text>
+      <text x="${W / 2}" y="${H - 20}" text-anchor="middle"
+        font-size="7.5" font-weight="700" fill="${accent}"
+        letter-spacing="1.5" font-family="sans-serif" opacity="0.55">WILD-BUILT</text>`,
+
+    /* ── Book 2: Anemone — soft periwinkle ────────────────────────
+       6 rounded overlapping petals, dark centre with stamen ring  */
     2: `
       <rect width="${W}" height="${H}" fill="${c0}"/>
-      ${Array.from({ length: 6 }, (_, col) =>
-        Array.from({ length: 7 }, (_, row) => {
-          const op = (0.07 + ((col + row) % 3) * 0.06).toFixed(2);
-          return `<rect x="${16 + col * 26}" y="${12 + row * 26}"
-            width="6" height="6" fill="${accent}" opacity="${op}"/>`;
-        }).join(""),
-      ).join("")}
-      <text x="${W / 2}" y="${H * 0.63}" text-anchor="middle"
-        font-size="84" font-weight="900" fill="${accent}"
-        font-family="sans-serif" opacity="0.9">½</text>
-      <rect x="0" y="0" width="${W}" height="34" fill="${c1}"/>
-      <text x="13" y="22" font-size="8.5" font-weight="700"
-        fill="rgba(255,255,255,0.6)" letter-spacing="2.5"
-        font-family="sans-serif">RUKMINI S</text>
-      <line x1="13" y1="${H - 22}" x2="${W - 13}" y2="${H - 22}"
-        stroke="${accent}" stroke-width="1.5" opacity="0.35"/>`,
 
-    /* ── On Writing ── black, two rules, big ON */
+      <!-- author -->
+      <text x="${W / 2}" y="20" text-anchor="middle"
+        font-size="6.5" font-weight="600" fill="${accent}"
+        letter-spacing="2" font-family="sans-serif" opacity="0.4">RUKMINI S</text>
+
+      <!-- 6 petals -->
+      ${Array.from(
+        { length: 6 },
+        (_, p) =>
+          `<ellipse cx="${W / 2}" cy="${H * 0.4 - 27}" rx="13" ry="23"
+          fill="rgba(255,255,255,0.45)" stroke="${accent}" stroke-width="0.6" opacity="0.6"
+          transform="rotate(${p * 60} ${W / 2} ${H * 0.4})" />`,
+      ).join("")}
+
+      <!-- petal vein hints -->
+      ${Array.from({ length: 6 }, (_, p) => {
+        const a = ((p * 60 - 90) * Math.PI) / 180;
+        const x1 = W / 2 + Math.cos(a) * 12,
+          y1 = H * 0.4 + Math.sin(a) * 12;
+        const x2 = W / 2 + Math.cos(a) * 30,
+          y2 = H * 0.4 + Math.sin(a) * 30;
+        return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"
+          stroke="${accent}" stroke-width="0.5" opacity="0.15"/>`;
+      }).join("")}
+
+      <!-- dark centre -->
+      <circle cx="${W / 2}" cy="${H * 0.4}" r="14" fill="${accent}" opacity="0.22"/>
+      <circle cx="${W / 2}" cy="${H * 0.4}" r="9"  fill="${accent}" opacity="0.18"/>
+
+      <!-- stamen ring -->
+      ${Array.from({ length: 14 }, (_, d) => {
+        const a = (d * (360 / 14) * Math.PI) / 180;
+        return `<circle cx="${W / 2 + Math.cos(a) * 6}" cy="${H * 0.4 + Math.sin(a) * 6}"
+          r="1.2" fill="${accent}" opacity="0.38"/>`;
+      }).join("")}
+      <circle cx="${W / 2}" cy="${H * 0.4}" r="3" fill="${accent}" opacity="0.3"/>
+
+      <!-- divider + title -->
+      <line x1="18" y1="${H - 54}" x2="${W - 18}" y2="${H - 54}"
+        stroke="${accent}" stroke-width="0.5" opacity="0.18"/>
+      <text x="${W / 2}" y="${H - 36}" text-anchor="middle"
+        font-size="6.5" font-weight="700" fill="${accent}"
+        letter-spacing="1" font-family="sans-serif" opacity="0.55">WHOLE NUMBERS</text>
+      <text x="${W / 2}" y="${H - 20}" text-anchor="middle"
+        font-size="6.5" font-weight="700" fill="${accent}"
+        letter-spacing="1" font-family="sans-serif" opacity="0.55">AND HALF TRUTHS</text>`,
+
+    /* ── Book 3: Wild rose — soft sage ────────────────────────────
+       5 petals with slight organic variation, two side leaves,
+       ring of stamens                                             */
     3: `
       <rect width="${W}" height="${H}" fill="${c0}"/>
-      <line x1="0" y1="${H * 0.28}" x2="${W}" y2="${H * 0.28}"
-        stroke="${accent}" stroke-width="2"/>
-      <line x1="0" y1="${H - 56}" x2="${W}" y2="${H - 56}"
-        stroke="${accent}" stroke-width="2"/>
-      <text x="13" y="${H * 0.73}"
-        font-size="78" font-weight="900" fill="${accent}"
-        font-family="sans-serif">ON</text>
-      <text x="15" y="${H * 0.86}"
-        font-size="20" font-weight="300" fill="${accent}"
-        font-family="sans-serif" letter-spacing="7" opacity="0.65">WRITING</text>
-      <text x="13" y="${H * 0.22}"
-        font-size="8" font-weight="700" fill="rgba(255,255,255,0.4)"
-        letter-spacing="3" font-family="sans-serif">STEPHEN KING</text>
-      <text x="13" y="${H - 18}"
-        font-size="7.5" font-weight="700" fill="rgba(255,255,255,0.28)"
-        letter-spacing="2" font-family="sans-serif">ON THE CRAFT</text>`,
 
-    /* ── Build ── yellow, square + circle + midline, ghost B */
+      <!-- author -->
+      <text x="${W / 2}" y="20" text-anchor="middle"
+        font-size="6.5" font-weight="600" fill="${accent}"
+        letter-spacing="2" font-family="sans-serif" opacity="0.4">STEPHEN KING</text>
+
+      <!-- 5 petals, slightly irregular sizes -->
+      ${Array.from({ length: 5 }, (_, p) => {
+        const rx = 11 + (p % 2) * 1.5;
+        const ry = 20 + (p % 3) * 1.5;
+        return `<ellipse cx="${W / 2}" cy="${H * 0.38 - 24}" rx="${rx}" ry="${ry}"
+          fill="rgba(255,255,255,0.5)" stroke="${accent}" stroke-width="0.6" opacity="0.68"
+          transform="rotate(${p * 72} ${W / 2} ${H * 0.38})" />`;
+      }).join("")}
+
+      <!-- centre -->
+      <circle cx="${W / 2}" cy="${H * 0.38}" r="10" fill="${accent}" opacity="0.2"/>
+
+      <!-- stamen dots -->
+      ${Array.from({ length: 10 }, (_, d) => {
+        const a = (d * 36 * Math.PI) / 180;
+        return `<circle cx="${W / 2 + Math.cos(a) * 5.5}" cy="${H * 0.38 + Math.sin(a) * 5.5}"
+          r="1" fill="${accent}" opacity="0.35"/>`;
+      }).join("")}
+      <circle cx="${W / 2}" cy="${H * 0.38}" r="2.5" fill="${accent}" opacity="0.28"/>
+
+      <!-- stem -->
+      <line x1="${W / 2}" y1="${H * 0.38 + 10}" x2="${W / 2}" y2="${H * 0.72}"
+        stroke="${accent}" stroke-width="1.2" opacity="0.28"/>
+
+      <!-- two leaves -->
+      <path d="M ${W / 2} ${H * 0.53} Q ${W / 2 - 22} ${H * 0.47} ${W / 2 - 18} ${H * 0.39}"
+        fill="${accent}" opacity="0.1" stroke="${accent}" stroke-width="0.8"/>
+      <path d="M ${W / 2} ${H * 0.64} Q ${W / 2 + 21} ${H * 0.58} ${W / 2 + 17} ${H * 0.5}"
+        fill="${accent}" opacity="0.1" stroke="${accent}" stroke-width="0.8"/>
+
+      <!-- divider + title -->
+      <line x1="18" y1="${H - 54}" x2="${W - 18}" y2="${H - 54}"
+        stroke="${accent}" stroke-width="0.5" opacity="0.18"/>
+      <text x="${W / 2}" y="${H - 32}" text-anchor="middle"
+        font-size="11" font-weight="700" fill="${accent}"
+        letter-spacing="2" font-family="sans-serif" opacity="0.55">ON</text>
+      <text x="${W / 2}" y="${H - 16}" text-anchor="middle"
+        font-size="11" font-weight="700" fill="${accent}"
+        letter-spacing="2" font-family="sans-serif" opacity="0.55">WRITING</text>`,
+
+    /* ── Book 4: Sunflower — soft butter ──────────────────────────
+       14 pointed petals, large centre with Fibonacci seed spiral  */
     4: `
       <rect width="${W}" height="${H}" fill="${c0}"/>
-      <rect x="14" y="22" width="70" height="70" fill="${accent}"/>
-      <circle cx="${W * 0.75}" cy="${H * 0.26}" r="36"
-        fill="none" stroke="${accent}" stroke-width="3"/>
-      <line x1="${W * 0.75}" y1="${H * 0.1}"  x2="${W * 0.75}" y2="${H * 0.42}"
-        stroke="${accent}" stroke-width="1.5" opacity="0.5"/>
-      <line x1="${W * 0.56}" y1="${H * 0.26}" x2="${W * 0.94}" y2="${H * 0.26}"
-        stroke="${accent}" stroke-width="1.5" opacity="0.5"/>
-      <line x1="0" y1="${H * 0.48}" x2="${W}" y2="${H * 0.48}"
-        stroke="${accent}" stroke-width="2"/>
-      <text x="${W / 2}" y="${H * 0.84}" text-anchor="middle"
-        font-size="88" font-weight="900" fill="${accent}"
-        font-family="sans-serif" opacity="0.1">B</text>
-      <text x="14" y="${H * 0.58}"
-        font-size="8.5" font-weight="700" fill="${accent}"
-        letter-spacing="3" font-family="sans-serif" opacity="0.5">TONY FADELL</text>
-      <rect x="0" y="${H - 34}" width="${W}" height="34" fill="${c1}"/>
-      <text x="14" y="${H - 12}"
-        font-size="8" font-weight="700" fill="${accent}"
-        letter-spacing="2" font-family="sans-serif" opacity="0.65">BUILD · 2022</text>`,
+
+      <!-- author -->
+      <text x="${W / 2}" y="20" text-anchor="middle"
+        font-size="6.5" font-weight="600" fill="${accent}"
+        letter-spacing="2" font-family="sans-serif" opacity="0.4">TONY FADELL</text>
+
+      <!-- 14 petals -->
+      ${Array.from(
+        { length: 14 },
+        (_, p) =>
+          `<ellipse cx="${W / 2}" cy="${H * 0.38 - 31}" rx="5" ry="21"
+          fill="rgba(255,255,255,0.55)" stroke="${accent}" stroke-width="0.5" opacity="0.65"
+          transform="rotate(${p * (360 / 14)} ${W / 2} ${H * 0.38})" />`,
+      ).join("")}
+
+      <!-- centre rings -->
+      <circle cx="${W / 2}" cy="${H * 0.38}" r="19" fill="${accent}" opacity="0.22"/>
+      <circle cx="${W / 2}" cy="${H * 0.38}" r="14" fill="${accent}" opacity="0.16"/>
+
+      <!-- Fibonacci seed spiral -->
+      ${Array.from({ length: 22 }, (_, d) => {
+        const a = (d * 137.508 * Math.PI) / 180;
+        const r = Math.sqrt(d + 1) * 2.8;
+        if (r > 13) return "";
+        return `<circle cx="${W / 2 + Math.cos(a) * r}" cy="${H * 0.38 + Math.sin(a) * r}"
+          r="1.3" fill="${accent}" opacity="0.32"/>`;
+      }).join("")}
+
+      <!-- stem -->
+      <line x1="${W / 2}" y1="${H * 0.38 + 19}" x2="${W / 2}" y2="${H * 0.72}"
+        stroke="${accent}" stroke-width="1.5" opacity="0.28"/>
+
+      <!-- leaf -->
+      <path d="M ${W / 2} ${H * 0.57} Q ${W / 2 + 26} ${H * 0.49} ${W / 2 + 20} ${H * 0.41}"
+        fill="${accent}" opacity="0.1" stroke="${accent}" stroke-width="0.9"/>
+
+      <!-- divider + title -->
+      <line x1="18" y1="${H - 54}" x2="${W - 18}" y2="${H - 54}"
+        stroke="${accent}" stroke-width="0.5" opacity="0.18"/>
+      <text x="${W / 2}" y="${H - 30}" text-anchor="middle"
+        font-size="18" font-weight="900" fill="${accent}"
+        letter-spacing="4" font-family="sans-serif" opacity="0.55">BUILD</text>
+      <text x="${W / 2}" y="${H - 14}" text-anchor="middle"
+        font-size="6" font-weight="600" fill="${accent}"
+        letter-spacing="1.5" font-family="sans-serif" opacity="0.35">TONY FADELL · 2022</text>`,
   };
 
   const inner = id in arts ? arts[id] : fallback();
@@ -155,13 +277,11 @@ function initBookshelf(BOOKS) {
     const bh = b.h || DEFAULT_H;
     const deg = getLean(i);
 
-    /* Outer wrap: carries organic lean */
     const wrap = document.createElement("div");
     wrap.className = "bs-book-wrap";
     wrap.dataset.idx = i;
     wrap.style.transform = `rotateZ(${deg}deg)`;
 
-    /* Perspective container / button */
     const btn = document.createElement("button");
     btn.className = "bs-book-btn";
     btn.dataset.idx = i;
@@ -170,7 +290,6 @@ function initBookshelf(BOOKS) {
     btn.style.cssText = `width:${sw}px; perspective:1000px; -webkit-perspective:1000px;`;
     btn.setAttribute("aria-label", b.title);
 
-    /* Spine */
     const spineEl = document.createElement("div");
     spineEl.className = "bs-spine";
     spineEl.style.cssText = `background:${b.spine}; color:${b.spineText}; width:${sw}px; height:${bh}px;`;
@@ -181,7 +300,6 @@ function initBookshelf(BOOKS) {
       : `<span class="bs-paper-tex"></span>
          <span class="bs-spine-title" style="max-height:${bh - 24}px">${b.title}</span>`;
 
-    /* Cover */
     const coverEl = document.createElement("div");
     coverEl.className = "bs-cover";
     coverEl.style.cssText = `width:${cw}px; height:${bh}px;`;
@@ -220,8 +338,7 @@ function initBookshelf(BOOKS) {
       <div class="bs-card-title">${b.title}</div>
       <div class="bs-card-byline">
         ${b.author}
-        <div class="bs-stars">
-        </div>
+        <div class="bs-stars"></div>
       </div>
       <p class="bs-card-thoughts">&ldquo;${b.thoughts}&rdquo;</p>`;
     reviewEl.appendChild(card);
@@ -268,7 +385,6 @@ function initBookshelf(BOOKS) {
   arrowLeft.addEventListener("click", () => scrollTo(targetScrollX - 160));
   arrowRight.addEventListener("click", () => scrollTo(targetScrollX + 160));
 
-  /* Wheel */
   viewport.addEventListener(
     "wheel",
     (e) => {
@@ -278,7 +394,6 @@ function initBookshelf(BOOKS) {
     { passive: false },
   );
 
-  /* Mouse drag */
   let dragActive = false,
     dragStartX = 0,
     dragStartScroll = 0;
@@ -297,7 +412,6 @@ function initBookshelf(BOOKS) {
     viewport.style.cursor = "";
   });
 
-  /* Touch */
   let touchStartX = 0,
     touchStartScroll = 0;
   viewport.addEventListener(
@@ -336,7 +450,7 @@ function initBookshelf(BOOKS) {
     requestAnimationFrame(() => {
       const viewW = viewport.clientWidth;
       const openW = parseInt(btn.dataset.openW);
-      const bookLeft = wrap.offsetLeft - currentScrollX; // position within visible area
+      const bookLeft = wrap.offsetLeft - currentScrollX;
       const idealScroll = currentScrollX + bookLeft - (viewW - openW) / 2;
       scrollTo(idealScroll);
     });

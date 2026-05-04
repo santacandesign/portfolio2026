@@ -868,7 +868,7 @@ function applyFanEffect() {
     // Smoothly grow/shrink card size based on proximity to center
     if (card) {
       const size = Math.round(130 + proximity * 16); // 130 → 146
-      const border = 4 + proximity;                  // 4 → 5
+      const border = 4 + proximity; // 4 → 5
       card.style.width = `${size}px`;
       card.style.height = `${size}px`;
       card.style.borderWidth = `${border}px`;
@@ -891,6 +891,7 @@ function detectSnapCard() {
   });
   if (bestIdx !== activeIdx) {
     activeIdx = bestIdx;
+    if (navigator.vibrate) navigator.vibrate(8);
     onActiveChange();
   }
 }
