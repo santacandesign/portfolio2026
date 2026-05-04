@@ -856,11 +856,23 @@ function applyFanEffect() {
   const wraps = carousel.querySelectorAll(".card-wrap");
   const centerX = carousel.scrollLeft + carousel.offsetWidth / 2;
   wraps.forEach((wrap) => {
+    const card = wrap.querySelector(".food-card");
     const wrapCenter = wrap.offsetLeft + wrap.offsetWidth / 2;
     const dist = (wrapCenter - centerX) / (wrap.offsetWidth + 20);
     const absD = Math.abs(dist);
+    const proximity = Math.max(0, 1 - absD * 2); // 1 at center, 0 at edges
+
     wrap.style.transform = `rotate(${dist * 22}deg) scale(${Math.max(0.72, 1 - absD * 0.28)}) translateY(${absD * 12}px)`;
     wrap.style.opacity = Math.max(0.45, 1 - absD * 0.45);
+
+    // Smoothly grow/shrink card size based on proximity to center
+    if (card) {
+      const size = Math.round(130 + proximity * 16); // 130 → 146
+      const border = 4 + proximity;                  // 4 → 5
+      card.style.width = `${size}px`;
+      card.style.height = `${size}px`;
+      card.style.borderWidth = `${border}px`;
+    }
   });
 }
 
