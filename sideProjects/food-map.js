@@ -5,7 +5,8 @@
 /* ----------------------------------------------------------------
    AIRTABLE CONFIG — replace YOUR_AIRTABLE_TOKEN
    ---------------------------------------------------------------- */
-const AIRTABLE_TOKEN = "pat8SgfGwKu0vF1Z2.c55659f350852c8d7d29b633905f3b8bfc5bac013cc42bbb0698270d67262104";
+const AIRTABLE_TOKEN =
+  "pat8SgfGwKu0vF1Z2.c55659f350852c8d7d29b633905f3b8bfc5bac013cc42bbb0698270d67262104";
 const AIRTABLE_BASE = "appwOd745ejdnIRig";
 const AIRTABLE_TABLE = "tblLWu7rFNaDhbbFW";
 
@@ -599,20 +600,28 @@ map.on("load", () => {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         userLoc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        console.log("✓ Got user location:", userLoc);
         if (userMarker) userMarker.remove();
         const el = document.createElement("div");
         el.className = "user-dot";
         userMarker = new maplibregl.Marker({ element: el })
           .setLngLat([userLoc.lng, userLoc.lat])
           .addTo(map);
-        const e = filtered[activeIdx];
-        if (e) {
-          updateDistance(e);
-          updateRoute(e);
-        }
+        // Re-run onActiveChange so the map refits to include the user dot
+        // and the distance + route pick up the now-known userLoc.
+        if (filtered[activeIdx]) onActiveChange();
       },
-      () => {},
+      (err) => {
+        const codeName =
+          ["", "PERMISSION_DENIED", "POSITION_UNAVAILABLE", "TIMEOUT"][
+            err.code
+          ] || "UNKNOWN";
+        console.warn("✗ Geolocation failed —", codeName, "—", err.message);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 },
     );
+  } else {
+    console.warn("✗ navigator.geolocation is not available in this browser");
   }
 });
 
@@ -676,6 +685,13 @@ async function fetchAirtable() {
         return {
           place: f["Place"] || f["Name"] || f["Restaurant"] || "",
           dish: f["Dish"] || f["Food"] || f["Item"] || "",
+          area:
+            f["Area"] ||
+            f["area"] ||
+            f["Neighbourhood"] ||
+            f["Neighborhood"] ||
+            f["Location"] ||
+            "",
           type: f["Type"] || f["Meal"] || f["Meal Type"] || "Snack",
           sensory:
             f["Sensory"] ||
@@ -816,12 +832,6 @@ function buildCarousel() {
 
     wrap.appendChild(card);
 
-    // Distance badge — sibling of card, NOT inside overflow:hidden
-    const distBadge = document.createElement("div");
-    distBadge.className = "card-distance";
-    distBadge.id = `card-dist-${i}`;
-    wrap.appendChild(distBadge);
-
     wrap.addEventListener("click", () => scrollToCard(i));
     carousel.appendChild(wrap);
   });
@@ -937,40 +947,38 @@ function updateDishInfo(e) {
    Walk if < 1 km, drive if ≥ 1 km
    ---------------------------------------------------------------- */
 function updateDistance(e) {
-  // Clear all badges
-  document.querySelectorAll(".card-distance").forEach((el) => {
-    el.textContent = "";
-    el.classList.remove("visible");
-  });
+  const badge = document.getElementById("distanceBadge");
+  if (!badge) return;
+  badge.innerHTML = "";
+  badge.classList.remove("visible");
   if (!userLoc || !e || !e.lat) return;
 
   const km = haversine(userLoc.lat, userLoc.lng, e.lat, e.lng);
-  const dist = km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`;
+  const dist = km < 1 ? `${Math.round(km * 1000)}m` : `${km.toFixed(1)}km`;
+  const icon = km < 1 ? "🚶" : "🚗";
+  const mins = km < 1 ? Math.round(km * 12) : Math.round(km * 3);
+  const mode = km < 1 ? "walk from you" : "drive from you";
 
-  let label;
-  if (km < 1) {
-    const mins = Math.round(km * 12); // ~5 km/h
-    label = `🚶 ${mins} min · ${dist}`;
-  } else {
-    const mins = Math.round(km * 3); // ~20 km/h city driving
-    label = `🚗 ${mins} min · ${dist}`;
-  }
-
-  const badge = document.getElementById(`card-dist-${activeIdx}`);
-  if (badge) {
-    badge.textContent = label;
-    badge.classList.add("visible");
-  }
+  badge.innerHTML = `<span class="dist-main">${icon}&nbsp;&nbsp;&nbsp;&nbsp;${mins} mins · ${dist}</span><span class="dist-sub">${mode}</span>`;
+  badge.classList.add("visible");
 }
 
 /* ----------------------------------------------------------------
-   MAP MARKERS — location pin SVG, name in popup
+   MAP MARKERS — location pin SVG, name label when active
    ---------------------------------------------------------------- */
 function pinSVG(color) {
-  return `<svg width="28" height="36" viewBox="0 0 28 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  return `<svg width="28" height="36" viewBox="0 0 28 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 3px rgba(0,0,0,0.22))">
     <path d="M14 0C6.268 0 0 6.268 0 14c0 9.2 12.6 21.1 13.13 21.6a1.3 1.3 0 001.74 0C15.4 35.1 28 23.2 28 14 28 6.268 21.732 0 14 0z" fill="${color}"/>
     <circle cx="14" cy="13.5" r="5.5" fill="white"/>
   </svg>`;
+}
+
+function pinLabelHTML(place, dish) {
+  return `
+    <div class="pin-label-box">
+      <span class="pin-label-name">${place}</span>
+      <span class="pin-label-dish">${dish}</span>
+    </div>`;
 }
 
 function renderMarkers() {
@@ -987,31 +995,58 @@ function renderMarkers() {
     const el = document.createElement("div");
     el.className = "pin-marker" + (isSeeking ? " seeking" : "");
     el.innerHTML = pinSVG(color);
+    el.dataset.place = e.place;
+    el.dataset.area = e.area;
+    el.dataset.color = color;
     el.addEventListener("click", () => scrollToCard(i));
-
-    const popup = new maplibregl.Popup({
-      offset: [0, -30],
-      closeButton: false,
-      closeOnClick: false,
-    }).setHTML(
-      `<span class="popup-name">${e.place}</span><span class="popup-loc">${e.dish}</span>`,
-    );
 
     markers[i] = new maplibregl.Marker({ element: el, anchor: "bottom" })
       .setLngLat([e.lng, e.lat])
-      .setPopup(popup)
       .addTo(map);
   });
 
   highlightMarker(activeIdx);
 }
 
+async function fetchArea(lat, lng) {
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
+      { headers: { "Accept-Language": "en" } },
+    );
+    const data = await res.json();
+    return (
+      data.address?.suburb ||
+      data.address?.neighbourhood ||
+      data.address?.quarter ||
+      data.address?.city_district ||
+      ""
+    );
+  } catch (_) {
+    return "";
+  }
+}
+
 function highlightMarker(idx) {
   Object.entries(markers).forEach(([i, m]) => {
     const active = parseInt(i) === idx;
-    m.getElement().classList.toggle("active", active);
-    if (active) m.getPopup().addTo(map);
-    else m.getPopup().remove();
+    const el = m.getElement();
+    el.classList.toggle("active", active);
+    el.style.zIndex = active ? "10" : "1";
+    if (active) {
+      const lngLat = m.getLngLat();
+      el.innerHTML = pinLabelHTML(el.dataset.place, el.dataset.area || "…");
+      if (!el.dataset.area) {
+        fetchArea(lngLat.lat, lngLat.lng).then((area) => {
+          el.dataset.area = area;
+          if (el.classList.contains("active")) {
+            el.innerHTML = pinLabelHTML(el.dataset.place, area);
+          }
+        });
+      }
+    } else {
+      el.innerHTML = pinSVG(el.dataset.color);
+    }
   });
 }
 

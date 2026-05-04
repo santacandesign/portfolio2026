@@ -20,6 +20,11 @@
     <link rel="stylesheet" href="food-map.css" />
   </head>
   <body>
+    <!-- Desktop blocker -->
+    <div class="desktop-block">
+      <p>Only works on mobile, for now</p>
+    </div>
+
     <!-- Full-screen map -->
     <div id="map"></div>
 
@@ -38,6 +43,8 @@
 
       <!-- Scrollable fan carousel -->
       <div class="carousel-wrap">
+        <!-- Distance badge floats above the active food card -->
+        <div class="card-distance" id="distanceBadge"></div>
         <div class="carousel" id="carousel"></div>
       </div>
 
