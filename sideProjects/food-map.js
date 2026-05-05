@@ -872,10 +872,19 @@ function onCarouselScroll() {
   snapTimeout = setTimeout(detectSnapCard, 180);
 }
 
+// Tracks which card is visually closest to center during scroll.
+// Separate from `activeIdx`, which is the snap-settled index used for
+// heavy ops (fitBounds, OSRM route fetch).
+let visualActiveIdx = 0;
+
 function applyFanEffect() {
   const wraps = carousel.querySelectorAll(".card-wrap");
+  if (!wraps.length) return;
   const centerX = carousel.scrollLeft + carousel.offsetWidth / 2;
-  wraps.forEach((wrap) => {
+  let closestIdx = 0;
+  let closestPx = Infinity;
+
+  wraps.forEach((wrap, i) => {
     const card = wrap.querySelector(".food-card");
     const wrapCenter = wrap.offsetLeft + wrap.offsetWidth / 2;
     const dist = (wrapCenter - centerX) / (wrap.offsetWidth + 20);
@@ -893,7 +902,33 @@ function applyFanEffect() {
       card.style.height = `${size}px`;
       card.style.borderWidth = `${border}px`;
     }
+
+    // Track which wrap is geometrically closest to viewport center
+    const px = Math.abs(wrapCenter - centerX);
+    if (px < closestPx) {
+      closestPx = px;
+      closestIdx = i;
+    }
   });
+
+  // Real-time soft update the moment a new card becomes closest.
+  // Cheap operations only — heavy ops still wait for snap-settle.
+  if (closestIdx !== visualActiveIdx) {
+    visualActiveIdx = closestIdx;
+    softActiveChange(closestIdx);
+  }
+}
+
+// Lightweight active-card change for in-flight scrolling: text swap,
+// distance recompute, marker highlight, and a haptic tick.
+// Skips fitBounds + updateRoute (those run on snap-settle in onActiveChange).
+function softActiveChange(idx) {
+  const e = filtered[idx];
+  if (!e) return;
+  updateDishInfo(e);
+  updateDistance(e);
+  highlightMarker(idx);
+  if (navigator.vibrate) navigator.vibrate(8);
 }
 
 function detectSnapCard() {
@@ -911,7 +946,8 @@ function detectSnapCard() {
   });
   if (bestIdx !== activeIdx) {
     activeIdx = bestIdx;
-    if (navigator.vibrate) navigator.vibrate(8);
+    // Haptic already fired in softActiveChange during the scroll;
+    // here we just commit the snap and run heavy ops (route + fitBounds).
     onActiveChange();
   }
 }
@@ -962,6 +998,7 @@ function onActiveChange() {
    DISH INFO
    ---------------------------------------------------------------- */
 function updateDishInfo(e) {
+  const dishInfo = document.getElementById("dishInfo");
   const nameEl = document.getElementById("activeDish");
   const locEl = document.getElementById("activeLocation");
   const arrow = document.getElementById("dishArrow");
@@ -970,9 +1007,21 @@ function updateDishInfo(e) {
     locEl.textContent = "—";
     return;
   }
+  // Skip work if the text hasn't changed (avoids re-triggering animation
+  // on every scroll frame when the same card is still closest).
+  if (nameEl.textContent === e.dish && locEl.textContent === e.place) return;
+
   nameEl.textContent = e.dish;
   locEl.textContent = e.place;
   if (arrow) arrow.onclick = () => window.open(gmapsUrl(e), "_blank");
+
+  // Re-trigger the swap-in animation by removing & re-adding the class
+  // (with a forced reflow in between so the animation actually restarts).
+  if (dishInfo) {
+    dishInfo.classList.remove("swapping");
+    void dishInfo.offsetWidth;
+    dishInfo.classList.add("swapping");
+  }
 }
 
 /* ----------------------------------------------------------------

@@ -426,6 +426,20 @@ h1 {
   color: var(--ink);
   text-transform: capitalize;
 }
+@keyframes dishSwapIn {
+  0% {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.dish-info.swapping .dish-name,
+.dish-info.swapping .dish-location {
+  animation: dishSwapIn 0.16s ease-out;
+}
 .dish-arrow {
   font-size: 14px;
   color: var(--ink-soft);
