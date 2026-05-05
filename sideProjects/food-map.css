@@ -166,7 +166,7 @@ body {
 .top-gradient {
   position: absolute;
   inset: 0;
-  height: 200px;
+  height: 230px;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.8) 0%,
@@ -184,9 +184,12 @@ h1 {
   font-style: italic;
   font-size: 40px;
   line-height: 1.05;
-  color: var(--ink);
-  -webkit-text-stroke: 12px #fff;
+  color: #111;
+  -webkit-text-stroke: 8px #f0f0ff;
   paint-order: stroke fill;
+  text-shadow: 1px 1px 1px rgba(22, 22, 138, 0.7);
+  /* -webkit-text-stroke: 12px #fff;
+  paint-order: stroke fill;*/
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.25));
   letter-spacing: -0.01em;
 }
@@ -762,7 +765,7 @@ h1 {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
   /* turning OFF: left edge leads, right edge follows */
   transition:
-    left  0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     right 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
 }
 .toggle-wrap input:checked ~ .toggle-track {
@@ -774,7 +777,7 @@ h1 {
   /* turning ON: right edge leads, left edge follows */
   transition:
     right 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    left  0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+    left 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
 }
 
 /* ================================================================

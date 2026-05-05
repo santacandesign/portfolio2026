@@ -1131,7 +1131,9 @@ function setMealType(type) {
   filters.type = type;
   document.getElementById("mealLabel").textContent = type === "all" ? "All" : type;
   document.querySelectorAll(".meal-option-item").forEach((el) => {
-    const matches = (type === "all" && el.textContent === "All") || el.textContent === type;
+    const itemText = el.textContent.trim();
+    const matches =
+      (type === "all" && itemText === "All") || itemText === type;
     el.classList.toggle("selected", matches);
   });
   document.getElementById("mealDropdownPanel").classList.remove("open");
