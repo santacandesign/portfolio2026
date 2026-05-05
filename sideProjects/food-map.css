@@ -187,7 +187,7 @@ h1 {
   color: #111;
   -webkit-text-stroke: 8px #f0f0ff;
   paint-order: stroke fill;
-  text-shadow: 1px 1px 1px rgba(22, 22, 138, 0.7);
+  /* text-shadow: 1px 1px 1px rgba(22, 22, 138, 0.7); */
   /* -webkit-text-stroke: 12px #fff;
   paint-order: stroke fill;*/
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.25));
