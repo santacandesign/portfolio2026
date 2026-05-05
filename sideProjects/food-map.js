@@ -557,6 +557,14 @@ const map = new maplibregl.Map({
   attributionControl: { compact: true },
 });
 
+// Force overflow visible on all MapLibre container elements so pins
+// don't get clipped at map edges (MapLibre sets overflow:hidden inline)
+map.getContainer().style.overflow = "visible";
+const mlMap = map.getContainer().querySelector(".maplibregl-map");
+if (mlMap) mlMap.style.overflow = "visible";
+const mlCanvas = map.getContainer().querySelector(".maplibregl-canvas-container");
+if (mlCanvas) mlCanvas.style.overflow = "visible";
+
 map.on("load", () => {
   mapLoaded = true;
 
@@ -572,7 +580,7 @@ map.on("load", () => {
     source: "route",
     layout: { "line-cap": "round", "line-join": "round" },
     paint: {
-      "line-color": "#8616abff",
+      "line-color": "#2323BF",
       "line-opacity": 1,
       "line-width": 10,
       // "line-blur": 2,
@@ -586,7 +594,7 @@ map.on("load", () => {
     source: "route",
     layout: { "line-cap": "round", "line-join": "round" },
     paint: {
-      "line-color": "#C51FFC",
+      "line-color": "#2929F5",
       "line-opacity": 1,
       "line-width": 6,
       // "line-dasharray": [2, 2],
@@ -817,17 +825,27 @@ function buildCarousel() {
     const card = document.createElement("div");
     card.className = "food-card";
 
+    const showPlaceholder = () => {
+      card.innerHTML = "";
+      const ph = document.createElement("div");
+      ph.className = "card-placeholder";
+      ph.textContent = MEAL_EMOJI[e.type] || "🍴";
+      card.appendChild(ph);
+    };
+
     if (e.image) {
       const img = document.createElement("img");
       img.src = e.image;
       img.alt = e.dish;
       img.loading = "lazy";
+      img.onerror = () => {
+        // URL expired or broken — re-fetch fresh Airtable data then rebuild
+        showPlaceholder();
+        fetchAirtable();
+      };
       card.appendChild(img);
     } else {
-      const ph = document.createElement("div");
-      ph.className = "card-placeholder";
-      ph.textContent = MEAL_EMOJI[e.type] || "🍴";
-      card.appendChild(ph);
+      showPlaceholder();
     }
 
     wrap.appendChild(card);
@@ -980,8 +998,13 @@ function updateDistance(e) {
    MAP MARKERS — location pin SVG, name label when active
    ---------------------------------------------------------------- */
 function pinSVG(color) {
-  return `<svg width="28" height="36" viewBox="0 0 28 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 3px rgba(0,0,0,0.22))">
-    <path d="M14 0C6.268 0 0 6.268 0 14c0 9.2 12.6 21.1 13.13 21.6a1.3 1.3 0 001.74 0C15.4 35.1 28 23.2 28 14 28 6.268 21.732 0 14 0z" fill="${color}"/>
+  return `<svg width="24" height="32" viewBox="0 0 28 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 2px rgba(0,0,0,0.4))">
+    <defs>
+      <clipPath id="pin-clip">
+        <path d="M14 0C6.268 0 0 6.268 0 14c0 9.2 12.6 21.1 13.13 21.6a1.3 1.3 0 001.74 0C15.4 35.1 28 23.2 28 14 28 6.268 21.732 0 14 0z"/>
+      </clipPath>
+    </defs>
+    <path d="M14 0C6.268 0 0 6.268 0 14c0 9.2 12.6 21.1 13.13 21.6a1.3 1.3 0 001.74 0C15.4 35.1 28 23.2 28 14 28 6.268 21.732 0 14 0z" fill="${color}" stroke="white" stroke-width="3" clip-path="url(#pin-clip)"/>
     <circle cx="14" cy="13.5" r="5.5" fill="white"/>
   </svg>`;
 }
@@ -1003,7 +1026,7 @@ function renderMarkers() {
     if (!e.lat) return;
 
     const isSeeking = e.sensory === "Sensory seeking";
-    const color = "#C51FFC";
+    const color = "#1F1FFB";
 
     const el = document.createElement("div");
     el.className = "pin-marker" + (isSeeking ? " seeking" : "");
@@ -1024,18 +1047,24 @@ function renderMarkers() {
 async function fetchArea(lat, lng) {
   try {
     const res = await fetch(
-      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&zoom=16&addressdetails=1`,
       { headers: { "Accept-Language": "en" } },
     );
     const data = await res.json();
+    console.log("[fetchArea] raw address:", data.address);
     return (
       data.address?.suburb ||
       data.address?.neighbourhood ||
       data.address?.quarter ||
+      data.address?.locality ||
+      data.address?.residential ||
+      data.address?.hamlet ||
       data.address?.city_district ||
+      data.address?.county ||
       ""
     );
-  } catch (_) {
+  } catch (err) {
+    console.warn("[fetchArea] failed:", err);
     return "";
   }
 }
@@ -1075,27 +1104,113 @@ function render() {
 /* ----------------------------------------------------------------
    FILTERS
    ---------------------------------------------------------------- */
-function setMealType(type, el) {
+function getTimeBasedMeal() {
+  const h = new Date().getHours();
+  if (h >= 6 && h < 11) return "Breakfast";
+  if (h >= 11 && h < 14) return "Dinner";
+  if (h >= 14 && h < 19) return "Snack";
+  if (h >= 19 && h < 22) return "Dinner";
+  return "all";
+}
+
+function pickMealType(el, type) {
+  // Flash pressed state, then close dropdown, then apply filter
+  el.classList.add("pressed");
+  setTimeout(() => {
+    closeMealDropdown();
+    setTimeout(() => {
+      el.classList.remove("pressed");
+      setMealType(type);
+    }, 260); // after furle animation (0.25s) finishes
+  }, 120); // let pressed state show briefly
+}
+
+function setMealType(type) {
   filters.type = type;
-  document
-    .querySelectorAll(".meal-type-pill")
-    .forEach((btn) => btn.classList.remove("active"));
-  el.classList.add("active");
+  document.getElementById("mealLabel").textContent = type === "all" ? "All" : type;
+  document.querySelectorAll(".meal-option-item").forEach((el) => {
+    const matches = (type === "all" && el.textContent === "All") || el.textContent === type;
+    el.classList.toggle("selected", matches);
+  });
+  document.getElementById("mealDropdownPanel").classList.remove("open");
   render();
 }
+
+function closeMealDropdown() {
+  const panel = document.getElementById("mealDropdownPanel");
+  const trigger = document.getElementById("mealTrigger");
+  if (!panel.classList.contains("open")) return;
+  panel.classList.remove("open");
+  panel.classList.add("closing");
+  trigger.classList.remove("open");
+  panel.addEventListener("animationend", () => {
+    panel.classList.remove("closing");
+  }, { once: true });
+}
+
+function toggleMealDropdown() {
+  const panel = document.getElementById("mealDropdownPanel");
+  const trigger = document.getElementById("mealTrigger");
+  if (panel.classList.contains("open")) {
+    closeMealDropdown();
+    return;
+  }
+  panel.classList.remove("closing");
+  const rect = trigger.getBoundingClientRect();
+  panel.style.left = rect.left + "px";
+  panel.style.bottom = (window.innerHeight - rect.top + 8) + "px";
+  panel.classList.add("open");
+  trigger.classList.add("open");
+}
+
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".meal-dropdown-wrap") && !e.target.closest("#mealDropdownPanel")) {
+    closeMealDropdown();
+  }
+});
+function animateBtn(el, cls) {
+  el.classList.remove("activating", "deactivating");
+  el.classList.add(cls);
+  el.addEventListener("animationend", () => el.classList.remove(cls), { once: true });
+}
+
 function setSensory(val) {
+  const seekingBtn = document.getElementById("seekingBtn");
+  const avoidingBtn = document.getElementById("avoidingBtn");
+  const wasSeekingActive = filters.sensory === "Sensory seeking";
+  const wasAvoidingActive = filters.sensory === "Sensory avoiding";
+
   if (filters.sensory === val) {
+    // toggling off
     filters.sensory = "all";
-    document.getElementById("seekingBtn").classList.remove("active");
-    document.getElementById("avoidingBtn").classList.remove("active");
+    if (val === "Sensory seeking") {
+      seekingBtn.classList.remove("active");
+      animateBtn(seekingBtn, "deactivating");
+    }
+    if (val === "Sensory avoiding") {
+      avoidingBtn.classList.remove("active");
+    }
   } else {
     filters.sensory = val;
-    document
-      .getElementById("seekingBtn")
-      .classList.toggle("active", val === "Sensory seeking");
-    document
-      .getElementById("avoidingBtn")
-      .classList.toggle("active", val === "Sensory avoiding");
+    // deactivate seeking if it was on
+    if (wasSeekingActive) {
+      seekingBtn.classList.remove("active");
+      animateBtn(seekingBtn, "deactivating");
+    }
+    // activate seeking
+    if (val === "Sensory seeking") {
+      seekingBtn.classList.add("active");
+      animateBtn(seekingBtn, "activating");
+    }
+    // deactivate avoiding if it was on — no animation
+    if (wasAvoidingActive && val !== "Sensory avoiding") {
+      avoidingBtn.classList.remove("active");
+    }
+    // activate avoiding
+    if (val === "Sensory avoiding") {
+      avoidingBtn.classList.add("active");
+      animateBtn(avoidingBtn, "activating");
+    }
   }
   render();
 }
@@ -1107,5 +1222,5 @@ document.getElementById("seatToggle").addEventListener("change", (e) => {
 /* ----------------------------------------------------------------
    BOOT
    ---------------------------------------------------------------- */
-render();
+setMealType(getTimeBasedMeal());
 fetchAirtable();

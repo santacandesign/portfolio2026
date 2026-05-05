@@ -65,6 +65,15 @@ body {
   background: #fef1e9;
 }
 
+/* Allow markers to bleed outside the map canvas edges */
+#map,
+.maplibregl-map,
+.maplibregl-canvas-container,
+.maplibregl-canvas-container canvas,
+.maplibregl-marker {
+  overflow: visible !important;
+}
+
 /* MapLibre popup */
 .maplibregl-popup-content {
   border-radius: 8px !important;
@@ -160,7 +169,7 @@ body {
   height: 200px;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.8) 0%,
     rgba(255, 255, 255, 0.8) 57%,
     rgba(255, 255, 255, 0) 100%
   );
@@ -176,17 +185,9 @@ h1 {
   font-size: 40px;
   line-height: 1.05;
   color: var(--ink);
-  text-shadow:
-    -3px -3px 0 #fff,
-    3px -3px 0 #fff,
-    -3px 3px 0 #fff,
-    3px 3px 0 #fff,
-    0 -3px 0 #fff,
-    0 3px 0 #fff,
-    -3px 0 0 #fff,
-    3px 0 0 #fff,
-    0 4px 4px rgba(0, 0, 0, 0.8);
-  /* text-shadow: 0 3px 2px rgba(0, 0, 0, 0.18); */
+  -webkit-text-stroke: 12px #fff;
+  paint-order: stroke fill;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.25));
   letter-spacing: -0.01em;
 }
 .by-line {
@@ -194,6 +195,7 @@ h1 {
   font-weight: 400;
   font-size: 18px;
   color: var(--ink);
+  paint-order: stroke fill;
   margin-top: 8px;
 }
 
@@ -273,7 +275,7 @@ h1 {
   z-index: 2;
   pointer-events: auto;
   height: 230px;
-  overflow: visi;
+  overflow: visible;
   display: flex;
   align-items: flex-end;
   margin-bottom: 4px;
@@ -383,18 +385,18 @@ h1 {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #c51ffc;
+  background: #1f1ffb;
   border: 5px solid #fff;
-  box-shadow: 0 0 0 12px #c51ffc;
+  box-shadow: 0 0 0 12px rgb(31, 31, 251);
   animation: pulse 2s ease-in-out infinite;
 }
 @keyframes pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 4px rgba(197, 31, 252, 0.5);
+    box-shadow: 0 0 0 4px rgba(31, 31, 251, 0.5);
   }
   50% {
-    box-shadow: 0 0 0 16px rgba(197, 31, 252, 0.08);
+    box-shadow: 0 0 0 16px rgba(31, 31, 251, 0.08);
   }
 }
 
@@ -447,7 +449,7 @@ h1 {
   gap: 0;
   overflow-x: auto;
   scrollbar-width: none;
-  padding: 8px 16px 28px;
+  padding: 8px 16px 36px;
   pointer-events: auto;
   background: transparent;
 }
@@ -459,7 +461,7 @@ h1 {
   background: var(--white);
   border: none;
   border-radius: var(--pill-radius);
-  box-shadow: 0 3px 2.5px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
@@ -467,23 +469,97 @@ h1 {
   color: var(--ink);
   transition: all 0.15s;
 }
-.meal-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* Meal dropdown */
+.meal-dropdown-wrap {
+  position: relative;
   flex-shrink: 0;
 }
-.meal-type-pill {
-  padding: 8px 14px;
-  font-size: 14px;
-  font-weight: 400;
-  color: #111;
+.meal-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f1ffb;
+  background: none;
+  box-shadow: none;
   border: none;
   cursor: pointer;
+  -webkit-text-stroke: 8px #f0f0ff;
+  paint-order: stroke fill;
+  text-shadow: 1px 1px 3px rgba(22, 22, 138, 0.5);
 }
-.meal-type-pill.active {
-  background: #111;
-  color: var(--white);
+.meal-chevron {
+  transition: transform 0.2s ease;
+}
+.meal-trigger.open .meal-chevron {
+  transform: rotate(180deg);
+}
+@keyframes unravel {
+  from {
+    transform: scaleY(0.4) translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1) translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes furle {
+  from {
+    transform: scaleY(1) translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: scaleY(0.4) translateY(8px);
+    opacity: 0;
+  }
+}
+.meal-dropdown-panel {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0px -4px 12px rgba(0, 0, 0, 0.4);
+  padding: 8px;
+  min-width: 110px;
+  z-index: 1000;
+  transform-origin: bottom center;
+  gap: 8px;
+}
+.meal-dropdown-panel.open {
+  display: flex;
+  animation: unravel 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.meal-dropdown-panel.closing {
+  display: flex;
+  animation: furle 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+.meal-option-item {
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+  padding: 8px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.meal-option-item.selected {
+  background: #ececf1;
+  color: #1f1ffb;
+}
+.meal-option-item.pressed {
+  background: #ddddf5;
+  color: #1f1ffb;
+  transform: scale(0.96);
+  transition:
+    transform 0.1s ease,
+    background 0.1s ease;
 }
 
 .filter-divider {
@@ -513,10 +589,141 @@ h1 {
   font-size: 14px;
   font-weight: 400;
   color: #111;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 2px solid #dcdce7;
+  transition:
+    color 0.25s ease-out,
+    background 0.25s ease-out,
+    border-color 0.25s ease-out;
+}
+.sensory-label {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.sensory-cross {
+  display: none;
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.8;
+}
+.sensory-pill.active .sensory-cross {
+  display: inline;
 }
 .sensory-pill.active {
-  background: #111;
+  background: #1f1ffb;
   color: var(--white);
+  border-color: transparent;
+}
+
+/* ── Seeking: SVG overlay + transition ── */
+#seekingBtn {
+  position: relative;
+  overflow: visible;
+  transition:
+    color 0.35s ease,
+    background 0.35s ease,
+    border-color 0.35s ease;
+}
+.seeking-stroke {
+  position: absolute;
+  inset: -8px -8px;
+  width: calc(100% + 20px);
+  height: calc(100% + 16px);
+  object-fit: fill;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+#seekingBtn.active {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  color: #ffffff;
+  font-weight: 700;
+  padding-bottom: 12px;
+}
+#seekingBtn.active .seeking-stroke {
+  opacity: 1;
+}
+
+@keyframes avoiding-in {
+  from {
+    opacity: 0.4;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes avoiding-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+#avoidingBtn.activating {
+  animation: avoiding-in 0.2s ease-in forwards;
+}
+#avoidingBtn.deactivating {
+  animation: avoiding-out 0.25s ease-in forwards;
+}
+
+@keyframes seeking-bounce-in {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(0.92);
+  }
+  45% {
+    transform: scale(1.1);
+  }
+  65% {
+    transform: scale(0.96);
+  }
+  80% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes seeking-bounce-out {
+  0% {
+    transform: scale(1);
+  }
+  18% {
+    transform: scale(1.1);
+  }
+  42% {
+    transform: scale(0.93);
+  }
+  68% {
+    transform: scale(1.04);
+  }
+  84% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+#seekingBtn.activating {
+  animation: seeking-bounce-in 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97)
+    forwards;
+}
+#seekingBtn.deactivating {
+  animation: seeking-bounce-out 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97)
+    forwards;
 }
 
 /* Seating toggle */
@@ -548,18 +755,26 @@ h1 {
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 20px;
+  right: 20px;
   height: 20px;
   background: var(--white);
-  border-radius: 50%;
+  border-radius: 999px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
-  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  /* turning OFF: left edge leads, right edge follows */
+  transition:
+    left  0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    right 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
 }
 .toggle-wrap input:checked ~ .toggle-track {
-  background: #0b0b40;
+  background: #1f1ffb;
 }
 .toggle-wrap input:checked ~ .toggle-track .toggle-thumb {
-  transform: translateX(18px);
+  left: 20px;
+  right: 2px;
+  /* turning ON: right edge leads, left edge follows */
+  transition:
+    right 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    left  0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
 }
 
 /* ================================================================

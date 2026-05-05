@@ -59,36 +59,11 @@
 
       <!-- Filter bar -->
       <div class="filter-bar" id="filterBar">
-        <!-- Meal type pill -->
-        <!-- Meal type pills -->
-        <div class="meal-group">
-          <button
-            class="filter-pill meal-type-pill active"
-            id="mealAll"
-            onclick="setMealType('all', this)"
-          >
-            All
-          </button>
-          <button
-            class="filter-pill meal-type-pill"
-            id="mealBreakfast"
-            onclick="setMealType('Breakfast', this)"
-          >
-            Breakfast
-          </button>
-          <button
-            class="filter-pill meal-type-pill"
-            id="mealSnack"
-            onclick="setMealType('Snack', this)"
-          >
-            Snack
-          </button>
-          <button
-            class="filter-pill meal-type-pill"
-            id="mealDinner"
-            onclick="setMealType('Dinner', this)"
-          >
-            Dinner
+        <!-- Meal type trigger -->
+        <div class="meal-dropdown-wrap" id="mealDropdownWrap">
+          <button class="filter-pill meal-trigger" id="mealTrigger" onclick="toggleMealDropdown()">
+            <span id="mealLabel">All</span>
+            <svg class="meal-chevron" width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 4L6 8L10 4" stroke="#1f1ffb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
 
@@ -102,14 +77,15 @@
             id="seekingBtn"
             onclick="setSensory('Sensory seeking')"
           >
-            Seeking
+            <span class="sensory-label">Seeking <span class="sensory-cross">×</span></span>
+            <img class="seeking-stroke" src="seeking-stroke.svg" aria-hidden="true" />
           </button>
           <button
             class="filter-pill sensory-pill"
             id="avoidingBtn"
             onclick="setSensory('Sensory avoiding')"
           >
-            Avoiding
+            <span class="sensory-label">Avoiding <span class="sensory-cross">×</span></span>
           </button>
         </div>
 
@@ -124,6 +100,14 @@
           </label>
         </div>
       </div>
+    </div>
+
+    <!-- Meal dropdown panel (outside filter bar to avoid overflow clipping) -->
+    <div class="meal-dropdown-panel" id="mealDropdownPanel">
+      <div class="meal-option-item" onclick="pickMealType(this, 'all')">All</div>
+      <div class="meal-option-item" onclick="pickMealType(this, 'Breakfast')">Breakfast</div>
+      <div class="meal-option-item" onclick="pickMealType(this, 'Snack')">Snack</div>
+      <div class="meal-option-item" onclick="pickMealType(this, 'Dinner')">Dinner</div>
     </div>
 
     <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
