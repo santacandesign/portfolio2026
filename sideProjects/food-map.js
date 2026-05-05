@@ -839,9 +839,11 @@ function buildCarousel() {
       img.alt = e.dish;
       img.loading = "lazy";
       img.onerror = () => {
-        // URL expired or broken — re-fetch fresh Airtable data then rebuild
+        // URL failed (likely expired Airtable attachment URL or broken link).
+        // Show the emoji placeholder. DO NOT call fetchAirtable here —
+        // doing so caused an infinite loop because rebuilding the carousel
+        // creates new <img> tags whose onerror would fire again.
         showPlaceholder();
-        fetchAirtable();
       };
       card.appendChild(img);
     } else {
