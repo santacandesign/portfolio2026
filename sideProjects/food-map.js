@@ -829,7 +829,15 @@ function buildCarousel() {
       card.innerHTML = "";
       const ph = document.createElement("div");
       ph.className = "card-placeholder";
-      ph.textContent = MEAL_EMOJI[e.type] || "🍴";
+      ph.innerHTML = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="24" cy="30" rx="14" ry="5" fill="#c9b49a" opacity="0.35"/>
+        <path d="M12 22 Q12 14 24 14 Q36 14 36 22 Q36 30 24 30 Q12 30 12 22Z" fill="#c9b49a" opacity="0.5"/>
+        <path d="M14 22 Q14 16 24 16 Q34 16 34 22 Q34 28 24 28 Q14 28 14 22Z" fill="#e8d8c4" opacity="0.8"/>
+        <path d="M18 20 Q20 17 24 17 Q28 17 30 20" stroke="#b8a48a" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.6"/>
+        <path d="M24 14 L24 10" stroke="#b8a48a" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+        <path d="M20 13 Q24 10 28 13" stroke="#b8a48a" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.5"/>
+      </svg>`;
+
       card.appendChild(ph);
     };
 

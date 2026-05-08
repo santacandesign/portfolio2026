@@ -185,7 +185,7 @@ h1 {
   font-size: 40px;
   line-height: 1.05;
   color: #111;
-  -webkit-text-stroke: 8px #f0f0ff;
+  -webkit-text-stroke: 8px #ffffff;
   paint-order: stroke fill;
   /* text-shadow: 1px 1px 1px rgba(22, 22, 138, 0.7); */
   /* -webkit-text-stroke: 12px #fff;
@@ -337,8 +337,11 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 36px;
-  background: linear-gradient(135deg, #f0e8d8, #e0d4c0);
+  font-size: 0;
+  background:
+    radial-gradient(ellipse at 30% 20%, #f5ede0 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, #e8d5c0 0%, transparent 55%),
+    linear-gradient(145deg, #ede0d0, #d9c8b4);
 }
 .food-card.active {
   width: 146px;
@@ -602,7 +605,8 @@ h1 {
   white-space: nowrap;
 }
 .sensory-pill {
-  padding: 8px 14px;
+  padding: 0 14px;
+  height: 38px;
   font-size: 14px;
   font-weight: 400;
   color: #111;
@@ -653,7 +657,7 @@ h1 {
   height: calc(100% + 16px);
   object-fit: fill;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 2s ease;
   pointer-events: none;
   z-index: 0;
 }
@@ -662,8 +666,6 @@ h1 {
   border-color: transparent;
   box-shadow: none;
   color: #ffffff;
-  font-weight: 700;
-  padding-bottom: 12px;
 }
 #seekingBtn.active .seeking-stroke {
   opacity: 1;
