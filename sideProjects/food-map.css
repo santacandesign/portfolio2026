@@ -364,15 +364,15 @@ h1 {
     linear-gradient(145deg, #ede0d0, #d9c8b4);
 }
 .food-card.active {
-  width: 146px;
-  height: 146px;
+  width: 160px;
+  height: 160px;
   border-width: 6px;
 }
 
 /* Distance badge — white pill that floats above the active food card */
 .card-distance {
   position: absolute;
-  top: 28px;
+  top: 12px;
   left: 50%;
   transform: translateX(-50%);
   background: #ffffff;
@@ -393,14 +393,14 @@ h1 {
 .dist-main {
   font-family: "Manrope", sans-serif;
   font-weight: 600;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--ink);
   line-height: 1.2;
 }
 .dist-sub {
   font-family: "Manrope", sans-serif;
   font-weight: 400;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--ink-muted);
   line-height: 1.2;
   margin-top: 1px;
@@ -445,7 +445,7 @@ h1 {
 .dish-name {
   font-family: "Manrope", sans-serif;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 20px;
   color: var(--ink);
   text-transform: capitalize;
 }
@@ -472,7 +472,7 @@ h1 {
   display: block;
   font-family: "Libre Baskerville", serif;
   font-style: italic;
-  font-size: 12px;
+  font-size: 16px;
   color: var(--ink);
   text-transform: capitalize;
   margin-top: 2px;

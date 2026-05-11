@@ -1042,7 +1042,7 @@ function applyFanEffect() {
 
     // Smoothly grow/shrink card size based on proximity to center
     if (card) {
-      const size = Math.round(130 + proximity * 16); // 130 → 146
+      const size = Math.round(146 + proximity * 16); // 130 → 146
       const border = 4 + proximity; // 4 → 5
       card.style.width = `${size}px`;
       card.style.height = `${size}px`;
