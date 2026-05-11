@@ -621,7 +621,7 @@ h1 {
   font-family: "Manrope", sans-serif;
   font-size: 16px;
   font-weight: 400;
-  color: var(--blue-label);
+  color: #111;
   white-space: nowrap;
 }
 .sensory-pill {
