@@ -685,6 +685,9 @@ h1 {
   border-color: transparent;
   box-shadow: none;
   color: #ffffff;
+  /* Bigger padding when active so the pill grows to fit the seeking-stroke
+     frame more comfortably. Overrides .sensory-pill's 12px 16px. */
+  padding: 8px 24px;
 }
 #seekingBtn.active .seeking-stroke {
   opacity: 1;
