@@ -580,9 +580,7 @@ h1 {
   animation: furle 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 .meal-option-item {
-  font-family: "Libre Baskerville", serif;
-  font-style: italic;
-  font-weight: 700;
+  font-family: "Manrope", sans-serif;
   font-size: 14px;
   color: var(--ink);
   padding: 8px 8px;
@@ -591,6 +589,7 @@ h1 {
 }
 .meal-option-item.selected {
   background: #ececf1;
+  font-style: italic;
   color: #1f1ffb;
 }
 .meal-option-item.pressed {
