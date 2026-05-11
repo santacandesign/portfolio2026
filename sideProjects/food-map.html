@@ -28,6 +28,41 @@
     <!-- Full-screen map -->
     <div id="map"></div>
 
+    <!-- Dialog shown once when the user is detected as too far from
+         Bengaluru. Dismissed with OK; choice persisted in localStorage. -->
+    <div class="loc-info-overlay loc-too-far" id="locTooFarOverlay" hidden>
+      <div class="loc-info-card">
+        <div class="loc-info-icon">🌏</div>
+        <h2 class="loc-info-title">You're far from Bengaluru</h2>
+        <p class="loc-info-body">
+          Looks like you're a long way from the spots in this guide. The map and
+          dishes will still work — you just won't see distances or walking
+          times.
+        </p>
+        <button class="loc-info-btn" onclick="dismissLocTooFar()">
+          Got it
+        </button>
+      </div>
+    </div>
+
+    <!-- Info card shown on first load.
+         The map continues loading behind it; geolocation is only requested
+         after the user dismisses this card. Subsequent visits skip it. -->
+    <div class="loc-info-overlay" id="locInfoOverlay">
+      <div class="loc-info-card">
+        <div class="loc-info-icon">📍</div>
+        <h2 class="loc-info-title">
+          Enable location access to see what is close to you!
+        </h2>
+        <p class="loc-info-body">
+          Your browser will ask to share your location. I don't collect or store
+          any data. If you skip it, the map still works, you just won't see
+          distances or routes.
+        </p>
+        <button class="loc-info-btn" onclick="acceptLocInfo()">Got it</button>
+      </div>
+    </div>
+
     <!-- Top gradient + title -->
     <div class="top-overlay">
       <div class="top-gradient"></div>
@@ -76,7 +111,7 @@
             >
               <path
                 d="M2 4L6 8L10 4"
-                stroke="#1f1ffb"
+                stroke="#111"
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"

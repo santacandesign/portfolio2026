@@ -562,7 +562,9 @@ const map = new maplibregl.Map({
 map.getContainer().style.overflow = "visible";
 const mlMap = map.getContainer().querySelector(".maplibregl-map");
 if (mlMap) mlMap.style.overflow = "visible";
-const mlCanvas = map.getContainer().querySelector(".maplibregl-canvas-container");
+const mlCanvas = map
+  .getContainer()
+  .querySelector(".maplibregl-canvas-container");
 if (mlCanvas) mlCanvas.style.overflow = "visible";
 
 map.on("load", () => {
@@ -603,35 +605,155 @@ map.on("load", () => {
 
   renderMarkers();
 
-  // Request user location
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        userLoc = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-        console.log("✓ Got user location:", userLoc);
-        if (userMarker) userMarker.remove();
-        const el = document.createElement("div");
-        el.className = "user-dot";
-        userMarker = new maplibregl.Marker({ element: el })
-          .setLngLat([userLoc.lng, userLoc.lat])
-          .addTo(map);
-        // Re-run onActiveChange so the map refits to include the user dot
-        // and the distance + route pick up the now-known userLoc.
-        if (filtered[activeIdx]) onActiveChange();
-      },
-      (err) => {
-        const codeName =
-          ["", "PERMISSION_DENIED", "POSITION_UNAVAILABLE", "TIMEOUT"][
-            err.code
-          ] || "UNKNOWN";
-        console.warn("✗ Geolocation failed —", codeName, "—", err.message);
-      },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 },
-    );
-  } else {
-    console.warn("✗ navigator.geolocation is not available in this browser");
-  }
+  // Map is ready. Try to request location — only fires if the user has
+  // already dismissed the info card (either now or in a prior session).
+  mapReadyForLocation = true;
+  tryRequestLocation();
 });
+
+/* ----------------------------------------------------------------
+   LOCATION INFO CARD + GATED GEOLOCATION REQUEST
+   ---------------------------------------------------------------- */
+let userAcknowledgedLocInfo = localStorage.getItem("locInfoAck") === "true";
+let mapReadyForLocation = false;
+let locationRequested = false;
+
+// Initialise the info card on first paint:
+// hide it immediately if the user has already seen it (no flash on reload).
+(function initLocInfoCard() {
+  const card = document.getElementById("locInfoOverlay");
+  if (!card) return;
+  if (userAcknowledgedLocInfo) {
+    card.classList.add("hidden");
+  }
+})();
+
+// "Got it" button on the info card.
+function acceptLocInfo() {
+  userAcknowledgedLocInfo = true;
+  localStorage.setItem("locInfoAck", "true");
+  const card = document.getElementById("locInfoOverlay");
+  if (card) {
+    card.classList.add("fading");
+    setTimeout(() => card.classList.add("hidden"), 320);
+  }
+  tryRequestLocation();
+}
+
+// Only request geolocation when BOTH:
+//   - the map has finished loading (so we can immediately drop the user-dot
+//     marker and refit the view via onActiveChange), AND
+//   - the user has acknowledged the info card.
+// This handles either order — the map may finish before or after the click.
+function tryRequestLocation() {
+  if (locationRequested) return;
+  if (!userAcknowledgedLocInfo || !mapReadyForLocation) return;
+  locationRequested = true;
+  requestLocation();
+}
+
+// Anyone outside this radius from Bengaluru's center is treated as
+// "too far" — no distance pill, no route, no user dot, no map refit.
+const BENGALURU_CENTER = { lat: 12.9716, lng: 77.5946 };
+const MAX_DISTANCE_FROM_BENGALURU_KM = 75;
+
+// Show a small subtle banner under "by Santa" with a state message.
+// Pass null/empty to hide it.
+function showLocationStateMessage(text) {
+  const el = document.getElementById("locStateMsg");
+  if (!el) return;
+  if (!text) {
+    el.setAttribute("hidden", "");
+    return;
+  }
+  el.querySelector(".loc-state-text").textContent = text;
+  el.removeAttribute("hidden");
+}
+
+// Show the "you're too far" dialog the FIRST time we detect this user is
+// outside the Bengaluru radius. Subsequent visits won't pester them — the
+// small banner under "by Santa" still serves as a quiet reminder.
+function showTooFarDialogIfNeeded() {
+  if (localStorage.getItem("tooFarAck") === "true") return;
+  const overlay = document.getElementById("locTooFarOverlay");
+  if (overlay) overlay.removeAttribute("hidden");
+}
+
+function dismissLocTooFar() {
+  localStorage.setItem("tooFarAck", "true");
+  const overlay = document.getElementById("locTooFarOverlay");
+  if (overlay) {
+    overlay.classList.add("fading");
+    setTimeout(() => overlay.setAttribute("hidden", ""), 320);
+  }
+}
+
+function requestLocation() {
+  if (!navigator.geolocation) {
+    console.warn("✗ navigator.geolocation is not available in this browser");
+    showLocationStateMessage("📍 Location unavailable");
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+
+      // If they're way outside Bengaluru, treat them like no-location.
+      // userLoc stays null so distance/route/refit logic naturally skips.
+      const km = haversine(
+        lat,
+        lng,
+        BENGALURU_CENTER.lat,
+        BENGALURU_CENTER.lng,
+      );
+      if (km > MAX_DISTANCE_FROM_BENGALURU_KM) {
+        console.log(
+          `ℹ User is ${km.toFixed(0)}km from Bengaluru — too far, disabling distance features`,
+        );
+        showLocationStateMessage("📍 You're outside Bengaluru");
+        showTooFarDialogIfNeeded();
+        // Make sure no stale state from a previous session lingers
+        if (userMarker) {
+          userMarker.remove();
+          userMarker = null;
+        }
+        userLoc = null;
+        if (filtered[activeIdx]) onActiveChange();
+        return;
+      }
+
+      userLoc = { lat, lng };
+      console.log("✓ Got user location:", userLoc);
+      showLocationStateMessage(null);
+      if (userMarker) userMarker.remove();
+      const el = document.createElement("div");
+      el.className = "user-dot";
+      userMarker = new maplibregl.Marker({ element: el })
+        .setLngLat([userLoc.lng, userLoc.lat])
+        .addTo(map);
+      // Re-run onActiveChange so the map refits to include the user dot
+      // and the distance + route pick up the now-known userLoc.
+      if (filtered[activeIdx]) onActiveChange();
+    },
+    (err) => {
+      const codeName =
+        ["", "PERMISSION_DENIED", "POSITION_UNAVAILABLE", "TIMEOUT"][
+          err.code
+        ] || "UNKNOWN";
+      console.warn("✗ Geolocation failed —", codeName, "—", err.message);
+      // Friendlier user-facing message for the most common cases
+      const msg =
+        err.code === 1
+          ? "📍 Location off"
+          : err.code === 3
+            ? "📍 Location timed out"
+            : "📍 Location unavailable";
+      showLocationStateMessage(msg);
+    },
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 },
+  );
+}
 
 /* ----------------------------------------------------------------
    AIRTABLE FETCH
@@ -763,10 +885,22 @@ function matchesFilter(e) {
 /* ----------------------------------------------------------------
    ROUTE — road-following dashed path via OSRM
    ---------------------------------------------------------------- */
+// Sequence counter: each updateRoute call claims a number; only the
+// most recent call is allowed to write to the map source. Stale OSRM
+// responses get discarded so they can't overwrite the latest route.
+let routeSeq = 0;
+
 async function updateRoute(e) {
   if (!mapLoaded || !map.getSource("route")) return;
+  const mySeq = ++routeSeq;
+
   if (!userLoc || !e || !e.lat) {
-    map.getSource("route").setData({ type: "FeatureCollection", features: [] });
+    if (mySeq === routeSeq) {
+      map.getSource("route").setData({
+        type: "FeatureCollection",
+        features: [],
+      });
+    }
     return;
   }
   let coords;
@@ -783,6 +917,10 @@ async function updateRoute(e) {
       if (data.routes?.[0]) coords = data.routes[0].geometry.coordinates;
     }
   } catch (_) {}
+
+  // If a newer call has started since this one, drop our result on the floor.
+  if (mySeq !== routeSeq) return;
+
   if (!coords)
     coords = [
       [userLoc.lng, userLoc.lat],
@@ -1186,11 +1324,11 @@ function pickMealType(el, type) {
 
 function setMealType(type) {
   filters.type = type;
-  document.getElementById("mealLabel").textContent = type === "all" ? "All" : type;
+  document.getElementById("mealLabel").textContent =
+    type === "all" ? "All" : type;
   document.querySelectorAll(".meal-option-item").forEach((el) => {
     const itemText = el.textContent.trim();
-    const matches =
-      (type === "all" && itemText === "All") || itemText === type;
+    const matches = (type === "all" && itemText === "All") || itemText === type;
     el.classList.toggle("selected", matches);
   });
   document.getElementById("mealDropdownPanel").classList.remove("open");
@@ -1204,9 +1342,13 @@ function closeMealDropdown() {
   panel.classList.remove("open");
   panel.classList.add("closing");
   trigger.classList.remove("open");
-  panel.addEventListener("animationend", () => {
-    panel.classList.remove("closing");
-  }, { once: true });
+  panel.addEventListener(
+    "animationend",
+    () => {
+      panel.classList.remove("closing");
+    },
+    { once: true },
+  );
 }
 
 function toggleMealDropdown() {
@@ -1219,20 +1361,25 @@ function toggleMealDropdown() {
   panel.classList.remove("closing");
   const rect = trigger.getBoundingClientRect();
   panel.style.left = rect.left + "px";
-  panel.style.bottom = (window.innerHeight - rect.top + 8) + "px";
+  panel.style.bottom = window.innerHeight - rect.top + 8 + "px";
   panel.classList.add("open");
   trigger.classList.add("open");
 }
 
 document.addEventListener("click", (e) => {
-  if (!e.target.closest(".meal-dropdown-wrap") && !e.target.closest("#mealDropdownPanel")) {
+  if (
+    !e.target.closest(".meal-dropdown-wrap") &&
+    !e.target.closest("#mealDropdownPanel")
+  ) {
     closeMealDropdown();
   }
 });
 function animateBtn(el, cls) {
   el.classList.remove("activating", "deactivating");
   el.classList.add(cls);
-  el.addEventListener("animationend", () => el.classList.remove(cls), { once: true });
+  el.addEventListener("animationend", () => el.classList.remove(cls), {
+    once: true,
+  });
 }
 
 function setSensory(val) {
