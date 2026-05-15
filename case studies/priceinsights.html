@@ -4,114 +4,271 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
-    <title>Santa's Portfolio</title>
+  <link rel="stylesheet" href="casestudy.css" />
+    <title>Price Insights — Santa's Portfolio</title>
     <link rel="icon" type="image/png" href="../assets/dragonfly.svg" />
-    
-  </head>
+</head>
   <body>
     <div class="bgimage"></div>
-    <div class="playstyles">
-      <img class="playimg" src="../assets/caseStudyImages/Price insights.png" />       
-      <br /><br />
-      <h1>Price Insights - Is this property priced fairly?</h1>
-      <h2>Problem Statement</h2>
-      <h3>Propertyguru is a property listing site that 200k+ people use across Singapore, Thailand, Malaysia & Vietnam to find houses that they might be interested in renting/buying. <br /><br />
 
-        On PropertyGuru, property prices are often listed higher than their true market value, with the expectations that there will be negotiations. There isn’t a clear way to understand if a property is priced fairly, how it compares to similar properties, or how much room there is to negotiate. <br /><br />
+    <!-- Navbar -->
+    <nav class="navbar">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+        <li><a href="../media.html">Media diet</a></li>
+        <li><a href="../aboutme.html">About & Contact</a></li>
+      </ul>
+    </nav>
 
-        PropertyGuru needed a way to **demystify pricing** by helping them quickly assess price fairness and make confident, informed decisions within their budget.</h3> <br /><br />
-        <h2>Hypothesis</h2>
-        <h3>**Property buyers/ renters are price sensitive** and want a good bargain for their money. Knowing the best a property has to offer and understanding how it compares to other properties helps them also negotiate better.
+    <div class="cs-wrap">
+      <!-- Back -->
+      <a class="cs-back" href="../index.html">← Back to work</a>
 
-        The user’s goal is to work within their budget and get the best offer in terms of location, amenities and personal preference.
+      <!-- Hero image -->
+      <div class="cs-hero">
+        <img src="../assets/caseStudyImages/Price insights.png" alt="Price Insights feature overview" />
+      </div>
 
-        **Knowing the fairness of a price is a big part of finding the right home for you.**</h3>
+      <!-- Title block -->
+      <div class="cs-title-block">
+        <p class="cs-eyebrow">PropertyGuru · Feb 2025</p>
+        <h1>Price Insights — Is this property priced fairly?</h1>
+        <p class="cs-subtitle">
+          Helping home seekers across South-East Asia understand whether a listing is worth its asking price — and giving them the confidence to negotiate.
+        </p>
+      </div>
 
-        <h2>Why is this feature important for users?</h2>
-        <h3>By contextualizing a property’s listed price against similar listings and past transactions, users gain a concrete reference point instead of relying on gut feel or agent guidance alone. This helps them:
-        <br><br>
-        <ul>
-          <li>Understand whether a property is fairly priced, overpriced, or a good deal</li>
-          <li>Feel confident negotiating, backed by data rather than assumptions</li>
-          <li>Make faster, more informed decisions within their budget constraints</li>
+      <!-- Meta -->
+      <div class="cs-meta">
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">My Role</span>
+          <span class="cs-meta-value">Lead Product Designer</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Platform</span>
+          <span class="cs-meta-value">PropertyGuru (iOS, Android, Web)</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Timeline</span>
+          <span class="cs-meta-value">Feb 2025</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Reach</span>
+          <span class="cs-meta-value">SG · MY · TH · VN</span>
+        </div>
+      </div>
+
+      <!-- Problem Statement -->
+      <div class="cs-section">
+        <p class="cs-section-label">01 — Problem Statement</p>
+        <h2>Prices are opaque, negotiations are stressful</h2>
+        <p class="cs-body">
+          PropertyGuru is a property listing platform used by 200k+ people across Singapore, Thailand, Malaysia and Vietnam to find homes to rent or buy. But there was a persistent pain point lurking inside every listing page.
+        </p>
+        <div class="cs-callout">
+          <p>Property prices are often listed higher than true market value, with the expectation of negotiation — yet users had no reliable way to know how far off a listing really was.</p>
+        </div>
+        <p class="cs-body">
+          There was no clear signal for whether a property was fairly priced, how it compared to similar listings, or how much room existed for negotiation. Users were forced to rely on gut feel or agent guidance alone — neither of which felt empowering.
+        </p>
+        <p class="cs-body">
+          PropertyGuru needed a way to <strong>demystify pricing</strong>: help users quickly assess price fairness and make confident, informed decisions within their budget.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Hypothesis -->
+      <div class="cs-section">
+        <p class="cs-section-label">02 — Hypothesis</p>
+        <h2>Price fairness is a core part of finding the right home</h2>
+        <p class="cs-body">
+          Property buyers and renters are inherently price-sensitive — they want a good bargain. Knowing what a property has to offer and how it compares to alternatives helps them negotiate from a position of knowledge rather than anxiety.
+        </p>
+        <div class="cs-callout">
+          <p>The user's goal is to work within their budget and get the best offer — in location, amenities and personal preference. Knowing the fairness of a price is a big part of finding the right home.</p>
+        </div>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Why Important -->
+      <div class="cs-section">
+        <p class="cs-section-label">03 — Why this feature matters</p>
+        <h2>For users — and for the business</h2>
+
+        <div class="cs-cards">
+          <div class="cs-card">
+            <h3>For users</h3>
+            <p>
+              By contextualising a property's price against similar listings and past transactions, users gain a concrete reference point — not just a gut feeling. This helps them understand whether a listing is fair or overpriced, negotiate with data rather than assumptions, and make faster, more confident decisions within budget.
+            </p>
+          </div>
+          <div class="cs-card">
+            <h3>For the business</h3>
+            <p>
+              Price Insights shifts PropertyGuru from a listings platform to a neutral, data-backed advisor. Strong early adoption signals users returning specifically for decision-support — not just browsing — which improves retention, marketplace health, and lays the foundation for future premium features.
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top: 32px;">
+          <div class="cs-biz-item">
+            <h4>Higher engagement & retention</h4>
+            <p>20% adoption in the first month and sustained daily usage of price history show users returning specifically for decision-support, not just browsing.</p>
+          </div>
+          <div class="cs-biz-item">
+            <h4>Differentiation in a crowded market</h4>
+            <p>Listings can be replicated; proprietary insights derived from historical data and comparisons cannot. Price Insights is a durable moat.</p>
+          </div>
+          <div class="cs-biz-item">
+            <h4>Better marketplace health</h4>
+            <p>Informed users negotiate realistically, leading to faster deal closures and reduced friction between buyers and agents.</p>
+          </div>
+          <div class="cs-biz-item">
+            <h4>Foundation for future monetisation</h4>
+            <p>Once users trust price insights, it opens doors to premium features for investors, agents and serious buyers — without compromising trust.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Research -->
+      <div class="cs-section">
+        <p class="cs-section-label">04 — Research</p>
+        <h2>Starting with the right questions</h2>
+        <p class="cs-body">
+          This was a net-new feature, so we needed to validate its core premise before committing to a direction. The research set out to answer four questions:
+        </p>
+
+        <ul class="cs-list" style="margin: 20px 0 32px;">
+          <li><span class="num">1.</span><span>Is price comparison a real necessity for users who are actively looking to buy or rent?</span></li>
+          <li><span class="num">2.</span><span>Can users actually comprehend the data we'd surface? Is it legible?</span></li>
+          <li><span class="num">3.</span><span>If they understand it — do they find it useful?</span></li>
+          <li><span class="num">4.</span><span>Is the data set sufficient to meaningfully convey price fairness?</span></li>
         </ul>
-        </h3>
-        <br> <br>
-        <h2>Why is this feature important for business?</h2>
-        <h3>**Price Insights changes PropertyGuru from property listings platform to a neutral, data-backed advisor**. This delivers business value in several ways:
-            <ul>
-                <li>1. **Higher engagement & retention**
-                    Strong adoption (20% in the first month) and sustained daily usage of price history indicate that users return specifically for decision-support, not just browsing.
-                </li>
-                <li>2. **Differentiation in a crowded market**
-                    While listings can be replicated, proprietary insights derived from historical data and comparisons are hard to copy giving Propertyguru an upper hand
-                </li>
-                <li>3. **Better marketplace health**
-                    Informed users negotiate realistically, which can lead to:
-                    - Faster deal closures
-                    - Reduced friction between buyers and agents
-                </li>
-                <li>4. **Foundation for future monetization**
-                    Once users trust price insights, it opens doors to premium features for investors, agents, and serious buyers—without compromising user trust.
-                </li>
-            </ul>
-        </h3>
-        <h2>Research</h2>
-        <h3>Objective</h3>
-        <h3>This was a new feature that needed a thorough understanding how it would impact a user’s experience on the property listing
 
-        1. Is this a necessity for users looking to buy/rent houses?
-        2. What is the comprehension on the data mentioned?
-        3. If understood, do they find it useful?
-        4. Is it enough data to decipher fairness of Property prices?</h3>
+        <div class="cs-research-grid">
+          <div class="cs-research-item">
+            <h4>Participants</h4>
+            <p>20 participants across Malaysia and Singapore — both renters and buyers — recruited to represent a broad spectrum.</p>
+          </div>
+          <div class="cs-research-item">
+            <h4>Spectrum</h4>
+            <p>From data-savvy property investors to first-time buyers and Malaysian students renting short-term — capturing wildly different mental models.</p>
+          </div>
+        </div>
+      </div>
 
-        <h2>Research recruitment  </h2>
-        <h3>1. 20 participants in malaysia and singapore
-        2. Included both renters and buyers
-        3. Key spectrum were recruited from both ends of data savy-ness 
-            
-        For ex : Investors (well versed with data savy-ness), first time home buyers, renters in malaysia (students on average don’t rent a home for more than a year or two)</h3>
+      <hr class="cs-divider" />
 
-       <h2>Design Brief</h2> 
-       <h3>Design a feature that allows home buyers/renters to understand fairness of a price of a property.</h3>
-       <h2>Process</h2>
-       <h3>Features of the design
-       <img class="playimg" src="../assets/caseStudyImages/price insights/pi1.png"> 
-       <ul>
-        <li>1. Propertyguru’s approximate estimate of property price </li>
-        <li>2. Property price range of properties listed on our site with similar amenities and features</li>
-       </ul></h3>
-       <h2> User Testing</h2>
-       <img class="playimg" src="../assets/caseStudyImages/price insights/pi2.png">
-       <h3>An overall insight for this testing was that users found it extremely overwhelming and found it more confusing than when they didn’t know this information. Two of the renters in Malaysia found it completely unnecessary for renters especially</h3>
-       <h2>Testing round 2</h2>
-       <img class="playimg" src="../assets/caseStudyImages/price insights/pi3.png">
-       <h3>On landing
+      <!-- Design Process -->
+      <div class="cs-section">
+        <p class="cs-section-label">05 — Design Process</p>
+        <h2>First iteration — putting everything on the table</h2>
+        <p class="cs-body">
+          The initial design surfaced two key pieces of information directly on the listing page:
+        </p>
+        <ul class="cs-list" style="margin: 16px 0 24px;">
+          <li><span class="num">→</span><span>PropertyGuru's approximate estimate of the property's fair value</span></li>
+          <li><span class="num">→</span><span>The price range of comparable properties listed on the platform with similar amenities and features</span></li>
+        </ul>
 
-        1. Better copy
-        2. included only essential information and rest under a button, on a different page
-        3. Past transactions to it’s previous state which people understood very well and found it extremely important
-        Detail page
+        <img class="cs-img" src="../assets/caseStudyImages/price insights/pi1.png" alt="First iteration of Price Insights design" />
+        <p class="cs-img-caption">First iteration — full data surfaced on the listing page</p>
+      </div>
 
-        1. Visualizations that help digest information easier and slightly more information and an option to see other listings that are similar to this including features like range and number of other listings
-        </h3>
+      <hr class="cs-divider" />
 
-        <h2>Outcome</h2>
-        <h3>1. Great comprehension
-        2. 10 out of 10 users found similar listing comparison useful
-        3. 8 out of 10 users found previous listing comparison useful
-        4. 10 out of 10 users felt more confident negotiating after viewing this data</h3>
+      <!-- User Testing Round 1 -->
+      <div class="cs-section">
+        <p class="cs-section-label">06 — User Testing: Round 1</p>
+        <h2>Too much, too soon</h2>
 
+        <img class="cs-img" src="../assets/caseStudyImages/price insights/pi2.png" alt="User testing round 1 findings" />
+        <p class="cs-img-caption">Testing synthesis from round 1</p>
 
-        <h2>Release and Reception</h2>
-        <h3>1. The adoption rate of this feature was 20% (about 1200 users) in the first month
-        2. The price history was being used by 3000 users avg. everyday</h3>
-        
-    </div>
+        <div class="cs-callout">
+          <p>Users found the first design overwhelming — more confusing than not knowing the information at all. Two renters in Malaysia felt it was entirely unnecessary for their use case.</p>
+        </div>
+
+        <p class="cs-body">
+          The data density was the problem. Users needed a clear, simple signal — not a spreadsheet. We went back to the drawing board with a sharper brief: surface only what's essential, and let users pull more detail on demand.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- User Testing Round 2 -->
+      <div class="cs-section">
+        <p class="cs-section-label">07 — User Testing: Round 2</p>
+        <h2>Less on landing, more on demand</h2>
+
+        <img class="cs-img" src="../assets/caseStudyImages/price insights/pi3.png" alt="Second iteration of Price Insights" />
+        <p class="cs-img-caption">Refined design — essential info on landing, depth on request</p>
+
+        <p class="cs-body">The revised design made two major shifts:</p>
+
+        <ul class="cs-list" style="margin: 16px 0;">
+          <li><span class="num">→</span><span><strong>On landing:</strong> Better copy, only the most essential signal, with additional data tucked behind a button. Past transactions were restored to their original position — users consistently understood this section well and rated it highly important.</span></li>
+          <li><span class="num">→</span><span><strong>Detail page:</strong> Richer visualisations to help digest information. Added a comparable listings view with price range and listing count — giving users meaningful context without drowning the landing experience.</span></li>
+        </ul>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Outcome -->
+      <div class="cs-section">
+        <p class="cs-section-label">08 — Outcome</p>
+        <h2>Users felt confident. The data backed them up.</h2>
+
+        <div class="cs-stats">
+          <div class="cs-stat">
+            <span class="cs-stat-number">10/10</span>
+            <p class="cs-stat-label">users found similar listing comparison useful</p>
+          </div>
+          <div class="cs-stat">
+            <span class="cs-stat-number">8/10</span>
+            <p class="cs-stat-label">users found previous listing comparison useful</p>
+          </div>
+          <div class="cs-stat">
+            <span class="cs-stat-number">10/10</span>
+            <p class="cs-stat-label">felt more confident negotiating after viewing the data</p>
+          </div>
+        </div>
+
+        <p class="cs-body" style="margin-top: 24px;">
+          Comprehension was high across all participant types — from first-time renters to seasoned investors. The simplified landing experience meant users absorbed the core signal immediately, with the option to go deeper when they needed it.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Release & Reception -->
+      <div class="cs-section">
+        <p class="cs-section-label">09 — Release & Reception</p>
+        <h2>Strong adoption from day one</h2>
+
+        <div class="cs-cards">
+          <div class="cs-card">
+            <h3>20% adoption</h3>
+            <p>~1,200 users engaged with Price Insights in the first month — well above expectations for a new information feature.</p>
+          </div>
+          <div class="cs-card">
+            <h3>3,000 daily users</h3>
+            <p>Price history was being accessed by an average of 3,000 users every day post-launch — evidence of a feature users actively returned for.</p>
+          </div>
+        </div>
+
+        <p class="cs-body" style="margin-top: 32px;">
+          The numbers confirmed the hypothesis: when users are given clear, trustworthy pricing context, they don't just browse — they come back to make decisions. Price Insights moved PropertyGuru one step closer to being the most trusted property platform in South-East Asia.
+        </p>
+      </div>
+
+      <!-- Back to home -->
+      <a class="cs-back" href="../index.html">← Back to all work</a>
     </div>
   </body>
 </html>

@@ -1,5 +1,19 @@
 "use strict";
 
+// Stop the browser from restoring the previous scroll position on reload.
+// The p5 canvas is appended asynchronously (after fonts/images preload), so
+// the rest of the page is briefly at the top — if the browser anchors scroll
+// during that window, the user lands inside the case studies and has to
+// scroll up to see the sketch. Forcing scroll to the top here, and again
+// once the page is fully loaded (canvas included), fixes that.
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+window.scrollTo(0, 0);
+window.addEventListener("load", () => {
+  window.scrollTo(0, 0);
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const p5holder = document.getElementById("p5jsholder");
   const paragraph = document.querySelector("p");

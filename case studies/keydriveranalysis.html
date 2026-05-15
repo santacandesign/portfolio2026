@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="casestudy.css" />
+    <title>Key Driver Analysis — Santa's Portfolio</title>
+    <link rel="icon" type="image/png" href="../assets/dragonfly.svg" />
+</head>
+  <body>
+    <div class="bgimage"></div>
+
+    <nav class="navbar">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+        <li><a href="../media.html">Media diet</a></li>
+        <li><a href="../aboutme.html">About & Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="cs-wrap">
+      <a class="cs-back" href="../index.html">← Back to work</a>
+
+      <div class="cs-hero">
+        <img src="../assets/caseStudyImages/Keydriveranalysis.png" alt="Key Driver Analysis visualisation" />
+      </div>
+
+      <div class="cs-title-block">
+        <p class="cs-eyebrow">Crux Intelligence · Dec 2023</p>
+        <h1>Key Driver Analysis — from correlation scores to dollar impact</h1>
+        <p class="cs-subtitle">
+          Replacing an unintuitive correlation model with a waterfall visualisation that tells users exactly how much each factor moved the needle — in money, not abstract scores.
+        </p>
+      </div>
+
+      <div class="cs-meta">
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">My Role</span>
+          <span class="cs-meta-value">Product Designer</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Duration</span>
+          <span class="cs-meta-value">2 weeks</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Team</span>
+          <span class="cs-meta-value">1 Designer · 1 Researcher · 1 PM</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Product</span>
+          <span class="cs-meta-value">Crux Intelligence (BI tool)</span>
+        </div>
+      </div>
+
+      <!-- Context -->
+      <div class="cs-section">
+        <p class="cs-section-label">01 — Context</p>
+        <h2>Owning data visualisations at a BI tool</h2>
+        <p class="cs-body">
+          Crux Intelligence is a Business Intelligence tool that helps companies make better decisions from their data. The primary way users consume that data is through visualisations — so getting them right matters enormously.
+        </p>
+        <p class="cs-body">
+          At Crux, users could analyse any metric and explore the wheres and whys behind it. The "Drivers" feature was the engine for that — designed to explain what factors caused a number to go up or down. This project was about replacing the first version of Drivers with something that actually worked for users.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Problem -->
+      <div class="cs-section">
+        <p class="cs-section-label">02 — The Problem with Drivers v1</p>
+        <h2>Correlation scores told users what happened. Not what to do about it.</h2>
+
+        <p class="cs-body">
+          Imagine you sell water bottles. Your blue one's sales have dropped this month. You know <em>what</em> happened — but you need to know <em>why</em>, so you can act on it.
+        </p>
+        <p class="cs-body">
+          Drivers v1 answered that question using correlation — assigning each potential factor a score between -1 and +1. Inflation might score -0.7, meaning it's negatively correlated with sales. Instagram ads might score +0.9, meaning more spend = more sales.
+        </p>
+
+        <div class="cs-version-row">
+          <div class="cs-version old">
+            <h4>Drivers 1.0 — Correlation</h4>
+            <p>Showed users a score from -1 to +1 for each factor. In theory, the closer to ±1, the stronger the relationship.</p>
+          </div>
+          <div class="cs-version new">
+            <h4>Drivers 2.0 — Key Driver Analysis</h4>
+            <p>Shows users exactly how much money each factor added or removed from a metric. Concrete, actionable, and immediately understood.</p>
+          </div>
+        </div>
+
+        <p class="cs-body" style="margin-top: 28px;">
+          The problem was that correlation scores just didn't land. User research revealed a painful pattern:
+        </p>
+
+        <ul class="cs-list" style="margin: 16px 0;">
+          <li><span class="num">1.</span><span>Users <strong>rarely looked</strong> at the correlation score in the first place.</span></li>
+          <li><span class="num">2.</span><span>When they did look, they <strong>didn't understand</strong> what the number meant.</span></li>
+          <li><span class="num">3.</span><span>When they <em>did</em> understand it — they <strong>didn't know what to do</strong> with the information.</span></li>
+          <li><span class="num">4.</span><span>Correlation also <strong>missed impact</strong>: a factor could still significantly affect sales even with a low correlation score, if the metric fluctuated frequently.</span></li>
+        </ul>
+
+        <div class="cs-callout">
+          <p>People understand money a lot more easily than they understand correlation numbers between -1 and +1. "You made $900K because you decreased the price" is infinitely more useful than a score of 0.74.</p>
+        </div>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Design Brief -->
+      <div class="cs-section">
+        <p class="cs-section-label">03 — Design Brief</p>
+        <h2>What an average business user needs to walk away knowing</h2>
+        <p class="cs-body">
+          Before jumping into explorations, I defined the three things the visualisation needed to communicate clearly to a non-technical user:
+        </p>
+
+        <div class="cs-cards">
+          <div class="cs-card">
+            <h3>What contributed?</h3>
+            <p>All the factors that caused an increase or decrease in a given metric (e.g. sales). The full picture, not just the biggest ones.</p>
+          </div>
+          <div class="cs-card">
+            <h3>How much did it contribute?</h3>
+            <p>The dollar impact — not a relationship score. How much money was added or lost because of each factor.</p>
+          </div>
+        </div>
+
+        <p class="cs-body" style="margin-top: 20px; font-style: italic; color: #555;">
+          Why visualisation over text? People resist dense blocks of information. A well-designed visualisation is far more efficient at telling a story and letting users find what they need quickly.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Explorations -->
+      <div class="cs-section">
+        <p class="cs-section-label">04 — Explorations</p>
+        <h2>Starting low-fidelity, adding complexity as confidence grew</h2>
+        <p class="cs-body">
+          My guiding principle throughout every exploration: <em>"How is this helping the user consume the information presented?"</em> Every format was evaluated against that question.
+        </p>
+
+        <div class="cs-exploration">
+          <div class="cs-exp-item">
+            <span class="cs-exp-step">1</span>
+            <div class="cs-exp-content">
+              <h4>Table</h4>
+              <p>The lowest-fidelity option. You can see the data — but it neither aids comparison between contributors nor gives any visual sense of magnitude or direction.</p>
+            </div>
+          </div>
+          <div class="cs-exp-item">
+            <span class="cs-exp-step">2</span>
+            <div class="cs-exp-content">
+              <h4>Simple breakdown chart</h4>
+              <p>Added a breakdown of the change and its contributors. Descending order helped, but comparison between contributors still required close reading of the numbers.</p>
+            </div>
+          </div>
+          <div class="cs-exp-item">
+            <span class="cs-exp-step">3</span>
+            <div class="cs-exp-content">
+              <h4>Indicator / lollipop chart</h4>
+              <p>Good at showing which contributors drove things positive or negative. But failed to show how all contributors accumulated into the total change — the "so what" was missing.</p>
+            </div>
+          </div>
+          <div class="cs-exp-item">
+            <span class="cs-exp-step">4</span>
+            <div class="cs-exp-content">
+              <h4>Scatter on axes</h4>
+              <p>Placing contributors on axes added real value — positive vs. negative contributors became clearly visible, and magnitude appeared in position. But implied a false chronological order.</p>
+            </div>
+          </div>
+          <div class="cs-exp-item">
+            <span class="cs-exp-step">5</span>
+            <div class="cs-exp-content">
+              <h4>Bubble chart</h4>
+              <p>Added size dimension to the scatter, proportional to impact. Good at both comparison and accumulation — but looked complicated and scored worst on approachability.</p>
+            </div>
+          </div>
+          <div class="cs-exp-item winner">
+            <span class="cs-exp-step">✓</span>
+            <div class="cs-exp-content">
+              <h4>Waterfall chart</h4>
+              <p>Familiar to business users, great at showing positive vs. negative contributors, and naturally communicates accumulation toward a final result. After further iteration, this won.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Why Waterfall -->
+      <div class="cs-section">
+        <p class="cs-section-label">05 — Final Decision</p>
+        <h2>Why the waterfall chart won</h2>
+
+        <div class="cs-reason">
+          <span class="cs-reason-icon">📊</span>
+          <p><strong>Familiarity.</strong> Business users already know what a waterfall chart is. That recognition reduces cognitive load before they've read a single label.</p>
+        </div>
+        <div class="cs-reason">
+          <span class="cs-reason-icon">↕️</span>
+          <p><strong>Efficient positive/negative breakdown.</strong> Green columns go up, red columns go down. The directionality is immediate and intuitive.</p>
+        </div>
+        <div class="cs-reason">
+          <span class="cs-reason-icon">➕</span>
+          <p><strong>Shows accumulation.</strong> Users can see that all positive and negative contributors stack together to produce the final change — a crucial part of the story.</p>
+        </div>
+        <div class="cs-reason">
+          <span class="cs-reason-icon">🔀</span>
+          <p><strong>Grouping removes false ordering.</strong> Grouping all positive contributors together and all negative contributors together made clear that there's no chronological sequence to them — they're parallel causes, not steps in a chain.</p>
+        </div>
+
+        <p class="cs-body" style="margin-top: 28px;">
+          The final design pairs the visualisation with a natural language explanation — a plain-text breakdown beneath the chart that helps users who don't immediately read charts confidently understand what they're looking at.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Iteration -->
+      <div class="cs-section">
+        <p class="cs-section-label">06 — Iteration</p>
+        <h2>The first test revealed two invisible problems</h2>
+        <p class="cs-body">
+          The first iteration looked clean, but testing showed two issues that users couldn't articulate — they just felt confused by the chart without knowing why.
+        </p>
+
+        <div class="cs-diff">
+          <h4>What changed between iteration 1 and the final</h4>
+          <div class="cs-diff-item">
+            <span class="tag removed">Removed</span>
+            <span>The grid lines — they were visually competing with the most important element: the arrow showing the change between the two purple reference columns.</span>
+          </div>
+          <div class="cs-diff-item">
+            <span class="tag removed">Removed</span>
+            <span>The Y-axis for contributor columns — it only made sense for the overall metric (the purple columns). Showing it for contributors added noise without adding meaning.</span>
+          </div>
+          <div class="cs-diff-item">
+            <span class="tag changed">Changed</span>
+            <span>The connecting arrow — made it a solid straight line instead of a dashed one. The change percentage and value were attached directly to the arrow, and both were coloured purple to visually link them to the reference columns.</span>
+          </div>
+        </div>
+
+        <p class="cs-body">
+          These changes made the chart's narrative structure obvious: the purple columns are what changed, the arrow quantifies that change, the coloured contributors explain why.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Learnings -->
+      <div class="cs-section">
+        <p class="cs-section-label">07 — Learnings</p>
+        <h2>What this project taught me</h2>
+
+        <div class="cs-learning">
+          <h4>UI explorations take longer than you think — and that's fine</h4>
+          <p>The reward at the end is proportional. When it finally comes together, it's genuinely satisfying in a way that shortcuts aren't.</p>
+        </div>
+        <div class="cs-learning">
+          <h4>Document your "why not" decisions</h4>
+          <p>Every time you narrow down on a solution, write down why you rejected the alternatives. You'll need to advocate for your choices — and your team will challenge them.</p>
+        </div>
+        <div class="cs-learning">
+          <h4>Rabbit holes are real. The user's goal is the way out.</h4>
+          <p>Visualisation design pulls you into endless aesthetic and technical tangents. Coming back to "can a user take information away from this quickly?" consistently cut through the noise.</p>
+        </div>
+        <div class="cs-learning">
+          <h4>Articulating the "why" makes you a better advocate</h4>
+          <p>Taking 2–3 minutes before a design review to articulate why I made a particular visualisation decision changed how confidently I could defend it — and how often the team aligned with it.</p>
+        </div>
+      </div>
+
+      <a class="cs-back" href="../index.html">← Back to all work</a>
+    </div>
+  </body>
+</html>

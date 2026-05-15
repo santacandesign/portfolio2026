@@ -2,6 +2,350 @@ html {
   overflow-x: hidden;
 }
 
+/* ── LOADING OVERLAY ── */
+#loadingOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #fffced;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  transition: opacity 0.8s ease;
+}
+
+#loadingOverlay.loader-fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#loadingText {
+  font-family: "Libre italic", serif;
+  font-style: italic;
+  font-size: 22px;
+  color: #325825;
+  white-space: nowrap;
+}
+
+.loading-dots span {
+  opacity: 0;
+  animation: loading-dot 1.5s infinite;
+}
+.loading-dots span:nth-child(2) { animation-delay: 0.3s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes loading-dot {
+  0%, 80%, 100% { opacity: 0; }
+  40%            { opacity: 1; }
+}
+/* ─────────────────────── */
+
+/* ===== NEW BOTTOM PILL NAVBAR ===== */
+
+.new-navbar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* z-index 2: visually covers the popup while it slides through */
+.nav-pill-bar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: #e8e6da;
+  border: 2px solid rgba(75, 45, 21, 0.14);
+  border-radius: 60px;
+  box-shadow: 0px 3px 4.5px rgba(75, 45, 21, 0.46);
+  white-space: nowrap;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  color: rgba(75, 45, 21, 0.48);
+  text-decoration: none;
+  font-family: "Libre", serif;
+  font-size: 16px;
+  border-radius: 30px;
+  transition: color 0.2s;
+}
+
+.nav-item:hover {
+  color: #4b2d15;
+}
+
+.nav-item.nav-active {
+  font-family: "Libre italic", serif;
+  font-weight: bold;
+  color: #4b2d15;
+}
+
+@keyframes contactBtnPop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.025);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.nav-contact-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #4b2d15;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-family: "Libre", serif;
+  font-size: 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.nav-contact-btn:hover {
+  background: #3a2010;
+  font-family: "Libre", serif;
+}
+
+/* pops when opened or closed */
+.nav-contact-btn.btn-pop {
+  animation: contactBtnPop 0.5s ease-out;
+}
+
+/* × slides in from the right */
+.nav-x-icon {
+  height: 13px;
+  flex-shrink: 0;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.2s ease;
+}
+
+.nav-contact-btn.btn-open .nav-x-icon {
+  max-width: 20px;
+  opacity: 1;
+}
+
+/* z-index 1: sits behind the bar until Contact is clicked */
+.nav-above-bar {
+  position: relative;
+  width: 175px;
+  height: 0;
+  z-index: 1;
+}
+
+/* Contact popup — hidden behind the bar by default, slides up on click */
+.nav-contact-popup {
+  position: absolute;
+  bottom: -45px;
+  left: 0%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 24px;
+  min-width: 175px;
+  white-space: normal;
+  box-sizing: border-box;
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Textured background shell — filtered separately so text/icons stay clean */
+.nav-contact-popup::before {
+  content: "";
+  position: absolute;
+  inset: 8px 8px 0px 8px;
+  background: #325825;
+  border-radius: 18px;
+  filter: url(#nav-wobble);
+  z-index: -1;
+}
+
+.nav-contact-popup.open {
+  transform: translateX(-20%) translateY(-45%);
+  pointer-events: auto;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-popup-text {
+  font-family: "Libre italic", serif;
+  font-size: 12px;
+  color: white;
+  margin: 0;
+  max-width: none;
+  line-height: 1.45;
+}
+
+.nav-popup-icons {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 0;
+}
+
+.nav-popup-icons a {
+  color: white;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity 0.15s;
+}
+
+.nav-popup-icons a:hover {
+  opacity: 1;
+}
+
+.nav-popup-icons svg {
+  width: 19px;
+  height: 19px;
+  fill: white;
+}
+/* ===================================== */
+
+/* ── MOBILE HAMBURGER + NAV CARD ── */
+
+/* Hidden on desktop, shown via media query */
+.nav-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: rgba(75, 45, 21, 1);
+  border-radius: 30px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.nav-hamburger:hover {
+  background: rgba(75, 45, 21, 0);
+  color: rgba(75, 45, 21, 1);
+}
+
+.nav-hamburger-lines {
+  display: block;
+}
+.nav-hamburger-close {
+  display: none;
+}
+
+.nav-hamburger.is-open .nav-hamburger-lines {
+  display: none;
+}
+.nav-hamburger.is-open .nav-hamburger-close {
+  display: block;
+}
+
+/* Mobile nav card — fully invisible until hamburger is clicked */
+.nav-mobile-menu {
+  position: absolute;
+  bottom: 68px;
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: #e8e6da;
+  border: 2px solid rgba(75, 45, 21, 0.14);
+  border-radius: 20px;
+  padding: 8px;
+  min-width: 200px;
+  box-shadow: 0px 3px 4.5px rgba(75, 45, 21, 0.46);
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.25s ease;
+}
+
+.nav-mobile-menu.open {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-mobile-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  color: rgba(75, 45, 21, 0.55);
+  text-decoration: none;
+  font-family: "Libre", serif;
+  font-size: 16px;
+  border-radius: 12px;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.nav-mobile-item:hover {
+  background: rgba(75, 45, 21, 0.06);
+  color: #4b2d15;
+}
+
+.nav-mobile-item.nav-active {
+  font-family: "Libre italic", serif;
+  font-weight: bold;
+  color: #4b2d15;
+}
+
+@media (max-width: 800px) {
+  /* Collapse desktop links, show hamburger */
+  .nav-item {
+    display: none;
+  }
+  .nav-hamburger {
+    display: flex;
+  }
+  .nav-mobile-menu {
+    display: flex;
+  }
+
+  /* Contact popup on mobile: center it and animate only on Y axis */
+  .nav-contact-popup {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .nav-contact-popup.open {
+    transform: translateX(-50%) translateY(-40%);
+  }
+
+  /* Fade out the popup when the hamburger menu is open */
+  .nav-contact-popup.menu-open {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+}
+
 @font-face {
   font-family: "Libre";
   src: url("./assets/Libre_Baskerville/LibreBaskerville-VariableFont_wght.ttf")
@@ -228,7 +572,7 @@ button {
 }
 
 button:hover {
-  transform: translate(4px, 4px);
+  /* transform: translate(4px, 4px); */
   font-family: "Libre italic", serif;
   background-color: #5f2a1a;
   color: #efeddf;

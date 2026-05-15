@@ -38,7 +38,7 @@ new p5((sketch) => {
       "Santrupti ",
       startX,
       nameY,
-      sketch.windowWidth / 8,
+      sketch.windowWidth / 6,
       {
         sampleFactor: 0.5,
       },
@@ -378,13 +378,24 @@ new p5((sketch) => {
       }
       angle += 40;
     } else {
-      sketch.stroke(17, 17, 17);
-      sketch.fill(17, 17, 17);
-      sketch.noStroke();
-      sketch.textFont(jostfont);
-      sketch.textSize(56);
-      // sketch.textStyle(sketch.BOLD);
-      sketch.text("Santrupti", startX + 40, nameY + subtextGap);
+      let sizeJitter;
+
+      for (let i = 0; i < points.length; i++) {
+        // existing wiggle
+        let x = points[i].x + 50 + 4 * sketch.sin(angle + i * 3);
+        let y = points[i].y + 220 + 4 * sketch.cos(angle + i * 3);
+
+        // noise-based texture layer
+        let n = sketch.noise(i * 10, sketch.frameCount * 0.0008); // slow, per-point noise
+        sizeJitter = sketch.map(n, 0, 1, 1, 12);
+        let xJitter = sketch.map(sketch.noise(i * 0.15, 99), 0, 1, -2, 2); // x scatter
+        let yJitter = sketch.map(sketch.noise(i * 0.15, 77), 0, 1, -2, 2); // y scatter
+        let alphaJitter = sketch.map(n, 0, 1, 160, 255); // vary opacity
+
+        sketch.fill(35, 90, 30, alphaJitter);
+        sketch.ellipse(x + xJitter, y - 180 + yJitter, sizeJitter, sizeJitter);
+      }
+      angle += 20;
     }
   };
 });

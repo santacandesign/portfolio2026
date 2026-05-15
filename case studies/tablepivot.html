@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="casestudy.css" />
+    <title>Table Pivot — Santa's Portfolio</title>
+    <link rel="icon" type="image/png" href="../assets/dragonfly.svg" />
+</head>
+  <body>
+    <div class="bgimage"></div>
+
+    <nav class="navbar">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../playground.html">Playground</a></li>
+        <li><a href="../media.html">Media diet</a></li>
+        <li><a href="../aboutme.html">About & Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="cs-wrap">
+      <a class="cs-back" href="../index.html">← Back to work</a>
+
+      <div class="cs-hero">
+        <img src="../assets/caseStudyImages/Pivot to compare.png" alt="Table Pivot feature" />
+      </div>
+
+      <div class="cs-title-block">
+        <p class="cs-eyebrow">Crux Intelligence · Dec 2023</p>
+        <h1>Table Pivot — manipulate data for better comparison</h1>
+        <p class="cs-subtitle">
+          A native pivot feature inside a BI tool — letting users reshape and compare their data without ever leaving the platform for Excel.
+        </p>
+      </div>
+
+      <div class="cs-meta">
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">My Role</span>
+          <span class="cs-meta-value">Product Designer</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Duration</span>
+          <span class="cs-meta-value">3 weeks</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Skills</span>
+          <span class="cs-meta-value">Product design · Iterative design · UI design · Facilitation</span>
+        </div>
+      </div>
+
+      <!-- Problem -->
+      <div class="cs-section">
+        <p class="cs-section-label">01 — Problem Discovery</p>
+        <h2>Users were escaping to Excel to do what the tool should do natively</h2>
+        <p class="cs-body">
+          Most users on Crux would download CSV exports of their data and open them in Excel to do simple transformations — reordering columns, pivoting rows and columns to compare figures side-by-side. The workflow was clunky but it got the job done.
+        </p>
+        <div class="cs-callout">
+          <p>The real problem: Crux data is interactive. Users don't just want to look at numbers — they want to click through them to understand the full story. That's impossible once you're in a spreadsheet.</p>
+        </div>
+        <p class="cs-body">
+          The ask-bar on Crux is powerful, but it isn't always conducive to the type of side-by-side comparisons users were trying to make. That gap is where this project began.
+        </p>
+        <p class="cs-body">
+          This was one of those projects with a deceptively simple task on paper — but keeping it genuinely simple to use turned out to be far more challenging than expected.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Use Cases -->
+      <div class="cs-section">
+        <p class="cs-section-label">02 — Use Cases & Personas</p>
+        <h2>Who needs to pivot, and why?</h2>
+
+        <div class="cs-cards-3">
+          <div class="cs-card">
+            <h3>Sales Rep Manager</h3>
+            <p>Comparing performance across a team of reps is far easier when each rep is a column, not a row buried in a long table.</p>
+          </div>
+          <div class="cs-card">
+            <h3>Sales Representative</h3>
+            <p>Needs to compare how each brand they manage is performing — a horizontal layout makes those differences jump out.</p>
+          </div>
+          <div class="cs-card">
+            <h3>Data Analyst</h3>
+            <p>Builds reports for meetings comparing sales vs. targets. Pivoted tables help the audience absorb comparisons faster.</p>
+          </div>
+        </div>
+
+        <p class="cs-body" style="margin-top: 28px;">Before designing, I mapped out every scenario a user might want to see — the questions they'd ask, the measures (sales, targets) and attributes (brands, regions, reps) involved, and all the output shapes they'd need.</p>
+
+        <table class="cs-table">
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Measures</th>
+              <th>Attributes</th>
+              <th>Output</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sales this month vs last month</td>
+              <td>Dollar Sales</td>
+              <td>—</td>
+              <td>1 measure, time period</td>
+            </tr>
+            <tr>
+              <td>Dollar sales by region</td>
+              <td>Dollar Sales</td>
+              <td>Region</td>
+              <td>1 attribute, 1 measure</td>
+            </tr>
+            <tr>
+              <td>Sales by region & rep</td>
+              <td>Dollar Sales</td>
+              <td>Region, Sales Rep</td>
+              <td>2 attributes, 1 measure</td>
+            </tr>
+            <tr>
+              <td>Sales & target by region & rep</td>
+              <td>Dollar Sales, Sales Target</td>
+              <td>Region, Sales Rep</td>
+              <td>2 attributes, 2 measures</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="cs-body" style="font-size:13px; color:#777; margin-top: -8px;">
+          💡 <em>Measures</em> = quantifiable values like sales or targets. <em>Attributes</em> = categorical dimensions like brands or regions.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Constraints -->
+      <div class="cs-section">
+        <p class="cs-section-label">03 — Scope & Constraints</p>
+        <h2>Important decisions made before a single pixel was drawn</h2>
+
+        <ul class="cs-list">
+          <li>
+            <span class="num">→</span>
+            <span><strong>Not a blank-canvas pivot table.</strong> This wasn't Excel. The goal was to aid comparison of existing data — not let users construct visualisations from scratch. That constraint kept scope focused.</span>
+          </li>
+          <li>
+            <span class="num">→</span>
+            <span><strong>Maximum 3 pivoted columns.</strong> Beyond 3, nesting becomes unmanageable and horizontal scroll defeats the whole point of comparing things at a glance.</span>
+          </li>
+          <li>
+            <span class="num">→</span>
+            <span><strong>Two entry points, built to scale.</strong> The feature lives behind two clicks (via a settings panel) to leave room for additional settings in future — rather than a surface-level button that would be hard to expand later.</span>
+          </li>
+        </ul>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Process: Copy -->
+      <div class="cs-section">
+        <p class="cs-section-label">04 — Process: Finding the right words</p>
+        <h2>A surprising amount of design work was just finding the right word</h2>
+        <p class="cs-body">
+          Before building any UI, I had to figure out what to <em>call</em> this thing. The word signals what the feature does — get it wrong and users won't even try it.
+        </p>
+
+        <div class="cs-copy-row">
+          <div class="cs-copy-item">
+            <span class="cs-copy-word">Transpose</span>
+            <p>Not a well-known term to most business users. Also didn't scale — you can't "transpose" just one part of a table.</p>
+          </div>
+          <div class="cs-copy-item">
+            <span class="cs-copy-word">Filter</span>
+            <p>Better, but ambiguous — didn't communicate how the table would actually change. Filter implies removal, not reshaping.</p>
+          </div>
+          <div class="cs-copy-item">
+            <span class="cs-copy-word">Compare</span>
+            <p>Much better. Communicated the outcome rather than the mechanism. But still gave users no visual sense of how the table would transform.</p>
+          </div>
+          <div class="cs-copy-item">
+            <span class="cs-copy-word">Group / Rearrange</span>
+            <p>Tested with users after a team brainstorm — but "group" specifically confused them. They couldn't predict what it would do to the table. This is when we gave up looking for a simpler word.</p>
+          </div>
+          <div class="cs-copy-item winner">
+            <span class="cs-copy-word">✓ Pivot</span>
+            <p>Not the simplest word — but it's the right word. Business users already know what a pivot means from Excel. Accuracy beat accessibility here.</p>
+          </div>
+        </div>
+
+        <p class="cs-body">
+          I ran a team brainstorming session where I showed different table arrangements to colleagues and asked them to describe what they were seeing — surfacing vocabulary they naturally reached for. The exercise validated that "pivot" was the most resonant term, even if it wasn't the friendliest.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Process: UI -->
+      <div class="cs-section">
+        <p class="cs-section-label">05 — Process: UI Explorations</p>
+        <h2>The tricky bit — grouping measures vs. attributes</h2>
+        <p class="cs-body">
+          Measures (like Dollar Sales, Unit Sales) and Attributes (like Region, Sales Rep) needed different interaction patterns inside the pivot panel:
+        </p>
+        <ul class="cs-list" style="margin: 16px 0 24px;">
+          <li><span class="num">→</span><span><strong>Measures</strong> get a single group toggle — on or off for all of them. Since all measures are already displayed as rows (the "pivoted" state), the toggle simply keeps or removes them as a group.</span></li>
+          <li><span class="num">→</span><span><strong>Attributes</strong> can be turned on as a group, but selected only one at a time — giving users precise control without overwhelming them with combinations.</span></li>
+        </ul>
+        <p class="cs-body">
+          The grouping also solved a key conceptual problem: it removed the false impression that contributors had a chronological order. Attributes aren't sequential — they're parallel — and the grouped toggle made that clear visually.
+        </p>
+
+        <div class="cs-insight">
+          <p>Early in testing, users kept hitting "Reset to default" by accident — it was positioned where they expected an action button to be. They also tried clicking outside the panel to dismiss it, which didn't work. Two classic design oversights that sent me back to the drawing board.</p>
+        </div>
+
+        <p class="cs-body" style="margin-top: 20px;">
+          The fix was simple once identified: add a clear "Done" button, and make clicking outside the panel close it while preserving the pivot state. The table stays in whatever configuration the user left it in.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Final Solution -->
+      <div class="cs-section">
+        <p class="cs-section-label">06 — Final Solution</p>
+        <h2>Two clicks to a better table</h2>
+
+        <p class="cs-body">The final design has two entry points into the pivot panel:</p>
+
+        <div class="cs-cards">
+          <div class="cs-card">
+            <h3>Via settings</h3>
+            <p>Accessible from the table's settings menu. Two clicks to reach the pivot window — intentional, to leave room for other settings to be added in future iterations without a structural redesign.</p>
+          </div>
+          <div class="cs-card">
+            <h3>Via column header</h3>
+            <p>Users can also trigger pivoting directly from a column header — a more discoverable path for users who think about columns rather than table-level settings.</p>
+          </div>
+        </div>
+
+        <p class="cs-body" style="margin-top: 28px;">
+          Measures start in their pivoted state (as rows) by default, since that's the most common starting configuration. The initial state feels natural rather than something that needs to be set up.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- Onboarding -->
+      <div class="cs-section">
+        <p class="cs-section-label">07 — Onboarding</p>
+        <h2>Getting users to the "aha" moment in 3 steps</h2>
+        <p class="cs-body">
+          New features need new mental models. The onboarding was designed around three goals:
+        </p>
+        <ul class="cs-list" style="margin: 16px 0;">
+          <li><span class="num">1.</span><span>Show users all the places they can trigger Pivot from — both entry points.</span></li>
+          <li><span class="num">2.</span><span>Visually demonstrate how the table changes after applying a pivot — not just describe it.</span></li>
+          <li><span class="num">3.</span><span>Keep it to a maximum of 3 steps to avoid abandonment.</span></li>
+        </ul>
+        <p class="cs-body">
+          The animation inside the onboarding was custom-built in After Effects — exported as a video rather than a GIF because the GIF conversion introduced noticeable glitching.
+        </p>
+      </div>
+
+      <a class="cs-back" href="../index.html">← Back to all work</a>
+    </div>
+  </body>
+</html>
