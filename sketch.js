@@ -48,7 +48,10 @@ new p5((sketch) => {
 
     grassBlades = [];
     if (sketch.windowWidth < 470) {
-      clumpCount = 50;
+      clumpCount = 20;
+    }
+    if (sketch.windowWidth < 700) {
+      clumpCount = 35;
     } else {
       clumpCount = 100;
     }
@@ -73,7 +76,7 @@ new p5((sketch) => {
         });
       }
     }
-    if (sketch.windowWidth < 470) {
+    if (sketch.windowWidth < 700) {
       butterflyCount = 10;
     } else {
       butterflyCount = 30;

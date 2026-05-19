@@ -70,8 +70,8 @@
         <a href="aboutme.html" class="nav-item">About</a>
         <button class="nav-contact-btn" id="navContactBtn" onclick="toggleContactNav()">
           <span>Contact</span>
-          <svg class="nav-x-icon" id="navXIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round">
-            <line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/>
+          <svg class="nav-chevron-icon" id="navChevronIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="2,4 7,10 12,4"/>
           </svg>
         </button>
       </div>
@@ -91,22 +91,50 @@
           btn.classList.remove('btn-open');
         }
       }
+      var _contactDocListener = null;
+
+      function _closeContactNav() {
+        var popup = document.getElementById('navContactPopup');
+        var btn   = document.getElementById('navContactBtn');
+        popup.classList.remove('open');
+        btn.classList.remove('btn-open');
+        if (_contactDocListener) {
+          document.removeEventListener('click', _contactDocListener);
+          _contactDocListener = null;
+        }
+      }
+
       function toggleContactNav() {
         var popup = document.getElementById('navContactPopup');
         var btn   = document.getElementById('navContactBtn');
         var menu  = document.getElementById('navMobileMenu');
         var hamburger = document.getElementById('navHamburger');
         var isOpen = popup.classList.contains('open');
-        popup.classList.toggle('open');
-        btn.classList.toggle('btn-open', !isOpen);
-        btn.classList.remove('btn-pop');
-        void btn.offsetWidth;
-        btn.classList.add('btn-pop');
-        if (!isOpen && menu.classList.contains('open')) {
+
+        if (isOpen) {
+          _closeContactNav();
+          return;
+        }
+
+        // Open the popup
+        popup.classList.add('open');
+        btn.classList.add('btn-open');
+        if (menu.classList.contains('open')) {
           menu.classList.remove('open');
           hamburger.classList.remove('is-open');
           popup.classList.remove('menu-open');
         }
+
+        // Close on any click outside the button (including on the popup itself)
+        if (_contactDocListener) document.removeEventListener('click', _contactDocListener);
+        _contactDocListener = function(e) {
+          if (!btn.contains(e.target)) {
+            _closeContactNav();
+          }
+        };
+        setTimeout(function() {
+          document.addEventListener('click', _contactDocListener);
+        }, 0);
       }
     </script>
     <script src="sketch.js"></script>
@@ -218,9 +246,6 @@
           </button>
         </div>
       </div>
-
-      <br />
-      <hr />
     <script>
       const navbar = document.querySelector(".navbar");
       const projectBeginning = document.querySelector(".projectbeginning");

@@ -32,12 +32,22 @@ html {
   opacity: 0;
   animation: loading-dot 1.5s infinite;
 }
-.loading-dots span:nth-child(2) { animation-delay: 0.3s; }
-.loading-dots span:nth-child(3) { animation-delay: 0.6s; }
+.loading-dots span:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.loading-dots span:nth-child(3) {
+  animation-delay: 0.6s;
+}
 
 @keyframes loading-dot {
-  0%, 80%, 100% { opacity: 0; }
-  40%            { opacity: 1; }
+  0%,
+  80%,
+  100% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
 }
 /* ─────────────────────── */
 
@@ -92,18 +102,6 @@ html {
   color: #4b2d15;
 }
 
-@keyframes contactBtnPop {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.025);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 .nav-contact-btn {
   display: flex;
   align-items: center;
@@ -126,26 +124,16 @@ html {
   font-family: "Libre", serif;
 }
 
-/* pops when opened or closed */
-.nav-contact-btn.btn-pop {
-  animation: contactBtnPop 0.5s ease-out;
-}
-
-/* × slides in from the right */
-.nav-x-icon {
+/* chevron rotates on open */
+.nav-chevron-icon {
   height: 13px;
+  width: 13px;
   flex-shrink: 0;
-  max-width: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition:
-    max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.2s ease;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.nav-contact-btn.btn-open .nav-x-icon {
-  max-width: 20px;
-  opacity: 1;
+.nav-contact-btn.btn-open .nav-chevron-icon {
+  transform: rotate(180deg);
 }
 
 /* z-index 1: sits behind the bar until Contact is clicked */
@@ -390,6 +378,7 @@ body {
   font-weight: 100;
   overflow-x: hidden;
   max-width: 100%;
+  padding-bottom: 120px;
 }
 
 hr {
@@ -558,7 +547,7 @@ button {
   cursor: pointer;
   background-color: #522b12;
   padding: 16px 16px;
-  font-family: "Manrope", sans-serif;
+  font-family: "Libre", serif;
   font-weight: 700;
   font-size: 16px;
   color: #fffced;

@@ -665,6 +665,84 @@
   margin: 0;
 }
 
+/* ── Exploration item image ── */
+.cs-exp-img {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+  margin-top: 12px;
+  border: 0.5px solid #52291215;
+  background: #fff;
+}
+
+/* ── Before / After comparison ── */
+.cs-before-after {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 28px 0;
+}
+
+.cs-before-after figure {
+  margin: 0;
+}
+
+.cs-before-after img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+  border: 0.5px solid #52291215;
+}
+
+.cs-before-after figcaption {
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  color: #777;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* ── Full-width dark image (product screenshots) ── */
+.cs-img-dark {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
+  margin: 28px 0;
+  background: #111;
+}
+
+/* ── Tooltip pair ── */
+.cs-tooltip-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.cs-tooltip-pair figure {
+  margin: 0;
+}
+
+.cs-tooltip-pair img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+  border: 0.5px solid #52291215;
+}
+
+.cs-tooltip-pair figcaption {
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  color: #777;
+  margin-top: 8px;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .cs-before-after,
+  .cs-tooltip-pair { grid-template-columns: 1fr; }
+}
+
 /* ============================================================
    Responsive — page-specific overrides
    ============================================================ */
