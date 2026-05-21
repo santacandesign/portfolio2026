@@ -884,4 +884,8 @@ h4 {
   .sideproject {
     padding-bottom: 0;
   }
+
+  .phone-mockup-inner video {
+    border-radius: 0.8rem;
+  }
 }
