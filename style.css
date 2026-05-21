@@ -2,6 +2,14 @@ html {
   overflow-x: hidden;
 }
 
+/* Hidden SVG filter container */
+.svg-filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
 /* ── LOADING OVERLAY ── */
 #loadingOverlay {
   position: fixed;

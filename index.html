@@ -246,6 +246,7 @@
           </button>
         </div>
       </div>
+
     <script>
       const navbar = document.querySelector(".navbar");
       const projectBeginning = document.querySelector(".projectbeginning");
@@ -343,6 +344,36 @@
           behavior: "smooth",
           block: "start",
         });
+      });
+
+      // Gallery: hover to pause/play videos
+      document.querySelectorAll('.pretty-vid2, .pretty-vid1').forEach(function(item) {
+        var video = item.querySelector('video');
+        var icon  = item.querySelector('.pretty-pause-icon');
+        item.addEventListener('mouseenter', function() {
+          video.pause();
+          icon.classList.add('visible');
+        });
+        item.addEventListener('mouseleave', function() {
+          video.play();
+          icon.classList.remove('visible');
+        });
+      });
+
+      // Gallery: scroll-reveal stagger
+      var revealItems = document.querySelectorAll('.pretty-reveal');
+      var galleryObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('pretty-visible');
+            galleryObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+
+      revealItems.forEach(function(el, i) {
+        el.style.transitionDelay = (i * 80) + 'ms';
+        galleryObserver.observe(el);
       });
 
       const emailLink = document.getElementById("emailLink");
