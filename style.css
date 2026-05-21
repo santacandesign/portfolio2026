@@ -717,6 +717,56 @@ h4 {
   padding-bottom: 40px;
 }
 
+/* ── Phone mockup thumbnail (video + phone frame overlay) ── */
+.phone-mockup-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #06010011;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Inner wrapper: matches Pixel 9 Pro - Hazel.svg viewBox (1620 x 3136)
+   so the screen cutout coordinates map cleanly to percentages. */
+.phone-mockup-inner {
+  position: relative;
+  height: 92%;
+  aspect-ratio: 1620 / 3136;
+  flex-shrink: 0;
+}
+
+/* Position the video exactly over the Pixel 9 Pro's screen cutout.
+   Screen rect in SVG units: x 449.49–1290.51, y 201–3059.
+   left:   449.49 / 1620 = 27.75%
+   top:    201    / 3136 =  6.41%
+   width:  841.01 / 1620 = 51.91%
+   height: 2858   / 3136 = 91.13% */
+.phone-mockup-inner video {
+  position: absolute;
+  top: 4%;
+  left: 7.4%;
+  width: 85%;
+  height: 92.13%;
+  object-fit: contain;
+  border-radius: 1.8rem;
+  z-index: 0;
+  box-shadow: 4px 12px 12px rgba(22, 8, 0, 0.621);
+}
+
+/* Device frame sits on top of the video. */
+.phone-mockup-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
 .sideproject img {
   width: 100%;
   border-radius: 12px;
