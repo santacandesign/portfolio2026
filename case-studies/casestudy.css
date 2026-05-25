@@ -62,7 +62,6 @@
   gap: 40px;
   flex-wrap: wrap;
   padding: 24px 0;
-  border-top: 0.5px solid #52291222;
   border-bottom: 0.5px solid #52291222;
   margin-bottom: 64px;
 }
@@ -233,7 +232,6 @@
   font-weight: 600;
   color: #522b12;
   text-decoration: none;
-  margin-top: 80px;
   margin-bottom: 0;
   opacity: 0.75;
   transition: opacity 0.2s;
@@ -493,8 +491,8 @@
 }
 
 .cs-version.new {
-  background: #d1eae4;
-  border: 0.5px solid #307436aa;
+  background: #d4b89830;
+  border: 0.5px solid #745d30aa;
 }
 
 .cs-version h4 {
@@ -508,7 +506,7 @@
   color: #888;
 }
 .cs-version.new h4 {
-  color: #307436;
+  color: #522b12;
 }
 
 .cs-version p {
@@ -571,7 +569,7 @@
 }
 
 .cs-exp-item.winner {
-  background: #d1eae4;
+  background: #b1d6b562;
 }
 
 .cs-exp-item.winner .cs-exp-step {
@@ -652,11 +650,11 @@
 }
 
 .tag.removed {
-  background: #fde8e8;
+  background: #fde8e8af;
   color: #c0392b;
 }
 .tag.changed {
-  background: #d1eae4;
+  background: #bfffc66a;
   color: #307436;
 }
 
