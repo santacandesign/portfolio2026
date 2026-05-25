@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="casestudy.css" />
+    <title>What's Nearby — Santa's Portfolio</title>
+    <link rel="icon" type="image/png" href="../assets/dragonfly.svg" />
+  </head>
+  <body>
+    <div class="bgimage"></div>
+
+    <div class="cs-wrap">
+      <a class="cs-back" href="../index.html">← Back to work</a>
+
+      <div class="cs-hero">
+        <img
+          src="../assets/caseStudyImages/whatsnearby.png"
+          alt="What's nearby map widget visualization"
+        />
+      </div>
+
+      <div class="cs-title-block">
+        <p class="cs-eyebrow">PropertyGuru · Aug 2024</p>
+        <h1>What's Nearby — turning neighborhood data into a clear, glanceable story</h1>
+        <p class="cs-subtitle">
+          Reimagined PropertyGuru's map widget to help home buyers and renters instantly understand what's around a property — replacing confusing pin symbols and endless subcategories with a single, intuitive interface that tells you what matters in walking distance.
+        </p>
+      </div>
+
+      <div class="cs-meta">
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">My Role</span>
+          <span class="cs-meta-value">Product Designer</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Duration</span>
+          <span class="cs-meta-value">2 weeks</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Team</span>
+          <span class="cs-meta-value">1 Designer · 1 PM</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Product</span>
+          <span class="cs-meta-value">PropertyGuru (Real estate platform)</span>
+        </div>
+      </div>
+
+      <!-- 01 Context -->
+      <div class="cs-section">
+        <p class="cs-section-label">01 — Context</p>
+        <h2>Why neighborhood matters more than you think</h2>
+        <p class="cs-body">
+          PropertyGuru is Southeast Asia's largest property listing platform, helping millions of people find homes to rent or buy across Singapore, Thailand, Malaysia, and Vietnam. But finding a property is only half the battle — the real decision comes down to whether that neighborhood feels right.
+        </p>
+        <p class="cs-body">
+          Every property listing on PropertyGuru has its own landing page filled with pretty photos, prices, and amenities. But people don't just care about the property itself — they care about everything around it. Where's the nearest transit? Are there good schools? Can I walk to restaurants or healthcare? The "What's nearby" feature was designed to answer those questions instantly, right on the property page.
+        </p>
+        <p class="cs-body">
+          The problem? The existing map widget was doing a terrible job of it.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- 02 Problem -->
+      <div class="cs-section">
+        <p class="cs-section-label">02 — The Problems with the Old Widget</p>
+        <h2>Three fundamental design problems that made the map feel useless</h2>
+
+        <p class="cs-body">
+          User research and testing sessions revealed three critical failures:
+        </p>
+
+        <ul class="cs-list">
+          <li>
+            <span class="num">1.</span>
+            <span>
+              <strong>Classification was confusing.</strong> Amenities like doctors and parks were lumped under "Family Living" — which meant non-family people might overlook important nearby services. The categories didn't reflect how real people think about their neighborhoods.
+            </span>
+          </li>
+          <li>
+            <span class="num">2.</span>
+            <span>
+              <strong>Pins were impossible to identify quickly.</strong> The tiny icons inside the pins were hard to distinguish at a glance. Users couldn't tell a bus stop from a school without hovering or zooming in, which broke the most important thing about a map: visual scanning speed.
+            </span>
+          </li>
+          <li>
+            <span class="num">3.</span>
+            <span>
+              <strong>Users couldn't browse without constant interaction.</strong> You had to click through categories one at a time to see what was available. There was no way to get a quick sense of "what's actually near this place" without manually testing each category.
+            </span>
+          </li>
+        </ul>
+
+        <!-- Visual example of the old widget -->
+        <img
+          class="cs-img"
+          src="../assets/caseStudyImages/whatsnearby/oldwidget.png"
+          alt="Old What's nearby widget showing confusing pins and categories"
+        />
+        <p class="cs-img-caption">
+          The original widget — vague categories, hard-to-read pins, and no way to quickly scan the neighborhood without clicking through each option.
+        </p>
+
+        <div class="cs-callout">
+          <p>
+            The core problem wasn't that the map lacked data. It was that users couldn't parse it fast enough to make a decision. A neighborhood lookup should take seconds, not minutes of interaction.
+          </p>
+        </div>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- 03 Design Brief -->
+      <div class="cs-section">
+        <p class="cs-section-label">03 — Design Brief</p>
+        <h2>What users actually needed to walk away knowing</h2>
+        <p class="cs-body">
+          Before sketching, I worked with the PM to define the core things someone deciding whether to view a property needs to understand:
+        </p>
+
+        <div class="cs-cards">
+          <div class="cs-card">
+            <h3>Is anything useful nearby?</h3>
+            <p>
+              Within walking distance (roughly 1km), what categories of places exist? Restaurants, transit, schools, healthcare — the basics that matter for daily life.
+            </p>
+          </div>
+          <div class="cs-card">
+            <h3>How far away is it, really?</h3>
+            <p>
+              Not just "close" or "far" — actual distances in meters, and estimated travel times by transit or on foot. Real, actionable numbers.
+            </p>
+          </div>
+          <div class="cs-card">
+            <h3>What's the fastest way to get there?</h3>
+            <p>
+              Walk, bus, MRT? Users want to understand commute options at a glance, not dive into complex routing.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- 04 Explorations -->
+      <div class="cs-section">
+        <p class="cs-section-label">04 — Explorations</p>
+        <h2>Three directions. All had fatal flaws.</h2>
+        <p class="cs-body">
+          I explored three fundamentally different approaches to the problem. Each solved some issues but created others.
+        </p>
+
+        <div class="cs-exploration">
+          <!-- Exploration 1: Simpler categories, horizontal scroll -->
+          <div class="cs-exp-item">
+            <span class="cs-exp-step">1</span>
+            <div class="cs-exp-content">
+              <h4>Simpler categories with horizontal scrolling</h4>
+              <p>
+                Flattened the category structure and made the place list scrollable. Better classification — no more "Family Living" bucket. But the horizontal scroll list could grow infinitely, and users didn't know when they'd reached the end.
+              </p>
+              <img
+                class="cs-exp-img"
+                src="../assets/caseStudyImages/whatsnearby/explore1.png"
+                alt="Exploration showing simplified categories with horizontal scroll"
+              />
+            </div>
+          </div>
+
+          <!-- Exploration 2: Highlights section -->
+          <div class="cs-exp-item">
+            <span class="cs-exp-step">2</span>
+            <div class="cs-exp-content">
+              <h4>Highlights section for the most relevant places</h4>
+              <p>
+                Added a "Highlights" section that automatically surfaced the closest or most important places without clicking categories. Reduced friction dramatically. But the logic for picking "highlights" was arbitrary — how do you choose between the nearest bus and the nearest school? And there were too many of both.
+              </p>
+              <img
+                class="cs-exp-img"
+                src="../assets/caseStudyImages/whatsnearby/explore2.png"
+                alt="Exploration showing highlights section with auto-selected places"
+              />
+            </div>
+          </div>
+
+          <!-- Exploration 3: List below map -->
+          <div class="cs-exp-item">
+            <span class="cs-exp-step">3</span>
+            <div class="cs-exp-content">
+              <h4>Full list of places below the map</h4>
+              <p>
+                Simple, transparent — show every place in every category in a scrollable list beneath the map. No hidden logic, no guessing. But the list could get massive, and if you allowed multiple categories on at once, the map became unreadable. You still had to manually filter.
+              </p>
+              <img
+                class="cs-exp-img"
+                src="../assets/caseStudyImages/whatsnearby/explore3.png"
+                alt="Exploration showing full list below map"
+              />
+            </div>
+          </div>
+
+          <!-- Winner: Single selection with list -->
+          <div class="cs-exp-item winner">
+            <span class="cs-exp-step">✓</span>
+            <div class="cs-exp-content">
+              <h4>Single-selection map + scrollable list hybrid</h4>
+              <p>
+                Allow only one category on the map at a time (keeps it clean), but show a complete, scrollable list of all places in that category below. Users choose what to explore, the map stays readable, and the list gives full transparency without overwhelming.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- 05 Key Decision -->
+      <div class="cs-section">
+        <p class="cs-section-label">05 — The Key Decision</p>
+        <h2>Why 1km became the magic number</h2>
+        <p class="cs-body">
+          Early testing showed something interesting: users mentally split the world into "walkable" and "not walkable" distance. Anything beyond a 10-15 minute walk (roughly 1km) felt like it might as well be in another neighborhood.
+        </p>
+        <p class="cs-body">
+          So we made a deliberate call: <strong>only show places under 1km away.</strong>
+        </p>
+        <p class="cs-body">
+          This solved three problems at once. It made the lists shorter and more relevant. It got everyone on the same page about what "nearby" means. And it forced us to focus the feature on what actually matters — the things you could reasonably walk to as part of daily life.
+        </p>
+
+        <div class="cs-callout">
+          <p>
+            Constraining the scope was actually the key to making the feature work. By definition, you can't show everything nearby and keep it glanceable.
+          </p>
+        </div>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- 06 Pin Design -->
+      <div class="cs-section">
+        <p class="cs-section-label">06 — Designing Pins for Speed</p>
+        <h2>Making every icon instantly recognizable</h2>
+        <p class="cs-body">
+          The original pins were failing because the icons inside were too small and the colors didn't stand out. I redesigned them with one principle: <strong>instantly recognizable at a glance.</strong>
+        </p>
+
+        <p class="cs-body">
+          Each pin now uses:
+        </p>
+
+        <div class="cs-reason">
+          <span class="cs-reason-icon">🎨</span>
+          <p>
+            <strong>Distinct color per category.</strong> Transit is blue, schools are green, restaurants are orange, healthcare is red. No ambiguity.
+          </p>
+        </div>
+        <div class="cs-reason">
+          <span class="cs-reason-icon">🔶</span>
+          <p>
+            <strong>Bold, simple icons.</strong> High contrast between icon and background. No details that disappear at map zoom levels.
+          </p>
+        </div>
+        <div class="cs-reason">
+          <span class="cs-reason-icon">🎯</span>
+          <p>
+            <strong>Pin shape acts as framing.</strong> The teardrop shape and drop shadow give the icon more visual weight, making it pop against the map.
+          </p>
+        </div>
+
+        <img
+          class="cs-img"
+          src="../assets/caseStudyImages/whatsnearby/pindesign.png"
+          alt="Pin design evolution from old to new"
+        />
+        <p class="cs-img-caption">
+          Pin design evolution — the new pins are bold, colored, and readable even when zoomed out.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- 07 The Final Solution -->
+      <div class="cs-section">
+        <p class="cs-section-label">07 — The Final Solution</p>
+        <h2>What's Nearby v2.0</h2>
+        <p class="cs-body">
+          The final design brings together four key features that work in concert:
+        </p>
+
+        <div class="cs-cards">
+          <div class="cs-card">
+            <h3>Single-selection category tabs</h3>
+            <p>
+              Horizontal pill buttons for each category (Transit, School, Restaurants, Shopping, Healthcare, etc.). Only one active at a time. Clean map, no visual clutter.
+            </p>
+          </div>
+          <div class="cs-card">
+            <h3>Clear, readable pins</h3>
+            <p>
+              Each category gets its own color and icon. Instantly scannable. No hovering required to understand what you're looking at.
+            </p>
+          </div>
+          <div class="cs-card">
+            <h3>Scrollable list with travel details</h3>
+            <p>
+              Below the map, a list of every place in the selected category, sorted by distance. Each entry shows distance, estimated travel time, and transit options (bus, MRT, walking).
+            </p>
+          </div>
+          <div class="cs-card">
+            <h3>Saved Places for personal context</h3>
+            <p>
+              A separate section where users can add their own destinations (spouse's workplace, kids' school, parents' house) and see commute times to those specific places. Up to 10 saved places.
+            </p>
+          </div>
+        </div>
+
+        <img
+          class="cs-img"
+          src="../assets/caseStudyImages/whatsnearby/finalsolution.png"
+          alt="Final What's nearby solution on property listing page"
+        />
+        <p class="cs-img-caption">
+          The final widget on a PropertyGuru listing — clean, scannable, and focused on what matters.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- 08 Mobile vs Desktop -->
+      <div class="cs-section">
+        <p class="cs-section-label">08 — Adapting for Mobile and Desktop</p>
+        <h2>Same data, different stories</h2>
+        <p class="cs-body">
+          Mobile and desktop needed different approaches. On mobile, screen real estate is precious. On desktop, you have room to show more.
+        </p>
+
+        <div class="cs-diff">
+          <h4>Mobile: Compact and focused</h4>
+          <div class="cs-diff-item">
+            <span class="tag info">Mobile</span>
+            <span>
+              Show only the first 5 places below the map. Offer a "See all" button that opens a full-screen modal with the complete list and a collapsible side panel for browsing.
+            </span>
+          </div>
+        </div>
+
+        <div class="cs-diff">
+          <h4>Desktop: Expanded detail</h4>
+          <div class="cs-diff-item">
+            <span class="tag info">Desktop</span>
+            <span>
+              Use a side panel that can collapse and expand. When expanded, it takes up roughly a third of the screen, showing a scrollable list of all places. Users can toggle it away to focus on the map, then bring it back.
+            </span>
+          </div>
+        </div>
+
+        <img
+          class="cs-img"
+          src="../assets/caseStudyImages/whatsnearby/mobilevsdesktop.png"
+          alt="Mobile and desktop layouts side by side"
+        />
+        <p class="cs-img-caption">
+          Left: Mobile in full-screen mode with half-screen list. Right: Desktop with collapsible side panel.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- 09 Testing & Iteration -->
+      <div class="cs-section">
+        <p class="cs-section-label">09 — Testing & Iteration</p>
+        <h2>One hypothesis that shifted everything</h2>
+        <p class="cs-body">
+          In the first round of testing, I discovered something counterintuitive about the desktop side panel. I'd originally designed it to collapse when the user's mouse moved away from it — based on the assumption that if someone's moving their cursor over the map, they want to interact with the map.
+        </p>
+        <p class="cs-body">
+          Testing showed this was annoying. The panel would collapse unexpectedly, breaking flow. Users wanted a simple toggle button instead — give them control, even if it meant one extra click. It was also far easier for engineers to build.
+        </p>
+
+        <div class="cs-callout">
+          <p>
+            Sometimes the "clever" solution is worse than the simple one. A predictable toggle button beats a context-sensitive auto-collapse every time.
+          </p>
+        </div>
+
+        <img
+          class="cs-img"
+          src="../assets/caseStudyImages/whatsnearby/iteration.png"
+          alt="Iteration showing simple toggle button for side panel"
+        />
+        <p class="cs-img-caption">
+          Final approach — clear toggle button for the side panel. Predictable, easy to build, and users preferred it.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- 10 Impact -->
+      <div class="cs-section">
+        <p class="cs-section-label">10 — Measuring Impact</p>
+        <h2>The numbers told the story</h2>
+        <p class="cs-body">
+          Two weeks after launch, the metrics were clear:
+        </p>
+
+        <div class="cs-reason">
+          <span class="cs-reason-icon">📈</span>
+          <p>
+            <strong>12.85% increase in active map users</strong> overall. The feature went from being a nice-to-have to something people actually used.
+          </p>
+        </div>
+        <div class="cs-reason">
+          <span class="cs-reason-icon">📱</span>
+          <p>
+            <strong>30% increase on mobile web.</strong> The mobile full-screen mode resonated strongly. Users appreciated the distraction-free space to explore neighborhoods.
+          </p>
+        </div>
+        <div class="cs-reason">
+          <span class="cs-reason-icon">🔵</span>
+          <p>
+            <strong>13.5% increase on mobile app.</strong> App users saw improvements, though slightly less dramatic — probably because app interactions felt less cumbersome than web to begin with.
+          </p>
+        </div>
+
+        <p class="cs-body" style="margin-top: 28px">
+          But the real win was qualitative. Users stopped asking "what's near this property?" They started exploring neighborhoods confidently. The feature had moved from overhead to genuinely useful.
+        </p>
+      </div>
+
+      <hr class="cs-divider" />
+
+      <!-- 11 Learnings -->
+      <div class="cs-section">
+        <p class="cs-section-label">11 — Three Big Learnings</p>
+        <h2>What this project taught me about design at scale</h2>
+
+        <div class="cs-learning">
+          <h4>Constraints are your friend — especially when you have too much data</h4>
+          <p>
+            Showing "everything nearby" was technically possible but made the feature unusable. Setting a 1km boundary was scary (what if someone actually wanted to see farther places?). But it made the core feature so much better that users didn't care. Sometimes you need to say "no" to possibilities to say "yes" to clarity.
+          </p>
+        </div>
+        <div class="cs-learning">
+          <h4>Single selection beats multi-select when maps are involved</h4>
+          <p>
+            Multi-select seems more powerful, but it creates visual chaos. By enforcing single selection, we kept the map readable and fast. It also naturally reduced decision fatigue — explore one category at a time, not everything at once.
+          </p>
+        </div>
+        <div class="cs-learning">
+          <h4>Collaborate early with engineering — sometimes the "clever" solution isn't worth the build cost</h4>
+          <p>
+            The auto-collapse side panel looked impressive in prototypes. But it had edge cases, required complex JavaScript, and confused users. A simple toggle was less clever but far more valuable. Working with the engineering team early meant we could make that trade-off confidently rather than finding out after months of development.
+          </p>
+        </div>
+      </div>
+
+      <a class="cs-back" href="../index.html">← Back to all work</a>
+    </div>
+  </body>
+</html>
