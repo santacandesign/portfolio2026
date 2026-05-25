@@ -16,7 +16,7 @@ new p5((sketch) => {
     nameY = sketch.windowHeight / 2.5;
   } else {
     startX = 150;
-    nameY = sketch.windowHeight / 3;
+    nameY = sketch.windowHeight / 4;
   }
   const subtextGap = 60; // distance below the name baseline
 
@@ -51,14 +51,14 @@ new p5((sketch) => {
       clumpCount = 20;
     }
     if (sketch.windowWidth < 700) {
-      clumpCount = 35;
+      clumpCount = 15;
     } else {
-      clumpCount = 100;
+      clumpCount = 60;
     }
     for (let i = 0; i < clumpCount; i++) {
       let cx = sketch.random(sketch.windowWidth);
       let cy = sketch.random(
-        sketch.windowHeight * 0.05,
+        sketch.windowHeight * 0.9,
         sketch.windowHeight - 10,
       );
       // each clump has 2-3 blades
@@ -69,26 +69,26 @@ new p5((sketch) => {
           y: cy + sketch.random(-6, 6),
           h: sketch.random(28, 35),
           w: sketch.random(8, 10), // leaf width
-          lean: sketch.random(-0.6, 0.6), // resting angle
-          speed: sketch.random(1, 2),
+          lean: sketch.random(-0.2, 0.2), // resting angle
+          speed: sketch.random(0.1, 0.8),
           offset: sketch.random(200),
           noiseScale: sketch.random(0.9, 4), // edge texture roughness
         });
       }
     }
     if (sketch.windowWidth < 700) {
-      butterflyCount = 10;
+      butterflyCount = 4;
     } else {
-      butterflyCount = 30;
+      butterflyCount = 10;
     }
     for (let i = 0; i < butterflyCount; i++) {
       butterflies.push({
         x: sketch.random(sketch.windowWidth),
-        y: sketch.random(sketch.windowHeight * 0.1, sketch.windowHeight * 0.8),
+        y: sketch.random(sketch.windowHeight * 0.6, sketch.windowHeight * 1),
         speed: sketch.random(2, 6), // flight speed
-        offset: sketch.random(1000), // noise offset for unique path
+        offset: sketch.random(100), // noise offset for unique path
         flapOffset: sketch.random(300), // wing flap phase
-        flapSpeed: sketch.random(100, 200), // how fast wings beat
+        flapSpeed: sketch.random(60, 100), // how fast wings beat
         size: sketch.random(8, 16), // body + wing size
         col: sketch.color(
           // wing colour — earthy tones
@@ -310,7 +310,7 @@ new p5((sketch) => {
     let label = "move your cursor for some fun";
     let labelWidth = sketch.textWidth(label) - 100;
     let labelHeight = 30;
-    let labelY = sketch.windowHeight / 2.8;
+    let labelY = sketch.windowHeight / 8;
     let labelX = sketch.constrain(
       sketch.mouseX,
       labelWidth / 2,
@@ -342,10 +342,17 @@ new p5((sketch) => {
     sketch.fill(17, 17, 17);
     sketch.noStroke();
     sketch.textFont(jostfont);
-    if (sketch.windowWidth < 900) {
+    if (sketch.windowWidth < 432) {
       sketch.textSize(16);
       sketch.text(
         " is a product designer that loves \n data, systems & people",
+        startX + 40,
+        nameY + 32 + subtextGap,
+      );
+    } else if (sketch.windowWidth < 900 && sketch.windowWidth > 432) {
+      sketch.textSize(16);
+      sketch.text(
+        " is a product designer that loves data, systems & people",
         startX + 40,
         nameY + 32 + subtextGap,
       );
@@ -366,8 +373,8 @@ new p5((sketch) => {
 
       for (let i = 0; i < points.length; i++) {
         // existing wiggle
-        let x = points[i].x + 50 + r * sketch.sin(angle + i * 2);
-        let y = points[i].y + 220 + r * sketch.cos(angle + i * 2);
+        let x = points[i].x + 50 + r * sketch.sin(angle + i * 0.4);
+        let y = points[i].y + 220 + r * sketch.cos(angle + i * 0.4);
 
         // noise-based texture layer
         let n = sketch.noise(i * 10, sketch.frameCount * 0.0008); // slow, per-point noise
@@ -379,13 +386,13 @@ new p5((sketch) => {
         sketch.fill(35, 90, 30, alphaJitter);
         sketch.ellipse(x + xJitter, y + yJitter, sizeJitter, sizeJitter);
       }
-      angle += 40;
+      angle += 20;
     } else {
       let sizeJitter;
 
       for (let i = 0; i < points.length; i++) {
         // existing wiggle
-        let x = points[i].x + 50 + 4 * sketch.sin(angle + i * 3);
+        let x = points[i].x + 50 + 4 * sketch.sin(angle + i * 1);
         let y = points[i].y + 220 + 4 * sketch.cos(angle + i * 3);
 
         // noise-based texture layer
