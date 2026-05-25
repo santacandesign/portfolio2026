@@ -405,7 +405,7 @@ new p5((sketch) => {
         sketch.fill(35, 90, 30, alphaJitter);
         sketch.ellipse(x + xJitter, y - 180 + yJitter, sizeJitter, sizeJitter);
       }
-      angle += 20;
+      angle += 10;
     }
   };
 });
