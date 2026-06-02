@@ -791,3 +791,190 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Mobile screenshot frame (portrait phone on white landscape bg) ── */
+.cs-mobile-frame {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 48px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  border: 0.5px solid #52291215;
+  margin: 28px 0;
+  overflow: hidden;
+}
+
+.cs-mobile-frame img {
+  height: 460px;
+  width: auto;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  display: block;
+}
+
+/* ── Looping video (full width) ── */
+.cs-video {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
+  margin: 28px 0;
+}
+
+/* ── Looping video (mobile frame) ── */
+.cs-video-mobile {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 48px 40px;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  border: 0.5px solid #52291215;
+  margin: 28px 0;
+}
+
+.cs-video-mobile video {
+  height: 460px;
+  width: auto;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Side-by-side wireframes ── */
+.cs-wf-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 28px 0;
+}
+
+.cs-wf-pair figure {
+  margin: 0;
+}
+
+.cs-wf-pair img {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+  border: 0.5px solid #52291215;
+}
+
+.cs-wf-pair figcaption {
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  color: #777;
+  margin-top: 8px;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .cs-mobile-frame {
+    padding: 28px 16px;
+    gap: 16px;
+  }
+  .cs-mobile-frame img {
+    height: 300px;
+  }
+  .cs-video-mobile {
+    padding: 28px 16px;
+  }
+  .cs-video-mobile video {
+    height: 300px;
+  }
+  .cs-wf-pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Side nav (scroll map) ── */
+.cs-sidenav {
+  position: fixed;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.cs-sidenav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: all;
+  cursor: pointer;
+  padding: 3px 0;
+}
+
+.cs-sidenav-tick {
+  display: block;
+  height: 1px;
+  background: #52291240;
+  transition:
+    background 0.2s ease,
+    width 0.2s ease;
+  flex-shrink: 0;
+}
+
+.cs-sidenav-item[data-level="1"] .cs-sidenav-tick {
+  width: 20px;
+}
+.cs-sidenav-item[data-level="2"] .cs-sidenav-tick {
+  width: 12px;
+}
+.cs-sidenav-item[data-level="3"] .cs-sidenav-tick {
+  width: 7px;
+}
+
+.cs-sidenav-label {
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #522b12;
+  white-space: nowrap;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  transform: translateX(6px);
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+  margin-right: 10px;
+  text-align: right;
+  pointer-events: none;
+}
+
+.cs-sidenav-item:hover .cs-sidenav-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.cs-sidenav-item.active .cs-sidenav-tick {
+  background: #522b12;
+}
+
+.cs-sidenav-item[data-level="1"].active .cs-sidenav-tick {
+  width: 24px;
+}
+.cs-sidenav-item[data-level="2"].active .cs-sidenav-tick {
+  width: 16px;
+}
+.cs-sidenav-item[data-level="3"].active .cs-sidenav-tick {
+  width: 10px;
+}
+
+.cs-sidenav-item:hover .cs-sidenav-tick {
+  background: #522b12;
+}
+
+@media (max-width: 1100px) {
+  .cs-sidenav {
+    display: none;
+  }
+}
