@@ -1,0 +1,36 @@
+{
+  "title": "PXL_20240402_075406374.jpg",
+  "description": "",
+  "imageViews": "3",
+  "creationTime": {
+    "timestamp": "1780326483",
+    "formatted": "Jun 1, 2026, 3:08:03 PM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1712044446",
+    "formatted": "Apr 2, 2024, 7:54:06 AM UTC"
+  },
+  "geoData": {
+    "latitude": 12.971986099999999,
+    "longitude": 77.6191778,
+    "altitude": 826.97,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 12.971986099999999,
+    "longitude": 77.6191778,
+    "altitude": 826.97,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipP_GaFm3avcyXpL4SbRp5MddWT6OysXmsEZR_xV",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

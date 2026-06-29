@@ -1,0 +1,29 @@
+{
+  "title": "IMG_20190710_104935.jpg",
+  "description": "",
+  "imageViews": "5",
+  "creationTime": {
+    "timestamp": "1780326483",
+    "formatted": "Jun 1, 2026, 3:08:03 PM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1562735976",
+    "formatted": "Jul 10, 2019, 5:19:36 AM UTC"
+  },
+  "geoData": {
+    "latitude": 0.0,
+    "longitude": 0.0,
+    "altitude": 0.0,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipO_yD6iZrbpHFQRRDbMlHCdGn2FS73Pd5rujAZb",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

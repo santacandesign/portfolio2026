@@ -1,0 +1,36 @@
+{
+  "title": "PXL_20260211_030413218.jpg",
+  "description": "",
+  "imageViews": "2",
+  "creationTime": {
+    "timestamp": "1780326483",
+    "formatted": "Jun 1, 2026, 3:08:03 PM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1770779053",
+    "formatted": "Feb 11, 2026, 3:04:13 AM UTC"
+  },
+  "geoData": {
+    "latitude": 13.0039917,
+    "longitude": 77.62477500000001,
+    "altitude": 845.55,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 13.0039917,
+    "longitude": 77.62477500000001,
+    "altitude": 845.55,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipPgepCeSng9-POdhZhmi5zpO7-qJ5GLvHXwjTfB",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

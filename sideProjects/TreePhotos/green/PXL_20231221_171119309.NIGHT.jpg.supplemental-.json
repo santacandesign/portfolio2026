@@ -1,0 +1,36 @@
+{
+  "title": "PXL_20231221_171119309.NIGHT.jpg",
+  "description": "",
+  "imageViews": "3",
+  "creationTime": {
+    "timestamp": "1780326483",
+    "formatted": "Jun 1, 2026, 3:08:03 PM UTC"
+  },
+  "photoTakenTime": {
+    "timestamp": "1703178679",
+    "formatted": "Dec 21, 2023, 5:11:19 PM UTC"
+  },
+  "geoData": {
+    "latitude": 12.911691699999999,
+    "longitude": 77.6375667,
+    "altitude": 818.3,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "geoDataExif": {
+    "latitude": 12.911691699999999,
+    "longitude": 77.6375667,
+    "altitude": 818.3,
+    "latitudeSpan": 0.0,
+    "longitudeSpan": 0.0
+  },
+  "url": "https://photos.google.com/photo/AF1QipNKqlqAtjQZoUqy9ZidBM0BpgdkAieGl2G016uG",
+  "googlePhotosOrigin": {
+    "mobileUpload": {
+      "deviceFolder": {
+        "localFolderName": ""
+      },
+      "deviceType": "ANDROID_PHONE"
+    }
+  }
+}

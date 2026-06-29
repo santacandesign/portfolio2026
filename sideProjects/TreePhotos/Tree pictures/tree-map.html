@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Santa's Trees · a map &amp; timeline</title>
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="tree-map.css" />
+  </head>
+  <body>
+    <div id="pageWrap">
+
+      <!-- Title -->
+      <div class="page-header">
+        <h1 class="page-title">Trees I love</h1>
+        <p class="page-subtitle">Stories of trees that Santa clicked</p>
+      </div>
+
+      <!-- City filter -->
+      <div id="cityFilter">
+        <div id="cityPill"></div>
+        <button class="city-btn" data-city="bangalore">Bangalore</button>
+        <button class="city-btn" data-city="kochi">Kochi</button>
+        <button class="city-btn" data-city="delhi">Delhi</button>
+        <button class="city-btn" data-city="dharamshala">Dharamshala</button>
+      </div>
+
+      <!-- Main content row -->
+      <div id="contentRow">
+
+        <!-- Map box — map + polaroid stack live here -->
+        <div id="mapBox">
+          <div id="map"></div>
+          <div id="previewCard"></div>
+          <div class="card-stack-wrap" id="cardStackWrap"></div>
+        </div>
+
+        <!-- Vertical timeline — sits outside the map box -->
+        <div id="vtimelineWrap">
+          <div class="vtimeline" id="vtimeline">
+            <div class="vtimeline-line"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom hint -->
+      <p id="tapHint">Tap on the polaroid to see the next image</p>
+
+    </div>
+
+    <!-- Gallery section — all polaroids in a responsive grid -->
+    <section id="gallerySection">
+      <div class="gallery-header">
+        <h2 class="gallery-title">Every tree</h2>
+        <p class="gallery-subtitle">The whole collection, laid out</p>
+      </div>
+      <div id="polaroidGrid"></div>
+    </section>
+
+    <!-- Colour waffle — every colour pulled from the polaroids above -->
+    <section id="waffleSection">
+      <div class="waffle-header">
+        <h2 class="waffle-title">Every colour</h2>
+        <p class="waffle-subtitle">Every dominant tone lifted from the photos above — sorted by hue, so identical tones stack together and kindred colours gather in bands</p>
+      </div>
+      <div id="waffleChart" aria-label="Waffle chart of all colours found in the polaroids"></div>
+      <p class="waffle-count" id="waffleCount"></p>
+    </section>
+
+    <!-- Tree sketch — leaf colours come from hovered polaroid -->
+    <section id="treeSection">
+      <div class="tree-header">
+        <h2 class="tree-title">A garden of colours</h2>
+        <p class="tree-subtitle">Every flower is a tree — its petals hold the colours of that photo</p>
+      </div>
+      <div id="treeCanvasWrap"></div>
+    </section>
+
+    <!-- Lightbox (fixed overlay, stays outside page wrap) -->
+    <div class="lightbox" id="lightbox">
+      <span class="lightbox-open-hint">use ← → to browse · Esc to close</span>
+      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+      <button class="lightbox-nav prev" onclick="lightboxStep(-1)">‹</button>
+      <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+      <button class="lightbox-nav next" onclick="lightboxStep(1)">›</button>
+      <div class="lightbox-caption">
+        <div class="lb-date" id="lbDate"></div>
+        <div class="lb-sub" id="lbSub"></div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+    <script src="tree-data.js"></script>
+    <script src="tree-map.js"></script>
+    <script src="gallery-tree.js"></script>
+    <!-- <script src="leaf-sketch.js"></script> -->
+  </body>
+</html>

@@ -1,0 +1,153 @@
+html {
+  overscroll-behavior-y: none;
+}
+
+body {
+  margin: 80px;
+  background-image: url(assets/bgtexturefinal.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin-left: 22%;
+  margin-right: 22%;
+  max-width: 600px;
+}
+
+@font-face {
+  font-family: "Libre";
+  src: url(assets/Libre_Baskerville/LibreBaskerville-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family: "Libre italic";
+  src: url(assets/Libre_Baskerville/LibreBaskerville-Italic-VariableFont_wght.ttf);
+}
+
+.back {
+  font-family: "Libre italic", serif;
+  text-decoration: underline;
+  margin: 0 0 100px 0;
+  color: #2b50bf;
+
+  &:hover {
+    letter-spacing: 0.02cap;
+    color: #ff4545;
+  }
+}
+
+.blogpost {
+  border-bottom: 0.5px solid #cfcfcf;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  padding: 16px 8px 24px 8px;
+  &:hover {
+    background-color: #0000000c;
+    border: 0px;
+  }
+}
+
+h1 {
+  font-family: "Libre italic", serif;
+  font-weight: 700;
+  font-size: 40px;
+  color: #111111;
+  margin: 0;
+  padding: 20px 0 20px 0;
+}
+
+h2 {
+  font-family: "Libre", serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #111111;
+  margin: 0;
+  line-height: 1.5;
+  text-decoration: none;
+  flex: 1;
+}
+
+h3 {
+  font-family: "Libre", serif;
+  font-weight: 200;
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.4;
+  margin: 0;
+  text-decoration: none;
+}
+
+h4 {
+  font-family: "Libre", serif;
+  font-weight: 200;
+  font-size: 12px;
+  color: #666666;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+h5 {
+  font-family: "Libre", serif;
+  font-weight: 200;
+  font-size: 14px;
+  color: #111111;
+  margin: 0;
+  line-height: 1.8;
+  text-decoration: none;
+}
+
+li {
+  font-family: "Libre", serif;
+  margin-left: 20px;
+  margin-bottom: 4px;
+  list-style-type: decimal;
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #111111;
+}
+
+a {
+  color: #2b50bf;
+  font-family: "Libre italic", serif;
+  text-decoration: none;
+}
+
+/* Mobile phones (portrait) */
+@media (max-width: 480px) {
+  body {
+    margin: 40px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  h3 {
+    font-size: 12px;
+  }
+
+  h4 {
+    color: #939393;
+  }
+
+  .blogpost {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 0px;
+    padding-right: 0px;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    margin: 60px;
+  }
+}

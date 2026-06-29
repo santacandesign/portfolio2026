@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Santa's Trees — Identified</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brown-dark: #392324;
+    --brown-mid: #613c27;
+    --green: #006303;
+    --bg: #f9f7f4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    font-family: "Manrope", sans-serif;
+    color: var(--brown-dark);
+    background-image:
+      linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  header {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 48px 5vw 32px;
+  }
+  h1 {
+    font-family: "Libre Baskerville", serif;
+    font-style: italic;
+    font-size: clamp(28px, 4vw, 52px);
+    color: var(--brown-dark);
+    line-height: 1.1;
+  }
+  .subtitle {
+    font-family: "Libre Baskerville", serif;
+    font-style: italic;
+    font-size: clamp(13px, 1.4vw, 20px);
+    color: var(--brown-mid);
+    margin-top: 6px;
+  }
+  .stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    background: white;
+    border-radius: 12px;
+    padding: 10px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .stat-num {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--brown-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* filters */
+  .filter-bar {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 5vw 24px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    background: white;
+    border: 1.5px solid #ddd;
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-family: "Manrope", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--brown-dark);
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--brown-dark);
+    color: white;
+    border-color: var(--brown-dark);
+  }
+
+  /* grid */
+  .grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 5vw 64px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+  }
+  .card.hidden { display: none; }
+  .card img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+  }
+  .card-body {
+    padding: 10px 12px 14px;
+  }
+  .card-species {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--brown-dark);
+    line-height: 1.3;
+  }
+  .card-latin {
+    font-family: "Libre Baskerville", serif;
+    font-style: italic;
+    font-size: 11px;
+    color: var(--brown-mid);
+    margin-top: 2px;
+  }
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .card-date {
+    font-size: 10px;
+    color: #aaa;
+  }
+  .tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    color: white;
+  }
+  .tag-bangalore { background: #6a4c2f; }
+  .tag-kochi     { background: #1a7a50; }
+  .tag-delhi     { background: #8b5e3c; }
+  .tag-dharamshala { background: #3a5fa0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🌳 Santa's Trees — Identified</h1>
+  <p class="subtitle">66 trees identified across Bangalore, Kochi, Delhi & Dharamshala</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">66</div><div class="stat-label">Photos</div></div>
+    <div class="stat"><div class="stat-num">28</div><div class="stat-label">Species found</div></div>
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">Cities</div></div>
+    <div class="stat"><div class="stat-num">2019–2026</div><div class="stat-label">Years</div></div>
+  </div>
+</header>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filter('all')">All</button>
+  <button class="filter-btn" onclick="filter('bangalore')">Bangalore</button>
+  <button class="filter-btn" onclick="filter('kochi')">Kochi</button>
+  <button class="filter-btn" onclick="filter('delhi')">Delhi</button>
+  <button class="filter-btn" onclick="filter('dharamshala')">Dharamshala</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const trees = [
+  { file:"IMG_20190228_132755.webp", date:"Feb 2019", species:"Pink Trumpet Tree", latin:"Tabebuia rosea", city:"bangalore" },
+  { file:"PXL_20221111_111920334.MP.webp", date:"Nov 2022", species:"Norfolk Island Pine", latin:"Araucaria heterophylla", city:"bangalore" },
+  { file:"PXL_20221223_093205857.webp", date:"Dec 2022", species:"Banyan + Coconut Palm", latin:"Ficus benghalensis · Cocos nucifera", city:"kochi" },
+  { file:"PXL_20221223_125009608.webp", date:"Dec 2022", species:"Banyan Tree", latin:"Ficus benghalensis", city:"kochi" },
+  { file:"PXL_20221225_090730283.webp", date:"Dec 2022", species:"Mango Tree", latin:"Mangifera indica", city:"kochi" },
+  { file:"PXL_20221225_091415474.webp", date:"Dec 2022", species:"Banana Plant", latin:"Musa sp.", city:"kochi" },
+  { file:"PXL_20221225_110426811.webp", date:"Dec 2022", species:"Peepal / Sacred Fig", latin:"Ficus religiosa", city:"kochi" },
+  { file:"PXL_20221225_110432335.webp", date:"Dec 2022", species:"Peepal / Sacred Fig", latin:"Ficus religiosa", city:"kochi" },
+  { file:"PXL_20221225_110434060.webp", date:"Dec 2022", species:"Peepal / Sacred Fig", latin:"Ficus religiosa", city:"kochi" },
+  { file:"PXL_20230128_092526310.webp", date:"Jan 2023", species:"Rain Tree", latin:"Samanea saman", city:"bangalore" },
+  { file:"PXL_20230128_092535541.webp", date:"Jan 2023", species:"Rain Tree", latin:"Samanea saman", city:"bangalore" },
+  { file:"PXL_20230128_093318025.webp", date:"Jan 2023", species:"Norfolk Island Pine + Royal Palm", latin:"Araucaria heterophylla · Roystonea regia", city:"bangalore" },
+  { file:"PXL_20230128_093325676.webp", date:"Jan 2023", species:"Norfolk Island Pine + Royal Palm", latin:"Araucaria heterophylla · Roystonea regia", city:"bangalore" },
+  { file:"PXL_20230225_033046110.webp", date:"Feb 2023", species:"Pink Trumpet Tree", latin:"Tabebuia rosea", city:"bangalore" },
+  { file:"PXL_20230304_045148676.webp", date:"Mar 2023", species:"Pongamia", latin:"Millettia pinnata", city:"bangalore" },
+  { file:"PXL_20230323_145328860.webp", date:"Mar 2023", species:"Cherry Blossom", latin:"Prunus serrulata", city:"dharamshala" },
+  { file:"PXL_20230509_081045117.webp", date:"May 2023", species:"Bougainvillea", latin:"Bougainvillea spectabilis", city:"bangalore" },
+  { file:"PXL_20230509_081657625.MP.webp", date:"May 2023", species:"Mango Tree", latin:"Mangifera indica", city:"bangalore" },
+  { file:"PXL_20230509_082042392.webp", date:"May 2023", species:"Creeping Fig + Neem", latin:"Ficus pumila · Azadirachta indica", city:"bangalore" },
+  { file:"PXL_20230512_043055815.webp", date:"May 2023", species:"Weeping Fig", latin:"Ficus benjamina", city:"bangalore" },
+  { file:"PXL_20230513_085407996.webp", date:"May 2023", species:"Jackfruit Tree", latin:"Artocarpus heterophyllus", city:"bangalore" },
+  { file:"PXL_20230531_130603373.webp", date:"May 2023", species:"Rain Tree + Jacaranda", latin:"Samanea saman · Jacaranda mimosifolia", city:"bangalore" },
+  { file:"PXL_20230720_153358586.webp", date:"Jul 2023", species:"Orchid Tree / Bauhinia", latin:"Bauhinia variegata", city:"bangalore" },
+  { file:"PXL_20230720_153400022.webp", date:"Jul 2023", species:"Orchid Tree / Bauhinia", latin:"Bauhinia variegata", city:"bangalore" },
+  { file:"PXL_20230720_153401820.webp", date:"Jul 2023", species:"Orchid Tree / Bauhinia", latin:"Bauhinia variegata", city:"bangalore" },
+  { file:"PXL_20230919_012922354.webp", date:"Sep 2023", species:"Peepal / Sacred Fig", latin:"Ficus religiosa", city:"bangalore" },
+  { file:"PXL_20230923_111855023.webp", date:"Sep 2023", species:"Rain Tree", latin:"Samanea saman", city:"bangalore" },
+  { file:"PXL_20230923_111917729.webp", date:"Sep 2023", species:"Rain Tree", latin:"Samanea saman", city:"bangalore" },
+  { file:"PXL_20231103_091032474.webp", date:"Nov 2023", species:"Bamboo + Neem", latin:"Bambusa sp. · Azadirachta indica", city:"bangalore" },
+  { file:"PXL_20231122_122742379.webp", date:"Nov 2023", species:"Rain Tree", latin:"Samanea saman", city:"bangalore" },
+  { file:"PXL_20231205_100634358.webp", date:"Dec 2023", species:"Bougainvillea", latin:"Bougainvillea spectabilis", city:"bangalore" },
+  { file:"PXL_20231205_101220307.webp", date:"Dec 2023", species:"Bougainvillea", latin:"Bougainvillea spectabilis", city:"bangalore" },
+  { file:"PXL_20231205_101228496.webp", date:"Dec 2023", species:"Bougainvillea", latin:"Bougainvillea spectabilis", city:"bangalore" },
+  { file:"PXL_20231205_101639304.webp", date:"Dec 2023", species:"Cannonball Tree", latin:"Couroupita guianensis", city:"bangalore" },
+  { file:"PXL_20231205_101657030.webp", date:"Dec 2023", species:"Cannonball Tree", latin:"Couroupita guianensis", city:"bangalore" },
+  { file:"PXL_20231221_104334197.webp", date:"Dec 2023", species:"Rain Tree", latin:"Samanea saman", city:"bangalore" },
+  { file:"PXL_20231221_171119309.NIGHT.webp", date:"Dec 2023", species:"Mango Tree", latin:"Mangifera indica", city:"bangalore" },
+  { file:"PXL_20240212_051049222.webp", date:"Feb 2024", species:"Bougainvillea", latin:"Bougainvillea spectabilis", city:"bangalore" },
+  { file:"PXL_20240216_075143607.webp", date:"Feb 2024", species:"Peepal / Sacred Fig", latin:"Ficus religiosa", city:"bangalore" },
+  { file:"PXL_20240306_123013526.webp", date:"Mar 2024", species:"Rain Tree", latin:"Samanea saman", city:"bangalore" },
+  { file:"PXL_20240402_075406374.webp", date:"Apr 2024", species:"Coconut Palm + Bougainvillea", latin:"Cocos nucifera · Bougainvillea sp.", city:"bangalore" },
+  { file:"PXL_20240414_051332953.webp", date:"Apr 2024", species:"Teak + Eucalyptus", latin:"Tectona grandis · Eucalyptus sp.", city:"bangalore" },
+  { file:"PXL_20240928_083747251.webp", date:"Sep 2024", species:"Peepal / Sacred Fig", latin:"Ficus religiosa", city:"delhi" },
+  { file:"PXL_20240930_043149959.MP.webp", date:"Sep 2024", species:"Deodar Cedar", latin:"Cedrus deodara", city:"dharamshala" },
+  { file:"PXL_20240930_082021443.webp", date:"Sep 2024", species:"Deodar Cedar", latin:"Cedrus deodara", city:"dharamshala" },
+  { file:"PXL_20240930_082033586.webp", date:"Sep 2024", species:"Deodar Cedar", latin:"Cedrus deodara", city:"dharamshala" },
+  { file:"PXL_20240930_093614354.webp", date:"Sep 2024", species:"Chir Pine + Rhododendron", latin:"Pinus roxburghii · Rhododendron arboreum", city:"dharamshala" },
+  { file:"PXL_20240930_095443801.webp", date:"Sep 2024", species:"Himalayan Oak", latin:"Quercus leucotrichophora", city:"dharamshala" },
+  { file:"PXL_20240930_095637846.MP.webp", date:"Sep 2024", species:"Himalayan Oak", latin:"Quercus sp.", city:"dharamshala" },
+  { file:"PXL_20240930_101616430.webp", date:"Sep 2024", species:"Chir Pine", latin:"Pinus roxburghii", city:"dharamshala" },
+  { file:"PXL_20240930_103215996.webp", date:"Sep 2024", species:"Himalayan Oak", latin:"Quercus sp.", city:"dharamshala" },
+  { file:"PXL_20240930_103536869.webp", date:"Sep 2024", species:"Deodar Cedar", latin:"Cedrus deodara", city:"dharamshala" },
+  { file:"PXL_20241001_062208554.webp", date:"Oct 2024", species:"Himalayan Birch", latin:"Betula utilis", city:"dharamshala" },
+  { file:"PXL_20241001_072803468.webp", date:"Oct 2024", species:"Himalayan Alder", latin:"Alnus nepalensis", city:"dharamshala" },
+  { file:"PXL_20241001_073321959.webp", date:"Oct 2024", species:"Bamboo", latin:"Dendrocalamus sp.", city:"dharamshala" },
+  { file:"PXL_20241001_074836868.webp", date:"Oct 2024", species:"Himalayan Oak (fallen)", latin:"Quercus sp.", city:"dharamshala" },
+  { file:"PXL_20241002_103943445.webp", date:"Oct 2024", species:"Deodar Cedar", latin:"Cedrus deodara", city:"dharamshala" },
+  { file:"PXL_20250315_061405586.webp", date:"Mar 2025", species:"Indian Laburnum + Peepal", latin:"Cassia fistula · Ficus religiosa", city:"delhi" },
+  { file:"PXL_20250315_063656140.webp", date:"Mar 2025", species:"Neem Tree", latin:"Azadirachta indica", city:"delhi" },
+  { file:"PXL_20250727_052805796.webp", date:"Jul 2025", species:"Creeping Fig", latin:"Ficus pumila", city:"bangalore" },
+  { file:"PXL_20250727_052809171.webp", date:"Jul 2025", species:"Creeping Fig", latin:"Ficus pumila", city:"bangalore" },
+  { file:"PXL_20250727_053014046.webp", date:"Jul 2025", species:"Weeping Fig / Banyan", latin:"Ficus sp.", city:"bangalore" },
+  { file:"PXL_20251020_055547287.webp", date:"Oct 2025", species:"Banyan Tree", latin:"Ficus benghalensis", city:"bangalore" },
+  { file:"PXL_20260211_030413218.webp", date:"Feb 2026", species:"Coconut Palm + Bougainvillea", latin:"Cocos nucifera · Bougainvillea sp.", city:"bangalore" },
+  { file:"PXL_20260516_055431919.webp", date:"May 2026", species:"Bamboo + Mango", latin:"Bambusa sp. · Mangifera indica", city:"bangalore" },
+  { file:"PXL_20260530_040022825.webp", date:"May 2026", species:"Peepal / Sacred Fig", latin:"Ficus religiosa", city:"bangalore" },
+];
+
+function render(list) {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = list.map(t => `
+    <div class="card" data-city="${t.city}">
+      <img src="images/thumb/${t.file}" alt="${t.species}" loading="lazy">
+      <div class="card-body">
+        <div class="card-species">${t.species}</div>
+        <div class="card-latin">${t.latin}</div>
+        <div class="card-meta">
+          <span class="card-date">${t.date}</span>
+          <span class="tag tag-${t.city}">${t.city.charAt(0).toUpperCase()+t.city.slice(1)}</span>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function filter(city) {
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  event.target.classList.add("active");
+  const list = city === "all" ? trees : trees.filter(t => t.city === city);
+  render(list);
+}
+
+render(trees);
+</script>
+</body>
+</html>
