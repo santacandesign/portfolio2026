@@ -24,6 +24,16 @@ body {
   src: url(assets/Libre_Baskerville/LibreBaskerville-Italic-VariableFont_wght.ttf);
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+  padding: 2px;
+  border: #a9b2c7 1px solid;
+}
+
 .back {
   font-family: "Libre italic", serif;
   text-decoration: underline;
