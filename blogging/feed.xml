@@ -1,9 +1,17 @@
-<xml version="1.0" encoding="UTF-8">
+<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
     <title>Santa writes to think</title>
     <description>I write here about everything</description>
     <link>https://santais.online/blogging/</link>
+
+    <item>
+      <title>Jhamkhandi trip on July 1, 2026</title>
+      <link>https://santais.online/blogging/blogs/jhamkhanditrip</link>
+      <description>curated parts of a 1 day trip</description>
+      <pubDate>Thu, 2 Jul 2026 17:40:00 GMT</pubDate>
+      <guid>https://santais.online/blogging/blogs/jhamkhanditrip</guid>
+    </item>
 
     <item>
       <title>Weeknote June 22- 27, 2026</title>
