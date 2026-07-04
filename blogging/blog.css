@@ -52,10 +52,10 @@ img {
   justify-content: space-between;
   gap: 8px;
   align-items: center;
-  padding: 16px 8px 24px 8px;
+  padding: 16px 12px 24px 12px;
   &:hover {
     background-color: #0000000c;
-    border: 0px;
+    border-radius: 8px;
   }
 }
 
