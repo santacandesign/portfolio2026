@@ -26,9 +26,20 @@
     '<feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="3" seed="11" result="n"/>',
     '<feDisplacementMap in="SourceGraphic" in2="n" scale="18" xChannelSelector="R" yChannelSelector="G"/>',
     "</filter>",
+    '<filter id="koiCausticNoise" x="-60%" y="-60%" width="220%" height="220%">',
+    '<feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="4" result="n">',
+    '<animate attributeName="baseFrequency" values="0.01;0.02;0.01" dur="11s" repeatCount="indefinite"/>',
+    "</feTurbulence>",
+    '<feDisplacementMap in="SourceGraphic" in2="n" scale="16" xChannelSelector="R" yChannelSelector="G"/>',
+    '<feGaussianBlur stdDeviation="14"/>',
+    "</filter>",
+    '<filter id="koiHaloNoise" x="-60%" y="-60%" width="220%" height="220%">',
+    '<feTurbulence type="fractalNoise" baseFrequency="0.15" numOctaves="2" seed="6" result="n"/>',
+    '<feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/>',
+    "</filter>",
 
     '<path id="koiBodyShape" d="M0 -1.0 C6 -2.6 16 -4.6 26 -5.4 C34.5 -6.1 43 -4.2 45.2 -1.6 C46.3 -0.5 46.3 0.5 45.2 1.6 C43 4.2 34.5 6.1 26 5.4 C16 4.6 6 2.6 0 1.0 Z"/>',
-    '<path id="koiFinShape" d="M0 0 C-5 1.2 -11 4.2 -14 8.5 C-16 11.5 -14.5 14.5 -10.5 13.7 C-6.5 12.9 -2.5 8.7 0 0 Z"/>',
+    '<path id="koiFinLobe" d="M0 0 Q-3.5 -6 -2.8 -11.5 A2.8 2.3 0 0 1 2.8 -11.5 Q3.5 -6 0 0 Z"/>',
     '<path id="koiTailShape" d="M1.5 0 Q-5.5 -5 -11 -0.6 Q-12.5 0 -11 0.6 Q-5.5 5 1.5 0 Z"/>',
 
     '<radialGradient id="padGrad" cx="38%" cy="35%" r="85%">',
@@ -79,7 +90,7 @@
     '<ellipse class="koi-glow" cx="720" cy="170" rx="260" ry="150" fill="url(#sunGlow)"/>',
     '<ellipse cx="1340" cy="30" rx="300" ry="150" fill="url(#sunGlow)"/>',
 
-    '<g class="koi-caustics">',
+    '<g class="koi-caustics" filter="url(#koiCausticNoise)">',
     '<ellipse class="koi-caustic kc-1" cx="300" cy="120" rx="170" ry="60" fill="#eafff2"/>',
     '<ellipse class="koi-caustic kc-2" cx="920" cy="270" rx="210" ry="70" fill="#eafff2"/>',
     '<ellipse class="koi-caustic kc-3" cx="1250" cy="110" rx="150" ry="55" fill="#eafff2"/>',
@@ -108,15 +119,15 @@
 
     '<g class="koi-ripple" transform="translate(380,150)" filter="url(#koiRippleNoise)">',
     '<circle class="ripple-ring" style="animation-delay:0s" r="42"/>',
-    '<circle class="ripple-ring" style="animation-delay:1.4s" r="42"/>',
+    '<circle class="ripple-ring" style="animation-delay:2.2s" r="42"/>',
     "</g>",
     '<g class="koi-ripple" transform="translate(1060,120)" filter="url(#koiRippleNoise)">',
-    '<circle class="ripple-ring" style="animation-delay:2.2s" r="42"/>',
-    '<circle class="ripple-ring" style="animation-delay:3.6s" r="42"/>',
+    '<circle class="ripple-ring" style="animation-delay:3.4s" r="42"/>',
+    '<circle class="ripple-ring" style="animation-delay:5.6s" r="42"/>',
     "</g>",
     '<g class="koi-ripple" transform="translate(720,305)" filter="url(#koiRippleNoise)">',
-    '<circle class="ripple-ring" style="animation-delay:4.4s" r="42"/>',
-    '<circle class="ripple-ring" style="animation-delay:5.8s" r="42"/>',
+    '<circle class="ripple-ring" style="animation-delay:6.9s" r="42"/>',
+    '<circle class="ripple-ring" style="animation-delay:9.1s" r="42"/>',
     "</g>",
 
     // noise sits above the background/caustics/ripples so those pick up
@@ -166,28 +177,40 @@
       path: "M 635 70 A 75 32 -6 1 0 785 70 A 75 32 -6 1 0 635 70 Z",
     }),
 
-    '<g transform="translate(1180,105)"><g class="koi-lily lily-1">',
-    '<ellipse rx="49" ry="45" fill="none" stroke="#ffffff" stroke-opacity="0.6" stroke-width="2"/>',
+    '<g transform="translate(1090,125)"><g class="koi-lily lily-1">',
+    '<g filter="url(#koiHaloNoise)">',
+    '<ellipse class="koi-lily-halo" rx="49" ry="45" stroke-width="2"/>',
+    '<ellipse class="koi-lily-halo halo-b" rx="49" ry="45" stroke-width="2"/>',
+    "</g>",
     '<path d="M-56 12 A54 50 0 0 1 -20 -52" fill="none" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.5"/>',
     '<path d="M0 0 L38 -14 A40 40 0 1 0 38 14 Z" fill="url(#padGrad)"/>',
     '<path d="M0 0 L-33 -8 M0 0 L-28 -20 M0 0 L-15 -30 M0 0 L5 -33 M0 0 L-34 6 M0 0 L-24 24 M0 0 L-8 32 M0 0 L12 30" stroke="#245c1d" stroke-width="1.2" stroke-opacity="0.65" fill="none"/>',
     '<circle cx="-14" cy="-12" r="2.6" fill="#ffffff" opacity="0.85"/>',
     "</g></g>",
-    '<g transform="translate(1252,150)"><g class="koi-lily lily-2">',
-    '<ellipse rx="32" ry="29" fill="none" stroke="#ffffff" stroke-opacity="0.55" stroke-width="1.8"/>',
+    '<g transform="translate(1160,170)"><g class="koi-lily lily-2">',
+    '<g filter="url(#koiHaloNoise)">',
+    '<ellipse class="koi-lily-halo" rx="32" ry="29" stroke-width="1.8"/>',
+    '<ellipse class="koi-lily-halo halo-b" rx="32" ry="29" stroke-width="1.8"/>',
+    "</g>",
     '<path d="M0 0 L24 -9 A26 26 0 1 0 24 9 Z" fill="url(#padGrad)"/>',
     '<path d="M0 0 L-21 -6 M0 0 L-14 -16 M0 0 L-2 -21 M0 0 L-20 10 M0 0 L-7 20" stroke="#245c1d" stroke-width="1" stroke-opacity="0.65" fill="none"/>',
     "</g></g>",
-    '<g transform="translate(165,120)"><g class="koi-lily lily-3">',
-    '<ellipse rx="39" ry="36" fill="none" stroke="#ffffff" stroke-opacity="0.6" stroke-width="2"/>',
+    '<g transform="translate(255,150)"><g class="koi-lily lily-3">',
+    '<g filter="url(#koiHaloNoise)">',
+    '<ellipse class="koi-lily-halo" rx="39" ry="36" stroke-width="2"/>',
+    '<ellipse class="koi-lily-halo halo-b" rx="39" ry="36" stroke-width="2"/>',
+    "</g>",
     '<path d="M44 -14 A42 38 0 0 1 18 40" fill="none" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.5"/>',
     '<path d="M0 0 L30 -11 A32 32 0 1 0 30 11 Z" fill="url(#padGrad)"/>',
     '<path d="M0 0 L-26 -8 M0 0 L-18 -20 M0 0 L-4 -26 M0 0 L-27 8 M0 0 L-16 22 M0 0 L0 26" stroke="#245c1d" stroke-width="1.2" stroke-opacity="0.65" fill="none"/>',
     '<circle cx="10" cy="14" r="2.2" fill="#ffffff" opacity="0.85"/>',
     "</g></g>",
-    '<g transform="translate(215,85)"><g class="koi-lily lily-4">',
-    '<ellipse rx="17" ry="15" fill="none" stroke="#ffffff" stroke-opacity="0.5" stroke-width="1.5"/>',
-    '<g fill="#fffced" stroke="#e8e6da" stroke-width="0.8">',
+    '<g transform="translate(300,115)"><g class="koi-lily lily-4">',
+    '<g filter="url(#koiHaloNoise)">',
+    '<ellipse class="koi-lily-halo" rx="17" ry="15" stroke-width="1.5"/>',
+    '<ellipse class="koi-lily-halo halo-b" rx="17" ry="15" stroke-width="1.5"/>',
+    "</g>",
+    '<g fill="#fffced">',
     '<ellipse rx="4.5" ry="12" transform="rotate(0)"/>',
     '<ellipse rx="4.5" ry="12" transform="rotate(45)"/>',
     '<ellipse rx="4.5" ry="12" transform="rotate(90)"/>',
@@ -196,25 +219,32 @@
     '<circle r="3.5" fill="#ff4545" opacity="0.85"/>',
     "</g></g>",
 
-    '<g transform="translate(1400,355) rotate(-30)"><g class="koi-lily lotus-1">',
-    '<ellipse rx="92" ry="86" fill="none" stroke="#ffffff" stroke-opacity="0.5" stroke-width="2"/>',
-    '<path d="M0 0 L74 -28 A80 80 0 1 0 74 28 Z" fill="url(#lotusGrad)" stroke="#1c4a16" stroke-width="2" stroke-opacity="0.45"/>',
-    '<path d="M0 0 L-66 -16 M0 0 L-56 -40 M0 0 L-34 -60 M0 0 L-6 -66 M0 0 L-68 12 M0 0 L-52 44 M0 0 L-28 62 M0 0 L0 66 M0 0 L28 58 M0 0 L52 -48" stroke="#1c4a16" stroke-width="1.6" stroke-opacity="0.55" fill="none"/>',
-    '<path d="M2 -22 L10 -8 L26 -14 L16 0 L26 14 L8 10 L-4 24 L-8 8 L-26 8 L-12 -4 L-20 -18 L-6 -10 Z" fill="#7cbf5a" opacity="0.4"/>',
-    '<circle cx="-30" cy="-24" r="3" fill="#ffffff" opacity="0.8"/>',
-    "</g></g>",
-    '<g transform="translate(45,330) rotate(150)"><g class="koi-lily lotus-2">',
-    '<ellipse rx="72" ry="67" fill="none" stroke="#ffffff" stroke-opacity="0.5" stroke-width="2"/>',
-    '<path d="M0 0 L56 -21 A62 62 0 1 0 56 21 Z" fill="url(#lotusGrad)" stroke="#1c4a16" stroke-width="2" stroke-opacity="0.45"/>',
-    '<path d="M0 0 L-52 -12 M0 0 L-42 -32 M0 0 L-24 -48 M0 0 L-2 -52 M0 0 L-52 10 M0 0 L-38 36 M0 0 L-18 48 M0 0 L4 50 M0 0 L40 -38" stroke="#1c4a16" stroke-width="1.4" stroke-opacity="0.55" fill="none"/>',
-    '<path d="M0 -16 L8 -6 L20 -10 L12 2 L18 12 L4 8 L-4 18 L-6 6 L-20 6 L-8 -4 L-14 -14 L-4 -8 Z" fill="#7cbf5a" opacity="0.4"/>',
-    "</g></g>",
-    '<g transform="translate(660,60) rotate(80)"><g class="koi-lily lotus-3">',
+    '<g transform="translate(660,100) rotate(80)"><g class="koi-lily lotus-3">',
+    '<g filter="url(#koiHaloNoise)">',
+    '<ellipse class="koi-lily-halo" rx="54" ry="50" stroke-width="1.8"/>',
+    '<ellipse class="koi-lily-halo halo-b" rx="54" ry="50" stroke-width="1.8"/>',
+    "</g>",
     '<path d="M0 0 L42 -16 A46 46 0 1 0 42 16 Z" fill="url(#lotusGrad)" stroke="#1c4a16" stroke-width="1.8" stroke-opacity="0.45"/>',
     '<path d="M0 0 L-38 -9 M0 0 L-30 -24 M0 0 L-16 -35 M0 0 L-38 8 M0 0 L-26 27 M0 0 L-10 36 M0 0 L30 -28" stroke="#1c4a16" stroke-width="1.2" stroke-opacity="0.55" fill="none"/>',
     '<circle cx="-14" cy="12" r="2.4" fill="#ffffff" opacity="0.8"/>',
     "</g></g>",
     "</svg>",
+
+    // textured outline lives in its own overlay <svg> with
+    // preserveAspectRatio="none" so it stretches to exactly match the
+    // rendered footer box on every side. The main scene above uses
+    // "slice" to crop-to-fill without distorting fish/lily pads, but that
+    // crops the left/right edges of its viewBox on wide/short containers —
+    // which was hiding the left/right portions of the frame when it lived
+    // inside that SVG. A separate non-scaling-stroke-free stretch overlay
+    // guarantees all four sides of the border are always visible.
+    '<svg class="koi-frame-scene" viewBox="0 0 1440 380" preserveAspectRatio="none" aria-hidden="true">',
+    '<g class="koi-frame" filter="url(#koiRough)">',
+    '<rect x="26" y="26" width="1388" height="328" rx="30" ry="30" fill="none" stroke="#eafff2" stroke-width="5" stroke-opacity="0.4"/>',
+    '<rect x="36" y="36" width="1368" height="308" rx="22" ry="22" fill="none" stroke="#eafff2" stroke-width="1.5" stroke-opacity="0.28"/>',
+    "</g>",
+    "</svg>",
+
     "</footer>",
   ].join("\n");
 
@@ -231,10 +261,34 @@
       '<g transform="scale(' + opts.scale + ')">',
       '<ellipse class="koi-shadow" cx="18" cy="5" rx="26" ry="4.5"/>',
       '<g class="koi-tail"><use href="#koiTailShape" class="koi-tail-fill"/></g>',
-      '<g transform="translate(35,-4.5) scale(1,-1)"><use href="#koiFinShape" class="koi-fin-fill"/></g>',
-      '<g transform="translate(35,4.5)"><use href="#koiFinShape" class="koi-fin-fill"/></g>',
+      // both fins use the identical ray layout (no swapping based on the
+      // mirror flip) so the long ray consistently sweeps toward the tail
+      // on both the top and bottom fin, instead of one reading "longer on
+      // top" and the other "longer on bottom"
+      '<g transform="translate(35,-4.5) scale(1,-1)">',
+      finFan(),
+      "</g>",
+      '<g transform="translate(35,4.5)">',
+      finFan(),
+      "</g>",
       '<use href="#koiBodyShape" class="koi-body-fill"/>',
       "</g>",
+      "</g>",
+    ].join("\n");
+  }
+
+  // a pectoral fin as a flowing 3-lobe fan (a short, a long and a medium
+  // ray splaying out from the same point), instead of one solid paddle.
+  // the same fixed ray-length layout is used for both the top and bottom
+  // fin (no swap based on the mirror flip), so the long ray sweeps toward
+  // the tail consistently on both fins rather than one being longer on
+  // its top edge and the other longer on its bottom edge.
+  function finFan() {
+    return [
+      '<g class="koi-fin">',
+      '<g transform="rotate(-124) scale(0.55)"><use href="#koiFinLobe" class="koi-fin-fill"/></g>',
+      '<g transform="rotate(-146) scale(0.85)"><use href="#koiFinLobe" class="koi-fin-fill"/></g>',
+      '<g transform="rotate(-168) scale(0.95)"><use href="#koiFinLobe" class="koi-fin-fill"/></g>',
       "</g>",
     ].join("\n");
   }

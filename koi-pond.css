@@ -5,6 +5,7 @@
   width: auto;
   height: 400px;
   margin: 80px 56px 0;
+  border-radius: 20px;
   overflow: hidden;
   background: linear-gradient(
     180deg,
@@ -13,35 +14,37 @@
     #164f3d 62%,
     #0a2e23 100%
   );
-  /* square (straight-edged) but soft-faded border on all four sides, so
-     the pond fades into the page instead of ending in a hard line */
-  -webkit-mask-image: linear-gradient(
+  /* soft 4px blur right at the pond's real (rectangular) edge — separate
+     from the crisp hand-drawn border, which now sits further inward */
+  -webkit-mask-image:
+    linear-gradient(
       to right,
       transparent 0,
-      #000 48px,
-      #000 calc(100% - 48px),
+      #000 4px,
+      #000 calc(100% - 4px),
       transparent 100%
     ),
     linear-gradient(
       to bottom,
       transparent 0,
-      #000 40px,
-      #000 calc(100% - 40px),
+      #000 4px,
+      #000 calc(100% - 4px),
       transparent 100%
     );
   -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(
+  mask-image:
+    linear-gradient(
       to right,
       transparent 0,
-      #000 48px,
-      #000 calc(100% - 48px),
+      #000 4px,
+      #000 calc(100% - 4px),
       transparent 100%
     ),
     linear-gradient(
       to bottom,
       transparent 0,
-      #000 40px,
-      #000 calc(100% - 40px),
+      #000 4px,
+      #000 calc(100% - 4px),
       transparent 100%
     );
   mask-composite: intersect;
@@ -55,23 +58,35 @@
   display: block;
 }
 
+/* stretches exactly to the footer's rendered box (no slice-cropping),
+   so the hand-drawn border shows on all four sides regardless of the
+   container's aspect ratio */
+.koi-frame-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
 /* water texture layers */
 .koi-streaks {
-  opacity: 0.09;
+  opacity: 0.07;
 }
 .koi-grain {
-  opacity: 0.24;
+  opacity: 0.024;
   mix-blend-mode: overlay;
 }
 .koi-glow {
-  opacity: 0.5;
+  opacity: 0.9;
   filter: blur(2px);
 }
 
 /* floating droplets twinkle */
 .kd-a,
 .kd-b {
-  animation: koi-twinkle 4s ease-in-out infinite alternate;
+  animation: koi-twinkle 1s ease-in-out infinite alternate;
 }
 .kd-b {
   animation-delay: -2s;
@@ -87,10 +102,10 @@
   }
 }
 
-/* drifting light patches */
+/* drifting light patches — blur + a shimmering noise texture (matching the
+   ripples) both live in the koiCausticNoise SVG filter now, not here */
 .koi-caustic {
   opacity: 0.14;
-  filter: blur(28px);
   transform-box: fill-box;
   transform-origin: center;
   animation: koi-drift 16s ease-in-out infinite alternate;
@@ -117,11 +132,11 @@
 .ripple-ring {
   fill: none;
   stroke: #eafff2;
-  stroke-width: 1.8;
+  stroke-width: 1.2;
   opacity: 0;
   transform-box: fill-box;
   transform-origin: center;
-  animation: koi-ripple 7s linear infinite;
+  animation: koi-ripple 11s linear infinite;
 }
 
 @keyframes koi-ripple {
@@ -142,7 +157,7 @@
 .koi-shadow {
   fill: #0b2e23;
   opacity: 0.4;
-  filter: blur(4px);
+  filter: blur(2px);
 }
 
 /* per-fish color palettes — all shades of red/orange */
@@ -182,27 +197,30 @@
   opacity: 0.95;
 }
 
-/* pectoral fins: gentle top-view paddle */
+/* pectoral fins: a flowing 3-ray fan (see finFan() in koi-pond.js) instead
+   of a single solid paddle — the whole fan flutters together as one unit */
 .koi-fin-fill {
   fill: var(--koi-dark);
   opacity: 0.9;
+}
+.koi-fin {
   transform-box: fill-box;
-  transform-origin: 100% 0%;
+  transform-origin: 100% 50%;
   animation: koi-fin-flap 1.3s ease-in-out infinite alternate;
 }
-.koi-2 .koi-fin-fill {
+.koi-2 .koi-fin {
   animation-duration: 1.05s;
 }
-.koi-3 .koi-fin-fill {
+.koi-3 .koi-fin {
   animation-duration: 0.95s;
 }
-.koi-4 .koi-fin-fill {
+.koi-4 .koi-fin {
   animation-duration: 0.8s;
 }
-.koi-5 .koi-fin-fill {
+.koi-5 .koi-fin {
   animation-duration: 1.15s;
 }
-.koi-6 .koi-fin-fill {
+.koi-6 .koi-fin {
   animation-duration: 0.85s;
 }
 
@@ -248,7 +266,35 @@
   }
 }
 
-/* lily pads bobbing */
+/* ripple halos around the lily pads/lotus — same pulsing-and-fading idea
+   as the water ripples, paired and staggered so the halo never fully
+   disappears, with a light noise wobble on the ring itself */
+.koi-lily-halo {
+  fill: none;
+  stroke: #ffffff;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: koi-halo-ripple 9s ease-out infinite;
+}
+.koi-lily-halo.halo-b {
+  animation-delay: -4.5s;
+}
+
+@keyframes koi-halo-ripple {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  65% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+/* lily pads bobbing — moves together with the halo ripple above */
 .koi-lily {
   transform-box: fill-box;
   transform-origin: center;
@@ -283,7 +329,7 @@
     transform: translate(0, 0) rotate(0deg);
   }
   to {
-    transform: translate(3px, 4px) rotate(2deg);
+    transform: translate(4px, 6px) rotate(3deg);
   }
 }
 
@@ -297,14 +343,16 @@
 @media (prefers-reduced-motion: reduce) {
   .koi-caustic,
   .ripple-ring,
+  .koi-lily-halo,
   .koi-tail,
-  .koi-fin-fill,
+  .koi-fin,
   .koi-lily,
   .kd-a,
   .kd-b {
     animation: none;
   }
-  .ripple-ring {
+  .ripple-ring,
+  .koi-lily-halo {
     opacity: 0.3;
   }
 }
