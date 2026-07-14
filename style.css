@@ -796,7 +796,7 @@ h4 {
   width: 85%;
   height: 92.13%;
   object-fit: contain;
-  border-radius: 1.8rem;
+  border-radius: 1.6rem;
   z-index: 0;
   box-shadow: 4px 12px 12px rgba(22, 8, 0, 0.621);
 }
@@ -936,6 +936,6 @@ h4 {
   }
 
   .phone-mockup-inner video {
-    border-radius: 0.8rem;
+    border-radius: 1.4rem;
   }
 }
