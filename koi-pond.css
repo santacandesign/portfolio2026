@@ -1,0 +1,310 @@
+/* ══════════ KOI POND FOOTER (standalone component) ══════════ */
+
+.koi-footer {
+  position: relative;
+  width: auto;
+  height: 400px;
+  margin: 80px 56px 0;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    #5c9c80 0%,
+    #327a5f 28%,
+    #164f3d 62%,
+    #0a2e23 100%
+  );
+  /* square (straight-edged) but soft-faded border on all four sides, so
+     the pond fades into the page instead of ending in a hard line */
+  -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 48px,
+      #000 calc(100% - 48px),
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 40px,
+      #000 calc(100% - 40px),
+      transparent 100%
+    );
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 48px,
+      #000 calc(100% - 48px),
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 40px,
+      #000 calc(100% - 40px),
+      transparent 100%
+    );
+  mask-composite: intersect;
+}
+
+.koi-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* water texture layers */
+.koi-streaks {
+  opacity: 0.09;
+}
+.koi-grain {
+  opacity: 0.24;
+  mix-blend-mode: overlay;
+}
+.koi-glow {
+  opacity: 0.5;
+  filter: blur(2px);
+}
+
+/* floating droplets twinkle */
+.kd-a,
+.kd-b {
+  animation: koi-twinkle 4s ease-in-out infinite alternate;
+}
+.kd-b {
+  animation-delay: -2s;
+  animation-duration: 5s;
+}
+
+@keyframes koi-twinkle {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 0.9;
+  }
+}
+
+/* drifting light patches */
+.koi-caustic {
+  opacity: 0.14;
+  filter: blur(28px);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: koi-drift 16s ease-in-out infinite alternate;
+}
+.kc-2 {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+.kc-3 {
+  animation-delay: -11s;
+  animation-duration: 13s;
+}
+
+@keyframes koi-drift {
+  from {
+    transform: translate(-35px, 6px) scale(1);
+  }
+  to {
+    transform: translate(35px, -8px) scale(1.15);
+  }
+}
+
+/* expanding ripple rings */
+.ripple-ring {
+  fill: none;
+  stroke: #eafff2;
+  stroke-width: 1.8;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: koi-ripple 7s linear infinite;
+}
+
+@keyframes koi-ripple {
+  0% {
+    transform: scale(0.15);
+    opacity: 0.7;
+  }
+  70% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* ── the fish ── */
+.koi-shadow {
+  fill: #0b2e23;
+  opacity: 0.4;
+  filter: blur(4px);
+}
+
+/* per-fish color palettes — all shades of red/orange */
+.koi-1 {
+  --koi-body: #ff4433;
+  --koi-dark: #c22f22;
+}
+.koi-2 {
+  --koi-body: #e2341f;
+  --koi-dark: #a92616;
+}
+.koi-3 {
+  --koi-body: #ff7a3d;
+  --koi-dark: #c85a26;
+}
+.koi-4 {
+  --koi-body: #ff4d3d;
+  --koi-dark: #c73326;
+}
+.koi-5 {
+  --koi-body: #f2481f;
+  --koi-dark: #b53318;
+}
+.koi-6 {
+  --koi-body: #ff5a3d;
+  --koi-dark: #c43e22;
+}
+
+.koi-body-fill {
+  fill: var(--koi-body);
+}
+
+/* tail: single sharp blade, whip-like flick (top-down fish only show
+   one edge of the tail at a time, not a split fork) */
+.koi-tail-fill {
+  fill: var(--koi-dark);
+  opacity: 0.95;
+}
+
+/* pectoral fins: gentle top-view paddle */
+.koi-fin-fill {
+  fill: var(--koi-dark);
+  opacity: 0.9;
+  transform-box: fill-box;
+  transform-origin: 100% 0%;
+  animation: koi-fin-flap 1.3s ease-in-out infinite alternate;
+}
+.koi-2 .koi-fin-fill {
+  animation-duration: 1.05s;
+}
+.koi-3 .koi-fin-fill {
+  animation-duration: 0.95s;
+}
+.koi-4 .koi-fin-fill {
+  animation-duration: 0.8s;
+}
+.koi-5 .koi-fin-fill {
+  animation-duration: 1.15s;
+}
+.koi-6 .koi-fin-fill {
+  animation-duration: 0.85s;
+}
+
+@keyframes koi-fin-flap {
+  from {
+    transform: rotate(-12deg);
+  }
+  to {
+    transform: rotate(14deg);
+  }
+}
+
+.koi-tail {
+  transform-box: fill-box;
+  transform-origin: 100% 50%;
+  animation: koi-tail-wag 1.3s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+.koi-2 .koi-tail {
+  animation-duration: 1.05s;
+}
+.koi-3 .koi-tail {
+  animation-duration: 0.95s;
+}
+.koi-4 .koi-tail {
+  animation-duration: 0.8s;
+}
+.koi-5 .koi-tail {
+  animation-duration: 1.15s;
+}
+.koi-6 .koi-tail {
+  animation-duration: 0.85s;
+}
+
+@keyframes koi-tail-wag {
+  0% {
+    transform: rotate(-14deg) scaleX(0.97);
+  }
+  45% {
+    transform: rotate(8deg) scaleX(1.03);
+  }
+  100% {
+    transform: rotate(-14deg) scaleX(0.97);
+  }
+}
+
+/* lily pads bobbing */
+.koi-lily {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: koi-bob 6s ease-in-out infinite alternate;
+}
+.lily-2 {
+  animation-delay: -2s;
+}
+.lily-3 {
+  animation-delay: -4s;
+  animation-duration: 7.5s;
+}
+.lily-4 {
+  animation-delay: -1s;
+  animation-duration: 8s;
+}
+.lotus-1 {
+  animation-delay: -3s;
+  animation-duration: 9s;
+}
+.lotus-2 {
+  animation-delay: -6s;
+  animation-duration: 8s;
+}
+.lotus-3 {
+  animation-delay: -1.5s;
+  animation-duration: 7s;
+}
+
+@keyframes koi-bob {
+  from {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  to {
+    transform: translate(3px, 4px) rotate(2deg);
+  }
+}
+
+@media (max-width: 800px) {
+  .koi-footer {
+    height: 320px;
+    margin: 40px 20px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .koi-caustic,
+  .ripple-ring,
+  .koi-tail,
+  .koi-fin-fill,
+  .koi-lily,
+  .kd-a,
+  .kd-b {
+    animation: none;
+  }
+  .ripple-ring {
+    opacity: 0.3;
+  }
+}
