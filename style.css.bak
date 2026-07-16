@@ -110,153 +110,115 @@ html {
   color: #4b2d15;
 }
 
-/* ===== TOP CONTACT BAR (badge + links) ===== */
-.contact-top {
-  position: fixed;
-  top: 26px;
-  right: 40px;
-  z-index: 1000;
+.nav-contact-btn {
   display: flex;
   align-items: center;
-  gap: 26px;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #4b2d15;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-family: "Libre", serif;
+  font-size: 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
 }
 
-/* Green textured "actively looking" badge */
-.contact-badge {
-  position: relative;
-  padding: 12px 18px;
-  width: fit-content;
-  max-width: 130px;
-  transition: opacity 0.25s ease;
+.nav-contact-btn:hover {
+  background: #3a2010;
+  font-family: "Libre", serif;
 }
-.contact-badge::before {
+
+/* chevron rotates on open */
+.nav-chevron-icon {
+  height: 13px;
+  width: 13px;
+  flex-shrink: 0;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-contact-btn.btn-open .nav-chevron-icon {
+  transform: rotate(180deg);
+}
+
+/* z-index 1: sits behind the bar until Contact is clicked */
+.nav-above-bar {
+  position: relative;
+  width: 175px;
+  height: 0;
+  z-index: 1;
+}
+
+/* Contact popup — hidden behind the bar by default, slides up on click */
+.nav-contact-popup {
+  position: absolute;
+  bottom: -45px;
+  left: 0%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 24px;
+  min-width: 175px;
+  white-space: normal;
+  box-sizing: border-box;
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Textured background shell — filtered separately so text/icons stay clean */
+.nav-contact-popup::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 8px 8px 0px 8px;
   background: #325825;
-  border-radius: 16px;
+  border-radius: 18px;
   filter: url(#nav-wobble);
   z-index: -1;
 }
-.contact-badge-text {
-  margin: 0;
+
+.nav-contact-popup.open {
+  transform: translateX(-20%) translateY(-45%);
+  pointer-events: auto;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-popup-text {
   font-family: "Libre italic", serif;
-  font-style: italic;
   font-size: 12px;
-  line-height: 1.4;
-  color: #fff;
+  color: white;
+  margin: 0;
+  max-width: none;
+  line-height: 1.45;
 }
 
-/* Twitter / Email / LinkedIn links */
-.contact-links {
+.nav-popup-icons {
   display: flex;
-  align-items: center;
-  gap: 22px;
-}
-.contact-link {
-  position: relative;
-  font-family: "Libre", serif;
-  font-size: 17px;
-  color: rgba(75, 45, 21, 0.5);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 0.18s ease;
-  cursor: pointer;
-}
-/* All links: bold italic + underline on hover; email keeps it after a click */
-.contact-link:hover,
-.contact-email.is-active {
-  color: #4b2d15;
-  font-family: "Libre italic", serif;
-  font-style: italic;
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.contact-email-wrap {
-  position: relative;
-}
-
-.contact-email {
-  display: inline-flex;
-  align-items: center;
-}
-
-.contact-email-icon {
-  display: inline-flex;
+  gap: 14px;
   align-items: center;
   justify-content: center;
-  width: 0;
-  height: 14px;
-  margin-left: 0;
-  opacity: 0;
-  overflow: hidden;
-  transform: translateX(-4px);
-  color: inherit;
-  transition:
-    width 0.2s ease,
-    margin-left 0.2s ease,
-    opacity 0.18s ease,
-    transform 0.2s ease;
+  padding: 2px 0;
 }
 
-.contact-link:hover .contact-email-icon,
-.contact-email.is-active .contact-email-icon {
-  width: 14px;
-  margin-left: 6px;
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* Shared flyout for tooltip + copied toast — animates in */
-.contact-flyout {
-  position: absolute;
-  top: calc(100% + 12px);
-  left: 50%;
+.nav-popup-icons a {
+  color: white;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 12px 16px 16px 16px;
-  background: #efece0;
-  border: 1.5px solid rgba(75, 45, 21, 0.35);
-  border-radius: 16px;
-  box-shadow: 0 6px 16px rgba(75, 45, 21, 0.16);
-  white-space: nowrap;
-  color: #4b2d15;
-  opacity: 0;
-  transform: translate(-50%, -10px);
-  pointer-events: none;
-  visibility: hidden;
-  transition:
-    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-    visibility 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 5;
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity 0.15s;
 }
-.contact-flyout.is-visible {
+
+.nav-popup-icons a:hover {
   opacity: 1;
-  transform: translate(-50%, 0);
-  visibility: visible;
 }
-.contact-tooltip-label {
-  font-family: "Manrope", serif;
-  font-weight: 800;
-  font-size: 14px;
-  color: rgba(75, 45, 21, 0.55);
-}
-.contact-tooltip-email {
-  font-family: "Manrope bold", sans-serif;
-  font-weight: 800;
-  font-size: 14px;
-  color: #4b2d15;
-}
-.contact-copied {
-  font-family: "Manrope bold", sans-serif;
-  font-weight: 800;
-  font-size: 14px;
-  color: #4b2d15;
+
+.nav-popup-icons svg {
+  width: 19px;
+  height: 19px;
+  fill: white;
 }
 /* ===================================== */
 
@@ -362,41 +324,21 @@ html {
     display: flex;
   }
 
-  /* Contact: links pinned top-center, badge drops to the bottom */
-  .contact-top {
-    top: 18px;
-    right: 0;
-    left: 0;
-    justify-content: center;
-    gap: 0;
-  }
-  .contact-links {
-    gap: 26px;
-  }
-  .contact-badge {
-    position: fixed;
-    top: auto;
-    bottom: 92px;
+  /* Contact popup on mobile: center it and animate only on Y axis */
+  .nav-contact-popup {
     left: 50%;
     transform: translateX(-50%);
-    max-width: 78vw;
-    text-align: center;
   }
-  .contact-badge.badge-hidden {
+
+  .nav-contact-popup.open {
+    transform: translateX(-50%) translateY(-40%);
+  }
+
+  /* Fade out the popup when the hamburger menu is open */
+  .nav-contact-popup.menu-open {
     opacity: 0;
     pointer-events: none;
-  }
-  /* Mobile has no hover — only the clicked (copied) state shows */
-  .contact-tooltip {
-    display: none;
-  }
-  .contact-flyout {
-    right: auto;
-    left: 50%;
-    transform: translateX(-50%) translateY(-6px);
-  }
-  .contact-flyout.is-visible {
-    transform: translateX(-50%) translateY(0);
+    transition: opacity 0.2s ease;
   }
 }
 
@@ -404,7 +346,7 @@ html {
   font-family: "Libre";
   src: url("./assets/Libre_Baskerville/LibreBaskerville-VariableFont_wght.ttf")
     format("truetype");
-  font-weight: 100 900;
+  font-weight: 400;
   font-style: normal;
 }
 
@@ -412,7 +354,7 @@ html {
   font-family: "Libre italic";
   src: url("./assets/Libre_Baskerville/LibreBaskerville-Italic-VariableFont_wght.ttf")
     format("truetype");
-  font-weight: 100 900;
+  font-weight: 400;
   font-style: italic;
 }
 
@@ -445,10 +387,6 @@ body {
   overflow-x: hidden;
   max-width: 100%;
   padding-bottom: 180px;
-  background-color: #fffced;
-  background-image: url(assets/bgtexturefinal.jpg);
-  background-repeat: repeat;
-  background-blend-mode: multiply;
 }
 
 hr {

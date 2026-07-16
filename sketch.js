@@ -310,7 +310,7 @@ new p5((sketch) => {
     let label = "move your cursor for some fun";
     let labelWidth = sketch.textWidth(label) - 100;
     let labelHeight = 30;
-    let labelY = sketch.windowHeight / 8;
+    let labelY = sketch.windowHeight / 6;
     let labelX = sketch.constrain(
       sketch.mouseX,
       labelWidth / 2,

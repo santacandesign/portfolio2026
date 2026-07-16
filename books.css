@@ -214,6 +214,10 @@
   will-change: auto;
   filter: brightness(0.8) contrast(2);
   transform-style: preserve-3d;
+  /* Hidden while closed: a near-edge-on filtered plane makes Chrome
+     smear the cover texture across the page on zoom. `visibility`
+     transitions cleanly: shows instantly on open, hides after close. */
+  visibility: hidden;
 }
 
 /* Open animation — Adam Maj hinge */
@@ -222,17 +226,24 @@
 }
 .bs-book-btn.open .bs-cover {
   transform: rotateY(30deg);
+  visibility: visible;
 }
 
 /* ── Paper texture overlay ─────────────────────────────────── */
+/* NOTE: was `filter: url(#bs-paper)` (live feTurbulence). Chromium
+   generates turbulence noise at layout scale but paints at zoom
+   scale, smearing it into giant streaks at any zoom ≠ 100%.
+   Baking the same filter into an SVG background image avoids the
+   bug — images rasterize in their own coordinate space. */
 .bs-paper-tex {
   pointer-events: none;
   position: absolute;
   inset: 0;
   opacity: 0.28;
-  filter: url(#bs-paper);
   z-index: 10;
-  background: white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='8' result='n'/%3E%3CfeDiffuseLighting in='n' lighting-color='white' surfaceScale='1'%3E%3CfeDistantLight azimuth='45' elevation='35'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23p)'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+  background-repeat: repeat;
 }
 
 /* ── Binding highlight ─────────────────────────────────────── */
