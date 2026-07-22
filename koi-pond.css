@@ -7,6 +7,7 @@
   margin: 80px 56px 0;
   border-radius: 20px;
   overflow: hidden;
+  cursor: pointer;
   background: linear-gradient(
     180deg,
     #5c9c80 0%,
@@ -58,18 +59,6 @@
   display: block;
 }
 
-/* stretches exactly to the footer's rendered box (no slice-cropping),
-   so the hand-drawn border shows on all four sides regardless of the
-   container's aspect ratio */
-.koi-frame-scene {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  pointer-events: none;
-}
-
 /* water texture layers */
 .koi-streaks {
   opacity: 0.07;
@@ -81,25 +70,6 @@
 .koi-glow {
   opacity: 0.9;
   filter: blur(2px);
-}
-
-/* floating droplets twinkle */
-.kd-a,
-.kd-b {
-  animation: koi-twinkle 1s ease-in-out infinite alternate;
-}
-.kd-b {
-  animation-delay: -2s;
-  animation-duration: 5s;
-}
-
-@keyframes koi-twinkle {
-  from {
-    opacity: 0.3;
-  }
-  to {
-    opacity: 0.9;
-  }
 }
 
 /* drifting light patches — blur + a shimmering noise texture (matching the
@@ -128,29 +98,19 @@
   }
 }
 
-/* expanding ripple rings */
-.ripple-ring {
-  fill: none;
-  stroke: #eafff2;
-  stroke-width: 1.2;
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: koi-ripple 11s linear infinite;
+/* thin colour film drawn directly over the fish layer, low opacity, so the
+   koi read as sitting under the water's surface instead of on top of it */
+.koi-water-film {
+  fill: #0f3f30;
+  opacity: 0.16;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
 }
 
-@keyframes koi-ripple {
-  0% {
-    transform: scale(0.15);
-    opacity: 0.7;
-  }
-  70% {
-    opacity: 0.2;
-  }
-  100% {
-    transform: scale(2.4);
-    opacity: 0;
-  }
+/* fish transforms are updated every frame from JS — hint the browser to
+   promote them to their own compositor layer instead of repainting */
+.koi {
+  will-change: transform;
 }
 
 /* ── the fish ── */
@@ -158,6 +118,15 @@
   fill: #0b2e23;
   opacity: 0.4;
   filter: blur(2px);
+}
+
+/* sped-up tail/fin flutter while a fish is at the food, so the "eating"
+   moment reads as a bit of excited nibbling */
+.koi-nibble .koi-tail {
+  animation-duration: 0.32s !important;
+}
+.koi-nibble .koi-fin {
+  animation-duration: 0.28s !important;
 }
 
 /* per-fish color palettes — all shades of red/orange */
@@ -185,9 +154,69 @@
   --koi-body: #ff5a3d;
   --koi-dark: #c43e22;
 }
+.koi-7 {
+  --koi-body: #ff6b4d;
+  --koi-dark: #d1502f;
+}
+.koi-8 {
+  --koi-body: #e8451c;
+  --koi-dark: #ad3012;
+}
+.koi-9 {
+  --koi-body: #ff8a5c;
+  --koi-dark: #cc6438;
+}
+.koi-10 {
+  --koi-body: #f0391c;
+  --koi-dark: #b02510;
+}
 
 .koi-body-fill {
   fill: var(--koi-body);
+}
+
+/* white scalloped scale outlines (half-circle arcs), clipped to the body
+   outline in koi-pond.js — strokes only, no fill, so the base koi colour
+   still shows through each scale */
+.koi-scale-outline {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 0.35;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* rear (pelvic) fin pair flaps a touch quicker/tighter than the front
+   pectoral pair so the two sets don't read as perfectly in sync */
+.koi-fin-rear .koi-fin {
+  animation-duration: 0.9s;
+}
+.koi-2 .koi-fin-rear .koi-fin {
+  animation-duration: 0.75s;
+}
+.koi-3 .koi-fin-rear .koi-fin {
+  animation-duration: 0.68s;
+}
+.koi-4 .koi-fin-rear .koi-fin {
+  animation-duration: 0.55s;
+}
+.koi-5 .koi-fin-rear .koi-fin {
+  animation-duration: 0.82s;
+}
+.koi-6 .koi-fin-rear .koi-fin {
+  animation-duration: 0.6s;
+}
+.koi-7 .koi-fin-rear .koi-fin {
+  animation-duration: 0.7s;
+}
+.koi-8 .koi-fin-rear .koi-fin {
+  animation-duration: 0.62s;
+}
+.koi-9 .koi-fin-rear .koi-fin {
+  animation-duration: 0.78s;
+}
+.koi-10 .koi-fin-rear .koi-fin {
+  animation-duration: 0.58s;
 }
 
 /* tail: single sharp blade, whip-like flick (top-down fish only show
@@ -223,13 +252,29 @@
 .koi-6 .koi-fin {
   animation-duration: 0.85s;
 }
+.koi-7 .koi-fin {
+  animation-duration: 1s;
+}
+.koi-8 .koi-fin {
+  animation-duration: 0.88s;
+}
+.koi-9 .koi-fin {
+  animation-duration: 1.08s;
+}
+.koi-10 .koi-fin {
+  animation-duration: 0.92s;
+}
 
+/* flap swing shifted to stay tail-swept the whole cycle — the old -12deg
+   extreme pulled the shortest ray back out toward perpendicular (close to
+   90° off the body) at the back of each stroke; capping it near 0deg keeps
+   every ray swept back throughout the flap instead of just at rest */
 @keyframes koi-fin-flap {
   from {
-    transform: rotate(-12deg);
+    transform: rotate(-2deg);
   }
   to {
-    transform: rotate(14deg);
+    transform: rotate(15deg);
   }
 }
 
@@ -253,6 +298,18 @@
 .koi-6 .koi-tail {
   animation-duration: 0.85s;
 }
+.koi-7 .koi-tail {
+  animation-duration: 1s;
+}
+.koi-8 .koi-tail {
+  animation-duration: 0.88s;
+}
+.koi-9 .koi-tail {
+  animation-duration: 1.08s;
+}
+.koi-10 .koi-tail {
+  animation-duration: 0.92s;
+}
 
 @keyframes koi-tail-wag {
   0% {
@@ -263,34 +320,6 @@
   }
   100% {
     transform: rotate(-14deg) scaleX(0.97);
-  }
-}
-
-/* ripple halos around the lily pads/lotus — same pulsing-and-fading idea
-   as the water ripples, paired and staggered so the halo never fully
-   disappears, with a light noise wobble on the ring itself */
-.koi-lily-halo {
-  fill: none;
-  stroke: #ffffff;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: koi-halo-ripple 9s ease-out infinite;
-}
-.koi-lily-halo.halo-b {
-  animation-delay: -4.5s;
-}
-
-@keyframes koi-halo-ripple {
-  0% {
-    transform: scale(0.9);
-    opacity: 0.6;
-  }
-  65% {
-    opacity: 0.2;
-  }
-  100% {
-    transform: scale(1.35);
-    opacity: 0;
   }
 }
 
@@ -333,6 +362,63 @@
   }
 }
 
+/* ── food dropped on click ── */
+.koi-food {
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+.koi-food.koi-food-eaten {
+  opacity: 0;
+}
+.koi-food-ripple {
+  fill: none;
+  stroke: #eafff2;
+  stroke-width: 1;
+  opacity: 0.8;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: koi-food-ripple-anim 1.1s ease-out infinite;
+}
+.koi-pellet {
+  fill: #d9a441;
+  stroke: #8a5a1f;
+  stroke-width: 0.4;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: koi-pellet-drop 0.35s ease-out;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+/* pellets nibbled away by the first fish to reach the food, before the
+   second fish arrives and the whole thing (ripple + last pellet) fades */
+.koi-pellet.koi-pellet-eaten {
+  opacity: 0;
+  transform: scale(0.3);
+}
+
+@keyframes koi-food-ripple-anim {
+  from {
+    transform: scale(0.3);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes koi-pellet-drop {
+  from {
+    opacity: 0;
+    transform: scale(0.2) translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 @media (max-width: 800px) {
   .koi-footer {
     height: 320px;
@@ -342,17 +428,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .koi-caustic,
-  .ripple-ring,
-  .koi-lily-halo,
   .koi-tail,
   .koi-fin,
-  .koi-lily,
-  .kd-a,
-  .kd-b {
+  .koi-lily {
     animation: none;
-  }
-  .ripple-ring,
-  .koi-lily-halo {
-    opacity: 0.3;
   }
 }

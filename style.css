@@ -941,17 +941,17 @@ h4 {
     flex-direction: column;
     gap: 12px;
     align-items: center;
-    padding-top: 20px;
+    padding: 20px 12px;
   }
 
   .project-image {
-    width: 80%;
+    width: 100%;
     height: auto;
     padding-left: 0;
   }
 
   .project-description {
-    width: 80%;
+    width: 100%;
   }
 
   .aboutme {
