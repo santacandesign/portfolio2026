@@ -24,10 +24,12 @@ import os
 import re
 import sys
 import glob
+import html
 import shutil
 import argparse
 import subprocess
 import datetime as dt
+from xml.sax.saxutils import escape as xml_escape
 
 try:
     import markdown as md
@@ -215,15 +217,28 @@ def process_images(md_text, slug):
 
 # ---------------------------------------------------------------------------
 # Builders
+#
+# title/description are plain text typed in Obsidian and can contain
+# characters like & < > that are meaningful in HTML/XML. They're escaped
+# separately for each output (html.escape for the HTML pages, xml_escape
+# for the RSS feed) so a title like "Learnings & Updates" doesn't produce
+# invalid markup or a broken feed.
 # ---------------------------------------------------------------------------
 def build_post_html(title, description, date_long, body_md, slug):
     body_md = process_images(body_md, slug)
     body_md = normalize_lists(body_md)
     body_html = md.markdown(body_md.strip(), extensions=["extra"])
-    return POST_TEMPLATE.format(title=title, description=description, date_long=date_long, body_html=body_html)
+    return POST_TEMPLATE.format(
+        title=html.escape(title),
+        description=html.escape(description),
+        date_long=date_long,
+        body_html=body_html,
+    )
 
 
 def build_index_card(title, description, slug, date_short):
+    title = html.escape(title)
+    description = html.escape(description)
     subtitle = f"\n          <h3>{description}</h3>" if description else ""
     return f"""
     <a href="/blogging/blogs/{slug}.html">
@@ -242,11 +257,11 @@ def build_feed_item(title, description, slug, pubdate):
     link = f"{SITE_BASE_URL}/blogs/{slug}.html"
     return f"""
     <item>
-      <title>{title}</title>
-      <link>{link}</link>
-      <description>{description}</description>
+      <title>{xml_escape(title)}</title>
+      <link>{xml_escape(link)}</link>
+      <description>{xml_escape(description)}</description>
       <pubDate>{pubdate}</pubDate>
-      <guid>{link}</guid>
+      <guid>{xml_escape(link)}</guid>
     </item>
 """
 
