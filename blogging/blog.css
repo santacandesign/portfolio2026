@@ -108,9 +108,15 @@ h5 {
   text-decoration: none;
 }
 
+ol,
+ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
 li {
   font-family: "Libre", serif;
-  margin-left: 20px;
+  margin-left: 0;
   margin-bottom: 4px;
   list-style-type: decimal;
   font-weight: 200;
