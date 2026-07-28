@@ -119,6 +119,15 @@ li {
   color: #111111;
 }
 
+p {
+  font-family: "Libre", serif;
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #111111;
+  margin: 0 0 12px 0;
+}
+
 a {
   color: #2b50bf;
   font-family: "Libre italic", serif;
