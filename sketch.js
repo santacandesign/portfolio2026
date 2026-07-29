@@ -294,7 +294,7 @@ new p5((sketch) => {
     // 3. Draw the Label and Background
     // Draw a vertical line at the cursor's Y position
     sketch.push();
-    sketch.stroke(82, 43, 18);
+    sketch.stroke(204, 218, 165);
     sketch.strokeWeight(2);
 
     if (sketch.windowWidth > 900) {
@@ -307,8 +307,8 @@ new p5((sketch) => {
     }
 
     // Combine your text with the new time string
-    let label = "move your cursor for some fun";
-    let labelWidth = sketch.textWidth(label) - 100;
+    let label = "brain chaos at " + timeString;
+    let labelWidth = sketch.textWidth(label) - 70;
     let labelHeight = 30;
     let labelY = sketch.windowHeight / 6;
     let labelX = sketch.constrain(
@@ -319,7 +319,7 @@ new p5((sketch) => {
 
     // Draw background rectangle
     sketch.noStroke();
-    sketch.fill(82, 43, 18);
+    sketch.fill(204, 218, 165);
     sketch.rectMode(sketch.CENTER);
 
     if (sketch.windowWidth > 900) {
@@ -328,7 +328,7 @@ new p5((sketch) => {
 
     // Draw text
     sketch.noStroke();
-    sketch.fill(255);
+    sketch.fill(0, 92, 18);
     sketch.textAlign(sketch.CENTER, sketch.CENTER);
     sketch.textSize(14);
     sketch.textFont(jostfont); // Using your loaded jostfont
