@@ -605,7 +605,12 @@ body::before {
   height: 100%; /* ← fill the flex container height */
   max-height: 80vh; /* ← cap it so it never exceeds the viewport */
   object-fit: contain; /* ← scale proportionally within that space */
-  padding: 0;
+  /* same faint background treatment as the phone-mockup-thumb on the
+     playground page — padding lets it peek out around the image */
+  background: #0601000a;
+  border-radius: 12px;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .project-description {
