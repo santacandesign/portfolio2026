@@ -71,12 +71,25 @@ h1 {
 h2 {
   font-family: "Libre", serif;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 20px;
   color: #111111;
   margin: 0;
   line-height: 1.5;
   text-decoration: none;
   flex: 1;
+}
+
+/* Section headings inside a post (not the index-card titles, which need
+   margin: 0 to stay centered in their flex row) get breathing room above
+   them so a blank line/divider in the markdown actually shows as space. */
+body > h2 {
+  margin-bottom: 8px;
+}
+
+hr {
+  border: none;
+  border-top: 0.8px solid #cfcfcf;
+  margin: 24px 0;
 }
 
 h3 {
@@ -151,7 +164,7 @@ a {
   }
 
   h2 {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   h3 {
