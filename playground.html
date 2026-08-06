@@ -317,22 +317,37 @@
 
       <!-- ===== Cat feeding footer ===== -->
       <footer class="cat-footer" id="catFooter">
+        <div class="cat-butterfly" id="catButterfly" aria-hidden="true">
+          <!-- same butterfly as the index.html p5 sketch, in SVG -->
+          <svg viewBox="-20 -12 40 26" width="40">
+            <g transform="scale(-1 1)">
+              <g class="bf-wing bf-wing-r">
+                <path d="M0 0 C 3.4 -5.6 13.4 -6.7 11.8 -7.3 C 10.1 2.8 3.4 1.1 0 0 Z" fill="#e96c1a" />
+                <path d="M0 0 C 5 1.7 11.8 5.6 8.4 5 C 3.4 4.5 0.8 2.8 0 0 Z" fill="#e96c1a" opacity="0.7" />
+                <path d="M0 0 L11.8 -0.6 M0 0 L8.4 3.4" stroke="#a24a0f" stroke-width="0.5" fill="none" />
+              </g>
+            </g>
+            <g class="bf-wing bf-wing-r">
+              <path d="M0 0 C 3.4 -5.6 13.4 -6.7 11.8 -7.3 C 10.1 2.8 3.4 1.1 0 0 Z" fill="#e96c1a" />
+              <path d="M0 0 C 5 1.7 11.8 5.6 8.4 5 C 3.4 4.5 0.8 2.8 0 0 Z" fill="#e96c1a" opacity="0.7" />
+              <path d="M0 0 L11.8 -0.6 M0 0 L8.4 3.4" stroke="#a24a0f" stroke-width="0.5" fill="none" />
+            </g>
+            <ellipse cx="0" cy="2.8" rx="1.4" ry="3" fill="#281c0f" />
+          </svg>
+        </div>
         <div class="cat-actor is-sitting" id="catActor">
           <div class="cat-sprite">
-            <!-- idle cat — long morning stretch, butt up, front low -->
-            <svg class="cat-sit" viewBox="0 0 240 170" aria-hidden="true">
-              <g class="cat-stretcher">
-                <path class="cat-tail-sit" d="M66 62 Q 44 30 60 12" fill="none" stroke="#4b2d15" stroke-width="14" stroke-linecap="round" />
-                <path d="M58 118 L56 152" stroke="#4b2d15" stroke-width="16" stroke-linecap="round" />
-                <path d="M42 156 C 30 96 52 46 92 50 C 122 54 128 84 148 104 C 158 112 166 118 170 124 L 170 156 Z" fill="#4b2d15" />
-                <path d="M150 140 L206 150" stroke="#4b2d15" stroke-width="13" stroke-linecap="round" />
-                <path d="M142 148 L198 156" stroke="#4b2d15" stroke-width="13" stroke-linecap="round" />
-                <path d="M156 96 Q 152 70 162 70 Q 170 72 176 82 Z" fill="#4b2d15" />
-                <path d="M198 92 Q 202 68 193 67 Q 185 70 179 80 Z" fill="#4b2d15" />
-                <circle cx="178" cy="112" r="27" fill="#4b2d15" />
-                <path d="M162 108 L173 103" stroke="#fffced" stroke-width="4" stroke-linecap="round" />
-                <path d="M183 103 L194 107" stroke="#fffced" stroke-width="4" stroke-linecap="round" />
-              </g>
+            <!-- idle cat — sitting upright, eyes following the butterfly -->
+            <svg class="cat-sit" viewBox="0 0 200 200" aria-hidden="true">
+              <path class="cat-tail-sit" d="M130 178 C 152 190 174 188 190 172" fill="none" stroke="#4b2d15" stroke-width="16" stroke-linecap="round" />
+              <path d="M56 50 C 52 30 54 12 62 10 C 68 9 78 20 92 34 Z" fill="#4b2d15" />
+              <path d="M134 50 C 138 30 136 12 128 10 C 122 9 112 20 98 34 Z" fill="#4b2d15" />
+              <path d="M39 176 C 36 128 58 96 95 92 C 133 96 152 130 149 176 C 149 188 143 192 136 192 L 52 192 C 45 192 39 188 39 176 Z" fill="#4b2d15" />
+              <circle cx="95" cy="70" r="42" fill="#4b2d15" />
+              <circle cx="78" cy="66" r="15" fill="#fffced" />
+              <circle cx="112" cy="66" r="15" fill="#fffced" />
+              <circle class="cat-pupil" cx="78" cy="66" r="7" fill="#4b2d15" />
+              <circle class="cat-pupil" cx="112" cy="66" r="7" fill="#4b2d15" />
             </svg>
             <!-- walking / eating cat — same blob style -->
             <svg class="cat-walk" viewBox="0 0 240 160" aria-hidden="true">
@@ -343,11 +358,19 @@
               <g class="leg legA"><path d="M174 84 L171 132" stroke="#4b2d15" stroke-width="19" stroke-linecap="round" /></g>
               <ellipse cx="118" cy="80" rx="62" ry="36" fill="#4b2d15" />
               <g class="cat-head-walk">
-                <path d="M163 36 Q 160 6 168 5 Q 176 7 186 18 Z" fill="#4b2d15" />
-                <path d="M209 38 Q 212 8 204 7 Q 196 9 186 19 Z" fill="#4b2d15" />
+                <path d="M160 40 C 156 22 158 8 166 7 C 171 6 178 14 186 24 Z" fill="#4b2d15" />
+                <path d="M212 42 C 216 24 214 10 206 9 C 201 8 194 16 186 26 Z" fill="#4b2d15" />
                 <circle cx="186" cy="50" r="29" fill="#4b2d15" />
-                <circle cx="176" cy="48" r="7" fill="#4b2d15" stroke="#fffced" stroke-width="4.5" />
-                <circle cx="198" cy="48" r="7" fill="#4b2d15" stroke="#fffced" stroke-width="4.5" />
+                <g class="walk-eyes-open">
+                  <circle cx="174" cy="47" r="12" fill="#fffced" />
+                  <circle cx="200" cy="47" r="12" fill="#fffced" />
+                  <circle cx="174" cy="47" r="5.5" fill="#4b2d15" />
+                  <circle cx="200" cy="47" r="5.5" fill="#4b2d15" />
+                </g>
+                <g class="walk-eyes-closed">
+                  <path d="M165 47 A 9 9 0 0 0 183 47" stroke="#fffced" stroke-width="4" fill="none" stroke-linecap="round" />
+                  <path d="M191 47 A 9 9 0 0 0 209 47" stroke="#fffced" stroke-width="4" fill="none" stroke-linecap="round" />
+                </g>
               </g>
             </svg>
           </div>
@@ -436,19 +459,43 @@
               setTimeout(function () {
                 footer.classList.remove("bowl-full");
                 actor.classList.remove("is-eating");
-                setTimeout(function () {
-                  actor.classList.add("is-walking", "facing-left");
-                  walkTo(0, dur, function () {
-                    actor.classList.remove("is-walking", "facing-left");
-                    actor.classList.add("is-sitting");
-                    footer.classList.remove("is-busy");
-                    busy = false;
-                  });
-                }, 250);
+                actor.classList.add("is-walking", "facing-left");
+                walkTo(0, dur, function () {
+                  actor.classList.remove("is-walking", "facing-left");
+                  actor.classList.add("is-sitting");
+                  footer.classList.remove("is-busy");
+                  busy = false;
+                });
               }, 2400);
             });
           }, 650);
         });
+
+        // the loaf cat's pupils follow the butterfly while it sits
+        var fly = document.getElementById("catButterfly");
+        var pupils = actor.querySelectorAll(".cat-pupil");
+        function track() {
+          if (fly && pupils.length && actor.classList.contains("is-sitting")) {
+            var fr = fly.getBoundingClientRect();
+            var fx = fr.left + fr.width / 2;
+            var fy = fr.top + fr.height / 2;
+            pupils.forEach(function (p) {
+              var r = p.getBoundingClientRect();
+              var dx = fx - (r.left + r.width / 2);
+              var dy = fy - (r.top + r.height / 2);
+              var d = Math.hypot(dx, dy) || 1;
+              var m = Math.min(3.5, d);
+              p.style.transform =
+                "translate(" + (dx / d) * m + "px," + (dy / d) * m + "px)";
+            });
+          } else {
+            pupils.forEach(function (p) {
+              p.style.transform = "";
+            });
+          }
+          requestAnimationFrame(track);
+        }
+        requestAnimationFrame(track);
       })();
     </script>
   </body>
