@@ -11,7 +11,7 @@ const PETAL_COLOURS = [
   [229, 168, 96], // warm gold
   [217, 129, 78], // soft orange
   [198, 100, 80], // terracotta rose
-  [124, 159, 212], // cornflower blue
+  [198, 116, 153], // cornflower blue
   [107, 38, 38], // deep maroon
 ];
 
@@ -196,14 +196,15 @@ new p5((sketch) => {
 
     // note card
     sketch.fill(PAPER[0], PAPER[1], PAPER[2]);
-    sketch.stroke(INK[0], INK[1], INK[2]);
-    sketch.strokeWeight(3);
+    sketch.stroke(INK[0], INK[1], INK[2], 50);
+    sketch.strokeWeight(1);
     sketch.rect(cx, cy, cardW, cardH, 10);
 
     // little window marks in the top-right corner of the card
     let mx = cx + cardW / 2;
     let my = cy - cardH / 2;
-    sketch.strokeWeight(3);
+    sketch.stroke(INK[0], INK[1], INK[2], 80);
+    sketch.strokeWeight(2);
     sketch.line(mx - 62, my + 20, mx - 52, my + 20);
     sketch.line(mx - 32, my + 25, mx - 22, my + 15);
     sketch.line(mx - 22, my + 25, mx - 32, my + 15);
@@ -216,8 +217,7 @@ new p5((sketch) => {
     sketch.textLeading(leading);
     sketch.textAlign(sketch.CENTER, sketch.CENTER);
 
-    let message =
-      "After work, I'm always on the hunt to do cool stuff on my computer";
+    let message = "I'm always on the hunt to do cool stuff on my computer";
     let boxW = cardW - 56;
     // p5 anchors the first wrapped line at y, so count the wrapped lines and
     // shift up half the block height to truly centre the text in the card
