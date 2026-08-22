@@ -189,16 +189,21 @@ new p5((sketch) => {
     let cx = sketch.width / 2;
     let cy = sketch.height / 2;
 
+    // // offset shadow card
+    // sketch.noStroke();
+    // sketch.fill(INK[0], INK[1], INK[2], 20);
+    // sketch.rect(cx + 6, cy + 6, cardW + 4, cardH + 4, 16);
+
     // offset shadow card
     sketch.noStroke();
-    sketch.fill(INK[0], INK[1], INK[2], 50);
-    sketch.rect(cx + 10, cy + 10, cardW, cardH, 10);
+    sketch.fill(INK[0], INK[1], INK[2], 60);
+    sketch.rect(cx + 2, cy + 2, cardW, cardH, 17);
 
     // note card
     sketch.fill(PAPER[0], PAPER[1], PAPER[2]);
     sketch.stroke(INK[0], INK[1], INK[2], 50);
-    sketch.strokeWeight(1);
-    sketch.rect(cx, cy, cardW, cardH, 10);
+    sketch.strokeWeight(2);
+    sketch.rect(cx, cy, cardW, cardH, 16);
 
     // little window marks in the top-right corner of the card
     let mx = cx + cardW / 2;
