@@ -1,0 +1,57 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Toggle" subtitle="default/minimal · sm/md/lg · icon-only · toolbar group" viewport="700x320" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.col{display:flex;flex-direction:column;gap:8px}
+
+.tog{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:6px;cursor:pointer;
+     font-family:inherit;font-weight:700;transition:background .15s}
+.tog.sm{height:28px;padding:0 10px;font-size:12px}
+.tog.md{height:36px;padding:0 14px;font-size:14px}
+.tog.lg{height:44px;padding:0 16px;font-size:16px}
+/* default variant */
+.tog.default{background:transparent;color:var(--fg1)}
+.tog.default:hover{background:var(--beige-100)}
+.tog.default.pressed{background:var(--beige-200);color:var(--fg1)}
+/* minimal variant */
+.tog.minimal{background:transparent;color:var(--fg2)}
+.tog.minimal:hover{background:var(--beige-50);color:var(--fg1)}
+.tog.minimal.pressed{color:var(--fg1)}
+/* icon-only */
+.tog.icon-only{padding:0;justify-content:center}
+.tog.icon-only.sm{width:28px}
+.tog.icon-only.md{width:36px}
+.tog.icon-only.lg{width:44px}
+</style></head><body style="padding:14px 16px">
+<div class="section">Default variant · sm / md / lg · unpressed / pressed</div>
+<div class="row">
+  <button class="tog default sm">sm</button>
+  <button class="tog default sm pressed">sm pressed</button>
+  <button class="tog default md"><i class="ph ph-text-bold" style="font-size:16px"></i>Bold</button>
+  <button class="tog default md pressed"><i class="ph ph-text-bold" style="font-size:16px"></i>Bold</button>
+  <button class="tog default lg">lg</button>
+  <button class="tog default lg pressed">lg pressed</button>
+</div>
+<div class="section">Minimal variant</div>
+<div class="row">
+  <button class="tog minimal md">Runs</button>
+  <button class="tog minimal md pressed">Knowledge</button>
+  <button class="tog minimal md">Policies</button>
+</div>
+<div class="section">Icon-only</div>
+<div class="row">
+  <button class="tog default icon-only sm"><i class="ph ph-text-bold" style="font-size:14px"></i></button>
+  <button class="tog default icon-only md pressed"><i class="ph ph-text-italic" style="font-size:16px"></i></button>
+  <button class="tog default icon-only md"><i class="ph ph-text-underline" style="font-size:16px"></i></button>
+  <button class="tog default icon-only lg"><i class="ph ph-text-align-left" style="font-size:18px"></i></button>
+</div>
+<div class="section">In context · toolbar group</div>
+<div style="display:inline-flex;align-items:center;background:#fff;border:1px solid var(--beige-300);border-radius:8px;padding:3px;gap:2px">
+  <button class="tog default icon-only sm"><i class="ph ph-text-bold" style="font-size:14px"></i></button>
+  <button class="tog default icon-only sm pressed"><i class="ph ph-text-italic" style="font-size:14px"></i></button>
+  <button class="tog default icon-only sm"><i class="ph ph-text-underline" style="font-size:14px"></i></button>
+</div></body></html>

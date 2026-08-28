@@ -1,0 +1,111 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Drawer" subtitle="sm/md/lg stacked · right-edge chrome · Header+Body+Footer" viewport="700x720" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;border:0}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.btn-primary{background:var(--green-800);color:#fff}
+.btn-secondary{background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}
+.btn-ghost{background:transparent;color:var(--fg1)}
+.drawer{background:#fff;border:1px solid var(--beige-400);border-left:0;border-radius:12px 0 0 12px;box-shadow:0 20px 25px -5px rgba(35,33,25,.12);display:flex;flex-direction:column;overflow:hidden;width:100%}
+.drawer-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--beige-200)}
+.drawer-body{flex:1;padding:18px;font-size:14px;line-height:20px;color:var(--fg1)}
+.drawer-ftr{padding:14px 18px;border-top:1px solid var(--beige-200);display:flex;justify-content:flex-end;gap:8px}
+.drawer-title{font-size:18px;line-height:28px;font-weight:700;color:var(--fg1)}
+.size-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--fg3);margin-bottom:6px}
+</style>
+</head><body style="padding:14px 16px">
+
+<div class="section">Drawer · sizes sm / md / lg · right edge · Header + Body + Footer</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+
+  <!-- sm 320px -->
+  <div>
+    <div class="size-tag">sm · 320px</div>
+    <div class="drawer" style="max-width:320px">
+      <div class="drawer-hdr">
+        <div class="drawer-title">Settings</div>
+        <button style="width:28px;height:28px;border-radius:6px;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--fg2)"><i class="ph ph-x" style="font-size:15px"></i></button>
+      </div>
+      <div class="drawer-body">
+        <div style="font-size:13px;color:var(--fg2)">Configure integration settings and routing rules.</div>
+      </div>
+      <div class="drawer-ftr">
+        <button class="btn btn-secondary btn-sm">Cancel</button>
+        <button class="btn btn-primary btn-sm">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- md 480px -->
+  <div>
+    <div class="size-tag">md · 480px (default)</div>
+    <div class="drawer" style="max-width:480px">
+      <div class="drawer-hdr">
+        <div>
+          <div class="drawer-title">Run detail</div>
+          <div style="font-size:12px;color:var(--fg3);margin-top:2px">r-284 · Tier-1 triage</div>
+        </div>
+        <button style="width:28px;height:28px;border-radius:6px;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--fg2)"><i class="ph ph-x" style="font-size:15px"></i></button>
+      </div>
+      <div class="drawer-body">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;gap:10px;align-items:center">
+            <div style="width:36px;height:36px;border-radius:8px;background:var(--green-200);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph ph-flow-arrow" style="color:var(--green-800);font-size:18px"></i></div>
+            <div>
+              <div style="font-size:14px;font-weight:500">Tier-1 triage</div>
+              <div style="font-size:12px;color:var(--fg3)">Case #48221 · 1m 42s</div>
+            </div>
+            <span style="margin-left:auto;background:var(--green-200);color:var(--green-900);border:1px solid var(--green-500);border-radius:9999px;padding:2px 8px;font-size:12px;font-weight:700">Completed</span>
+          </div>
+          <div style="height:1px;background:var(--beige-200)"></div>
+          <div style="font-size:13px;color:var(--fg2)">Ema resolved this billing case automatically. The customer was charged twice on Apr 14 — a refund was initiated per the billing policy.</div>
+        </div>
+      </div>
+      <div class="drawer-ftr">
+        <button class="btn btn-ghost btn-sm">Close</button>
+        <button class="btn btn-primary btn-sm">View full run</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- lg 600px -->
+  <div>
+    <div class="size-tag">lg · 600px</div>
+    <div class="drawer" style="max-width:600px">
+      <div class="drawer-hdr">
+        <div>
+          <div class="drawer-title">Edit policy</div>
+          <div style="font-size:12px;color:var(--fg3);margin-top:2px">Refund policy v4 · last edited 3d ago</div>
+        </div>
+        <button style="width:28px;height:28px;border-radius:6px;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--fg2)"><i class="ph ph-x" style="font-size:15px"></i></button>
+      </div>
+      <div class="drawer-body">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div>
+            <div style="font-size:12px;font-weight:500;color:var(--fg2);margin-bottom:4px">Policy name</div>
+            <input style="width:100%;box-sizing:border-box;height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;outline:none" value="Auto-resolve billing tier-1" readonly/>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:500;color:var(--fg2);margin-bottom:4px">Conditions</div>
+            <div style="height:72px;border:1px solid var(--beige-500);border-radius:8px;padding:8px 14px;font-size:13px;color:var(--fg2)">Intent: billing enquiry · Confidence &gt; 0.85 · Refund &lt; $250 · No prior escalations in 30d</div>
+          </div>
+        </div>
+      </div>
+      <div class="drawer-ftr">
+        <button class="btn btn-secondary btn-sm">Discard</button>
+        <button class="btn btn-primary btn-sm">Save changes</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:8px">Anatomy · slide-in from right · rounded-l-xl · border-left: 0</div>
+<div style="font-size:12px;color:var(--fg3);line-height:18px">
+  Overlay: <code style="font-size:11px;background:var(--beige-100);padding:1px 5px;border-radius:4px">bg-black/40</code> · z-index 28 · slides in from right · sizes sm/md/lg/xl/full
+</div>
+</body></html>

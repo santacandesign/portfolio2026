@@ -1,0 +1,49 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · SectionHeader" subtitle="sm/md/lg · required · description · action slot" viewport="700x460" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.col{display:flex;flex-direction:column;gap:6px}
+
+</style></head><body style="padding:14px 16px">
+<div class="section">Sizes · sm / md / lg · required · with description · with action</div>
+<div class="col" style="max-width:520px;gap:20px">
+
+  <div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--fg3);margin-bottom:8px">sm</div>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+      <div>
+        <div style="font-size:14px;font-weight:500;color:var(--fg1)">Escalation rules</div>
+      </div>
+    </div>
+    <div style="height:1px;background:var(--beige-300);margin-top:8px"></div>
+  </div>
+
+  <div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--fg3);margin-bottom:8px">md (default)</div>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+      <div>
+        <div style="font-size:16px;font-weight:500;color:var(--fg1)">Routing policies <span style="color:var(--red-800);margin-left:2px">*</span></div>
+        <div style="font-size:12px;line-height:16px;color:var(--fg3);margin-top:4px">Define how Ema escalates unresolved cases to human agents.</div>
+      </div>
+      <button style="height:28px;padding:0 10px;border-radius:6px;background:#fff;border:1px solid var(--beige-500);font-size:12px;font-weight:700;font-family:inherit;color:var(--fg1);cursor:pointer;white-space:nowrap">Add policy</button>
+    </div>
+    <div style="height:1px;background:var(--beige-300);margin-top:10px"></div>
+  </div>
+
+  <div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--fg3);margin-bottom:8px">lg</div>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+      <div>
+        <div style="font-size:18px;font-weight:500;color:var(--fg1);line-height:28px">Knowledge base</div>
+        <div style="font-size:14px;line-height:20px;color:var(--fg3);margin-top:4px">Documents, runbooks and policies that Ema can reference during a run.</div>
+      </div>
+      <button style="height:36px;padding:0 16px;border-radius:6px;background:var(--green-800);border:0;font-size:14px;font-weight:700;font-family:inherit;color:#fff;cursor:pointer;white-space:nowrap">Add document</button>
+    </div>
+    <div style="height:1px;background:var(--beige-300);margin-top:12px"></div>
+  </div>
+
+</div></body></html>

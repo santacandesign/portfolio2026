@@ -1,0 +1,52 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Avatar" subtitle="xs/sm/md/lg/xl/2xl · isOnline indicator · fallback initials" viewport="700x320" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.col{display:flex;flex-direction:column;gap:8px}
+
+.av{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;
+    background:var(--beige-100);border:.5px solid var(--beige-300);
+    color:var(--gray-900);font-weight:700;overflow:hidden;flex-shrink:0;text-transform:uppercase;position:relative}
+.av-xs{width:20px;height:20px;font-size:10px}
+.av-sm{width:28px;height:28px;font-size:12px}
+.av-md{width:36px;height:36px;font-size:14px;border-width:.75px}
+.av-lg{width:44px;height:44px;font-size:16px;border-width:.75px}
+.av-xl{width:52px;height:52px;font-size:18px;border-width:.75px}
+.av-2xl{width:60px;height:60px;font-size:20px;border-width:.75px}
+.av-green{background:var(--green-800);color:#fff;border:none}
+.av-purple{background:var(--purple-800);color:#fff;border:none}
+.online-dot{position:absolute;bottom:0;right:0;width:30%;height:30%;border-radius:50%;background:var(--green-800);border:1.5px solid #fff}
+.offline-dot{position:absolute;bottom:0;right:0;width:30%;height:30%;border-radius:50%;background:var(--beige-700);border:1.5px solid #fff}
+</style></head><body style="padding:14px 16px">
+<div class="section">Sizes · xs / sm / md / lg / xl / 2xl</div>
+<div class="row" style="align-items:flex-end">
+  <div class="av av-xs">PS</div>
+  <div class="av av-sm">JD</div>
+  <div class="av av-md av-green">EM</div>
+  <div class="av av-lg av-green">PS</div>
+  <div class="av av-xl av-purple">EM</div>
+  <div class="av av-2xl av-green">JD</div>
+</div>
+<div class="section">isOnline indicator (green dot / beige dot)</div>
+<div class="row">
+  <div style="position:relative;display:inline-flex">
+    <div class="av av-md av-green">PS<span class="online-dot"></span></div>
+  </div>
+  <div style="position:relative;display:inline-flex">
+    <div class="av av-lg av-green">JD<span class="offline-dot"></span></div>
+  </div>
+  <div style="position:relative;display:inline-flex">
+    <div class="av av-xl">EM<span class="online-dot"></span></div>
+  </div>
+</div>
+<div class="section">Fallback initials · image load</div>
+<div class="row">
+  <div class="av av-md">A</div>
+  <div class="av av-md av-green">PR</div>
+  <div class="av av-md av-purple">AI</div>
+  <div class="av av-md" style="background:var(--blue-200);color:var(--blue-900)">RK</div>
+</div></body></html>

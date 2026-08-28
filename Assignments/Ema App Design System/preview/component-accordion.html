@@ -1,0 +1,72 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Accordion" subtitle="single/multiple · chevron animation · icon in trigger" viewport="700x420" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.col{display:flex;flex-direction:column;gap:6px}
+
+.acc-item{border-bottom:1px solid var(--beige-300)}
+.acc-item:first-child{border-top:1px solid var(--beige-300)}
+.acc-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;
+  border:0;background:transparent;cursor:pointer;padding:14px 0;font-family:inherit;
+  font-size:14px;font-weight:500;color:var(--fg1);text-align:left;transition:color .15s}
+.acc-trigger:hover{color:var(--green-800)}
+.acc-trigger .chev{transition:transform .2s cubic-bezier(.16,1,.3,1);font-size:16px;color:var(--fg2);flex-shrink:0}
+.acc-trigger.open .chev{transform:rotate(180deg)}
+.acc-content{font-size:14px;line-height:20px;color:var(--fg2);padding:0 0 0;max-height:0;overflow:hidden;transition:max-height .35s ease, padding .35s ease}
+.acc-content.open{max-height:400px;padding:0 0 14px}
+</style></head><body style="padding:14px 16px">
+<div class="section">Accordion · single + multiple · default open</div>
+<div style="max-width:480px">
+  
+  <div class="acc-item">
+    <button class="acc-trigger open">
+      <span>What does Ema auto-resolve?</span>
+      <i class="ph ph-caret-down chev"></i>
+    </button>
+    <div class="acc-content open">Ema handles tier-1 cases where the intent is clear, a matching policy exists, and no human sign-off is required. Unresolved cases are routed to your queue.</div>
+  </div>
+  <div class="acc-item">
+    <button class="acc-trigger">
+      <span>How does Ema learn from corrections?</span>
+      <i class="ph ph-caret-down chev"></i>
+    </button>
+    <div class="acc-content">When an agent overrides a response, Ema logs the correction to the knowledge base and adjusts its confidence threshold for similar future cases.</div>
+  </div>
+  <div class="acc-item">
+    <button class="acc-trigger">
+      <span>Can I limit Ema to specific channels?</span>
+      <i class="ph ph-caret-down chev"></i>
+    </button>
+    <div class="acc-content">Yes. In Integrations → Channel rules you can scope Ema's access per channel, queue, or ticket tag.</div>
+  </div>
+</div>
+<div class="section">With icon in trigger</div>
+<div style="max-width:480px">
+  
+  <div class="acc-item">
+    <button class="acc-trigger open">
+      <span style="display:flex;align-items:center;gap:8px"><i class="ph ph-shield-check" style="font-size:16px;color:var(--green-800)"></i>Policy settings</span>
+      <i class="ph ph-caret-down chev"></i>
+    </button>
+    <div class="acc-content open" style="padding-left:24px">Configure auto-resolve thresholds and escalation rules.</div>
+  </div>
+  <div class="acc-item">
+    <button class="acc-trigger">
+      <span style="display:flex;align-items:center;gap:8px"><i class="ph ph-plugs-connected" style="font-size:16px;color:var(--green-800)"></i>Integrations</span>
+      <i class="ph ph-caret-down chev"></i>
+    </button>
+    <div class="acc-content" style="padding-left:24px">Connect Zendesk, Salesforce, Outreach and more.</div>
+  </div>
+</div>
+<script>
+document.querySelectorAll('.acc-trigger').forEach(t=>{
+  t.addEventListener('click',()=>{
+    const open=t.classList.toggle('open');
+    t.nextElementSibling.classList.toggle('open',open);
+  });
+});
+</script></body></html>

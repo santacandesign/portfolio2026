@@ -1,0 +1,69 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · RadioGroup & Label" subtitle="sm/md · vertical/horizontal · Label required/optional" viewport="700x440" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.col{display:flex;flex-direction:column;gap:8px}
+
+.radio-item{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;color:var(--fg1)}
+.ema-radio{appearance:none;-webkit-appearance:none;border-radius:50%;border:1.5px solid var(--beige-700);
+  background:#fff;cursor:pointer;transition:all .15s;position:relative;flex-shrink:0}
+.ema-radio.sm{width:16px;height:16px}
+.ema-radio.md{width:20px;height:20px}
+.ema-radio:checked{border-color:var(--green-800);border-width:5px;background:#fff}
+.ema-radio.md:checked{border-width:6px}
+.ema-radio:hover{border-color:var(--beige-900)}
+.ema-radio:disabled{background:var(--beige-100);border-color:var(--beige-300);cursor:not-allowed}
+.ema-label{display:block;font-size:14px;line-height:20px;font-weight:500;color:var(--fg2);margin-bottom:4px}
+.ema-label .req{color:var(--red-800);margin-left:2px}
+.ema-label.sm{font-size:12px;line-height:16px}
+</style></head><body style="padding:14px 16px">
+<div class="section">RadioGroup · sizes sm / md · vertical · horizontal</div>
+<div class="row" style="align-items:flex-start;gap:24px">
+  <div class="col">
+    <div class="section" style="margin:0 0 4px">Vertical (default)</div>
+    
+    <label class="radio-item"><input type="radio" class="ema-radio md" name="v1" checked> Resolve automatically</label>
+    <label class="radio-item"><input type="radio" class="ema-radio md" name="v1" > Route to agent</label>
+    <label class="radio-item"><input type="radio" class="ema-radio md" name="v1" > Escalate to supervisor</label>
+  </div>
+  <div class="col">
+    <div class="section" style="margin:0 0 4px">Horizontal</div>
+    <div class="row">
+      
+      <label class="radio-item"><input type="radio" class="ema-radio md" name="h1" checked> sm</label>
+      <label class="radio-item"><input type="radio" class="ema-radio md" name="h1" > md</label>
+      <label class="radio-item"><input type="radio" class="ema-radio md" name="h1" > lg</label>
+    </div>
+    <div class="section" style="margin:8px 0 4px">sm size</div>
+    <div class="row">
+      
+      <label class="radio-item"><input type="radio" class="ema-radio sm" name="sm1" > Option A</label>
+      <label class="radio-item"><input type="radio" class="ema-radio sm" name="sm1" checked> Option B</label>
+      <label class="radio-item"><input type="radio" class="ema-radio sm" name="sm1" > Option C</label>
+    </div>
+  </div>
+</div>
+<div class="section">Disabled</div>
+<div class="row">
+  <label class="radio-item"><input type="radio" class="ema-radio md" name="d1" disabled> Disabled unchecked</label>
+  <label class="radio-item"><input type="radio" class="ema-radio md" name="d2" disabled checked> Disabled checked</label>
+</div>
+<div class="section">Label component · required · optional · sm</div>
+<div class="col" style="max-width:320px">
+  <div>
+    <label class="ema-label">Work email <span class="req">*</span></label>
+    <input style="width:100%;box-sizing:border-box;height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;outline:none" placeholder="you@company.com"/>
+  </div>
+  <div>
+    <label class="ema-label">Notes <span style="font-size:12px;font-weight:400;color:var(--fg3)">(optional)</span></label>
+    <input style="width:100%;box-sizing:border-box;height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;outline:none"/>
+  </div>
+  <div>
+    <label class="ema-label sm">Small label</label>
+    <input style="width:100%;box-sizing:border-box;height:28px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;outline:none"/>
+  </div>
+</div></body></html>

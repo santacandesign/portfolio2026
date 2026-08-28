@@ -1,0 +1,75 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · ButtonGroup" subtitle="horizontal/vertical · sm/md · icons · active state" viewport="700x360" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:8px}
+.lbl{font-size:12px;font-weight:500;line-height:16px;color:var(--fg2);margin-bottom:4px;display:block}
+.lbl .req{color:var(--red-800)}
+.hint-default{font-size:11px;color:var(--gray-800);margin-top:3px}
+.hint-success{font-size:11px;color:var(--green-930);margin-top:3px}
+.hint-error{font-size:11px;color:var(--red-930);margin-top:3px}
+.inp{height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;outline:none;color:var(--fg1);background:#fff;width:100%;box-sizing:border-box}
+.inp:focus{border-color:var(--green-500);box-shadow:0 0 0 3px var(--green-200)}
+.inp.error{border-color:var(--red-500)}
+.inp.success{border-color:var(--green-500)}
+.inp.disabled{background:var(--beige-100);border-color:var(--beige-300);color:var(--beige-800);cursor:not-allowed}
+.inp-sm{height:28px;font-size:12px}
+.inp-lg{height:44px;font-size:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;border:0}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.btn-lg{height:44px;padding:0 16px;font-size:16px;border-radius:8px}
+.btn-primary{background:var(--green-800);color:#fff}
+.btn-secondary{background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}
+.btn-ghost{background:transparent;color:var(--fg1)}
+
+.bg-h{display:inline-flex;flex-direction:row}
+.bg-h .btn{border-radius:0;margin-left:-1px}
+.bg-h .btn:first-child{border-radius:6px 0 0 6px;margin-left:0}
+.bg-h .btn:last-child{border-radius:0 6px 6px 0}
+.bg-v{display:inline-flex;flex-direction:column}
+.bg-v .btn{border-radius:0;margin-top:-1px}
+.bg-v .btn:first-child{border-radius:6px 6px 0 0;margin-top:0}
+.bg-v .btn:last-child{border-radius:0 0 6px 6px}
+.btn-active{background:var(--beige-200)!important;font-weight:700}
+</style></head><body style="padding:14px 16px">
+<div class="section">ButtonGroup · horizontal (default) · vertical · sizes sm/md/lg</div>
+<div class="col" style="gap:20px">
+  <div>
+    <div class="lbl">Horizontal · md · secondary</div>
+    <div class="bg-h">
+      <button class="btn btn-secondary btn-active">Week</button>
+      <button class="btn btn-secondary">Month</button>
+      <button class="btn btn-secondary">Quarter</button>
+      <button class="btn btn-secondary">Year</button>
+    </div>
+  </div>
+  <div>
+    <div class="lbl">Horizontal · sm</div>
+    <div class="bg-h">
+      <button class="btn btn-secondary btn-sm btn-active">List</button>
+      <button class="btn btn-secondary btn-sm">Grid</button>
+      <button class="btn btn-secondary btn-sm">Board</button>
+    </div>
+  </div>
+  <div>
+    <div class="lbl">Horizontal · with icons</div>
+    <div class="bg-h">
+      <button class="btn btn-secondary" style="height:36px;padding:0 14px;border-radius:0;margin-left:0;border-radius:6px 0 0 6px"><i class="ph ph-text-align-left" style="font-size:16px"></i></button>
+      <button class="btn btn-secondary btn-active" style="height:36px;padding:0 14px;border-radius:0;margin-left:-1px"><i class="ph ph-text-align-center" style="font-size:16px"></i></button>
+      <button class="btn btn-secondary" style="height:36px;padding:0 14px;border-radius:0 6px 6px 0;margin-left:-1px"><i class="ph ph-text-align-right" style="font-size:16px"></i></button>
+    </div>
+  </div>
+  <div>
+    <div class="lbl">Vertical</div>
+    <div class="bg-v">
+      <button class="btn btn-secondary btn-active" style="border-radius:6px 6px 0 0;margin-top:0">Overview</button>
+      <button class="btn btn-secondary" style="border-radius:0;margin-top:-1px">Steps</button>
+      <button class="btn btn-secondary" style="border-radius:0 0 6px 6px;margin-top:-1px">Transcript</button>
+    </div>
+  </div>
+</div>
+</body></html>

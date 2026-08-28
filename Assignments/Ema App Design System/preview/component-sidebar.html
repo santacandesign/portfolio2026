@@ -1,0 +1,180 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Sidebar" subtitle="default / app (dark) / inset / icon-collapsed · collapsible modes" viewport="700x560" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.col{display:flex;flex-direction:column;gap:6px}
+
+.sb{display:flex;flex-direction:column;height:320px;border-radius:10px;overflow:hidden;flex-shrink:0}
+.sb-default{background:#fff;border:1px solid var(--beige-300);width:240px}
+.sb-icon{background:#fff;border:1px solid var(--beige-300);width:64px}
+.sb-app{background:var(--gray-960);width:240px}
+.sb-inset{background:var(--beige-100);border:1px solid var(--beige-300);width:240px}
+.sb-hdr{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid}
+.sb-default .sb-hdr,.sb-inset .sb-hdr{border-color:var(--beige-300)}
+.sb-app .sb-hdr{border-color:var(--gray-900)}
+.sb-icon .sb-hdr{border-color:var(--beige-300);justify-content:center}
+.sb-body{flex:1;overflow:hidden;padding:8px}
+.sb-icon .sb-body{padding:8px 4px}
+.sb-ftr{border-top:1px solid;padding:8px 12px;display:flex;align-items:center;gap:8px}
+.sb-default .sb-ftr,.sb-inset .sb-ftr{border-color:var(--beige-300)}
+.sb-app .sb-ftr{border-color:var(--gray-900)}
+.sb-icon .sb-ftr{border-color:var(--beige-300);justify-content:center;padding:8px 4px}
+.sb-btn{display:flex;align-items:center;gap:8px;width:100%;padding:8px 8px;border:0;border-radius:8px;background:transparent;cursor:pointer;font-family:inherit;font-size:14px;color:var(--gray-800);text-align:left;transition:background .15s}
+.sb-btn:hover{background:var(--beige-100);color:var(--fg1)}
+.sb-btn.active{background:var(--beige-100);color:var(--fg1);font-weight:500}
+.sb-btn-app{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border:0;border-radius:8px;background:transparent;cursor:pointer;font-family:inherit;font-size:16px;color:#fff;text-align:left;transition:background .15s}
+.sb-btn-app:hover{background:var(--gray-930)}
+.sb-btn-app.active{background:#fff;color:var(--green-800);font-weight:500}
+.sb-grp-label{font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--beige-800);padding:8px 8px 4px}
+.sb-grp-label-app{font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gray-700);padding:8px 8px 4px}
+.av-sm{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--green-800);color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
+</style></head><body style="padding:14px 16px">
+<div class="section">Variants · default / app / inset / icon (collapsed)</div>
+<div class="row" style="gap:16px;align-items:flex-start">
+
+  <!-- default -->
+  <div class="sb sb-default">
+    <div class="sb-hdr">
+      <img src="../assets/logo.svg?v=3" height="18" alt="Ema"/>
+    </div>
+    <div class="sb-body">
+      <div class="sb-grp-label">Workspace</div>
+      
+      <button class="sb-btn active">
+        <i class="ph ph-squares-four" style="font-size:16px;color:var(--green-800)"></i>
+        <span>Dashboard</span>
+        <span style="margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--green-800)"></span>
+      </button>
+      <button class="sb-btn">
+        <i class="ph ph-flow-arrow" style="font-size:16px;color:var(--fg3)"></i>
+        <span>Runs</span>
+        
+      </button>
+      <button class="sb-btn">
+        <i class="ph ph-book-open" style="font-size:16px;color:var(--fg3)"></i>
+        <span>Knowledge</span>
+        
+      </button>
+      <button class="sb-btn">
+        <i class="ph ph-shield-check" style="font-size:16px;color:var(--fg3)"></i>
+        <span>Policies</span>
+        
+      </button>
+    </div>
+    <div class="sb-ftr">
+      <div class="av-sm">PS</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:500;color:var(--fg1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Priya Shah</div>
+        <div style="font-size:11px;color:var(--fg3)">Admin</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- app (dark) -->
+  <div class="sb sb-app">
+    <div class="sb-hdr" style="border-color:var(--gray-900)">
+      <img src="../assets/logo.svg?v=3" height="18" alt="Ema" style="filter:brightness(0) invert(1)"/>
+    </div>
+    <div class="sb-body">
+      <div class="sb-grp-label-app">Workspace</div>
+      
+      <button class="sb-btn-app active">
+        <i class="ph ph-fill ph-squares-four" style="font-size:20px"></i>
+        <span>Dashboard</span>
+      </button>
+      <button class="sb-btn-app">
+        <i class="ph ph-flow-arrow" style="font-size:20px"></i>
+        <span>Runs</span>
+      </button>
+      <button class="sb-btn-app">
+        <i class="ph ph-book-open" style="font-size:20px"></i>
+        <span>Knowledge</span>
+      </button>
+      <button class="sb-btn-app">
+        <i class="ph ph-shield-check" style="font-size:20px"></i>
+        <span>Policies</span>
+      </button>
+    </div>
+    <div class="sb-ftr" style="border-color:var(--gray-900)">
+      <div class="av-sm">PS</div>
+      <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:500;color:#fff">Priya Shah</div></div>
+    </div>
+  </div>
+
+  <!-- inset -->
+  <div class="sb sb-inset">
+    <div class="sb-hdr">
+      <img src="../assets/logo.svg?v=3" height="18" alt="Ema"/>
+    </div>
+    <div class="sb-body">
+      <div class="sb-grp-label">Workspace</div>
+      
+      <button class="sb-btn active" style="background:var(--beige-200)">
+        <i class="ph ph-squares-four" style="font-size:16px;color:var(--green-800)"></i>
+        <span>Dashboard</span>
+      </button>
+      <button class="sb-btn" style="">
+        <i class="ph ph-flow-arrow" style="font-size:16px;color:var(--fg3)"></i>
+        <span>Runs</span>
+      </button>
+      <button class="sb-btn" style="">
+        <i class="ph ph-book-open" style="font-size:16px;color:var(--fg3)"></i>
+        <span>Knowledge</span>
+      </button>
+      <button class="sb-btn" style="">
+        <i class="ph ph-shield-check" style="font-size:16px;color:var(--fg3)"></i>
+        <span>Policies</span>
+      </button>
+    </div>
+    <div class="sb-ftr"><div class="av-sm">PS</div></div>
+  </div>
+
+  <!-- icon / collapsed -->
+  <div class="sb sb-icon">
+    <div class="sb-hdr">
+      <img src="../assets/logo-mark.svg?v=3" width="24" height="24" alt="Ema"/>
+    </div>
+    <div class="sb-body" style="display:flex;flex-direction:column;align-items:center;gap:4px">
+      
+      <button title="Dashboard" style="width:40px;height:40px;border-radius:8px;border:0;background:var(--beige-200);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s"
+        onmouseover="this.style.background='var(--beige-100)'" onmouseout="this.style.background='var(--beige-200)'">
+        <i class="ph ph-squares-four" style="font-size:18px;color:var(--green-800)"></i>
+      </button>
+      <button title="Runs" style="width:40px;height:40px;border-radius:8px;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s"
+        onmouseover="this.style.background='var(--beige-100)'" onmouseout="this.style.background='transparent'">
+        <i class="ph ph-flow-arrow" style="font-size:18px;color:var(--fg3)"></i>
+      </button>
+      <button title="Knowledge" style="width:40px;height:40px;border-radius:8px;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s"
+        onmouseover="this.style.background='var(--beige-100)'" onmouseout="this.style.background='transparent'">
+        <i class="ph ph-book-open" style="font-size:18px;color:var(--fg3)"></i>
+      </button>
+      <button title="Policies" style="width:40px;height:40px;border-radius:8px;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s"
+        onmouseover="this.style.background='var(--beige-100)'" onmouseout="this.style.background='transparent'">
+        <i class="ph ph-shield-check" style="font-size:18px;color:var(--fg3)"></i>
+      </button>
+    </div>
+    <div class="sb-ftr"><div class="av-sm">PS</div></div>
+  </div>
+
+</div>
+
+<div class="section">collapsible: icon · offcanvas · none (API reference)</div>
+<div class="row" style="gap:16px">
+  
+  <div style="background:var(--beige-50);border:1px solid var(--beige-300);border-radius:8px;padding:10px 14px;min-width:200px">
+    <div style="font-size:12px;font-weight:700;color:var(--fg1);font-family:var(--font-mono)">collapsible="icon"</div>
+    <div style="font-size:12px;color:var(--fg3);margin-top:4px">64px when closed, 256px when open</div>
+  </div>
+  <div style="background:var(--beige-50);border:1px solid var(--beige-300);border-radius:8px;padding:10px 14px;min-width:200px">
+    <div style="font-size:12px;font-weight:700;color:var(--fg1);font-family:var(--font-mono)">collapsible="offcanvas"</div>
+    <div style="font-size:12px;color:var(--fg3);margin-top:4px">0px (hidden) when closed, 256px when open</div>
+  </div>
+  <div style="background:var(--beige-50);border:1px solid var(--beige-300);border-radius:8px;padding:10px 14px;min-width:200px">
+    <div style="font-size:12px;font-weight:700;color:var(--fg1);font-family:var(--font-mono)">collapsible="none"</div>
+    <div style="font-size:12px;color:var(--fg3);margin-top:4px">always 256px, no toggle</div>
+  </div>
+</div></body></html>

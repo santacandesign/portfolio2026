@@ -1,0 +1,283 @@
+/**
+ * Ema Design System — Colors & Type
+ * Source of truth: Ema-Unlimited/ema-fe-lib @ main
+ *   packages/design-system/src/styles.css
+ *   packages/design-system/src/tokens/colorTokens.json
+ *   packages/design-system/src/tokens/typographyTokens.json
+ *
+ * Font family: Satoshi (variable, 300–900). Fonts live in ./fonts/
+ */
+
+/* ─────────── 1. Font face ─────────── */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./fonts/Satoshi-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./fonts/Satoshi-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./fonts/Satoshi-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./fonts/Satoshi-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./fonts/Satoshi-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./fonts/Satoshi-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./fonts/Satoshi-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./fonts/Satoshi-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./fonts/Satoshi-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./fonts/Satoshi-BlackItalic.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* ─────────── 2. App font stack ─────────── */
+  --app-font-family: 'Satoshi', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* ─────────── 3. Base color scales ─────────── */
+  /* Green — primary brand */
+  --green-50:#fbfefb; --green-100:#f5fbf6; --green-200:#e7f7e9;
+  --green-300:#d8f1dc; --green-400:#c5e9cc; --green-500:#aedeb7;
+  --green-600:#8fcf9c; --green-700:#5fba76; --green-800:#1f8844;
+  --green-900:#017a37; --green-930:#11803d; --green-960:#1e3c25;
+
+  /* Beige — app surface + neutrals */
+  --beige-50:#fbfaf7;  --beige-100:#f7f6f5; --beige-200:#f1f0ed;
+  --beige-300:#eae8e3; --beige-400:#e3e1db; --beige-500:#d9d7cf;
+  --beige-600:#d1cec4; --beige-700:#bebbaf; --beige-800:#8f8d81;
+  --beige-900:#838075; --beige-930:#676357; --beige-960:#232119;
+
+  /* Gray — cool neutrals (text, borders in tabular UI) */
+  --gray-50:#f5f6f7;   --gray-100:#f1f3f8;  --gray-200:#e7eaf2;
+  --gray-300:#e3e6ed;  --gray-400:#d8dce5;  --gray-500:#c8cddb;
+  --gray-600:#bac0cc;  --gray-700:#a1a7b3;  --gray-800:#838998;
+  --gray-900:#61666f;  --gray-930:#4a4d55;  --gray-960:#1f2430;
+
+  /* Blue — info */
+  --blue-50:#fbfdff;   --blue-100:#f4fafe;  --blue-200:#e6f4ff;
+  --blue-300:#d7edff;  --blue-400:#c5e4fd;  --blue-500:#b0d7f7;
+  --blue-600:#95c6ee;  --blue-700:#6bb0e5;  --blue-800:#2195df;
+  --blue-900:#1b88cd;  --blue-930:#0078c0;  --blue-960:#0d3855;
+
+  /* Purple — AI / magic */
+  --purple-50:#fcfcff; --purple-100:#f9f8ff; --purple-200:#f1f1ff;
+  --purple-300:#e7e5ff;--purple-400:#dcd9ff; --purple-500:#cfcaff;
+  --purple-600:#bcb4ff;--purple-700:#a396ff; --purple-800:#6f45e8;
+  --purple-900:#613dcb;--purple-930:#6644d2; --purple-960:#311f6b;
+
+  /* Orange — warning */
+  --orange-50:#fefcfb; --orange-100:#fff7f1;--orange-200:#ffecde;
+  --orange-300:#ffdcbf;--orange-400:#ffcea6;--orange-500:#fec298;
+  --orange-600:#efb185;--orange-700:#e29a64;--orange-800:#dd7a1e;
+  --orange-900:#d06e00;--orange-930:#b45d00;--orange-960:#4e321d;
+
+  /* Red — error / destructive */
+  --red-50:#fffcfc;    --red-100:#fff7f6;   --red-200:#ffebe8;
+  --red-300:#ffdbd7;   --red-400:#ffccc5;   --red-500:#ffbbb4;
+  --red-600:#faa79e;   --red-700:#f18b82;   --red-800:#ea383a;
+  --red-900:#dd1f2a;   --red-930:#d51d28;   --red-960:#661616;
+
+  /* Yellow — pending */
+  --yellow-50:#fefdfb; --yellow-100:#fffaea;--yellow-200:#fff4d5;
+  --yellow-300:#ffeab6;--yellow-400:#ffdf90;--yellow-500:#fbd27d;
+  --yellow-600:#e8c170;--yellow-700:#d6aa47;--yellow-800:#ffca36;
+  --yellow-900:#efb428;--yellow-930:#997000;--yellow-960:#463a21;
+
+  --white:#ffffff;
+  --ema-primary-green:#0a430d;   /* deep marketing green */
+
+  /* ─────────── 4. Semantic brand ─────────── */
+  --brand-primary: var(--green-800);
+  --brand-primary-accent: var(--green-900);
+  --brand-primary-active: var(--green-930);
+  --brand-primary-foreground: var(--white);
+
+  --brand-secondary: var(--white);
+  --brand-secondary-accent: var(--beige-50);
+  --brand-secondary-hover: var(--beige-100);
+  --brand-secondary-active: var(--beige-200);
+  --brand-secondary-pressed: var(--beige-300);
+  --brand-secondary-strong: var(--beige-400);
+  --brand-secondary-border: var(--beige-500);
+  --brand-secondary-foreground: var(--beige-960);
+  --brand-secondary-muted: var(--beige-800);
+
+  /* App surface */
+  --app-background: var(--beige-50);
+  --app-background-accent: var(--beige-200);
+  --app-foreground: var(--beige-960);
+  --app-muted-foreground: var(--beige-930);
+
+  /* Text aliases (fg1 = primary text, fg2 = muted, fg3 = tertiary) */
+  --fg1: var(--beige-960);
+  --fg2: var(--beige-930);
+  --fg3: var(--beige-800);
+  --fg-inverse: var(--white);
+  --bg1: var(--beige-50);
+  --bg2: var(--white);
+  --bg3: var(--beige-100);
+  --bg-accent: var(--beige-200);
+
+  /* Status */
+  --success: var(--green-800);   --success-fg: var(--white);
+  --success-bg: var(--green-200);--success-border: var(--green-500);
+  --success-bg-subtle: var(--green-100);
+
+  --error: var(--red-800);       --error-fg: var(--white);
+  --error-bg: var(--red-200);    --error-border: var(--red-500);
+  --error-bg-subtle: var(--red-100);
+
+  --warning: var(--orange-800);  --warning-fg: var(--white);
+  --warning-bg: var(--orange-200);--warning-border: var(--orange-500);
+  --warning-bg-subtle: var(--yellow-100);
+
+  --info: var(--blue-800);       --info-fg: var(--white);
+  --info-bg: var(--blue-200);    --info-border: var(--blue-500);
+  --info-bg-subtle: var(--blue-100);
+
+  --pending: var(--yellow-930);  --pending-fg: var(--yellow-960);
+  --pending-bg: var(--yellow-200);
+
+  --ai-magic: var(--purple-800); --ai-magic-fg: var(--white);
+  --ai-magic-bg: var(--purple-200);--ai-magic-border: var(--purple-500);
+  --ai-magic-bg-subtle: var(--purple-100);
+
+  --muted: var(--gray-700);      --muted-fg: var(--gray-800);
+  --muted-bg: var(--gray-50);    --muted-border: var(--gray-300);
+
+  /* Focus */
+  --focus-ring: var(--brand-primary);
+  --focus-border: var(--green-500);
+
+  /* ─────────── 5. Borders / radii ─────────── */
+  --border-color: var(--beige-400);
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 9999px;
+
+  /* ─────────── 6. Spacing (4px grid) ─────────── */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px;
+  --space-4: 16px; --space-5: 20px; --space-6: 24px;
+  --space-8: 32px; --space-10: 40px; --space-12: 48px;
+  --space-16: 64px;
+
+  /* ─────────── 7. Shadows ─────────── */
+  --shadow-xs: 0 1px 2px rgba(35, 33, 25, 0.04);
+  --shadow-sm: 0 1px 2px rgba(35, 33, 25, 0.06), 0 1px 3px rgba(35, 33, 25, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(35, 33, 25, 0.08), 0 2px 4px -2px rgba(35, 33, 25, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(35, 33, 25, 0.10), 0 4px 6px -4px rgba(35, 33, 25, 0.06);
+  --shadow-xl: 0 20px 25px -5px rgba(35, 33, 25, 0.12), 0 8px 10px -6px rgba(35, 33, 25, 0.08);
+  --shadow-focus: 0 0 0 3px rgba(31, 136, 68, 0.25);   /* green-800 @ 25 */
+
+  /* ─────────── 8. Motion ─────────── */
+  --ease-out-quint: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-slow: 400ms;
+}
+
+/* ─────────── 9. Base elements ─────────── */
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--app-background);
+  color: var(--app-foreground);
+  font-family: var(--app-font-family);
+  font-size: 14px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ─────────── 10. Type scale ───────────
+   Mirrors Ema's typography tokens (text-xs..header-1).
+*/
+.text-xs-normal   { font-size:12px; line-height:16px; font-weight:400; }
+.text-xs-medium   { font-size:12px; line-height:16px; font-weight:500; }
+.text-xs-bold     { font-size:12px; line-height:16px; font-weight:700; }
+.text-xs-label    { font-size:12px; line-height:16px; font-weight:700;
+                    letter-spacing:1.2px; text-transform:uppercase; }
+.text-sm-normal   { font-size:14px; line-height:20px; font-weight:400; }
+.text-sm-medium   { font-size:14px; line-height:20px; font-weight:500; }
+.text-sm-bold     { font-size:14px; line-height:20px; font-weight:700; }
+.text-sm-label    { font-size:14px; line-height:20px; font-weight:700;
+                    letter-spacing:1.4px; text-transform:uppercase; }
+.text-base-normal { font-size:16px; line-height:24px; font-weight:400; }
+.text-base-medium { font-size:16px; line-height:24px; font-weight:500; }
+.text-base-bold   { font-size:16px; line-height:24px; font-weight:700; }
+
+.header-5         { font-size:18px; line-height:28px; font-weight:500; }
+.header-4         { font-size:20px; line-height:28px; font-weight:500; }
+.header-3         { font-size:24px; line-height:32px; font-weight:500; }
+.header-2         { font-size:30px; line-height:36px; font-weight:700; }
+.header-1         { font-size:36px; line-height:40px; font-weight:700; }
+.display          { font-size:56px; line-height:60px; font-weight:900;
+                    letter-spacing:-0.02em; }
+
+/* Semantic element defaults — use when rendering markdown / body copy */
+h1 { font-size:36px; line-height:40px; font-weight:700; margin:0 0 16px; color:var(--fg1); }
+h2 { font-size:30px; line-height:36px; font-weight:700; margin:0 0 12px; color:var(--fg1); }
+h3 { font-size:24px; line-height:32px; font-weight:500; margin:0 0 8px;  color:var(--fg1); }
+h4 { font-size:20px; line-height:28px; font-weight:500; margin:0 0 8px;  color:var(--fg1); }
+h5 { font-size:18px; line-height:28px; font-weight:500; margin:0 0 8px;  color:var(--fg1); }
+p  { font-size:14px; line-height:20px; font-weight:400; margin:0 0 12px; color:var(--fg1); }
+small { font-size:12px; line-height:16px; color: var(--fg2); }
+code, pre { font-family: var(--font-mono); font-size: 13px; }
+code { background: var(--beige-100); padding: 1px 6px; border-radius: 4px; color: var(--beige-960); }
+a { color: var(--brand-primary); text-decoration: none; }
+a:hover { color: var(--brand-primary-accent); text-decoration: underline; }

@@ -1,0 +1,106 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Modal" subtitle="sm/md/lg stacked · confirm · destructive · form · review draft" viewport="700x760" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;border:0}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.btn-primary{background:var(--green-800);color:#fff}
+.btn-secondary{background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}
+.btn-destructive{background:var(--red-800);color:#fff}
+.modal{background:#fff;border:1px solid var(--beige-400);border-radius:16px;box-shadow:0 10px 15px -3px rgba(35,33,25,.10),0 4px 6px -4px rgba(35,33,25,.06);overflow:hidden}
+.modal-hdr{display:flex;align-items:flex-start;justify-content:space-between;padding:20px 20px 0;gap:12px}
+.modal-title{font-size:18px;line-height:28px;font-weight:700;color:var(--fg1)}
+.modal-desc{font-size:14px;line-height:20px;color:var(--fg2);margin-top:4px}
+.modal-body{padding:16px 20px;font-size:14px;line-height:20px;color:var(--fg1)}
+.modal-ftr{padding:0 20px 20px;display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--beige-200);padding-top:14px}
+.modal-close{width:28px;height:28px;border-radius:6px;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--fg2);flex-shrink:0}
+.modal-close:hover{background:var(--beige-100)}
+.size-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--fg3);margin-bottom:6px}
+</style>
+</head><body style="padding:14px 16px">
+
+<div class="section">Modal sizes · sm / md / lg · confirm · destructive</div>
+<div style="display:flex;flex-direction:column;gap:16px;max-width:640px">
+
+  <!-- sm — destructive -->
+  <div>
+    <div class="size-tag">sm · 400px — destructive</div>
+    <div class="modal" style="width:100%;max-width:400px">
+      <div class="modal-hdr">
+        <div>
+          <div class="modal-title">Delete workflow?</div>
+          <div class="modal-desc">This action cannot be undone. All 42 run history records will be permanently removed.</div>
+        </div>
+        <button class="modal-close"><i class="ph ph-x" style="font-size:15px"></i></button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-ftr">
+        <button class="btn btn-secondary btn-sm">Cancel</button>
+        <button class="btn btn-destructive btn-sm">Delete workflow</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- md — form -->
+  <div>
+    <div class="size-tag">md · 480px — form modal</div>
+    <div class="modal" style="width:100%;max-width:480px">
+      <div class="modal-hdr">
+        <div>
+          <div class="modal-title">Add policy</div>
+          <div class="modal-desc">Set a rule Ema follows when handling cases.</div>
+        </div>
+        <button class="modal-close"><i class="ph ph-x" style="font-size:15px"></i></button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div>
+            <div style="font-size:12px;font-weight:500;color:var(--fg2);margin-bottom:4px">Policy name <span style="color:var(--red-800)">*</span></div>
+            <input style="width:100%;box-sizing:border-box;height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;outline:none" value="Auto-resolve billing tier-1" readonly/>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:500;color:var(--fg2);margin-bottom:4px">Description</div>
+            <div style="height:64px;border:1px solid var(--beige-500);border-radius:8px;padding:8px 14px;font-size:14px;color:var(--fg2)">Automatically resolve billing enquiries where intent is clear and no refund exceeds $250.</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-ftr">
+        <button class="btn btn-secondary btn-sm">Cancel</button>
+        <button class="btn btn-primary btn-sm">Save policy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- lg — review -->
+  <div>
+    <div class="size-tag">lg · 600px — review draft</div>
+    <div class="modal" style="width:100%;max-width:600px">
+      <div class="modal-hdr">
+        <div>
+          <div class="modal-title">Review Ema's draft</div>
+          <div class="modal-desc">Drafted by Ema · Case #48221 · 2 min ago</div>
+        </div>
+        <button class="modal-close"><i class="ph ph-x" style="font-size:15px"></i></button>
+      </div>
+      <div class="modal-body">
+        <div style="background:var(--purple-50);border:1px solid var(--purple-300);border-radius:8px;padding:12px 14px;font-size:14px;line-height:20px;color:var(--fg1)">
+          Hi Jordan, thanks for reaching out. I can see two charges of $129.00 on Apr 14. I've initiated a reversal on the duplicate — it should land within 3 business days. I'll keep this ticket open until you confirm receipt.
+        </div>
+      </div>
+      <div class="modal-ftr">
+        <button class="btn btn-secondary btn-sm"><i class="ph ph-pencil" style="font-size:13px"></i>Edit</button>
+        <button class="btn btn-primary btn-sm"><i class="ph ph-paper-plane-tilt" style="font-size:13px"></i>Send</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:8px">Scrim · z-index · animation</div>
+<div style="font-size:12px;color:var(--fg3);max-width:540px;line-height:18px">
+  Overlay: <code style="font-size:11px;background:var(--beige-100);padding:1px 5px;border-radius:4px">rgba(247,246,242,0.90)</code> · backdrop-blur(2px) · z-index 32 · content animation: scale(0.96)→scale(1) + fade
+</div>
+</body></html>

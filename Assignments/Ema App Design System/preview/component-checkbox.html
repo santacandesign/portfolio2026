@@ -1,0 +1,61 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Checkbox" subtitle="sm/md · checked · indeterminate · disabled · select-all pattern" viewport="700x360" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.col{display:flex;flex-direction:column;gap:8px}
+
+.cb-wrap{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;color:var(--fg1)}
+input[type=checkbox].ema-cb{
+  appearance:none;-webkit-appearance:none;cursor:pointer;border-radius:4px;position:relative;
+  border:1px solid var(--beige-700);background:#fff;transition:all .15s;flex-shrink:0;
+}
+input[type=checkbox].ema-cb:hover{border-color:var(--beige-800)}
+input[type=checkbox].ema-cb:checked{background:var(--green-800);border-color:transparent}
+input[type=checkbox].ema-cb:checked::after{content:'';position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-52%) rotate(45deg);border:2px solid #fff;border-top:0;border-left:0;
+  width:28%;height:48%}
+input[type=checkbox].ema-cb.indet{background:#fff;border:2px solid var(--green-800)}
+input[type=checkbox].ema-cb.indet::after{content:'';position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);background:var(--green-800);width:60%;height:2px}
+input[type=checkbox].ema-cb:disabled{background:var(--beige-100);border-color:var(--beige-300);cursor:not-allowed}
+input[type=checkbox].ema-cb:checked:disabled{background:var(--beige-300)}
+.ema-cb.sm{width:16px;height:16px}
+.ema-cb.md{width:20px;height:20px}
+</style></head><body style="padding:14px 16px">
+<div class="section">Sizes · sm 16px · md 20px (default)</div>
+<div class="row">
+  <label class="cb-wrap"><input type="checkbox" class="ema-cb sm"> sm unchecked</label>
+  <label class="cb-wrap"><input type="checkbox" class="ema-cb sm" checked> sm checked</label>
+  <label class="cb-wrap"><input type="checkbox" class="ema-cb md"> md unchecked</label>
+  <label class="cb-wrap"><input type="checkbox" class="ema-cb md" checked> md checked</label>
+</div>
+<div class="section">States · indeterminate · disabled</div>
+<div class="row">
+  <label class="cb-wrap"><input type="checkbox" class="ema-cb md indet"> Indeterminate</label>
+  <label class="cb-wrap"><input type="checkbox" class="ema-cb md" disabled> Disabled</label>
+  <label class="cb-wrap"><input type="checkbox" class="ema-cb md" disabled checked> Disabled checked</label>
+</div>
+<div class="section">In context · select all row pattern</div>
+<div class="col" style="max-width:320px;background:#fff;border:1px solid var(--beige-300);border-radius:8px;overflow:hidden">
+  <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--beige-200);background:var(--beige-50)">
+    <input type="checkbox" class="ema-cb md indet">
+    <span style="font-size:14px;font-weight:700">Select all</span>
+  </div>
+  
+  <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--beige-200)">
+    <input type="checkbox" class="ema-cb md" checked>
+    <span style="font-size:14px;color:var(--fg1)">Case #48221</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--beige-200)">
+    <input type="checkbox" class="ema-cb md" >
+    <span style="font-size:14px;color:var(--fg1)">Case #48220</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--beige-200)">
+    <input type="checkbox" class="ema-cb md" >
+    <span style="font-size:14px;color:var(--fg1)">Case #48219</span>
+  </div>
+</div></body></html>

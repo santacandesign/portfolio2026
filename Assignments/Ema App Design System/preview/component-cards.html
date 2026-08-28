@@ -1,0 +1,178 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Cards" subtitle="default, interactive, disabled, folder, 5 gradients · Header/Title/Desc/Footer/IconBadge/StatusBadge · 5 sizes" viewport="700x820" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+  .card{display:flex;flex-direction:column;background:#fff;border-radius:12px;transition:border-color .2s, box-shadow .2s}
+  /* Variants */
+  .v-default{border:1px solid var(--beige-300)}
+  .v-default:hover{border-color:var(--beige-500)}
+  .v-interactive{border:1px solid var(--beige-300);cursor:pointer}
+  .v-interactive:hover{border-color:var(--beige-500);box-shadow:var(--shadow-md)}
+  .v-disabled{border:1.5px dashed var(--beige-300);color:var(--gray-800);opacity:.6;pointer-events:none}
+  .v-folder{border:1px solid var(--beige-300);border-radius:8px;box-shadow:var(--shadow-sm);padding:0!important;gap:0!important}
+  .v-folder.disabled{background:var(--beige-100);opacity:.6;box-shadow:none}
+  /* Gradients */
+  .g-brand  {background:linear-gradient(to bottom,#fff,var(--green-50));border:1px solid var(--green-500);border-radius:12px}
+  .g-info   {background:linear-gradient(to bottom,#fff,var(--blue-50));border:1px solid var(--blue-400);border-radius:12px}
+  .g-warning{background:linear-gradient(to bottom,#fff,var(--yellow-50));border:1px solid var(--yellow-400);border-radius:12px}
+  .g-error  {background:linear-gradient(to bottom,#fff,var(--red-50));border:1px solid var(--red-400);border-radius:12px}
+  .g-flair  {background:linear-gradient(to bottom,#fff,var(--purple-50));border:1px solid var(--purple-400);border-radius:12px}
+  /* Sizes */
+  .s-xs{min-width:176px;padding:12px;gap:8px}
+  .s-sm{min-width:200px;padding:14px;gap:8px}
+  .s-md{min-width:220px;padding:16px;gap:10px}
+  .s-lg{min-width:260px;padding:20px;gap:12px}
+  .s-xl{min-width:300px;padding:24px;gap:12px}
+
+  /* Sub-components — typography tokens per Card.tsx */
+  .card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .card-content{display:flex;flex-direction:column;gap:4px}
+  .card-footer{display:flex;width:100%;gap:6px;padding-top:4px}
+  .c-title-sm{font-size:14px;line-height:20px;font-weight:700;color:var(--fg1)}      /* text-sm bold */
+  .c-title-md{font-size:16px;line-height:24px;font-weight:700;color:var(--fg1)}      /* text-base bold */
+  .c-title-lg{font-size:18px;line-height:28px;font-weight:700;color:var(--fg1)}      /* text-lg bold */
+  .c-desc-xs {font-size:12px;line-height:16px;color:var(--fg2)}                       /* text-xs */
+  .c-desc-sm {font-size:14px;line-height:20px;color:var(--fg2)}                       /* text-sm */
+
+  /* IconBadge — size-10 rounded-lg bg-beige-100 */
+  .icon-badge{width:40px;height:40px;border-radius:8px;background:var(--beige-100);
+              display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  .icon-badge i{font-size:20px;color:var(--fg1)}
+
+  /* StatusBadge — text-sm-medium + colored icon */
+  .status{display:inline-flex;align-items:center;gap:6px;font-size:14px;line-height:20px;font-weight:500}
+  .status.processing{color:var(--orange-930)}
+  .status.error     {color:var(--red-900)}
+  .status.success   {color:var(--green-930)}
+  .status .spin{width:14px;height:14px;border:2px solid rgba(180,93,0,.25);border-top-color:var(--orange-930);
+                border-radius:50%;animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* Inline mini buttons used in footers */
+  .mini{display:inline-flex;align-items:center;gap:4px;background:#fff;border:1px solid var(--beige-500);
+        border-radius:6px;padding:0 10px;height:28px;font-size:12px;line-height:16px;font-weight:700;
+        color:var(--fg1);cursor:pointer}
+  .mini:hover{background:var(--beige-50)}
+  .mini.primary{background:var(--green-800);color:#fff;border-color:var(--green-800)}
+  .mini.primary:hover{background:var(--green-900)}
+
+  .section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+           color:var(--fg3);margin:10px 0 6px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
+</style>
+</head><body style="padding:14px 16px">
+
+<div class="section">Default · interactive (hover shadow) · disabled dashed</div>
+<div class="row">
+  <div class="card v-default s-md" style="width:220px">
+    <div class="card-header">
+      <div class="icon-badge"><i class="ph ph-chart-line-up"></i></div>
+    </div>
+    <div class="card-content">
+      <div class="c-title-md">Runs today</div>
+      <div style="font-size:30px;line-height:36px;font-weight:700">1,284</div>
+      <div class="c-desc-xs" style="color:var(--green-900)"><i class="ph ph-arrow-up"></i> 12% vs yesterday</div>
+    </div>
+  </div>
+
+  <div class="card v-interactive s-md" style="width:220px">
+    <div class="card-header">
+      <div class="icon-badge" style="background:var(--green-200)"><i class="ph ph-flow-arrow" style="color:var(--green-900)"></i></div>
+      <i class="ph ph-caret-right" style="color:var(--fg3)"></i>
+    </div>
+    <div class="card-content">
+      <div class="c-title-md">Tier-1 triage</div>
+      <div class="c-desc-xs">42 runs \u00b7 Support \u00b7 hover to see shadow</div>
+    </div>
+  </div>
+
+  <div class="card v-disabled s-md" style="width:220px">
+    <div class="card-content">
+      <div class="c-title-md">Unpublished policy</div>
+      <div class="c-desc-xs">draft \u00b7 editor only</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">Full anatomy · Header + Title + Description + Content + Footer</div>
+<div class="row">
+  <div class="card v-default s-lg" style="width:340px">
+    <div class="card-header">
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="icon-badge" style="background:var(--purple-200)"><i class="ph ph-magic-wand" style="color:var(--purple-800)"></i></div>
+        <div>
+          <div class="c-title-md">Draft refund response</div>
+          <div class="c-desc-xs">Run #4081 \u00b7 2 min ago</div>
+        </div>
+      </div>
+      <span class="status success"><i class="ph-fill ph-check-circle"></i>Uploaded</span>
+    </div>
+    <div class="card-content">
+      <div class="c-desc-sm" style="color:var(--fg1)">Ema drafted a refund acknowledgement and tagged the case as resolved pending approver sign-off.</div>
+    </div>
+    <div class="card-footer" style="justify-content:flex-end">
+      <button class="mini">Review</button>
+      <button class="mini primary">Approve</button>
+    </div>
+  </div>
+
+  <div class="card v-default s-lg" style="width:300px">
+    <div class="card-header">
+      <div class="c-title-md">refund-receipt.pdf</div>
+    </div>
+    <div class="card-content">
+      <span class="status processing"><span class="spin"></span>Processing</span>
+      <span class="status error"><i class="ph-fill ph-warning-circle"></i>Failed to upload</span>
+      <span class="status success"><i class="ph-fill ph-check-circle"></i>Uploaded successfully</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">Gradient · brand · info · warning · error · flair (AI)</div>
+<div class="row">
+  <div class="card g-brand s-sm" style="width:160px"><div class="c-title-sm">Brand</div><div class="c-desc-xs">green \u2193</div></div>
+  <div class="card g-info s-sm" style="width:160px"><div class="c-title-sm">Info</div><div class="c-desc-xs">blue \u2193</div></div>
+  <div class="card g-warning s-sm" style="width:160px"><div class="c-title-sm">Warning</div><div class="c-desc-xs">yellow \u2193</div></div>
+  <div class="card g-error s-sm" style="width:160px"><div class="c-title-sm">Error</div><div class="c-desc-xs">red \u2193</div></div>
+  <div class="card g-flair s-sm" style="width:160px">
+    <div style="display:flex;align-items:center;gap:6px"><i class="ph-fill ph-magic-wand" style="color:var(--purple-800)"></i><div class="c-title-sm">Flair</div></div>
+    <div class="c-desc-xs">AI-generated content</div>
+  </div>
+</div>
+
+<div class="section">Folder variant (list row) — default · disabled</div>
+<div class="row">
+  <div class="card v-folder" style="width:280px">
+    <div style="padding:10px 12px;display:flex;align-items:center;gap:10px">
+      <i class="ph ph-folder" style="color:var(--fg2);font-size:18px"></i>
+      <div style="flex:1">
+        <div class="c-title-sm">Refund workflows</div>
+        <div class="c-desc-xs">8 runs \u00b7 updated 2d ago</div>
+      </div>
+      <i class="ph ph-caret-right" style="color:var(--fg3)"></i>
+    </div>
+  </div>
+  <div class="card v-folder disabled" style="width:280px">
+    <div style="padding:10px 12px;display:flex;align-items:center;gap:10px">
+      <i class="ph ph-folder" style="color:var(--fg3);font-size:18px"></i>
+      <div style="flex:1">
+        <div class="c-title-sm">Archived · Q3 2024</div>
+        <div class="c-desc-xs">locked \u00b7 read-only</div>
+      </div>
+      <i class="ph ph-lock" style="color:var(--fg3)"></i>
+    </div>
+  </div>
+</div>
+
+<div class="section">Sizes · xs · sm · md · lg · xl (padding & title scale)</div>
+<div class="row">
+  <div class="card v-default s-xs" style="width:150px"><div class="c-title-sm">xs</div><div class="c-desc-xs">p12 \u00b7 text-sm</div></div>
+  <div class="card v-default s-sm" style="width:160px"><div class="c-title-sm">sm</div><div class="c-desc-xs">p14 \u00b7 text-sm</div></div>
+  <div class="card v-default s-md" style="width:180px"><div class="c-title-md">md</div><div class="c-desc-xs">p16 \u00b7 text-base</div></div>
+  <div class="card v-default s-lg" style="width:200px"><div class="c-title-lg">lg</div><div class="c-desc-sm">p20 \u00b7 text-lg</div></div>
+  <div class="card v-default s-xl" style="width:240px"><div class="c-title-lg" style="font-size:20px;line-height:28px">xl</div><div class="c-desc-sm">p24 \u00b7 text-xl</div></div>
+</div>
+
+</body></html>

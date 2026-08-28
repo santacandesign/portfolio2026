@@ -1,0 +1,70 @@
+<!doctype html>
+<!-- @dsCard group="Brand" name="Brand · Logo" subtitle="Real Ema wordmark + icon mark · sidebar expanded/collapsed usage · clear space" viewport="700x520" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+  .section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+           color:var(--fg3);margin:2px 0 8px}
+  .chip{display:inline-flex;align-items:center;justify-content:center;background:#fff;
+        border:1px solid var(--beige-300);border-radius:12px;padding:14px 18px;gap:12px}
+  .chip.dark  {background:var(--gray-950);border-color:var(--gray-900)}
+  .chip.brand {background:var(--green-800);border-color:var(--green-900)}
+  .chip img{display:block}
+  .inv{filter:brightness(0) invert(1)}
+  .sb-expanded,.sb-collapsed{background:var(--beige-50);border:1px solid var(--beige-300);
+    border-radius:10px;height:72px;display:flex;align-items:center;padding:0 14px;gap:10px}
+  .sb-expanded{width:220px}
+  .sb-collapsed{width:72px;justify-content:center}
+  .caption{font-size:12px;line-height:16px;color:var(--fg3)}
+</style>
+</head><body style="padding:14px 16px">
+
+<div class="section">Type=Full \u00b7 wordmark (use when sidebar is expanded / marketing)</div>
+<div class="row">
+  <div class="chip"><img src="../assets/logo.svg?v=3" height="32" alt="Ema wordmark"/></div>
+  <div class="chip dark"><img src="../assets/logo.svg?v=3" height="32" alt="Ema wordmark" class="inv"/></div>
+  <div class="chip brand"><img src="../assets/logo.svg?v=3" height="32" alt="Ema wordmark" class="inv"/></div>
+</div>
+
+<div class="section">Type=Icon \u00b7 icon mark (use when sidebar is collapsed / favicon)</div>
+<div class="row">
+  <div class="chip"><img src="../assets/logo-mark.svg?v=3" width="28" height="28" alt="Ema mark"/></div>
+  <div class="chip"><img src="../assets/logo-mark.svg?v=3" width="40" height="40" alt="Ema mark"/></div>
+  <div class="chip"><img src="../assets/logo-mark.svg?v=3" width="56" height="56" alt="Ema mark"/></div>
+  <div class="chip dark"><img src="../assets/logo-mark.svg?v=3" width="40" height="40" alt="Ema mark"/></div>
+</div>
+
+<div class="section">In context \u00b7 sidebar states</div>
+<div class="row">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div class="sb-expanded">
+      <img src="../assets/logo.svg?v=3" height="24" alt="Ema"/>
+    </div>
+    <span class="caption">Sidebar expanded \u2192 wordmark</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div class="sb-collapsed">
+      <img src="../assets/logo-mark.svg?v=3" width="28" height="28" alt="Ema"/>
+    </div>
+    <span class="caption">Sidebar collapsed \u2192 icon mark</span>
+  </div>
+</div>
+
+<div class="section">Clear space &amp; minimum size</div>
+<div class="row" style="align-items:flex-start">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div style="position:relative;background:#fff;border:1px dashed var(--beige-500);border-radius:10px;padding:18px 22px">
+      <img src="../assets/logo.svg?v=3" height="32" alt="Ema"/>
+    </div>
+    <span class="caption">Clear space = x-height of the \u201ce\u201d on all sides.</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <div class="chip" style="padding:10px">
+      <img src="../assets/logo-mark.svg?v=3" width="20" height="20" alt="Ema"/>
+    </div>
+    <span class="caption">Min. size icon mark \u2265 20px \u00b7 wordmark \u2265 48px wide.</span>
+  </div>
+</div>
+
+</body></html>

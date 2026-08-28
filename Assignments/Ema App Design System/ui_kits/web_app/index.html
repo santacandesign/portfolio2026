@@ -1,0 +1,75 @@
+<!doctype html>
+<!-- @dsCard group="UI Kit — Web App" name="Ema Web App · UI Kit" subtitle="Dashboard → Run detail → Composer click-thru" viewport="1280x900" -->
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Ema — Web App UI Kit</title>
+<link rel="stylesheet" href="../../colors_and_type.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+  html, body, #root { height: 100%; margin: 0; }
+  body { background: var(--app-background); font-family: var(--app-font-family); color: var(--fg1); }
+  * { box-sizing: border-box; }
+  button { font-family: inherit; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="Primitives.jsx"></script>
+<script type="text/babel" src="Chrome.jsx"></script>
+<script type="text/babel" src="Dashboard.jsx"></script>
+<script type="text/babel" src="RunDetail.jsx"></script>
+<script type="text/babel" src="Composer.jsx"></script>
+
+<script type="text/babel">
+function App() {
+  const [collapsed, setCollapsed] = React.useState(false);
+  const [current, setCurrent] = React.useState('dashboard');
+  const [openRun, setOpenRun] = React.useState(null);
+  const [composerOpen, setComposerOpen] = React.useState(false);
+
+  const onOpenRun = (r) => { setOpenRun(r); setCurrent('run'); };
+
+  let title = 'Dashboard';
+  let crumbs = [];
+  if (current === 'run' && openRun) {
+    crumbs = ['Runs', openRun.workflow, openRun.id];
+  } else {
+    title = { dashboard:'Dashboard', runs:'Runs', knowledge:'Knowledge', policies:'Policies', integrations:'Integrations' }[current] || 'Workspace';
+  }
+
+  return (
+    <div style={{height:'100%',display:'flex',position:'relative'}} data-screen-label={current}>
+      <Sidebar collapsed={collapsed} onToggle={()=>setCollapsed(c=>!c)} current={current==='run'?'runs':current} onNav={setCurrent}/>
+      <div style={{flex:1,display:'flex',flexDirection:'column',minWidth:0,position:'relative'}}>
+        <Navbar title={title} breadcrumbs={crumbs} onNewRun={()=>setComposerOpen(true)}/>
+        <main style={{flex:1,overflow:'auto',background:'var(--app-background)'}}>
+          {current === 'dashboard' && <Dashboard onOpenRun={onOpenRun}/>}
+          {current === 'run' && openRun && <RunDetail run={openRun} onBack={()=>{setCurrent('dashboard');setOpenRun(null);}}/>}
+          {['runs','knowledge','policies','integrations'].includes(current) && (
+            <div style={{padding:'48px 28px',maxWidth:560,color:'var(--fg2)'}}>
+              <div style={{fontSize:30,fontWeight:700,color:'var(--fg1)',marginBottom:8}}>{title}</div>
+              <p style={{fontSize:14,lineHeight:'20px'}}>
+                This section is represented structurally in the UI kit. Open <b>Dashboard</b> to see the interactive dashboard → run detail flow, or click <b>Start a run</b> in the top bar to open the Ema composer.
+              </p>
+              <div style={{marginTop:16,display:'flex',gap:8}}>
+                <Button variant="primary" color="brand" icon="arrow-left" onClick={()=>setCurrent('dashboard')}>Back to dashboard</Button>
+                <Button variant="primary" color="aiMagic" icon="magic-wand" onClick={()=>setComposerOpen(true)}>Draft with Ema</Button>
+              </div>
+            </div>
+          )}
+        </main>
+        {composerOpen && <Composer onClose={()=>setComposerOpen(false)}/>}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · DeleteWarning" subtitle="Correct primary/destructive button (soft red) · disabled → active flow" viewport="700x680" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+
+/* Buttons matching Button.tsx cva exactly */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;
+     height:36px;padding:0 16px;border-radius:6px;font-family:inherit;
+     font-size:14px;line-height:20px;font-weight:700;cursor:pointer;
+     border:0;transition:background .15s,border-color .15s}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+
+/* secondary/brand — Cancel */
+.btn-cancel{
+  background:#fff;color:var(--beige-960);
+  border:1px solid var(--beige-500);
+}
+.btn-cancel:hover{background:var(--beige-50)}
+
+/* primary/destructive — soft red (Button.tsx: bg-error-bgSubtle, text-error-accent, border-error-border) */
+.btn-delete{
+  background:var(--red-100);    /* --error-bg-subtle = red-100 */
+  color:var(--red-900);          /* --error-accent   = red-900 */
+  border:1px solid var(--red-500); /* --error-border   = red-500 */
+}
+.btn-delete:hover{background:var(--red-200)}    /* hover: error-hover = red-200 */
+.btn-delete:active{background:var(--red-300)}   /* active: error-active = red-300 */
+.btn-delete:disabled{
+  background:var(--red-100);
+  color:var(--red-700);          /* error-disabled-text = red-700 */
+  border-color:var(--red-400);
+  cursor:not-allowed;
+  opacity:.65;
+}
+</style>
+</head><body style="padding:14px 16px">
+
+<div class="section">DeleteWarning · empty input (confirm button disabled)</div>
+<div style="max-width:440px;margin-bottom:20px">
+  <div style="background:#fff;border:1px solid var(--beige-300);border-radius:16px;overflow:hidden;
+              box-shadow:0 4px 4px 0 rgba(0,0,0,.05)">
+    <div style="padding:24px 24px 0">
+      <!-- icon + title -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <div style="width:40px;height:40px;border-radius:10px;background:var(--red-100);
+                    display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i class="ph-fill ph-trash" style="font-size:20px;color:var(--red-800)"></i>
+        </div>
+        <div style="font-size:16px;font-weight:700;color:var(--fg1)">Delete "Tier-1 triage"?</div>
+      </div>
+      <!-- body -->
+      <div style="font-size:14px;line-height:20px;color:var(--gray-930)">
+        This will permanently delete the workflow and all run history (42 runs). Connected integrations will not be affected.
+      </div>
+      <!-- warning strip -->
+      <div style="margin-top:12px;background:var(--red-50);border:1px solid var(--red-200);
+                  border-radius:8px;padding:10px 14px;display:flex;gap:8px;align-items:flex-start">
+        <i class="ph-fill ph-warning-circle" style="font-size:15px;color:var(--red-800);flex-shrink:0;margin-top:1px"></i>
+        <div style="font-size:13px;line-height:18px;color:var(--red-900)">This action cannot be undone. Type the workflow name to confirm.</div>
+      </div>
+      <!-- confirm input -->
+      <div style="margin-top:12px">
+        <input style="width:100%;box-sizing:border-box;height:36px;padding:0 14px;
+                      border:1px solid var(--beige-500);border-radius:8px;
+                      font-family:inherit;font-size:14px;outline:none"
+               placeholder="Type &quot;Tier-1 triage&quot; to confirm"/>
+      </div>
+    </div>
+    <!-- footer — delete disabled until input matches -->
+    <div style="padding:16px 24px 24px;display:flex;justify-content:flex-end;gap:10px">
+      <button class="btn btn-cancel">Cancel</button>
+      <button class="btn btn-delete" disabled>Delete workflow</button>
+    </div>
+  </div>
+</div>
+
+<div class="section">DeleteWarning · input filled (confirm button active)</div>
+<div style="max-width:440px">
+  <div style="background:#fff;border:1px solid var(--beige-300);border-radius:16px;overflow:hidden;
+              box-shadow:0 4px 4px 0 rgba(0,0,0,.05)">
+    <div style="padding:24px 24px 0">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <div style="width:40px;height:40px;border-radius:10px;background:var(--red-100);
+                    display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i class="ph-fill ph-trash" style="font-size:20px;color:var(--red-800)"></i>
+        </div>
+        <div style="font-size:16px;font-weight:700;color:var(--fg1)">Delete "Tier-1 triage"?</div>
+      </div>
+      <div style="font-size:14px;line-height:20px;color:var(--gray-930)">
+        This will permanently delete the workflow and all run history (42 runs). Connected integrations will not be affected.
+      </div>
+      <div style="margin-top:12px;background:var(--red-50);border:1px solid var(--red-200);
+                  border-radius:8px;padding:10px 14px;display:flex;gap:8px;align-items:flex-start">
+        <i class="ph-fill ph-warning-circle" style="font-size:15px;color:var(--red-800);flex-shrink:0;margin-top:1px"></i>
+        <div style="font-size:13px;line-height:18px;color:var(--red-900)">This action cannot be undone.</div>
+      </div>
+      <div style="margin-top:12px">
+        <input style="width:100%;box-sizing:border-box;height:36px;padding:0 14px;
+                      border:1px solid var(--green-500);border-radius:8px;
+                      font-family:inherit;font-size:14px;outline:none;
+                      box-shadow:0 0 0 3px var(--green-200)"
+               value="Tier-1 triage" readonly/>
+      </div>
+    </div>
+    <div style="padding:16px 24px 24px;display:flex;justify-content:flex-end;gap:10px">
+      <button class="btn btn-cancel">Cancel</button>
+      <button class="btn btn-delete">Delete workflow</button>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:8px">Button token reference · primary/destructive</div>
+<div style="font-size:12px;line-height:18px;color:var(--fg3);max-width:480px">
+  bg: <code style="background:var(--beige-100);padding:1px 5px;border-radius:3px">error-bgSubtle (#fff7f6)</code> ·
+  text: <code style="background:var(--beige-100);padding:1px 5px;border-radius:3px">error-accent (#dd1f2a)</code> ·
+  border: <code style="background:var(--beige-100);padding:1px 5px;border-radius:3px">error-border (#ffbbb4)</code>
+</div>
+
+</body></html>

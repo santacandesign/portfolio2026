@@ -1,0 +1,143 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Tooltip" subtitle="top/bottom/right · heading+description · arrow aligned · icon buttons + disabled" viewport="700x560" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 8px}
+.row{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;margin-bottom:8px}
+
+/* Tooltip shell */
+.tip{display:inline-flex;flex-direction:column;align-items:center;position:relative;gap:6px}
+.tip-box{
+  background:var(--gray-930);color:#fff;border-radius:8px;padding:8px 12px;
+  min-width:max-content;max-width:240px;z-index:2;
+}
+.tip-heading{font-size:12px;line-height:16px;font-weight:700}
+.tip-desc{font-size:12px;line-height:16px;font-weight:500;color:var(--gray-400);margin-top:4px;white-space:pre-line}
+
+/* Arrow — always a downward triangle pointing toward trigger */
+.arrow-down{
+  width:0;height:0;
+  border-left:6px solid transparent;
+  border-right:6px solid transparent;
+  border-top:6px solid var(--gray-930);
+}
+/* Arrow pointing UP — tooltip appears below trigger */
+.arrow-up{
+  width:0;height:0;
+  border-left:6px solid transparent;
+  border-right:6px solid transparent;
+  border-bottom:6px solid var(--gray-930);
+}
+/* Arrow pointing LEFT — tooltip appears to the right */
+.arrow-left{
+  width:0;height:0;
+  border-top:6px solid transparent;
+  border-bottom:6px solid transparent;
+  border-right:6px solid var(--gray-930);
+  align-self:center;
+}
+
+/* trigger button */
+.trigger{
+  background:var(--beige-100);border:1px solid var(--beige-400);border-radius:6px;
+  padding:7px 14px;font-size:13px;font-family:inherit;cursor:pointer;
+  color:var(--fg1);white-space:nowrap;
+}
+</style>
+</head><body style="padding:14px 16px">
+
+<div class="section">Side · top (default) · with arrow</div>
+<div class="row" style="padding-bottom:4px">
+  <!-- top -->
+  <div class="tip">
+    <div class="tip-box">
+      <div class="tip-heading">Copy to clipboard</div>
+    </div>
+    <div class="arrow-down"></div>
+    <button class="trigger">Hover target</button>
+  </div>
+
+  <!-- top + description -->
+  <div class="tip">
+    <div class="tip-box" style="max-width:200px;white-space:normal">
+      <div class="tip-heading">Draft with Ema</div>
+      <div class="tip-desc">Ema will generate a response. Review before sending.</div>
+    </div>
+    <div class="arrow-down"></div>
+    <button class="trigger">With description</button>
+  </div>
+
+  <!-- top on icon trigger -->
+  <div class="tip">
+    <div class="tip-box">
+      <div class="tip-heading">More options</div>
+    </div>
+    <div class="arrow-down"></div>
+    <i class="ph ph-dots-three" style="font-size:22px;color:var(--fg2);cursor:pointer"></i>
+  </div>
+</div>
+
+<div class="section">Side · bottom</div>
+<div class="row" style="padding-top:4px">
+  <div class="tip">
+    <button class="trigger">Hover target</button>
+    <div class="arrow-up"></div>
+    <div class="tip-box">
+      <div class="tip-heading">Opens run detail</div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <button class="trigger">With description</button>
+    <div class="arrow-up"></div>
+    <div class="tip-box" style="max-width:200px;white-space:normal">
+      <div class="tip-heading">View audit log</div>
+      <div class="tip-desc">See every decision Ema made and why.</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">Side · right</div>
+<div class="row" style="align-items:center">
+  <div style="display:inline-flex;align-items:center;gap:6px">
+    <button class="trigger">Hover target</button>
+    <div class="arrow-left"></div>
+    <div class="tip-box">
+      <div class="tip-heading">Right side tooltip</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">Tooltip on interactive elements</div>
+<div class="row">
+  <!-- icon button with tooltip top -->
+  <div class="tip">
+    <div class="tip-box"><div class="tip-heading">Delete run</div></div>
+    <div class="arrow-down"></div>
+    <button style="width:36px;height:36px;border-radius:6px;border:1px solid var(--beige-400);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer">
+      <i class="ph ph-trash" style="font-size:16px;color:var(--red-800)"></i>
+    </button>
+  </div>
+  <div class="tip">
+    <div class="tip-box"><div class="tip-heading">Download PDF</div></div>
+    <div class="arrow-down"></div>
+    <button style="width:36px;height:36px;border-radius:6px;border:1px solid var(--beige-400);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer">
+      <i class="ph ph-download-simple" style="font-size:16px;color:var(--fg1)"></i>
+    </button>
+  </div>
+  <!-- disabled button with tooltip -->
+  <div class="tip">
+    <div class="tip-box" style="max-width:180px;white-space:normal">
+      <div class="tip-heading">Not available</div>
+      <div class="tip-desc">Complete the previous step first.</div>
+    </div>
+    <div class="arrow-down"></div>
+    <button style="height:36px;padding:0 16px;border-radius:6px;background:var(--beige-100);border:1px solid var(--beige-300);color:var(--beige-800);font-size:14px;font-weight:700;font-family:inherit;cursor:not-allowed">
+      Publish
+    </button>
+  </div>
+</div>
+
+</body></html>

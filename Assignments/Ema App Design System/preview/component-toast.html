@@ -1,0 +1,97 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Toast" subtitle="success/error/warning/info/flair · with actions · positions" viewport="700x580" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
+/* shared btn */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;border:0;transition:background .15s}
+.btn-primary{background:var(--green-800);color:#fff}.btn-primary:hover{background:var(--green-900)}
+.btn-secondary{background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}.btn-secondary:hover{background:var(--beige-50)}
+.btn-ghost{background:transparent;color:var(--fg1)}.btn-ghost:hover{background:var(--beige-100)}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.btn-destructive{background:var(--red-800);color:#fff;border:0}.btn-destructive:hover{background:var(--red-900)}
+.btn-destr-soft{background:var(--red-100);color:var(--red-900);border:1px solid var(--red-500)}.btn-destr-soft:hover{background:var(--red-200)}
+
+.toast{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:10px;border:1px solid;min-width:320px;max-width:400px;box-shadow:0 4px 6px -1px rgba(35,33,25,.08)}
+.toast-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.toast-title{font-size:14px;line-height:20px;font-weight:700}
+.toast-desc{font-size:13px;line-height:18px;margin-top:2px}
+.toast-close{margin-left:auto;flex-shrink:0;width:24px;height:24px;border-radius:4px;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;opacity:.6}
+.t-success{background:var(--green-100);border-color:var(--green-400);color:var(--green-930)}
+.t-error  {background:var(--red-100);border-color:var(--red-400);color:var(--red-900)}
+.t-warning{background:var(--yellow-100);border-color:var(--yellow-500);color:var(--orange-930)}
+.t-info   {background:var(--blue-100);border-color:var(--blue-400);color:var(--blue-930)}
+.t-flair  {background:var(--purple-100);border-color:var(--purple-400);color:var(--purple-900)}
+</style></head><body style="padding:14px 16px">
+<div class="section">Toast variants · success · error · warning · info · flair (AI)</div>
+<div style="display:flex;flex-direction:column;gap:10px;max-width:420px">
+  
+  <div class="toast t-success">
+    <i class="ph-fill ph-check-circle toast-icon"></i>
+    <div style="flex:1;min-width:0">
+      <div class="toast-title">Case resolved</div>
+      <div class="toast-desc">Ema auto-resolved Case #48221 in 1m 42s.</div>
+    </div>
+    <button class="toast-close"><i class="ph ph-x"></i></button>
+  </div>
+  <div class="toast t-error">
+    <i class="ph-fill ph-x-circle toast-icon"></i>
+    <div style="flex:1;min-width:0">
+      <div class="toast-title">Run failed</div>
+      <div class="toast-desc">Policy lookup timed out. Check the Salesforce connection.</div>
+    </div>
+    <button class="toast-close"><i class="ph ph-x"></i></button>
+  </div>
+  <div class="toast t-warning">
+    <i class="ph-fill ph-warning toast-icon"></i>
+    <div style="flex:1;min-width:0">
+      <div class="toast-title">Approaching limit</div>
+      <div class="toast-desc">84 of 100 daily runs used. Upgrade to continue.</div>
+    </div>
+    <button class="toast-close"><i class="ph ph-x"></i></button>
+  </div>
+  <div class="toast t-info">
+    <i class="ph-fill ph-info toast-icon"></i>
+    <div style="flex:1;min-width:0">
+      <div class="toast-title">New integration available</div>
+      <div class="toast-desc">Connect Outreach to enable outbound workflow automation.</div>
+    </div>
+    <button class="toast-close"><i class="ph ph-x"></i></button>
+  </div>
+  <div class="toast t-flair">
+    <i class="ph-fill ph-magic-wand toast-icon"></i>
+    <div style="flex:1;min-width:0">
+      <div class="toast-title">Drafted by Ema</div>
+      <div class="toast-desc">Review the suggested response before sending to the customer.</div>
+    </div>
+    <button class="toast-close"><i class="ph ph-x"></i></button>
+  </div>
+</div>
+<div class="section">With action button · persistent · position reference</div>
+<div style="display:flex;flex-direction:column;gap:10px;max-width:420px">
+  <div class="toast t-info">
+    <i class="ph-fill ph-info toast-icon"></i>
+    <div style="flex:1;min-width:0">
+      <div class="toast-title">Policy updated</div>
+      <div class="toast-desc">Refund policy v5 is now active.</div>
+      <div style="margin-top:8px;display:flex;gap:6px">
+        <button class="btn btn-sm" style="background:var(--blue-200);color:var(--blue-930);border:0;font-family:inherit">View changes</button>
+        <button class="btn btn-sm btn-ghost" style="font-family:inherit">Dismiss</button>
+      </div>
+    </div>
+    <button class="toast-close"><i class="ph ph-x"></i></button>
+  </div>
+</div>
+<div class="section" style="margin-top:4px">Positions · top-right (default) · bottom-center · top-center</div>
+<div class="row" style="gap:8px">
+  
+  <div style="font-size:11px;font-family:var(--font-mono);background:var(--beige-100);border:1px solid var(--beige-300);border-radius:4px;padding:3px 8px;color:var(--fg2)">top-right</div>
+  <div style="font-size:11px;font-family:var(--font-mono);background:var(--beige-100);border:1px solid var(--beige-300);border-radius:4px;padding:3px 8px;color:var(--fg2)">top-center</div>
+  <div style="font-size:11px;font-family:var(--font-mono);background:var(--beige-100);border:1px solid var(--beige-300);border-radius:4px;padding:3px 8px;color:var(--fg2)">bottom-right</div>
+  <div style="font-size:11px;font-family:var(--font-mono);background:var(--beige-100);border:1px solid var(--beige-300);border-radius:4px;padding:3px 8px;color:var(--fg2)">bottom-left</div>
+  <div style="font-size:11px;font-family:var(--font-mono);background:var(--beige-100);border:1px solid var(--beige-300);border-radius:4px;padding:3px 8px;color:var(--fg2)">top-left</div>
+  <div style="font-size:11px;font-family:var(--font-mono);background:var(--beige-100);border:1px solid var(--beige-300);border-radius:4px;padding:3px 8px;color:var(--fg2)">bottom-center</div>
+</div></body></html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Form" subtitle="react-hook-form · FormInput/FormTextArea · validation states" viewport="700x460" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:8px}
+.lbl{font-size:12px;font-weight:500;line-height:16px;color:var(--fg2);margin-bottom:4px;display:block}
+.lbl .req{color:var(--red-800)}
+.hint-default{font-size:11px;color:var(--gray-800);margin-top:3px}
+.hint-success{font-size:11px;color:var(--green-930);margin-top:3px}
+.hint-error{font-size:11px;color:var(--red-930);margin-top:3px}
+.inp{height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;outline:none;color:var(--fg1);background:#fff;width:100%;box-sizing:border-box}
+.inp:focus{border-color:var(--green-500);box-shadow:0 0 0 3px var(--green-200)}
+.inp.error{border-color:var(--red-500)}
+.inp.success{border-color:var(--green-500)}
+.inp.disabled{background:var(--beige-100);border-color:var(--beige-300);color:var(--beige-800);cursor:not-allowed}
+.inp-sm{height:28px;font-size:12px}
+.inp-lg{height:44px;font-size:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;border:0}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.btn-lg{height:44px;padding:0 16px;font-size:16px;border-radius:8px}
+.btn-primary{background:var(--green-800);color:#fff}
+.btn-secondary{background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}
+.btn-ghost{background:transparent;color:var(--fg1)}
+
+</style></head><body style="padding:14px 16px">
+<div class="section">Form · react-hook-form wrapper · FormInput / FormTextArea / validation</div>
+<form style="max-width:480px;display:flex;flex-direction:column;gap:14px" onsubmit="return false">
+  <div>
+    <label class="lbl">Workflow name <span class="req" style="color:var(--red-800)">*</span></label>
+    <input class="inp" value="Tier-1 billing triage" readonly/>
+    <div class="hint-default">Used to identify this workflow in runs and reports.</div>
+  </div>
+  <div>
+    <label class="lbl">Description</label>
+    <textarea class="inp" style="height:auto;padding:8px 14px;resize:none" rows="3">Automatically resolves billing enquiries where intent is clear and no refund exceeds $250.</textarea>
+    <div style="font-size:11px;color:var(--fg2);text-align:right;margin-top:2px">87 / 280 characters</div>
+  </div>
+  <div>
+    <label class="lbl">Assignee <span class="req" style="color:var(--red-800)">*</span></label>
+    <div style="display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-size:14px;color:var(--fg1);background:#fff;cursor:pointer;min-width:220px;justify-content:space-between;box-sizing:border-box;width:100%">
+      <span>Priya Shah</span>
+      <i class="ph ph-caret-down" style="font-size:14px;color:var(--fg3)"></i>
+    </div>
+  </div>
+  <div>
+    <label class="lbl">API endpoint <span class="req" style="color:var(--red-800)">*</span></label>
+    <input class="inp error" style="border-color:var(--red-500)" value="not-a-valid-url" readonly/>
+    <div class="hint-error" style="font-size:11px;color:var(--red-930);margin-top:3px">Must be a valid HTTPS URL.</div>
+  </div>
+  <div style="display:flex;justify-content:flex-end;gap:8px;padding-top:4px;border-top:1px solid var(--beige-200);margin-top:4px">
+    <button class="btn btn-secondary btn-sm">Cancel</button>
+    <button class="btn btn-primary btn-sm">Save workflow</button>
+  </div>
+</form>
+</body></html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Tabs" subtitle="underline / button / pill × sm/md/lg · icon · fullWidth" viewport="700x380" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.col{display:flex;flex-direction:column;gap:6px}
+
+.tabs-list-underline{display:flex;gap:8px;border-bottom:1px solid var(--beige-500);padding-top:8px}
+.tabs-list-button{display:inline-flex;gap:4px;border:1px solid var(--beige-300);background:var(--beige-100);border-radius:6px;padding:2px}
+.tabs-list-pill{display:flex;gap:8px}
+/* underline trigger */
+.tab-u{border:0;background:transparent;cursor:pointer;font-family:inherit;color:var(--gray-800);
+       border-bottom:2px solid transparent;padding:8px 12px;border-radius:4px 4px 0 0;white-space:nowrap;
+       transition:color .15s,background .15s}
+.tab-u:hover{background:var(--beige-100);color:var(--fg1)}
+.tab-u.active{border-bottom-color:var(--green-800);color:var(--fg1);font-weight:500}
+/* button trigger */
+.tab-b{border:0;background:transparent;cursor:pointer;font-family:inherit;color:var(--gray-800);
+       border-radius:4px;padding:6px 10px;font-size:14px;white-space:nowrap;transition:background .15s}
+.tab-b:hover{background:var(--beige-200)}
+.tab-b.active{background:#fff;border:1px solid var(--beige-300);box-shadow:0 1px 2px rgba(35,33,25,.06);color:var(--fg1);font-weight:500}
+/* pill trigger */
+.tab-p{border:1px solid var(--beige-500);background:#fff;cursor:pointer;font-family:inherit;
+       color:var(--fg1);border-radius:9999px;padding:6px 10px;font-size:14px;font-weight:700;white-space:nowrap;transition:all .15s}
+.tab-p:hover{background:var(--beige-50);border-color:var(--beige-800)}
+.tab-p.active{background:var(--green-800);color:#fff;border-color:transparent}
+/* sizes */
+.tab-sm{font-size:12px;line-height:16px;font-weight:500;padding:6px 12px}
+.tab-md{font-size:14px;line-height:20px;font-weight:500}
+.tab-lg{font-size:16px;line-height:24px;font-weight:500;padding:10px 12px}
+</style></head><body style="padding:14px 16px">
+<div class="section">Underline variant · sm / md / lg · with icon</div>
+<div class="col" style="gap:16px">
+  <div>
+    <div style="font-size:11px;color:var(--fg3);margin-bottom:4px">md (default)</div>
+    <div class="tabs-list-underline">
+      <button class="tab-u tab-md active"><i class="ph ph-squares-four" style="font-size:14px;margin-right:4px"></i>Dashboard</button>
+      <button class="tab-u tab-md">Runs</button>
+      <button class="tab-u tab-md">Knowledge</button>
+      <button class="tab-u tab-md">Policies</button>
+    </div>
+  </div>
+  <div>
+    <div style="font-size:11px;color:var(--fg3);margin-bottom:4px">sm</div>
+    <div class="tabs-list-underline">
+      <button class="tab-u tab-sm active">Overview</button>
+      <button class="tab-u tab-sm">Steps</button>
+      <button class="tab-u tab-sm">Transcript</button>
+    </div>
+  </div>
+</div>
+
+<div class="section">Button variant (segmented control)</div>
+<div class="row">
+  <div class="tabs-list-button">
+    <button class="tab-b active">Week</button>
+    <button class="tab-b">Month</button>
+    <button class="tab-b">Quarter</button>
+  </div>
+  <div class="tabs-list-button">
+    <button class="tab-b" style="padding:4px 8px"><i class="ph ph-list" style="font-size:14px"></i></button>
+    <button class="tab-b active" style="padding:4px 8px"><i class="ph ph-squares-four" style="font-size:14px"></i></button>
+  </div>
+</div>
+
+<div class="section">Pill variant</div>
+<div class="row">
+  <div class="tabs-list-pill">
+    <button class="tab-p">All</button>
+    <button class="tab-p active">Active</button>
+    <button class="tab-p">Completed</button>
+    <button class="tab-p">Error</button>
+  </div>
+</div></body></html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · ComboBox" subtitle="multi-select · search · removable tags · open state" viewport="700x380" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:8px}
+.lbl{font-size:12px;font-weight:500;line-height:16px;color:var(--fg2);margin-bottom:4px;display:block}
+.lbl .req{color:var(--red-800)}
+.hint-default{font-size:11px;color:var(--gray-800);margin-top:3px}
+.hint-success{font-size:11px;color:var(--green-930);margin-top:3px}
+.hint-error{font-size:11px;color:var(--red-930);margin-top:3px}
+.inp{height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;outline:none;color:var(--fg1);background:#fff;width:100%;box-sizing:border-box}
+.inp:focus{border-color:var(--green-500);box-shadow:0 0 0 3px var(--green-200)}
+.inp.error{border-color:var(--red-500)}
+.inp.success{border-color:var(--green-500)}
+.inp.disabled{background:var(--beige-100);border-color:var(--beige-300);color:var(--beige-800);cursor:not-allowed}
+.inp-sm{height:28px;font-size:12px}
+.inp-lg{height:44px;font-size:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;border:0}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.btn-lg{height:44px;padding:0 16px;font-size:16px;border-radius:8px}
+.btn-primary{background:var(--green-800);color:#fff}
+.btn-secondary{background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}
+.btn-ghost{background:transparent;color:var(--fg1)}
+
+.tag{display:inline-flex;align-items:center;gap:4px;background:var(--beige-200);border:1px solid var(--beige-400);color:var(--fg1);padding:2px 6px 2px 8px;border-radius:9999px;font-size:12px;font-weight:500}
+.tag .rm{border:0;background:transparent;cursor:pointer;color:var(--fg3);font-size:12px;padding:0;display:flex;align-items:center}
+.combo-input{display:flex;flex-wrap:wrap;gap:4px;align-items:center;min-height:36px;padding:4px 10px;border:1px solid var(--beige-500);border-radius:8px;background:#fff;cursor:text}
+.combo-input input{border:0;outline:0;font-family:inherit;font-size:14px;flex:1;min-width:80px;background:transparent;color:var(--fg1)}
+</style></head><body style="padding:14px 16px">
+<div class="section">ComboBox · multi-select + search + removable tags</div>
+<div class="col" style="max-width:480px">
+  <div>
+    <label class="lbl">Channels (multi-select)</label>
+    <div class="combo-input">
+      <span class="tag">Zendesk <button class="rm"><i class="ph ph-x"></i></button></span>
+      <span class="tag">Salesforce <button class="rm"><i class="ph ph-x"></i></button></span>
+      <input placeholder="Add channel…"/>
+    </div>
+    <div class="hint-default">Select the channels Ema should monitor.</div>
+  </div>
+  <div>
+    <label class="lbl">Open — with search results</label>
+    <div class="combo-input">
+      <span class="tag">Zendesk <button class="rm"><i class="ph ph-x"></i></button></span>
+      <input value="sale" style="border:0;outline:0;font-family:inherit;font-size:14px;flex:1;min-width:80px;background:transparent;color:var(--fg1)" readonly/>
+    </div>
+    <div style="margin-top:4px;background:#fff;border:1px solid var(--beige-400);border-radius:8px;box-shadow:0 4px 6px -1px rgba(35,33,25,.08);padding:4px">
+      
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:6px;font-size:14px;cursor:pointer">
+        <span>Salesforce</span>
+        <span style="font-size:12px;color:var(--fg3)">CRM</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:6px;font-size:14px;cursor:pointer">
+        <span>Sales Outreach</span>
+        <span style="font-size:12px;color:var(--fg3)">Outreach</span>
+      </div>
+      <div style="padding:8px 10px;font-size:13px;color:var(--fg3)">No more matching channels</div>
+    </div>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Plannotator — Audit Annotate</title>
+<link rel="stylesheet" href="../Ema App Design System/colors_and_type.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:var(--app-font-family);background:var(--beige-50);color:var(--fg1)}
+.top{height:48px;background:var(--white);border-bottom:1px solid var(--beige-400);display:flex;align-items:center;gap:12px;padding:0 16px;position:sticky;top:0;z-index:10}
+.btn{height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--beige-400);background:var(--white);font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--green-800);color:#fff;border-color:var(--green-800)}
+.layout{display:grid;grid-template-columns:1fr 360px;height:calc(100% - 48px)}
+.frame-wrap{position:relative;background:var(--beige-100);overflow:hidden}
+iframe{width:100%;height:100%;border:0;background:var(--white)}
+.pin{position:absolute;width:28px;height:28px;border-radius:50%;background:var(--red-800);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;border:2px solid #fff;box-shadow:var(--shadow-md);transform:translate(-50%,-100%);cursor:pointer}
+.pin.selected{outline:3px solid var(--green-500)}
+.checklist{overflow:auto;background:var(--white);border-left:1px solid var(--beige-400);padding:16px;display:flex;flex-direction:column;gap:12px}
+.card{border:1px solid var(--beige-300);border-radius:12px;padding:12px;background:var(--white)}
+.card h4{margin:0 0 8px;font-size:13px}
+.small{font-size:12px;color:var(--fg3)}
+textarea,input{width:100%;border:1px solid var(--beige-400);border-radius:8px;padding:8px 10px;font:inherit;font-size:13px}
+textarea:focus,input:focus{outline:none;border-color:var(--green-500);box-shadow:var(--shadow-focus)}
+.pill{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 6px;border-radius:999px;background:var(--beige-100);border:1px solid var(--beige-300)}
+</style>
+</head>
+<body>
+<div class="top">
+  <span style="font-weight:800">Plannotator</span><span class="small">— click on the prototype to drop a pin → annotate → Export</span>
+  <span style="flex:1"></span>
+  <button class="btn" onclick="clearPins()"><i class="ph ph-trash"></i> Clear</button>
+  <button class="btn" onclick="exportJSON()"><i class="ph ph-download"></i> Export JSON</button>
+  <button class="btn btn-primary" onclick="copyChecklist()"><i class="ph ph-copy"></i> Copy checklist path</button>
+  <span class="pill" id="count">0 pins</span>
+</div>
+<div class="layout">
+  <div class="frame-wrap" id="wrap">
+    <iframe id="frame" src="./index.html" title="Prototype"></iframe>
+    <div id="pins" style="position:absolute;inset:0;pointer-events:none"></div>
+    <div id="hit" style="position:absolute;inset:0;cursor:crosshair" title="Click to annotate"></div>
+  </div>
+  <div class="checklist">
+    <div class="card">
+      <h4>Audit checklist</h4>
+      <div class="small">Loaded from <code>AUDIT_CHECKLIST.md</code> — check items, then add pins for visual context. Pins persist in <code>localStorage: ema-audit-pins</code>.</div>
+      <div style="margin-top:8px;display:flex;gap:8px">
+        <a class="btn" href="./AUDIT_CHECKLIST.md" target="_blank"><i class="ph ph-file-text"></i> Open checklist</a>
+        <a class="btn" href="./index.html" target="_blank"><i class="ph ph-arrow-square-out"></i> Open prototype alone</a>
+      </div>
+      <div style="margin-top:12px;max-height:220px;overflow:auto;border:1px solid var(--beige-300);border-radius:8px;padding:8px;font-size:12px;white-space:pre-wrap" id="checkPreview">Loading…</div>
+    </div>
+    <div class="card" id="editor" style="display:none">
+      <h4>Pin #<span id="pinNo"></span></h4>
+      <label class="small">Category</label>
+      <select id="cat" style="width:100%;height:36px;border:1px solid var(--beige-400);border-radius:8px;padding:0 8px">
+        <option>Design System</option><option>WCAG</option><option>4px Grid</option><option>UX / Flow</option><option>Other</option>
+      </select>
+      <label class="small">Severity</label>
+      <select id="sev" style="width:100%;height:36px;border:1px solid var(--beige-400);border-radius:8px;padding:0 8px">
+        <option>Low</option><option selected>Medium</option><option>High</option><option>Block</option>
+      </select>
+      <label class="small">Comment</label>
+      <textarea id="comment" rows="4" placeholder="What’s wrong / what to fix…"></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn btn-primary" onclick="savePin()">Save</button>
+        <button class="btn" onclick="deletePin()">Delete</button>
+      </div>
+    </div>
+    <div class="card">
+      <h4>Pins</h4>
+      <div id="pinList" class="small">No pins yet — click the prototype.</div>
+    </div>
+  </div>
+</div>
+<script>
+const KEY="ema-audit-pins";
+let pins=JSON.parse(localStorage.getItem(KEY)||"[]");
+let sel=null;
+const wrap=document.getElementById('wrap'), hit=document.getElementById('hit'), pinsLayer=document.getElementById('pins'), frame=document.getElementById('frame');
+function render(){
+  pinsLayer.innerHTML="";
+  pins.forEach((p,i)=>{
+    const d=document.createElement('div');
+    d.className="pin"+(sel===i?" selected":"");
+    d.style.left=p.x+"%"; d.style.top=p.y+"%";
+    d.style.pointerEvents="auto";
+    d.textContent=i+1;
+    d.title=p.comment||p.cat;
+    d.onclick=(e)=>{e.stopPropagation(); select(i);};
+    pinsLayer.appendChild(d);
+  });
+  document.getElementById('count').textContent=pins.length+" pins";
+  document.getElementById('pinList').innerHTML = pins.length? pins.map((p,i)=>`<div style="padding:8px;border:1px solid var(--beige-300);border-radius:8px;margin-bottom:8px;cursor:pointer" onclick="select(${i})"><b>#${i+1} ${p.cat}</b> <span style="float:right">${p.sev}</span><br><span class="small">${(p.comment||"—").slice(0,120)}</span><br><span class="small">${p.x.toFixed(1)}%, ${p.y.toFixed(1)}%</span></div>`).join("") : "No pins yet — click the prototype.";
+}
+function select(i){ sel=i; const p=pins[i]; document.getElementById('editor').style.display=p?"block":"none"; document.getElementById('pinNo').textContent=i+1; document.getElementById('cat').value=p.cat; document.getElementById('sev').value=p.sev; document.getElementById('comment').value=p.comment||""; render(); }
+function savePin(){ if(sel==null) return; pins[sel].cat=document.getElementById('cat').value; pins[sel].sev=document.getElementById('sev').value; pins[sel].comment=document.getElementById('comment').value; persist(); render(); }
+function deletePin(){ if(sel==null) return; pins.splice(sel,1); sel=null; document.getElementById('editor').style.display="none"; persist(); render(); }
+function clearPins(){ if(!confirm("Clear all pins?")) return; pins=[]; sel=null; document.getElementById('editor').style.display="none"; persist(); render(); }
+function persist(){ localStorage.setItem(KEY, JSON.stringify(pins)); }
+hit.addEventListener('click',e=>{
+  const r=wrap.getBoundingClientRect();
+  const x=((e.clientX - r.left)/r.width)*100;
+  const y=((e.clientY - r.top)/r.height)*100;
+  pins.push({x,y,cat:"Design System",sev:"Medium",comment:""});
+  persist(); sel=pins.length-1; document.getElementById('editor').style.display="block"; document.getElementById('pinNo').textContent=sel+1; document.getElementById('cat').value="Design System"; document.getElementById('sev').value="Medium"; document.getElementById('comment').value=""; render();
+  // focus comment
+  setTimeout(()=>document.getElementById('comment').focus(),0);
+});
+function exportJSON(){
+  const data={generated:new Date().toISOString(), prototype:"./index.html", checklist:"./AUDIT_CHECKLIST.md", pins};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download="ema-audit-pins.json"; a.click(); URL.revokeObjectURL(url);
+}
+function copyChecklist(){ navigator.clipboard.writeText(location.href.replace(/annotate\.html.*/,"AUDIT_CHECKLIST.md")); alert("Copied checklist path"); }
+fetch('./AUDIT_CHECKLIST.md').then(r=>r.text()).then(t=>document.getElementById('checkPreview').textContent=t.slice(0,4000)).catch(()=>document.getElementById('checkPreview').textContent="Open AUDIT_CHECKLIST.md in prototype folder.");
+render();
+// keyboard: Enter to save
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && sel!=null){ document.getElementById('editor').style.display="none"; sel=null; render(); }});
+</script>
+</body>
+</html>

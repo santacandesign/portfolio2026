@@ -1,0 +1,117 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · InputGroup" subtitle="leading/trailing/both/icon/button addons · consistent heights sm/md/lg" viewport="700x520" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.col{display:flex;flex-direction:column;gap:14px}
+.lbl{font-size:12px;font-weight:500;line-height:16px;color:var(--fg2);margin-bottom:4px;display:block}
+
+/* InputGroup wrapper — stretches children to same height */
+.ig{display:flex;align-items:stretch;width:100%}
+
+/* Shared addon */
+.addon{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--beige-100);border:1px solid var(--beige-500);
+  color:var(--gray-900);white-space:nowrap;flex-shrink:0;
+  font-family:inherit;
+}
+/* Addon sizes match input sizes exactly */
+.addon-sm{height:28px;padding:0 8px; font-size:12px;line-height:16px}
+.addon-md{height:36px;padding:0 12px;font-size:14px;line-height:20px}
+.addon-lg{height:44px;padding:0 14px;font-size:16px;line-height:24px}
+
+/* Position variants */
+.addon-first{border-radius:8px 0 0 8px;border-right:0}
+.addon-last {border-radius:0 8px 8px 0;border-left:0}
+
+/* Input inside an InputGroup — override width, let flex control sizing */
+.ig-input{
+  flex:1;min-width:0;
+  border:1px solid var(--beige-500);
+  font-family:inherit;color:var(--fg1);background:#fff;
+  outline:none;
+  transition:border-color .15s,box-shadow .15s;
+}
+.ig-input:focus{border-color:var(--green-500);box-shadow:0 0 0 3px var(--green-200);z-index:1}
+
+/* Size-specific heights + padding + font */
+.ig-input-sm{height:28px;padding:0 10px;font-size:12px;line-height:16px}
+.ig-input-md{height:36px;padding:0 14px;font-size:14px;line-height:20px}
+.ig-input-lg{height:44px;padding:0 14px;font-size:16px;line-height:24px}
+
+/* Border-radius when input is first or last */
+.ig-input-first{border-radius:8px 0 0 8px;border-right:0}
+.ig-input-last {border-radius:0 8px 8px 0}
+.ig-input-mid  {border-radius:0;margin-left:-1px}
+</style>
+</head><body style="padding:14px 16px">
+
+<div class="section">InputGroup · leading / trailing / both · icon · sm / md / lg</div>
+<div class="col" style="max-width:460px">
+
+  <div>
+    <label class="lbl">Leading addon · md</label>
+    <div class="ig">
+      <span class="addon addon-md addon-first">https://</span>
+      <input class="ig-input ig-input-md ig-input-last" value="acme.ema.co"/>
+    </div>
+  </div>
+
+  <div>
+    <label class="lbl">Trailing addon · md</label>
+    <div class="ig">
+      <input class="ig-input ig-input-md ig-input-first" value="250"/>
+      <span class="addon addon-md addon-last">USD</span>
+    </div>
+  </div>
+
+  <div>
+    <label class="lbl">Both addons · md</label>
+    <div class="ig">
+      <span class="addon addon-md addon-first">$</span>
+      <input class="ig-input ig-input-md ig-input-mid" value="1,250.00"/>
+      <span class="addon addon-md addon-last">USD</span>
+    </div>
+  </div>
+
+  <div>
+    <label class="lbl">Leading icon addon · md</label>
+    <div class="ig">
+      <span class="addon addon-md addon-first">
+        <i class="ph ph-magnifying-glass" style="font-size:16px"></i>
+      </span>
+      <input class="ig-input ig-input-md ig-input-last" placeholder="Search runs, policies…"/>
+    </div>
+  </div>
+
+  <div>
+    <label class="lbl">sm · h-7 (28px)</label>
+    <div class="ig" style="max-width:240px">
+      <span class="addon addon-sm addon-first">@</span>
+      <input class="ig-input ig-input-sm ig-input-last" placeholder="username"/>
+    </div>
+  </div>
+
+  <div>
+    <label class="lbl">lg · h-11 (44px)</label>
+    <div class="ig">
+      <span class="addon addon-lg addon-first">+1</span>
+      <input class="ig-input ig-input-lg ig-input-last" placeholder="Phone number"/>
+    </div>
+  </div>
+
+  <div>
+    <label class="lbl">Button addon (trailing)</label>
+    <div class="ig">
+      <input class="ig-input ig-input-md" style="border-radius:8px 0 0 8px;border-right:0" placeholder="Enter invite email…"/>
+      <button style="height:36px;padding:0 16px;border:1px solid var(--green-800);border-radius:0 8px 8px 0;background:var(--green-800);color:#fff;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;flex-shrink:0">
+        Invite
+      </button>
+    </div>
+  </div>
+
+</div>
+</body></html>

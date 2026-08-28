@@ -1,0 +1,101 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Badges & status" subtitle="All 8 variants × 4 sizes × pill/rounded, text-sm-medium tokens applied" viewport="700x440" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+  :root{
+    --success:var(--green-800);   --success-border:var(--green-500);   --success-bg:var(--green-200);
+    --error:var(--red-800);       --error-border:var(--red-500);       --error-bg:var(--red-200);
+    --info:var(--blue-800);       --info-border:var(--blue-500);       --info-bg:var(--blue-200);
+    --warning:var(--orange-800);  --warning-border:var(--orange-500);  --warning-bg:var(--orange-200);
+    --pending:var(--yellow-930);  --pending-border:var(--yellow-500);  --pending-bg:var(--yellow-200);
+    --unresolved:var(--beige-900);--unresolved-border:var(--beige-500);--unresolved-bg:var(--beige-200);
+    --ai-magic-accent:var(--purple-800);--ai-magic-border:var(--purple-500);--ai-magic-bg:var(--purple-200);
+    --muted-fg-strong:var(--gray-900);--muted-border:var(--gray-300);  --muted-bg:var(--gray-50);
+  }
+  .badge{display:inline-flex;align-items:center;gap:4px;border:1px solid;
+         font-family:var(--app-font-family);white-space:nowrap}
+  /* Sizes — mirror BADGE_VARIANTS exactly */
+  .sm{height:20px;font-size:12px;line-height:16px;font-weight:500}  /* text-xs-medium */
+  .md{height:24px;font-size:14px;line-height:20px;font-weight:500}  /* text-sm-medium */
+  .lg{height:28px;font-size:14px;line-height:20px;font-weight:500}  /* text-sm-medium */
+  .xl{height:32px;font-size:16px;line-height:24px;font-weight:500}  /* text-base-medium */
+  /* Icon sizing scales with text */
+  .sm i{font-size:10px}
+  .md i{font-size:12px}
+  .lg i{font-size:14px}
+  .xl i{font-size:16px}
+  /* Shapes */
+  .pill{border-radius:9999px;padding:2px 8px}
+  .rounded{border-radius:6px;padding:0 4px}
+  /* Variants */
+  .v-default{color:var(--muted-fg-strong);border-color:var(--muted-border);background:var(--muted-bg)}
+  .v-success{color:var(--success);border-color:var(--success-border);background:var(--success-bg)}
+  .v-error  {color:var(--error);  border-color:var(--error-border);  background:var(--error-bg)}
+  .v-info   {color:var(--info);   border-color:var(--info-border);   background:var(--info-bg)}
+  .v-warning{color:var(--warning);border-color:var(--warning-border);background:var(--warning-bg)}
+  .v-pending{color:var(--pending);border-color:var(--pending-border);background:var(--pending-bg)}
+  .v-unresolved{color:var(--unresolved);border-color:var(--unresolved-border);background:var(--unresolved-bg)}
+  .v-magic  {color:var(--ai-magic-accent);border-color:var(--ai-magic-border);background:var(--ai-magic-bg)}
+
+  .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+  .section{
+    font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;  /* text-xs-label */
+    text-transform:uppercase;color:var(--fg3);margin:10px 0 6px
+  }
+  .status-text{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:14px;line-height:20px;font-weight:500;color:var(--fg1)     /* text-sm-medium */
+  }
+  .status-text .dot{width:8px;height:8px;border-radius:50%}
+</style>
+</head><body style="padding:14px 16px">
+
+<div class="section">Variants · pill · md (text-sm-medium)</div>
+<div class="row">
+  <span class="badge v-default pill md"><i class="ph-bold ph-circle"></i>Default</span>
+  <span class="badge v-success pill md"><i class="ph-bold ph-check-circle"></i>Running</span>
+  <span class="badge v-error   pill md"><i class="ph-bold ph-x-circle"></i>Error</span>
+  <span class="badge v-info    pill md"><i class="ph-bold ph-info"></i>Info</span>
+  <span class="badge v-warning pill md"><i class="ph-bold ph-warning"></i>Warning</span>
+  <span class="badge v-pending pill md"><i class="ph-bold ph-hourglass"></i>Pending</span>
+  <span class="badge v-unresolved pill md"><i class="ph-bold ph-minus-circle"></i>Unresolved</span>
+  <span class="badge v-magic   pill md"><i class="ph-bold ph-magic-wand"></i>AI draft</span>
+</div>
+
+<div class="section">Sizes · pill · success (xs-med / sm-med / sm-med / base-med)</div>
+<div class="row">
+  <span class="badge v-success pill sm">sm \u00b7 h20 \u00b7 12/16</span>
+  <span class="badge v-success pill md">md \u00b7 h24 \u00b7 14/20</span>
+  <span class="badge v-success pill lg">lg \u00b7 h28 \u00b7 14/20</span>
+  <span class="badge v-success pill xl">xl \u00b7 h32 \u00b7 16/24</span>
+</div>
+
+<div class="section">Shape · rounded</div>
+<div class="row">
+  <span class="badge v-default  rounded md">SLA-4h</span>
+  <span class="badge v-success  rounded md"><i class="ph-bold ph-check"></i>PASS</span>
+  <span class="badge v-error    rounded md"><i class="ph-bold ph-x"></i>FAIL</span>
+  <span class="badge v-magic    rounded md"><i class="ph-bold ph-magic-wand"></i>AI</span>
+  <span class="badge v-info     rounded md">v1.2.0</span>
+</div>
+
+<div class="section">Status dots · text-sm-medium</div>
+<div class="row">
+  <span class="status-text"><span class="dot" style="background:var(--green-800)"></span>Active</span>
+  <span class="status-text"><span class="dot" style="background:var(--yellow-800)"></span>Pending</span>
+  <span class="status-text"><span class="dot" style="background:var(--red-800)"></span>Failed</span>
+  <span class="status-text"><span class="dot" style="background:var(--blue-800)"></span>Syncing</span>
+  <span class="status-text"><span class="dot" style="background:var(--beige-700)"></span>Idle</span>
+  <span class="status-text"><span class="dot" style="background:var(--purple-800);box-shadow:0 0 0 3px rgba(111,69,232,.18)"></span>Drafting</span>
+</div>
+
+<div class="section">Block (full-width)</div>
+<div style="max-width:320px">
+  <span class="badge v-pending pill md" style="width:100%;justify-content:center;box-sizing:border-box">
+    <i class="ph-bold ph-hourglass"></i>Waiting on approver \u2014 2h SLA
+  </span>
+</div>
+
+</body></html>

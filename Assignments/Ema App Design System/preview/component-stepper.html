@@ -1,0 +1,143 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Stepper" subtitle="horizontal / vertical · sm/md/lg · done/active/pending states" viewport="700x420" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.col{display:flex;flex-direction:column;gap:6px}
+
+.step-row{display:flex;align-items:center}
+.step-col{display:flex;flex-direction:column}
+.step-dot{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0;font-weight:700}
+.step-dot.sm{width:24px;height:24px;font-size:12px}
+.step-dot.md{width:32px;height:32px;font-size:14px}
+.step-dot.lg{width:40px;height:40px;font-size:16px}
+.step-dot.active{background:var(--green-800);color:#fff}
+.step-dot.done{background:var(--green-200);color:var(--green-900)}
+.step-dot.pending{background:var(--beige-200);color:var(--beige-900)}
+.step-sep{flex:1;height:1px;background:var(--beige-300);margin:0 8px}
+.step-sep-v{width:1px;background:var(--beige-300);min-height:16px;margin:2px 0 2px 15px}
+.step-label{font-size:14px;font-weight:500;color:var(--fg1)}
+.step-label.muted{color:var(--gray-800)}
+.step-desc{font-size:12px;color:var(--fg3)}
+</style></head><body style="padding:14px 16px">
+<div class="section">Horizontal · md · step 2 active</div>
+<div class="step-row" style="max-width:520px">
+  
+    <div class="step-dot md done"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <div style="display:flex;flex-direction:column;margin-left:8px;margin-right:8px">
+      <span class="step-label">Intake</span>
+      <span class="step-desc">Classified</span>
+    </div>
+    <div class="step-sep"></div>
+    <div class="step-dot md active">2</div>
+    <div style="display:flex;flex-direction:column;margin-left:8px;margin-right:8px">
+      <span class="step-label">Policy</span>
+      <span class="step-desc">Matched</span>
+    </div>
+    <div class="step-sep"></div>
+    <div class="step-dot md pending">3</div>
+    <div style="display:flex;flex-direction:column;margin-left:8px;margin-right:8px">
+      <span class="step-label muted">Draft</span>
+      <span class="step-desc">Pending</span>
+    </div>
+    <div class="step-sep"></div>
+    <div class="step-dot md pending">4</div>
+    <div style="display:flex;flex-direction:column;margin-left:8px">
+      <span class="step-label muted">Send</span>
+      <span class="step-desc">Pending</span>
+    </div>
+    
+</div>
+
+<div class="section">Sizes · sm / md / lg</div>
+<div class="row" style="align-items:center;gap:32px">
+  
+  <div class="step-row" style="gap:6px">
+    
+      <div class="step-dot sm done"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div style="height:1px;width:20px;background:var(--beige-300)"></div>
+      <div class="step-dot sm active">2</div>
+      <div style="height:1px;width:20px;background:var(--beige-300)"></div>
+      <div class="step-dot sm pending">3</div>
+      
+    <span style="font-size:11px;color:var(--fg3);margin-left:6px">sm</span>
+  </div>
+  <div class="step-row" style="gap:6px">
+    
+      <div class="step-dot md done"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div style="height:1px;width:24px;background:var(--beige-300)"></div>
+      <div class="step-dot md active">2</div>
+      <div style="height:1px;width:24px;background:var(--beige-300)"></div>
+      <div class="step-dot md pending">3</div>
+      
+    <span style="font-size:11px;color:var(--fg3);margin-left:6px">md</span>
+  </div>
+  <div class="step-row" style="gap:6px">
+    
+      <div class="step-dot lg done"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div style="height:1px;width:28px;background:var(--beige-300)"></div>
+      <div class="step-dot lg active">2</div>
+      <div style="height:1px;width:28px;background:var(--beige-300)"></div>
+      <div class="step-dot lg pending">3</div>
+      
+    <span style="font-size:11px;color:var(--fg3);margin-left:6px">lg</span>
+  </div>
+</div>
+
+<div class="section">Vertical orientation</div>
+<div class="step-col" style="gap:0">
+  
+  <div style="display:flex;gap:12px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="step-dot md done"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="step-sep-v"></div>
+    </div>
+    <div style="padding-bottom:16px">
+      <div class="step-label">Intake classified</div>
+      <div class="step-desc">Billing · Urgent</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:12px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="step-dot md done"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="step-sep-v"></div>
+    </div>
+    <div style="padding-bottom:16px">
+      <div class="step-label">Policy matched</div>
+      <div class="step-desc">Refund policy v4</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:12px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="step-dot md active">3</div>
+      <div class="step-sep-v"></div>
+    </div>
+    <div style="padding-bottom:16px">
+      <div class="step-label">Drafting response</div>
+      <div class="step-desc">In progress</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:12px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="step-dot md pending">4</div>
+      <div class="step-sep-v"></div>
+    </div>
+    <div style="padding-bottom:16px">
+      <div class="step-label muted">Send to customer</div>
+      
+    </div>
+  </div>
+  <div style="display:flex;gap:12px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;align-items:center">
+      <div class="step-dot md pending">5</div>
+      
+    </div>
+    <div style="padding-bottom:0px">
+      <div class="step-label muted">Close ticket</div>
+      
+    </div>
+  </div>
+</div></body></html>

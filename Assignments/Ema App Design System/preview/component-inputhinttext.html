@@ -1,0 +1,68 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · InputHintText" subtitle="default/success/error · ghost · sm/lg sizes" viewport="700x440" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:8px}
+.lbl{font-size:12px;font-weight:500;line-height:16px;color:var(--fg2);margin-bottom:4px;display:block}
+.lbl .req{color:var(--red-800)}
+.hint-default{font-size:11px;color:var(--gray-800);margin-top:3px}
+.hint-success{font-size:11px;color:var(--green-930);margin-top:3px}
+.hint-error{font-size:11px;color:var(--red-930);margin-top:3px}
+.inp{height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;outline:none;color:var(--fg1);background:#fff;width:100%;box-sizing:border-box}
+.inp:focus{border-color:var(--green-500);box-shadow:0 0 0 3px var(--green-200)}
+.inp.error{border-color:var(--red-500)}
+.inp.success{border-color:var(--green-500)}
+.inp.disabled{background:var(--beige-100);border-color:var(--beige-300);color:var(--beige-800);cursor:not-allowed}
+.inp-sm{height:28px;font-size:12px}
+.inp-lg{height:44px;font-size:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;border:0}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.btn-lg{height:44px;padding:0 16px;font-size:16px;border-radius:8px}
+.btn-primary{background:var(--green-800);color:#fff}
+.btn-secondary{background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}
+.btn-ghost{background:transparent;color:var(--fg1)}
+
+</style></head><body style="padding:14px 16px">
+<div class="section">InputHintText · states default / success / error · sizes sm/md/lg · ghost</div>
+<div class="col" style="max-width:480px;gap:16px">
+  
+  <div>
+    <label class="lbl">Default</label>
+    <input class="inp " value="priya@acme.co" readonly/>
+    <div class="hint-default">We'll only use this for billing notifications.</div>
+  </div>
+  <div>
+    <label class="lbl">Success</label>
+    <input class="inp success" value="sk-ema-••••••••" readonly/>
+    <div class="hint-success">Key verified and connected to Salesforce.</div>
+  </div>
+  <div>
+    <label class="lbl">Error</label>
+    <input class="inp error" value="acme.zendesk.c" readonly/>
+    <div class="hint-error">Domain not found. Check the integration settings.</div>
+  </div>
+  <div>
+    <label class="lbl">Ghost · hint only on hover/focus</label>
+    <input class="inp" style="border-color:transparent" placeholder="Ghost input…"/>
+    <div style="font-size:11px;color:var(--gray-800);margin-top:3px;opacity:0.4">This hint appears on hover and focus.</div>
+  </div>
+  <div>
+    <div class="row" style="gap:24px">
+      <div>
+        <div class="lbl" style="margin-bottom:4px">sm</div>
+        <input class="inp inp-sm" style="width:160px" placeholder="sm input"/>
+        <div style="font-size:11px;color:var(--gray-800);margin-top:2px">sm hint text (11px)</div>
+      </div>
+      <div>
+        <div class="lbl" style="margin-bottom:4px">lg</div>
+        <input class="inp inp-lg" style="width:200px" placeholder="lg input"/>
+        <div style="font-size:11px;color:var(--gray-800);margin-top:2px">lg hint text</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

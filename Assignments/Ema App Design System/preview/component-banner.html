@@ -1,0 +1,96 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Banner" subtitle="6 variants · compact/expanded · action button" viewport="700x560" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
+/* shared btn */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;border:0;transition:background .15s}
+.btn-primary{background:var(--green-800);color:#fff}.btn-primary:hover{background:var(--green-900)}
+.btn-secondary{background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}.btn-secondary:hover{background:var(--beige-50)}
+.btn-ghost{background:transparent;color:var(--fg1)}.btn-ghost:hover{background:var(--beige-100)}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.btn-destructive{background:var(--red-800);color:#fff;border:0}.btn-destructive:hover{background:var(--red-900)}
+.btn-destr-soft{background:var(--red-100);color:var(--red-900);border:1px solid var(--red-500)}.btn-destr-soft:hover{background:var(--red-200)}
+
+.banner{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;border:1px solid}
+.banner-exp{flex-direction:column;align-items:flex-start;gap:8px}
+.banner-icon{font-size:20px;flex-shrink:0}
+.banner-title{font-size:14px;line-height:20px;font-weight:700}
+.banner-desc{font-size:13px;line-height:18px;margin-top:2px}
+.b-default{background:var(--beige-50); border-color:var(--beige-400);color:var(--fg1)}
+.b-success{background:var(--green-100);border-color:var(--green-400);color:var(--green-930)}
+.b-error  {background:var(--red-100);  border-color:var(--red-400);  color:var(--red-900)}
+.b-warning{background:var(--yellow-100);border-color:var(--yellow-500);color:var(--orange-930)}
+.b-info   {background:var(--blue-100); border-color:var(--blue-400); color:var(--blue-930)}
+.b-magic  {background:var(--purple-100);border-color:var(--purple-400);color:var(--purple-900)}
+</style></head><body style="padding:14px 16px">
+<div class="section">Compact layout (default) · all variants</div>
+<div style="display:flex;flex-direction:column;gap:8px;max-width:600px">
+  
+  <div class="banner b-default">
+    <i class="ph-fill ph-info banner-icon"></i>
+    <div style="flex:1;min-width:0">
+      <span class="banner-title">System maintenance</span>
+      <span style="font-size:13px;margin-left:6px">Ema will be briefly unavailable on May 14 from 02:00–03:00 UTC.</span>
+    </div>
+    <button style="flex-shrink:0;border:0;background:transparent;cursor:pointer;font-size:14px;opacity:.6"><i class="ph ph-x"></i></button>
+  </div>
+  <div class="banner b-success">
+    <i class="ph-fill ph-check-circle banner-icon"></i>
+    <div style="flex:1;min-width:0">
+      <span class="banner-title">Deployment complete</span>
+      <span style="font-size:13px;margin-left:6px">Tier-1 triage workflow v3.1 is live across all queues.</span>
+    </div>
+    <button style="flex-shrink:0;border:0;background:transparent;cursor:pointer;font-size:14px;opacity:.6"><i class="ph ph-x"></i></button>
+  </div>
+  <div class="banner b-error">
+    <i class="ph-fill ph-x-circle banner-icon"></i>
+    <div style="flex:1;min-width:0">
+      <span class="banner-title">Connection lost</span>
+      <span style="font-size:13px;margin-left:6px">Zendesk integration offline. Cases queued for retry.</span>
+    </div>
+    <button style="flex-shrink:0;border:0;background:transparent;cursor:pointer;font-size:14px;opacity:.6"><i class="ph ph-x"></i></button>
+  </div>
+  <div class="banner b-warning">
+    <i class="ph-fill ph-warning banner-icon"></i>
+    <div style="flex:1;min-width:0">
+      <span class="banner-title">High volume alert</span>
+      <span style="font-size:13px;margin-left:6px">Case volume 3× above baseline. Consider increasing auto-resolve threshold.</span>
+    </div>
+    <button style="flex-shrink:0;border:0;background:transparent;cursor:pointer;font-size:14px;opacity:.6"><i class="ph ph-x"></i></button>
+  </div>
+  <div class="banner b-info">
+    <i class="ph-fill ph-info banner-icon"></i>
+    <div style="flex:1;min-width:0">
+      <span class="banner-title">New feature</span>
+      <span style="font-size:13px;margin-left:6px">Stepper guardrails are now available for multi-step workflows.</span>
+    </div>
+    <button style="flex-shrink:0;border:0;background:transparent;cursor:pointer;font-size:14px;opacity:.6"><i class="ph ph-x"></i></button>
+  </div>
+  <div class="banner b-magic">
+    <i class="ph-fill ph-magic-wand banner-icon"></i>
+    <div style="flex:1;min-width:0">
+      <span class="banner-title">Drafted by Ema</span>
+      <span style="font-size:13px;margin-left:6px">This response was generated by Ema. Review before publishing.</span>
+    </div>
+    <button style="flex-shrink:0;border:0;background:transparent;cursor:pointer;font-size:14px;opacity:.6"><i class="ph ph-x"></i></button>
+  </div>
+</div>
+<div class="section">Expanded layout · with action button · buttonPosition right / bottom</div>
+<div style="display:flex;flex-direction:column;gap:10px;max-width:600px">
+  <div class="banner b-info" style="align-items:flex-start;gap:12px">
+    <i class="ph-fill ph-info banner-icon" style="margin-top:2px"></i>
+    <div style="flex:1;min-width:0">
+      <div class="banner-title">Policy review required</div>
+      <div class="banner-desc">3 routing policies haven't been reviewed in 90 days. Update them to keep Ema's behaviour accurate.</div>
+      <div style="margin-top:8px;display:flex;gap:6px">
+        <button class="btn btn-sm" style="background:var(--blue-200);color:var(--blue-930);border:0;font-family:inherit">Review policies</button>
+        <button class="btn btn-sm btn-ghost" style="font-family:inherit">Remind me later</button>
+      </div>
+    </div>
+    <button style="border:0;background:transparent;cursor:pointer;font-size:14px;opacity:.6;flex-shrink:0"><i class="ph ph-x"></i></button>
+  </div>
+</div></body></html>

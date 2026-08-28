@@ -1,0 +1,55 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Switch" subtitle="md/lg · default/orange · disabled · settings list" viewport="700x380" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.col{display:flex;flex-direction:column;gap:8px}
+
+.sw-track{width:32px;height:16px;border-radius:9999px;position:relative;cursor:pointer;transition:background .15s;flex-shrink:0}
+.sw-track.lg{width:40px;height:20px}
+.sw-thumb{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:transform .15s}
+.sw-track.lg .sw-thumb{width:16px;height:16px}
+.sw-track.off{background:var(--beige-800)}
+.sw-track.on{background:var(--green-800)}
+.sw-track.on .sw-thumb{transform:translateX(16px)}
+.sw-track.lg.on .sw-thumb{transform:translateX(20px)}
+.sw-track.orange-off{background:var(--orange-800)}
+.sw-track.disabled{opacity:.6;cursor:not-allowed}
+.sw-wrap{display:inline-flex;align-items:center;gap:10px;font-size:14px;color:var(--fg1)}
+</style></head><body style="padding:14px 16px">
+<div class="section">Default variant · md (32×16) · lg (40×20)</div>
+<div class="row">
+  <label class="sw-wrap"><div class="sw-track off"><div class="sw-thumb"></div></div>Off</label>
+  <label class="sw-wrap"><div class="sw-track on"><div class="sw-thumb"></div></div>On</label>
+  <label class="sw-wrap"><div class="sw-track off lg"><div class="sw-thumb"></div></div>lg Off</label>
+  <label class="sw-wrap"><div class="sw-track on lg"><div class="sw-thumb"></div></div>lg On</label>
+</div>
+<div class="section">Orange variant (warning state before enabling)</div>
+<div class="row">
+  <label class="sw-wrap"><div class="sw-track orange-off"><div class="sw-thumb"></div></div>Warning off</label>
+  <label class="sw-wrap"><div class="sw-track on"><div class="sw-thumb"></div></div>Enabled</label>
+</div>
+<div class="section">Disabled states (LockKey icon, opacity .6)</div>
+<div class="row">
+  <label class="sw-wrap"><div class="sw-track off disabled"><div class="sw-thumb"></div></div>Disabled off</label>
+  <label class="sw-wrap"><div class="sw-track on disabled"><div class="sw-thumb"></div></div>Disabled on</label>
+</div>
+<div class="section">In context · settings list</div>
+<div class="col" style="max-width:340px;background:#fff;border:1px solid var(--beige-300);border-radius:10px;overflow:hidden">
+  
+  <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--beige-200)">
+    <span style="flex:1;font-size:14px;color:var(--fg1)">Auto-resolve tier-1 cases</span>
+    <div class="sw-track on"><div class="sw-thumb"></div></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--beige-200)">
+    <span style="flex:1;font-size:14px;color:var(--fg1)">Notify on escalation</span>
+    <div class="sw-track off"><div class="sw-thumb"></div></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--beige-200)">
+    <span style="flex:1;font-size:14px;color:var(--fg1)">Enable AI drafts</span>
+    <div class="sw-track on"><div class="sw-thumb"></div></div>
+  </div>
+</div></body></html>

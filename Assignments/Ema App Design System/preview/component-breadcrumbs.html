@@ -1,0 +1,71 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · BreadCrumbs" subtitle="xs/sm/md · truncated middle · navbar context" viewport="700x280" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.col{display:flex;flex-direction:column;gap:6px}
+
+</style></head><body style="padding:14px 16px">
+<div class="section">Sizes · xs (default) · sm · md</div>
+<div class="col" style="gap:12px">
+  
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--fg3);width:28px">xs</span>
+    
+      
+      <span style="font-size:12px;font-weight:400;color:var(--fg2);cursor:pointer;hover:color:var(--fg1)">Workspace</span>
+      <span style="font-size:12px;font-weight:500;color:var(--fg2)">/</span>
+      <span style="font-size:12px;font-weight:400;color:var(--fg2);cursor:pointer;hover:color:var(--fg1)">Runs</span>
+      <span style="font-size:12px;font-weight:500;color:var(--fg2)">/</span>
+      <span style="font-size:12px;font-weight:400;color:var(--fg2);cursor:pointer;hover:color:var(--fg1)">Tier-1 triage</span>
+      <span style="font-size:12px;font-weight:500;color:var(--fg2)">/</span>
+      <span style="font-size:12px;font-weight:400;color:var(--fg1);cursor:default;">Run #r-284</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--fg3);width:28px">sm</span>
+    
+      
+      <span style="font-size:14px;font-weight:500;color:var(--fg2);cursor:pointer;hover:color:var(--fg1)">Workspace</span>
+      <span style="font-size:14px;font-weight:500;color:var(--fg2)">/</span>
+      <span style="font-size:14px;font-weight:500;color:var(--fg2);cursor:pointer;hover:color:var(--fg1)">Runs</span>
+      <span style="font-size:14px;font-weight:500;color:var(--fg2)">/</span>
+      <span style="font-size:14px;font-weight:500;color:var(--fg2);cursor:pointer;hover:color:var(--fg1)">Tier-1 triage</span>
+      <span style="font-size:14px;font-weight:500;color:var(--fg2)">/</span>
+      <span style="font-size:14px;font-weight:500;color:var(--fg1);cursor:default;">Run #r-284</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--fg3);width:28px">md</span>
+    
+      
+      <span style="font-size:16px;font-weight:500;color:var(--fg2);cursor:pointer;hover:color:var(--fg1)">Workspace</span>
+      <span style="font-size:16px;font-weight:500;color:var(--fg2)">/</span>
+      <span style="font-size:16px;font-weight:500;color:var(--fg2);cursor:pointer;hover:color:var(--fg1)">Runs</span>
+      <span style="font-size:16px;font-weight:500;color:var(--fg2)">/</span>
+      <span style="font-size:16px;font-weight:500;color:var(--fg2);cursor:pointer;hover:color:var(--fg1)">Tier-1 triage</span>
+      <span style="font-size:16px;font-weight:500;color:var(--fg2)">/</span>
+      <span style="font-size:16px;font-weight:500;color:var(--fg1);cursor:default;">Run #r-284</span>
+  </div>
+</div>
+
+<div class="section">Truncated middle items (long path)</div>
+<div style="max-width:400px;display:flex;align-items:center;gap:8px;overflow:hidden">
+  <span style="font-size:12px;font-weight:500;color:var(--fg2);cursor:pointer;flex-shrink:0">Workspace</span>
+  <span style="font-size:12px;color:var(--fg2)">/</span>
+  <span style="font-size:12px;font-weight:500;color:var(--fg2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:1.5ch">Customer support</span>
+  <span style="font-size:12px;color:var(--fg2)">/</span>
+  <span style="font-size:12px;font-weight:500;color:var(--fg1);flex-shrink:0">Tier-1 triage</span>
+</div>
+
+<div class="section">In context · Navbar breadcrumb</div>
+<div style="height:48px;background:var(--beige-50);border:1px solid var(--beige-300);border-radius:8px;display:flex;align-items:center;padding:0 16px;gap:8px;max-width:480px">
+  <img src="../assets/logo-mark.svg?v=3" width="20" height="20" alt="Ema"/>
+  <i class="ph ph-caret-right" style="font-size:11px;color:var(--fg3)"></i>
+  <span style="font-size:13px;font-weight:500;color:var(--fg2);cursor:pointer">Runs</span>
+  <i class="ph ph-caret-right" style="font-size:11px;color:var(--fg3)"></i>
+  <span style="font-size:13px;font-weight:500;color:var(--fg2);cursor:pointer">Tier-1 triage</span>
+  <i class="ph ph-caret-right" style="font-size:11px;color:var(--fg3)"></i>
+  <span style="font-size:13px;font-weight:500;color:var(--fg1)">Run #r-284</span>
+</div></body></html>

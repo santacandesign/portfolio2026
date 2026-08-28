@@ -1,0 +1,65 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · DateRangePicker" subtitle="trigger · open calendar · range selected" viewport="700x440" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:8px}
+.lbl{font-size:12px;font-weight:500;line-height:16px;color:var(--fg2);margin-bottom:4px;display:block}
+.lbl .req{color:var(--red-800)}
+.hint-default{font-size:11px;color:var(--gray-800);margin-top:3px}
+.hint-success{font-size:11px;color:var(--green-930);margin-top:3px}
+.hint-error{font-size:11px;color:var(--red-930);margin-top:3px}
+.inp{height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;outline:none;color:var(--fg1);background:#fff;width:100%;box-sizing:border-box}
+.inp:focus{border-color:var(--green-500);box-shadow:0 0 0 3px var(--green-200)}
+.inp.error{border-color:var(--red-500)}
+.inp.success{border-color:var(--green-500)}
+.inp.disabled{background:var(--beige-100);border-color:var(--beige-300);color:var(--beige-800);cursor:not-allowed}
+.inp-sm{height:28px;font-size:12px}
+.inp-lg{height:44px;font-size:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;border:0}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.btn-lg{height:44px;padding:0 16px;font-size:16px;border-radius:8px}
+.btn-primary{background:var(--green-800);color:#fff}
+.btn-secondary{background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}
+.btn-ghost{background:transparent;color:var(--fg1)}
+
+.date-inp{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-size:14px;color:var(--fg1);background:#fff;cursor:pointer;min-width:260px}
+.cal{background:#fff;border:1px solid var(--beige-400);border-radius:10px;padding:14px;box-shadow:0 4px 6px -1px rgba(35,33,25,.08);width:280px}
+.cal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:14px;font-weight:700}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+.cal-day{height:30px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:13px;cursor:pointer;color:var(--fg1)}
+.cal-day:hover{background:var(--beige-100)}
+.cal-day.selected{background:var(--green-800);color:#fff}
+.cal-day.in-range{background:var(--green-100);color:var(--green-900)}
+.cal-day.outside{color:var(--fg3)}
+.cal-day-label{height:24px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;letter-spacing:.8px;color:var(--fg3);text-transform:uppercase}
+</style></head><body style="padding:14px 16px">
+<div class="section">DateRangePicker · trigger · open calendar · selected range</div>
+<div class="col" style="gap:14px">
+  <div>
+    <label class="lbl">Trigger (closed)</label>
+    <div class="date-inp">
+      <i class="ph ph-calendar" style="font-size:16px;color:var(--fg3)"></i>
+      <span>May 1, 2025 – May 12, 2025</span>
+      <i class="ph ph-caret-down" style="font-size:13px;color:var(--fg3);margin-left:auto"></i>
+    </div>
+  </div>
+  <div>
+    <label class="lbl">Calendar — range selected May 5–12</label>
+    <div class="cal">
+      <div class="cal-hdr">
+        <button style="border:0;background:transparent;cursor:pointer;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center"><i class="ph ph-caret-left" style="color:var(--fg2)"></i></button>
+        <span>May 2025</span>
+        <button style="border:0;background:transparent;cursor:pointer;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center"><i class="ph ph-caret-right" style="color:var(--fg2)"></i></button>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-day-label">Su</div><div class="cal-day-label">Mo</div><div class="cal-day-label">Tu</div><div class="cal-day-label">We</div><div class="cal-day-label">Th</div><div class="cal-day-label">Fr</div><div class="cal-day-label">Sa</div>
+        <div class="cal-day outside"> </div><div class="cal-day outside"> </div><div class="cal-day outside"> </div><div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day selected">5</div><div class="cal-day in-range">6</div><div class="cal-day in-range">7</div><div class="cal-day in-range">8</div><div class="cal-day in-range">9</div><div class="cal-day in-range">10</div><div class="cal-day in-range">11</div><div class="cal-day selected">12</div><div class="cal-day">13</div><div class="cal-day">14</div><div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day">21</div><div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div><div class="cal-day">29</div><div class="cal-day">30</div><div class="cal-day">31</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

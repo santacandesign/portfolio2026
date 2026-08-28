@@ -1,0 +1,66 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · TextLink" subtitle="brand/blue · sm/md/lg/inline · with icon · disabled" viewport="700x340" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 8px}
+.row{display:flex;gap:16px;flex-wrap:wrap;align-items:baseline;margin-bottom:10px}
+a.tl,button.tl{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--app-font-family);font-weight:700;
+  text-decoration:none;cursor:pointer;border:0;background:transparent;padding:0;
+  transition:text-decoration .1s;
+}
+a.tl:hover,button.tl:hover{text-decoration:underline}
+.brand{color:#1f8844}
+.blue{color:#2195df}
+.disabled{color:var(--beige-800);cursor:not-allowed;pointer-events:none}
+.sz-sm{font-size:12px;line-height:16px}
+.sz-md{font-size:14px;line-height:20px}
+.sz-lg{font-size:16px;line-height:24px}
+.sz-inline{font-size:14px;line-height:20px;font-weight:400}
+.chip{
+  background:#fff;border:1px solid var(--beige-300);border-radius:10px;
+  padding:16px 20px;display:flex;flex-direction:column;gap:10px;
+}
+</style>
+</head><body style="padding:14px 16px">
+
+<div class="section">Colors · brand / blue / disabled</div>
+<div class="chip">
+  <div class="row">
+    <a href="#" class="tl brand sz-md">View audit log</a>
+    <a href="#" class="tl blue sz-md">Open in Salesforce</a>
+    <span class="tl disabled sz-md">Locked</span>
+  </div>
+</div>
+
+<div class="section">Sizes · sm / md / lg / inline</div>
+<div class="chip">
+  <div class="row" style="align-items:center;gap:20px">
+    <a href="#" class="tl brand sz-sm">sm · View</a>
+    <a href="#" class="tl brand sz-md">md · View run</a>
+    <a href="#" class="tl brand sz-lg">lg · View details</a>
+  </div>
+  <div style="font-size:14px;line-height:20px;color:var(--fg1)">
+    Ema resolved this case. <a href="#" class="tl brand sz-inline">View transcript</a> to see the full interaction.
+  </div>
+</div>
+
+<div class="section">With icon · leading / trailing</div>
+<div class="chip">
+  <div class="row">
+    <a href="#" class="tl brand sz-md">
+      <i class="ph ph-arrow-square-out" style="font-size:16px"></i>Open in Zendesk
+    </a>
+    <a href="#" class="tl brand sz-md">
+      Download report<i class="ph ph-download-simple" style="font-size:16px"></i>
+    </a>
+    <a href="#" class="tl blue sz-md">
+      <i class="ph ph-github-logo" style="font-size:16px"></i>View on GitHub
+    </a>
+  </div>
+</div>
+
+</body></html>

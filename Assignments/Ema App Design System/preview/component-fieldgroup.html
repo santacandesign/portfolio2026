@@ -1,0 +1,77 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · FieldGroup" subtitle="flex items-end · first/last radius · name · phone · filter combo" viewport="700x380" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:8px}
+.lbl{font-size:12px;font-weight:500;line-height:16px;color:var(--fg2);margin-bottom:4px;display:block}
+.lbl .req{color:var(--red-800)}
+.hint-default{font-size:11px;color:var(--gray-800);margin-top:3px}
+.hint-success{font-size:11px;color:var(--green-930);margin-top:3px}
+.hint-error{font-size:11px;color:var(--red-930);margin-top:3px}
+.inp{height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;outline:none;color:var(--fg1);background:#fff;width:100%;box-sizing:border-box}
+.inp:focus{border-color:var(--green-500);box-shadow:0 0 0 3px var(--green-200)}
+.inp.error{border-color:var(--red-500)}
+.inp.success{border-color:var(--green-500)}
+.inp.disabled{background:var(--beige-100);border-color:var(--beige-300);color:var(--beige-800);cursor:not-allowed}
+.inp-sm{height:28px;font-size:12px}
+.inp-lg{height:44px;font-size:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;border:0}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.btn-lg{height:44px;padding:0 16px;font-size:16px;border-radius:8px}
+.btn-primary{background:var(--green-800);color:#fff}
+.btn-secondary{background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}
+.btn-ghost{background:transparent;color:var(--fg1)}
+
+.field-group{display:flex;align-items:flex-end}
+.field-group .inp{border-radius:0}
+.field-group .inp:first-child{border-radius:8px 0 0 8px}
+.field-group .inp:last-child{border-radius:0 8px 8px 0;margin-left:-1px}
+.field-group .inp:not(:first-child):not(:last-child){margin-left:-1px}
+.field-group .select-trigger{border-radius:0;margin-left:-1px}
+.sel{height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;background:#fff;color:var(--fg1);cursor:pointer;outline:none;appearance:none;padding-right:32px}
+</style></head><body style="padding:14px 16px">
+<div class="section">FieldGroup · flex items-end · rounds first/last, removes middle borders</div>
+<div class="col" style="max-width:520px;gap:20px">
+  <div>
+    <label class="lbl">First name + Last name (equal width)</label>
+    <div class="field-group">
+      <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:12px;color:var(--fg2);font-weight:500">First name</span>
+        <input class="inp" style="border-radius:8px 0 0 8px;width:100%;box-sizing:border-box" value="Priya" readonly/>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:12px;color:var(--fg2);font-weight:500">Last name</span>
+        <input class="inp" style="border-radius:0 8px 8px 0;margin-left:-1px;width:100%;box-sizing:border-box" value="Shah" readonly/>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label class="lbl">Country code + Phone</label>
+    <div class="field-group">
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:12px;color:var(--fg2);font-weight:500">Code</span>
+        <select class="sel" style="border-radius:8px 0 0 8px;width:88px">
+          <option>+1 🇺🇸</option><option>+44</option><option>+91</option>
+        </select>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+        <span style="font-size:12px;color:var(--fg2);font-weight:500">Phone number</span>
+        <input class="inp" style="border-radius:0 8px 8px 0;margin-left:-1px;width:100%;box-sizing:border-box" placeholder="(555) 000-0000"/>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label class="lbl">Select + Input (inline combo)</label>
+    <div class="field-group">
+      <select class="sel" style="border-radius:8px 0 0 8px;width:120px">
+        <option>Contains</option><option>Starts with</option><option>Equals</option>
+      </select>
+      <input class="inp" style="border-radius:0 8px 8px 0;margin-left:-1px;flex:1;width:100%;box-sizing:border-box" placeholder="billing"/>
+    </div>
+  </div>
+</div>
+</body></html>

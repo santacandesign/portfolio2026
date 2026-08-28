@@ -1,0 +1,111 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Inputs" subtitle="sm/md/lg w/ exact type tokens (text-sm-medium, text-base-medium) + green focus ring" viewport="700x360" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+  /* Input size + type tokens from common/input.ts */
+  .field{display:flex;flex-direction:column;gap:6px;max-width:320px}
+  .field label{
+    font-size:14px;line-height:20px;font-weight:500;           /* text-sm-medium */
+    color:var(--fg2);
+  }
+  .ema-input{
+    background:#fff;
+    border:1px solid var(--beige-500);                         /* brand-secondaryBorder */
+    border-radius:8px;                                          /* rounded-lg */
+    outline:none;
+    color:var(--fg1);                                          /* text-app-foreground */
+    font-family:var(--app-font-family);
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  /* size md — h-9, px-3.5, text-sm-medium (14/20/500), placeholder text-sm-normal */
+  .size-md{
+    height:36px;padding:0 14px;
+    font-size:14px;line-height:20px;font-weight:500;
+  }
+  .size-md::placeholder{font-weight:400;color:var(--beige-800)}
+  /* size sm — h-7, same 14/20 tokens */
+  .size-sm{
+    height:28px;padding:0 14px;
+    font-size:14px;line-height:20px;font-weight:500;
+  }
+  .size-sm::placeholder{font-weight:400;color:var(--beige-800)}
+  /* size lg — h-11, text-base-medium (16/24/500), placeholder text-base-normal */
+  .size-lg{
+    height:44px;padding:0 14px;
+    font-size:16px;line-height:24px;font-weight:500;
+  }
+  .size-lg::placeholder{font-weight:400;color:var(--beige-800)}
+
+  /* States — green ring on focus, NEVER native blue */
+  .ema-input:hover{border-color:var(--green-500)}               /* focus-border */
+  .ema-input:focus,
+  .ema-input.is-focus{
+    border-color:var(--green-500);
+    box-shadow:0 0 0 3px var(--green-200);                     /* focus:ring-success-bg */
+  }
+  .ema-input.is-success{border-color:var(--green-500)}
+  .ema-input.is-success:focus{box-shadow:0 0 0 3px var(--green-200)}
+  .ema-input.is-error{border-color:var(--red-500);color:var(--red-900)}
+  .ema-input.is-error:focus{box-shadow:0 0 0 3px var(--red-200)}
+  .ema-input:disabled,.ema-input.is-disabled{
+    background:var(--beige-100);
+    border-color:var(--beige-300);
+    color:var(--beige-900);                                    /* muted-foregroundStrong */
+    cursor:not-allowed;
+  }
+  .ema-input:disabled::placeholder{color:var(--beige-900)}
+
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px}
+  .hint{
+    font-size:12px;line-height:16px;font-weight:400;           /* text-xs-normal */
+    color:var(--fg3);margin-top:2px;
+  }
+  .hint.err{color:var(--red-900)}
+  .tag{
+    font-size:12px;line-height:16px;font-weight:700;           /* text-xs-bold / label */
+    letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3)
+  }
+</style>
+</head><body style="padding:14px 16px">
+<div class="row">
+
+  <div class="field">
+    <label>Default · md</label>
+    <input class="ema-input size-md" placeholder="Search runs, policies, people\u2026"/>
+    <span class="hint">h-9 \u00b7 text-sm-medium (14/20/500)</span>
+  </div>
+
+  <div class="field">
+    <label>Focused · md</label>
+    <input class="ema-input size-md is-focus" value="workspace@ema.co"/>
+    <span class="hint">ring = success-bg (green-200)</span>
+  </div>
+
+  <div class="field">
+    <label>Size · sm</label>
+    <input class="ema-input size-sm" placeholder="h-7 \u00b7 text-sm-medium"/>
+    <span class="hint">text-sm-medium 14/20/500</span>
+  </div>
+
+  <div class="field">
+    <label>Size · lg</label>
+    <input class="ema-input size-lg" placeholder="h-11 \u00b7 text-base-medium"/>
+    <span class="hint">text-base-medium 16/24/500</span>
+  </div>
+
+  <div class="field">
+    <label>Error state</label>
+    <input class="ema-input size-md is-error" value="invalid@"/>
+    <span class="hint err">Enter a valid work email.</span>
+  </div>
+
+  <div class="field">
+    <label>Disabled</label>
+    <input class="ema-input size-md is-disabled" disabled value="Read-only field"/>
+    <span class="hint">muted-foregroundStrong</span>
+  </div>
+
+</div>
+</body></html>

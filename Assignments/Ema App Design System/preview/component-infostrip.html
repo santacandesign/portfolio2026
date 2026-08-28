@@ -1,0 +1,63 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · InfoStrip" subtitle="icon + title + dot-separated items + action" viewport="700x300" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
+/* shared btn */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;border:0;transition:background .15s}
+.btn-primary{background:var(--green-800);color:#fff}.btn-primary:hover{background:var(--green-900)}
+.btn-secondary{background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}.btn-secondary:hover{background:var(--beige-50)}
+.btn-ghost{background:transparent;color:var(--fg1)}.btn-ghost:hover{background:var(--beige-100)}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.btn-destructive{background:var(--red-800);color:#fff;border:0}.btn-destructive:hover{background:var(--red-900)}
+.btn-destr-soft{background:var(--red-100);color:var(--red-900);border:1px solid var(--red-500)}.btn-destr-soft:hover{background:var(--red-200)}
+
+</style></head><body style="padding:14px 16px">
+<div class="section">InfoStrip · icon + title + dot-separated items + action</div>
+<div style="display:flex;flex-direction:column;gap:10px;max-width:640px">
+  <!-- basic -->
+  <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--beige-400);background:var(--beige-50);border-radius:8px;padding:12px 16px">
+    <i class="ph ph-flow-arrow" style="font-size:18px;color:var(--fg2);flex-shrink:0"></i>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:16px;font-weight:700;color:var(--beige-960);line-height:24px">Tier-1 triage</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:var(--beige-930)">
+        <span>Support</span>
+        <span style="width:4px;height:4px;border-radius:50%;background:var(--beige-800)"></span>
+        <span>42 runs</span>
+        <span style="width:4px;height:4px;border-radius:50%;background:var(--beige-800)"></span>
+        <span>Last run 2m ago</span>
+      </div>
+    </div>
+  </div>
+  <!-- with action -->
+  <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--beige-400);background:var(--beige-50);border-radius:8px;padding:12px 16px">
+    <i class="ph ph-user-circle" style="font-size:18px;color:var(--fg2);flex-shrink:0"></i>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:16px;font-weight:700;color:var(--beige-960);line-height:24px">Priya Shah</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:var(--beige-930)">
+        <span>Workspace admin</span>
+        <span style="width:4px;height:4px;border-radius:50%;background:var(--beige-800)"></span>
+        <span>priya@acme.co</span>
+      </div>
+    </div>
+    <button class="btn btn-secondary btn-sm" style="font-family:inherit;flex-shrink:0">Edit profile</button>
+  </div>
+  <!-- with icon action -->
+  <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--beige-400);background:var(--beige-50);border-radius:8px;padding:12px 16px">
+    <i class="ph ph-plugs-connected" style="font-size:18px;color:var(--fg2);flex-shrink:0"></i>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:16px;font-weight:700;color:var(--beige-960);line-height:24px">Zendesk</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:var(--beige-930)">
+        <span>Support</span>
+        <span style="width:4px;height:4px;border-radius:50%;background:var(--beige-800)"></span>
+        <span>Connected</span>
+        <span style="width:4px;height:4px;border-radius:50%;background:var(--beige-800)"></span>
+        <span>12 active rules</span>
+      </div>
+    </div>
+    <button class="btn btn-ghost btn-sm" style="font-family:inherit;flex-shrink:0"><i class="ph ph-gear" style="font-size:14px"></i>Configure</button>
+  </div>
+</div></body></html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · TextArea" subtitle="primary/ghost · sm/md/lg/xl · default/success/error · char count · expandable" viewport="700x620" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:8px}
+.lbl{font-size:12px;font-weight:500;line-height:16px;color:var(--fg2);margin-bottom:4px;display:block}
+.lbl .req{color:var(--red-800)}
+.hint-default{font-size:11px;color:var(--gray-800);margin-top:3px}
+.hint-success{font-size:11px;color:var(--green-930);margin-top:3px}
+.hint-error{font-size:11px;color:var(--red-930);margin-top:3px}
+.inp{height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;outline:none;color:var(--fg1);background:#fff;width:100%;box-sizing:border-box}
+.inp:focus{border-color:var(--green-500);box-shadow:0 0 0 3px var(--green-200)}
+.inp.error{border-color:var(--red-500)}
+.inp.success{border-color:var(--green-500)}
+.inp.disabled{background:var(--beige-100);border-color:var(--beige-300);color:var(--beige-800);cursor:not-allowed}
+.inp-sm{height:28px;font-size:12px}
+.inp-lg{height:44px;font-size:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;border:0}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.btn-lg{height:44px;padding:0 16px;font-size:16px;border-radius:8px}
+.btn-primary{background:var(--green-800);color:#fff}
+.btn-secondary{background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}
+.btn-ghost{background:transparent;color:var(--fg1)}
+
+</style></head><body style="padding:14px 16px">
+<div class="section">Variants · primary / ghost · sizes sm/md/lg/xl</div>
+<div class="col" style="max-width:480px">
+  <div>
+    <label class="lbl">primary · md (default)</label>
+    <textarea style="width:100%;box-sizing:border-box;padding:8px 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;line-height:20px;outline:none;resize:none;color:var(--fg1)" rows="3" placeholder="Describe what happened…"></textarea>
+    <div class="hint-default">Tip: describe the outcome, not the steps.</div>
+  </div>
+  <div>
+    <label class="lbl">ghost variant — border appears on hover/focus</label>
+    <textarea style="width:100%;box-sizing:border-box;padding:8px 14px;border:1px solid transparent;border-radius:8px;font-family:inherit;font-size:14px;line-height:20px;outline:none;resize:none;color:var(--fg1)" rows="2" placeholder="Ghost — border on hover/focus only"></textarea>
+  </div>
+</div>
+
+<div class="section">States · default / success / error + hintText</div>
+<div class="col" style="max-width:480px">
+  <div>
+    <label class="lbl">Default</label>
+    <textarea class="inp" style="height:auto;padding:8px 14px;resize:none" rows="2" placeholder="Enter case notes…"></textarea>
+    <div class="hint-default">Support additional context for Ema.</div>
+  </div>
+  <div>
+    <label class="lbl">Success</label>
+    <textarea class="inp success" style="height:auto;padding:8px 14px;resize:none" rows="2">Policy approved and published to all queues.</textarea>
+    <div class="hint-success">✓ Saved successfully.</div>
+  </div>
+  <div>
+    <label class="lbl">Error</label>
+    <textarea class="inp error" style="height:auto;padding:8px 14px;resize:none" rows="2">This is too sh</textarea>
+    <div class="hint-error">Must be at least 20 characters.</div>
+  </div>
+  <div>
+    <label class="lbl">Disabled</label>
+    <textarea class="inp disabled" style="height:auto;padding:8px 14px;resize:none" rows="2" disabled>Content is read-only.</textarea>
+  </div>
+</div>
+
+<div class="section">Character count + expandable (ArrowsOut icon on hover)</div>
+<div style="max-width:480px">
+  <div style="position:relative">
+    <textarea class="inp" style="height:auto;padding:8px 14px;resize:none;width:100%;box-sizing:border-box" rows="3" maxlength="200" placeholder="Write a description…"></textarea>
+    <button style="position:absolute;bottom:8px;right:8px;width:24px;height:24px;border-radius:4px;border:0;background:rgba(251,250,247,.9);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--fg3)">
+      <i class="ph ph-arrows-out" style="font-size:14px"></i>
+    </button>
+  </div>
+  <div style="font-size:11px;color:var(--fg2);text-align:right;margin-top:3px">0 / 200 characters</div>
+</div>
+</body></html>

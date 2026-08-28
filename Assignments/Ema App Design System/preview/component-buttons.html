@@ -1,0 +1,144 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · Buttons" subtitle="Variants × colors × sizes × states. Bold tokens (xs 12/16/700 → lg 16/24/700), clean icon borders." viewport="700x680" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+  /* Per Button.tsx cva: every size uses *-bold tokens */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;
+       font-family:var(--app-font-family);cursor:pointer;white-space:nowrap;
+       transition:background .15s ease, border-color .15s ease, box-shadow .15s ease;}
+  .btn:focus-visible{outline:none;box-shadow:0 0 0 2px var(--app-background),0 0 0 4px var(--green-800)}
+
+  /* Sizes — h & radius from cva; typography from tokens */
+  .btn-xs{height:24px;padding:0 10px;border-radius:4px;
+          font-size:12px;line-height:16px;font-weight:700}   /* text-xs-bold */
+  .btn-sm{height:28px;padding:0 16px;border-radius:6px;
+          font-size:12px;line-height:16px;font-weight:700}   /* text-xs-bold */
+  .btn-md{height:36px;padding:0 16px;border-radius:6px;
+          font-size:14px;line-height:20px;font-weight:700}   /* text-sm-bold */
+  .btn-lg{height:44px;padding:0 16px;border-radius:8px;
+          font-size:16px;line-height:24px;font-weight:700}   /* text-base-bold */
+
+  /* Primary × color */
+  .p-brand       {background:var(--green-800);color:#fff}
+  .p-brand:hover {background:var(--green-900)}
+  .p-brand.active{background:var(--green-930)}
+  .p-alt         {background:var(--beige-200);color:var(--beige-960)}
+  .p-alt:hover   {background:var(--beige-300)}
+  .p-magic       {background:var(--purple-800);color:#fff}
+  .p-magic:hover {background:var(--purple-900)}
+  .p-destr       {background:var(--red-100);color:var(--red-900);border:1px solid var(--red-500)}
+  .p-destr:hover {background:var(--red-200)}
+  /* Secondary × color (single source of border) */
+  .s-brand       {background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}
+  .s-brand:hover {background:var(--beige-50)}
+  .s-alt         {background:#fff;color:var(--beige-960);border:1px solid var(--beige-500)}
+  .s-alt:hover   {background:var(--beige-100)}
+  .s-magic       {background:#fff;color:var(--purple-800);border:1px solid var(--purple-500)}
+  .s-magic:hover {background:var(--purple-100)}
+  .s-destr       {background:#fff;color:var(--red-900);border:1px solid var(--red-500)}
+  .s-destr:hover {background:var(--red-100)}
+  /* Ghost × color */
+  .g-brand       {background:transparent;color:var(--fg1)}
+  .g-brand:hover {background:var(--beige-100)}
+  .g-magic       {background:transparent;color:var(--purple-800)}
+  .g-magic:hover {background:var(--purple-100)}
+  .g-destr       {background:transparent;color:var(--red-900)}
+  .g-destr:hover {background:var(--red-100)}
+  /* Link */
+  .link{background:transparent;border:0;color:var(--green-800);padding:0;height:auto;
+        font-size:14px;line-height:20px;font-weight:500;cursor:pointer}
+  .link:hover{text-decoration:underline}
+  /* Disabled */
+  .disabled{background:var(--beige-100)!important;color:var(--beige-800)!important;
+            border:1px solid var(--beige-300)!important;cursor:not-allowed}
+
+  /* Icon-only: square containers, NO border by default — border comes from variant class */
+  .icon-sm,.icon-md,.icon-lg{
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:0;border:0;cursor:pointer;background:transparent;color:var(--fg1);
+    transition:background .15s ease;
+  }
+  .icon-sm{width:28px;height:28px;border-radius:6px}
+  .icon-md{width:36px;height:36px;border-radius:6px}
+  .icon-lg{width:44px;height:44px;border-radius:8px}
+  .icon-sm i,.icon-md i,.icon-lg i{font-size:16px}
+  .icon-sm i{font-size:14px}
+  .icon-lg i{font-size:20px}
+
+  /* Loading */
+  .loading{pointer-events:none;position:relative;color:transparent!important}
+  .loading::after{content:"";position:absolute;inset:0;margin:auto;width:14px;height:14px;
+    border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+  .s-brand.loading::after,.p-alt.loading::after{border-color:rgba(0,0,0,.15);border-top-color:var(--fg1)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+  .tag{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+       color:var(--fg3);width:112px;flex-shrink:0}
+  .section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+           color:var(--fg3);margin:10px 0 6px}
+</style>
+</head><body style="padding:14px 16px">
+
+<div class="section">Primary × color · md (text-sm-bold)</div>
+<div class="row"><span class="tag">primary</span>
+  <button class="btn btn-md p-brand">Start run</button>
+  <button class="btn btn-md p-alt">Alt brand</button>
+  <button class="btn btn-md p-magic"><i class="ph-bold ph-magic-wand"></i>Draft with Ema</button>
+  <button class="btn btn-md p-destr"><i class="ph-bold ph-trash"></i>Delete run</button>
+</div>
+
+<div class="section">Secondary × color</div>
+<div class="row"><span class="tag">secondary</span>
+  <button class="btn btn-md s-brand">Cancel</button>
+  <button class="btn btn-md s-alt">Alt</button>
+  <button class="btn btn-md s-magic"><i class="ph-bold ph-magic-wand"></i>Ask Ema</button>
+  <button class="btn btn-md s-destr">Archive</button>
+</div>
+
+<div class="section">Ghost × color</div>
+<div class="row"><span class="tag">ghost</span>
+  <button class="btn btn-md g-brand">Skip for now</button>
+  <button class="btn btn-md g-magic"><i class="ph-bold ph-magic-wand"></i>Suggest</button>
+  <button class="btn btn-md g-destr">Remove</button>
+  <button class="link">Link style action</button>
+</div>
+
+<div class="section">Sizes · brand primary</div>
+<div class="row"><span class="tag">xs / sm / md / lg</span>
+  <button class="btn btn-xs p-brand">xs 12/16/700</button>
+  <button class="btn btn-sm p-brand">sm 12/16/700</button>
+  <button class="btn btn-md p-brand">md 14/20/700</button>
+  <button class="btn btn-lg p-brand">lg 16/24/700</button>
+</div>
+
+<div class="section">States</div>
+<div class="row"><span class="tag">states</span>
+  <button class="btn btn-md p-brand">Default</button>
+  <button class="btn btn-md p-brand" style="background:var(--green-900)">Hover</button>
+  <button class="btn btn-md p-brand active">Active</button>
+  <button class="btn btn-md p-brand loading">Loading</button>
+  <button class="btn btn-md p-brand disabled" disabled>Disabled</button>
+  <button class="btn btn-md s-brand loading">Loading</button>
+</div>
+
+<div class="section">Icon-only · color follows variant (no stray borders)</div>
+<div class="row"><span class="tag">icon</span>
+  <button class="icon-sm s-brand"><i class="ph ph-gear"></i></button>
+  <button class="icon-md s-brand"><i class="ph ph-gear"></i></button>
+  <button class="icon-lg s-brand"><i class="ph ph-gear"></i></button>
+  <button class="icon-md p-brand"><i class="ph ph-plus" style="color:#fff"></i></button>
+  <button class="icon-md p-magic"><i class="ph ph-magic-wand" style="color:#fff"></i></button>
+  <button class="icon-md g-brand"><i class="ph ph-dots-three"></i></button>
+  <button class="icon-md g-destr"><i class="ph ph-trash"></i></button>
+</div>
+
+<div class="section">Block (full-width)</div>
+<div style="max-width:320px;display:flex;flex-direction:column;gap:6px">
+  <button class="btn btn-md p-brand" style="width:100%">Continue</button>
+  <button class="btn btn-md s-brand" style="width:100%">Back</button>
+</div>
+
+</body></html>

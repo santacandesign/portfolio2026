@@ -1,0 +1,455 @@
+<!-- oxlint-disable no-restricted-syntax -- raw px kept intentionally, all multiples of 4 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Ema — Talent Sourcing Prototype</title>
+<link rel="stylesheet" href="../Ema App Design System/colors_and_type.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+*{box-sizing:border-box}
+:root{--app-background:#FFFFFF}
+html,body{margin:0;padding:0;background:var(--app-background);font-family:var(--app-font-family);color:var(--fg1);-webkit-font-smoothing:antialiased}
+a{color:var(--brand-primary);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible,[role="button"]:focus-visible{outline:none;box-shadow:var(--shadow-focus);border-color:var(--green-500)!important}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.nav{height:56px;background:var(--white);border-bottom:1px solid var(--beige-400);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:30}
+.nav-left{display:flex;align-items:center;gap:12px}
+.logo{width:32px;height:32px;border-radius:8px;background:var(--green-800);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px}
+.nav-title{font-weight:700;font-size:14px}
+.nav-sub{font-size:12px;color:var(--beige-930)}
+.wizard-wrap{background:var(--white);border-bottom:1px solid var(--beige-400);padding:0;position:sticky;top:0;z-index:30;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);box-sizing:border-box;display:flex;justify-content:center}
+
+.step-row{display:flex;align-items:center;justify-content:space-between;gap:0;width:100%;max-width:none;padding:14px 0 12px;box-sizing:border-box}
+.step-item{display:flex;align-items:center;gap:8px;cursor:pointer;flex:0 0 auto;justify-content:center;padding:4px 8px;border-radius:8px;text-align:center}
+.step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;border:1.5px solid var(--beige-400);background:var(--white);color:var(--fg1)}
+.step-dot.done{background:var(--green-800);color:#fff;border-color:var(--green-800)}
+.step-dot.active{background:var(--green-800);color:#fff;border-color:var(--green-800)}
+.step-dot.pending{background:var(--white);color:var(--beige-800);border-color:var(--beige-400)}
+.step-label{font-size:13px;font-weight:700;color:var(--fg1);text-align:center;white-space:nowrap}
+.step-desc{font-size:11px;color:var(--beige-930)}
+.step-sep{height:1px;background:var(--beige-300);width:32px;flex:0 0 32px;margin:0}
+.step-item.pending{opacity:.7}
+.step-item.active .step-label{color:var(--green-900)}
+.step-item.done .step-label{color:var(--green-900)}
+.filter-bar{position:sticky;top:48px;z-index:20;background:var(--white);;border-bottom:1px solid var(--beige-400);padding:12px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.filter-scroll::-webkit-scrollbar{display:none}
+.filter-bar .meta{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--beige-930)}
+.pill{height:28px;border:1.5px solid var(--beige-400);background:var(--white);color:var(--fg1);border-radius:999px;padding:0 12px;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500}
+.pill .x{width:20px;height:20px;border-radius:50%;background:var(--beige-100);display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;border:1px solid transparent}
+.pill.pick{background:var(--green-50);border-color:var(--green-600);color:var(--green-900)}
+.count{margin-left:auto;font-size:12px;color:var(--fg2);background:var(--white);border:1px solid var(--beige-300);border-radius:999px;padding:6px 12px}
+.page{max-width:1080px;margin:0 auto;padding:20px 20px 120px}
+.tier{margin:20px 0}
+.tier-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.tier-badge{font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 8px;border-radius:999px}
+.tier-badge.best{background:var(--green-800);color:#fff}
+.tier-badge.strong{background:var(--green-200);color:var(--green-960);border:1px solid var(--green-300)}
+.tier-badge.partial{background:var(--beige-200);color:var(--beige-930);border:1px solid var(--beige-300)}
+.tier-title{font-size:13px;font-weight:700}
+.tier-count{font-size:12px;color:var(--beige-930)}
+.row{background:var(--white);border:1px solid var(--beige-300);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:border-color .15s,box-shadow .15s;cursor:pointer}
+#pageRanked .row{flex-direction:row;align-items:center;gap:12px;padding:0 12px;height:48px;min-height:48px;border:none;border-bottom:1px solid var(--beige-300);border-radius:0;margin-bottom:0;background:var(--white)}
+
+#pageRanked .row .match{margin-top:0}
+.row:hover{background:var(--beige-50)}
+.row.selected{background:var(--green-50)}
+.row.bookmarked{background:var(--green-50)}
+.cb{width:20px;height:20px;border:1.5px solid var(--beige-500);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--white);cursor:pointer}
+.cb.on{background:var(--green-800);border-color:var(--green-800);color:#fff}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--beige-200);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--beige-900);flex-shrink:0;overflow:hidden}
+.main{flex:1;min-width:0}
+.name{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.title{font-size:12px;color:var(--fg2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.source{font-size:11px;color:var(--beige-930)}
+.dot{width:8px;height:8px;border-radius:50%}
+.dot.on{background:var(--green-700)}
+.dot.off{background:var(--beige-300)}
+.badge{font-size:11px;font-weight:600;padding:4px 8px;border-radius:999px;border:1px solid var(--beige-300);background:var(--white);display:inline-flex;align-items:center;gap:4px}
+.badge.ok{border-color:var(--green-300);background:var(--green-50);color:var(--green-960)}
+.badge.warn{border-color:var(--yellow-400);background:var(--yellow-50)}
+.badge.gap{border-color:var(--red-200);background:var(--red-50);color:var(--red-960)}
+.meta-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.iconbtn{width:32px;height:32px;border-radius:8px;border:1px solid var(--beige-400);background:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.iconbtn:hover{background:var(--beige-100)}
+.iconbtn.active{background:var(--green-800);color:#fff;border-color:var(--green-800)}
+.btn{height:32px;padding:0 16px;border-radius:8px;border:1px solid var(--beige-400);background:var(--white);font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--green-800);color:#fff;border-color:var(--green-800)}
+.btn-primary:hover{background:var(--green-900)}
+.btn:disabled{opacity:.5;pointer-events:none}
+/* Drawer 480px = 4*120, padding 16/20 multiples of 4 */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:480px;max-width:92vw;height:100vh;max-height:100vh;background:var(--white);border-left:1px solid var(--beige-400);box-shadow:var(--shadow-xl);transform:translateX(100%);transition:transform .4s var(--ease-out-quint);z-index:45;display:flex;flex-direction:column;overflow:hidden}
+.drawer.open{transform:translateX(0)}
+.drawer-head{padding:16px 20px;border-bottom:1px solid var(--beige-300);display:flex;align-items:center;gap:12px}
+.drawer-body{padding:20px;overflow-y:auto;overflow-x:hidden;flex:1;min-height:0;display:flex;flex-direction:column;gap:16px}
+.link-row{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--beige-300);border-radius:8px;background:var(--white);text-decoration:none;color:inherit}
+.link-row:hover{background:#F2F5F9;text-decoration:none}
+.snap{border:1px solid var(--beige-300);border-radius:12px;overflow:hidden;background:var(--white)}
+.snap-head{padding:12px 16px;border-bottom:1px solid var(--beige-300);font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--fg3);display:flex;align-items:center;gap:8px}
+.snap-body{padding:16px;display:flex;flex-direction:column;gap:12px}
+.thumb{height:96px;border-radius:8px;background:var(--beige-100);border:1px solid var(--beige-300);display:flex;align-items:center;justify-content:center;color:var(--fg3);font-size:12px;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.compare-bar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:transparent;pointer-events:none;transform:translateY(100%);transition:transform .35s var(--ease-out-quint);padding:0}
+.compare-bar.open{transform:translateY(0);pointer-events:auto}
+.compare-bar.open .compare-expanded{opacity:1;transform:translateY(0)}
+.compare-collapsed{height:56px;display:flex;align-items:center;gap:12px;padding:0 16px;cursor:pointer;background:var(--white);border:1px solid var(--beige-300);border-radius:12px;box-shadow:var(--shadow-md);pointer-events:auto;margin:16px}
+.handle{width:36px;height:4px;border-radius:999px;background:var(--beige-400);margin:0 auto;position:absolute;top:8px;left:50%;transform:translateX(-50%)}
+.compare-expanded{max-height:62vh;overflow-y:auto;overflow-x:hidden;background:var(--white);border:1px solid var(--beige-300);border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,0.14);margin:16px;padding:20px;pointer-events:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;opacity:0;transform:translateY(16px);transition:opacity .3s var(--ease-out-quint), transform .3s var(--ease-out-quint)}
+.sim{background:var(--purple-50);border:1px solid var(--purple-300);border-radius:8px;padding:12px;font-size:12px}
+.diff-table{width:100%;border-collapse:collapse;font-size:13px;background:var(--white);border:none;border-radius:0}
+.diff-table th{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--fg3);text-align:left;padding:8px;border-bottom:1px solid var(--beige-300)}
+.diff-table td{padding:16px;border-bottom:1px solid var(--beige-200);vertical-align:top}
+.diff-table .hl{background:var(--yellow-50)}
+.usp{font-size:12px;background:var(--white);border:1px solid var(--beige-300);border-radius:8px;padding:8px}
+.source{font-size:11px;color:var(--fg3)}
+
+.best-card{background:linear-gradient(135deg,#D1FAE5 0%,#A7F3D0 30%,#FEF3C7 75%,#FDE68A 100%);border:1px solid var(--green-300);border-radius:16px;padding:20px;color:var(--fg1);box-shadow:0 4px 16px rgba(31,136,68,0.08);margin-bottom:24px;position:relative;overflow:hidden}
+.best-card::before{content:'';position:absolute;top:-30%;right:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(31,136,68,0.06) 0%,transparent 70%);pointer-events:none}
+.best-card-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.best-card-title{font-size:13px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--fg1);display:flex;align-items:center;gap:8px}
+.best-card-count{font-size:12px;color:var(--beige-930);background:var(--white);padding:4px 10px;border-radius:999px;border:1px solid var(--beige-300)}
+.best-card-grid{display:flex;flex-direction:column;gap:10px}
+.best-card .row{background:var(--white);color:var(--fg1)}
+.best-card .row .source{color:var(--beige-930)}
+.match-pill{font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:4px;letter-spacing:0.2px;color:#fff}
+.match-pill.high{background:linear-gradient(135deg,var(--green-700) 0%,var(--green-900) 100%);color:#fff;box-shadow:0 1px 4px rgba(0,0,0,0.15)}
+.match-pill.mid{background:linear-gradient(135deg,#F59E0B 0%,#B45309 100%);color:#fff;box-shadow:0 1px 4px rgba(180,83,9,0.25)}
+.match-pill.low{background:var(--beige-100);color:var(--beige-800);border:1px solid var(--beige-300)}
+
+.table-head{display:flex;align-items:center;gap:12px;padding:0 12px;height:32px;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--beige-800);border-bottom:1px solid var(--beige-300);margin-bottom:8px}
+.table-head span{white-space:nowrap}
+.shortlist-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:860px){.shortlist-grid{grid-template-columns:1fr}.drawer{width:100%}}
+.s-card{background:var(--white);border:1px solid var(--beige-300);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.s-card .head{display:flex;gap:12px;align-items:center}
+.note{width:100%;border:1px solid var(--beige-400);border-radius:8px;padding:8px 12px;font-size:13px;background:var(--white);min-height:36px}
+.note:focus{outline:none;border-color:var(--green-500);box-shadow:var(--shadow-focus)}
+.empty{border:1.5px dashed var(--beige-400);border-radius:12px;padding:32px;text-align:center;background:var(--white)}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%);background:var(--beige-960);color:#fff;padding:12px 16px;border-radius:999px;font-size:13px;box-shadow:var(--shadow-lg);z-index:60;display:none}
+.overlay{position:fixed;inset:0;background:rgba(35,33,25,.32);z-index:44;display:none}
+.overlay.show{display:block}
+@media (max-width:640px){.step-row{gap:4px}.step-label{font-size:11px}.step-dot{width:24px;height:24px;font-size:11px}.step-sep{width:16px;flex:0 0 16px}}
+@media (min-width:640px){.step-row{justify-content:space-between;padding:14px 0 12px}.step-item{flex:1 1 0}.step-sep{flex:1 1 0;width:auto}}
+
+
+</style>
+</head>
+<body>
+<a href="#main" class="sr-only">Skip to content</a>
+
+<div class="wizard-wrap" role="navigation" aria-label="Progress" style="position:sticky;top:0;z-index:30">
+  <div class="step-row" id="wizard" style="max-width:960px">
+    <div class="step-item done" data-step="1" aria-label="Step 1 Describe the role" style="cursor:default;opacity:1"><div class="step-dot done" aria-hidden="true">✓</div><div><div class="step-label" style="color:var(--green-900)">Describe the role</div></div></div>
+    <div class="step-sep" aria-hidden="true"></div>
+    <div class="step-item active" data-step="2" role="button" tabindex="0" aria-current="step" aria-label="Step 2 Shortlist Candidates"><div class="step-dot active" aria-hidden="true">2</div><div><div class="step-label">Shortlist Candidates</div></div></div>
+    <div class="step-sep" aria-hidden="true"></div>
+    <div class="step-item pending" data-step="3" role="button" tabindex="0" aria-label="Step 3 Send to recruiter"><div class="step-dot pending" id="dot3" aria-hidden="true">3</div><div><div class="step-label">Send to recruiter</div></div></div>
+    <div class="step-sep" aria-hidden="true"></div>
+    <div class="step-item pending" data-step="4" role="button" tabindex="0" aria-label="Step 4 Candidate tracker"><div class="step-dot pending" id="dot4" aria-hidden="true">4</div><div><div class="step-label">Candidate tracker</div></div></div>
+  </div>
+  <div class="progress-track" aria-hidden="true" style="position:absolute;left:0;right:0;top:0;height:4px;background:var(--beige-300);width:100%"><div class="progress-fill" id="progressFill" style="width:33%;height:100%;background:var(--green-800);transition:width .35s var(--ease-out-quint)"></div></div>
+</div>
+
+<div class="filter-bar" id="filterBar" aria-label="Active filters" style="background:var(--white);position:sticky;top:44px;z-index:20;border-bottom:1px solid var(--beige-400);padding:12px 0 12px 20px;display:flex;align-items:center;gap:0">
+  <div class="filter-scroll" style="display:flex;align-items:center;gap:8px;overflow-x:auto;flex:1;white-space:nowrap;scrollbar-width:none;padding-right:12px">
+  <span class="meta">Filters from JD</span>
+  <button class="pill pick" aria-pressed="true" title="Selected — click to deselect" onclick="const h=!this.classList.contains('pick');this.classList.toggle('pick');this.setAttribute('aria-pressed',this.classList.contains('pick'));if(this.classList.contains('pick')){if(!this.querySelector('.ph-check'))this.insertAdjacentHTML('afterbegin','<i class=\'ph ph-check\' aria-hidden=\'true\'></i> ')}else{const i=this.querySelector('.ph-check');if(i)i.remove()}"><i class="ph ph-check" aria-hidden="true"></i> Must: Figma</button>
+  <button class="pill pick" aria-pressed="true" title="Selected — click to deselect" onclick="const h=!this.classList.contains('pick');this.classList.toggle('pick');this.setAttribute('aria-pressed',this.classList.contains('pick'));if(this.classList.contains('pick')){if(!this.querySelector('.ph-check'))this.insertAdjacentHTML('afterbegin','<i class=\'ph ph-check\' aria-hidden=\'true\'></i> ')}else{const i=this.querySelector('.ph-check');if(i)i.remove()}"><i class="ph ph-check" aria-hidden="true"></i> Must: Design Systems</button>
+  <button class="pill pick" aria-pressed="true" title="Selected — click to deselect" onclick="const h=!this.classList.contains('pick');this.classList.toggle('pick');this.setAttribute('aria-pressed',this.classList.contains('pick'));if(this.classList.contains('pick')){if(!this.querySelector('.ph-check'))this.insertAdjacentHTML('afterbegin','<i class=\'ph ph-check\' aria-hidden=\'true\'></i> ')}else{const i=this.querySelector('.ph-check');if(i)i.remove()}"><i class="ph ph-check" aria-hidden="true"></i> Must: Prototyping</button>
+  <button class="pill" aria-pressed="false" title="Unselected — click to select" onclick="const h=this.classList.toggle('pick');this.setAttribute('aria-pressed',h);if(h){if(!this.querySelector('.ph-check'))this.insertAdjacentHTML('afterbegin','<i class=\'ph ph-check\' aria-hidden=\'true\'></i> ')}else{const i=this.querySelector('.ph-check');if(i)i.remove()}">Role: Senior Product Designer</button>
+  <button class="pill" aria-pressed="false" title="Unselected — click to select" onclick="const h=this.classList.toggle('pick');this.setAttribute('aria-pressed',h);if(h){if(!this.querySelector('.ph-check'))this.insertAdjacentHTML('afterbegin','<i class=\'ph ph-check\' aria-hidden=\'true\'></i> ')}else{const i=this.querySelector('.ph-check');if(i)i.remove()}">Years: 5–8</button>
+  <button class="pill" aria-pressed="false" title="Unselected — click to select" onclick="const h=this.classList.toggle('pick');this.setAttribute('aria-pressed',h);if(h){if(!this.querySelector('.ph-check'))this.insertAdjacentHTML('afterbegin','<i class=\'ph ph-check\' aria-hidden=\'true\'></i> ')}else{const i=this.querySelector('.ph-check');if(i)i.remove()}">Location: Remote</button>
+  </div>
+  <div class="filter-add" style="position:sticky;right:0;background:var(--white);padding:0 20px 0 12px;display:flex;align-items:center;box-shadow:-8px 0 12px rgba(255,255,255,0.9)">
+  <button class="pill" style="border-style:dashed;background:var(--white)" aria-label="Add filter"><i class="ph ph-plus" aria-hidden="true"></i> Add filter</button>
+  </div>
+</div>
+
+<main id="main" class="page" aria-live="polite">
+<section id="pageRanked" aria-label="Ranked applicants">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <span style="font-size:13px;color:var(--fg1);font-weight:500" id="showingCount">Showing all 212 applicants</span>
+    <button class="pill" aria-label="Sort" style="background:var(--white)"><i class="ph ph-arrows-down-up" aria-hidden="true"></i> Sort: Best match</button>
+  </div>
+  <div id="tiers"></div>
+  <div id="noResults" class="empty" style="display:none" role="status">
+    <div style="font-weight:700;margin-bottom:8px">No Best match for this filter</div>
+    <div style="font-size:13px;color:var(--beige-930);margin-bottom:12px">Try broadening <b>Years</b> or removing <b>Prototyping</b> must-have.</div>
+    <button class="btn" onclick="document.querySelectorAll('.pill .x')[2].click()">Clear React filter</button>
+  </div>
+  <p style="font-size:11px;color:var(--beige-930);text-align:center;margin-top:16px">Tip: Click a row to view LinkedIn, GitHub and portfolio snapshots. Check 2–3 to compare. Heart to shortlist.</p>
+</section>
+<section id="pageShortlist" style="display:none" aria-label="Bookmarks">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <h2 style="margin:0;font-size:20px">Send to recruiter</h2>
+    <button class="btn" onclick="go(1)"><i class="ph ph-arrow-left" aria-hidden="true"></i> Back to ranked</button>
+  </div>
+  <div id="shortlistGrid" class="shortlist-grid" style="padding-bottom:80px"></div>
+  <div id="shortlistEmpty" class="empty" role="status">
+    <div style="font-weight:700;margin-bottom:8px">No bookmarked candidates yet</div>
+    <div style="font-size:13px;color:var(--fg3);margin-bottom:12px">Bookmarks from Ranked list — use heart or Compare → Bookmarks.</div>
+    <button class="btn btn-primary" onclick="go(1)">Go to ranked list</button>
+  </div>
+  <div id="handoffBar" style="display:none;position:fixed;left:16px;right:16px;bottom:16px;background:var(--white);border:1px solid var(--beige-300);border-radius:12px;box-shadow:var(--shadow-lg);padding:12px 16px;align-items:center;justify-content:space-between;gap:12px;z-index:30">
+    <div style="font-weight:700" id="handoffText">Pass on 0 profiles to recruiter</div>
+    <button class="btn btn-primary" id="passBtn" onclick="passToRecruiter()"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i> Send</button>
+  </div>
+</section>
+<div id="bookmarkBar" style="position:fixed;left:16px;right:16px;bottom:16px;background:var(--white);border:1px solid var(--beige-300);border-radius:12px;box-shadow:var(--shadow-lg);padding:12px 16px;display:none;align-items:center;gap:12px;z-index:31"><div style="font-weight:700;font-size:13px" id="bookmarkCount">0 shortlisted</div><button class="btn btn-primary" style="margin-left:auto" onclick="go(3)">Next →</button></div>
+
+<section id="pageHandoff" style="display:none" aria-label="Handoff tracker">
+  <div class="empty" id="handoffEmpty" role="status">
+    <div style="font-weight:700;margin-bottom:8px">No handoff yet</div>
+    <div style="font-size:13px;color:var(--fg3)">Pass candidates from Bookmarks to see recruiter progress here.</div>
+  </div>
+  <div id="handoffList" style="display:none">
+    <h2 style="margin:0 0 16px;font-size:20px">Handoff tracker · <span id="handoffN" style="color:var(--fg3);font-weight:500"></span></h2>
+    <div id="trackerRows"></div>
+  </div>
+</section>
+</main>
+
+<!-- Right Drawer: Link snapshots -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Candidate details" aria-hidden="true">
+  <div class="drawer-head" style="padding:16px 20px;border-bottom:1px solid var(--beige-300);display:flex;align-items:center;gap:12px">
+    <div class="avatar" id="dAvatar" aria-hidden="true" style="width:40px;height:40px"><img src="https://i.pravatar.cc/150?img=5" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+    <div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:8px;justify-content:space-between" id="dName">Name</div><div id="dRole" style="font-size:12px;color:var(--beige-930)"></div></div>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+</aside>
+
+<!-- Compare bottom drawer -->
+<div class="compare-bar" id="compareBar" role="region" aria-label="Compare">
+  <div class="handle" aria-hidden="true"></div>
+  <div class="compare-collapsed" id="compareCollapsed" onclick="toggleCompare()" role="button" tabindex="0" aria-label="Toggle compare details">
+    <div style="font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px"><i class="ph ph-scales" aria-hidden="true"></i> Compare <span id="compareCount">0</span>/3</div>
+    <div id="compareChips" style="display:flex;gap:8px"></div>
+    <div style="margin-left:auto;display:flex;gap:8px">
+      <button class="btn" onclick="event.stopPropagation();clearCompare()" aria-label="Clear compare">Clear</button>
+      <button class="btn btn-primary" aria-hidden="true"><span id="expandLabel">Expand ↑</span></button>
+    </div>
+  </div>
+  <div class="compare-expanded" id="compareExpanded" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div style="font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px"><i class="ph ph-scales" aria-hidden="true"></i> Compare <span id="compareCount2">0</span>/3</div>
+      <div style="display:flex;gap:8px"><button class="btn" onclick="clearCompare()" aria-label="Clear">Clear</button><button class="btn" onclick="toggleCompare()" aria-label="Collapse"><i class="ph ph-caret-down" aria-hidden="true"></i> Collapse</button></div>
+    </div>
+    <div id="compareTableWrap"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const candidates=[
+{id:1,score:96,name:"Priya Nair",role:"Senior Product Designer",company:"Razorpay",tenure:"3y · Design Systems lead",applied:"Applied 1d ago",loc:"Bengaluru · Remote",avatar:"PN",avatarUrl:"https://i.pravatar.cc/150?img=5",best:true,skills:{react:4,ds:5,webgl:0,scope:5},usp:"Led tokens + 40→120 eng adoption",gap:"No motion — nice-to-have",src:"Portfolio case study + Figma files",links:{linkedin:"https://linkedin.com/in/priya-nair",github:"https://github.com/priyanair",portfolio:"https://priya.design"}, gh:{repos:42,lang:"Figma 68% · Tokens 22%",stars:"1.2k views"}, portfolioImgs:["Tokens case study","Component audit","Migration story"]},
+{id:2,score:94,name:"Alex Chen",role:"Product Designer",company:"Figma",tenure:"2y · Prototyping & systems",applied:"Applied 3d ago",loc:"Berlin · Remote",avatar:"AC",avatarUrl:"https://i.pravatar.cc/150?img=8",best:true,skills:{react:3,ds:4,webgl:4,scope:4},usp:"Figma plugins + prototype systems",gap:"Mid-scope vs Senior ask",src:"Portfolio + Figma community",links:{linkedin:"https://linkedin.com/in/alexchen",github:"https://github.com/alexchen",portfolio:"https://alexchen.design"}, gh:{repos:31,lang:"Figma 54% · Proto 21%",stars:"890"}, portfolioImgs:["Figma plugin","Interactive prototype","Theming spec"]},
+{id:3,score:95,name:"Maya Patel",role:"Staff Product Designer",company:"Linear",tenure:"5y · Design + systems",applied:"Applied 2d ago",loc:"London · Hybrid",avatar:"MP",avatarUrl:"https://i.pravatar.cc/150?img=9",best:true,skills:{react:4,ds:5,webgl:1,scope:3},usp:"Strongest portfolio depth — Linear craft",gap:"Slightly IC-heavy",src:"Portfolio · Figma files",links:{linkedin:"https://linkedin.com/in/mayapatel",github:"https://github.com/mayapatel",portfolio:"https://maya-patel.com"}, gh:{repos:18,lang:"Figma 62% · Framer 28%",stars:"340"}, portfolioImgs:["Design system audit","App redesign","Component library"]},
+{id:4,score:93,name:"Jonah Kim",role:"Staff Designer",company:"Stripe",tenure:"4y · Platform design",applied:"Applied 5d ago",loc:"Remote · US",avatar:"JK",avatarUrl:"https://i.pravatar.cc/150?img=12",best:true,skills:{react:5,ds:4,webgl:2,scope:5},usp:"Stripe scale — design at 10M users",gap:"Heavy platform, light brand",src:"Case studies",links:{linkedin:"https://linkedin.com/in/jonahkim",github:"https://github.com/jonahkim",portfolio:"https://jonahkim.design"}, gh:{repos:57,lang:"Figma 71% · Systems 12%",stars:"2.4k"}, portfolioImgs:["Dashboard redesign","Scale story","Design ops"]},
+{id:5,score:71,name:"Sara Lopez",role:"Product Design Lead",company:"Monzo",tenure:"2y · Design ops",applied:"Applied 4d ago",loc:"Bristol · Remote",avatar:"SL",avatarUrl:"https://i.pravatar.cc/150?img=16",best:false,skills:{react:4,ds:3,webgl:0,scope:4},usp:"Lead + ops strength",gap:"Short tenure 1.2y",src:"Portfolio",links:{linkedin:"https://linkedin.com/in/saralopez",github:"https://github.com/saralopez",portfolio:"https://saralopez.design"}, gh:{repos:22,lang:"Figma 58% · Miro 30%",stars:"410"}, portfolioImgs:["Monzo DS","Ops playbook","Research synthesis"]},
+{id:6,score:86,name:"Daniel Wu",role:"Product Designer",company:"Linear",tenure:"3y · Systems & brand",applied:"Applied 6d ago",loc:"Paris · Remote",avatar:"DW",avatarUrl:"https://i.pravatar.cc/150?img=15",best:false,skills:{react:4,ds:4,webgl:0,scope:3},usp:"Linear pedigree — craft",gap:"No Staff scope yet",src:"Portfolio",links:{linkedin:"https://linkedin.com/in/danielwu",github:"https://github.com/danielwu",portfolio:"https://danielwu.design"}, gh:{repos:29,lang:"Figma 66% · Brand 19%",stars:"760"}, portfolioImgs:["Linear components","Brand system","Motion spec"]},
+{id:7,score:68,name:"Anika Rao",role:"Product Designer",company:"CRED",tenure:"2y · Systems",applied:"Applied 7d ago",loc:"Mumbai · On-site",avatar:"AR",avatarUrl:"https://i.pravatar.cc/150?img=26",best:false,skills:{react:3,ds:3,webgl:0,scope:2},usp:"CRED craft — high bar",gap:"Seniority light",src:"Portfolio",links:{linkedin:"https://linkedin.com/in/anikarao",github:"https://github.com/anikarao",portfolio:"https://anikarao.design"}, gh:{repos:15,lang:"Figma 72% · Principle 18%",stars:"210"}, portfolioImgs:["CRED rewards","Micro-interactions","Design hand-off"]},
+{id:8,score:88,name:"Tom Becker",role:"Staff Product Designer",company:"Shopify",tenure:"3y · Polaris DS",applied:"Applied 2d ago",loc:"Toronto · Remote",avatar:"TB",avatarUrl:"https://i.pravatar.cc/150?img=33",best:false,skills:{react:4,ds:5,webgl:0,scope:5},usp:"Polaris — exact DS match",gap:"Timezone",src:"Portfolio + Polaris docs",links:{linkedin:"https://linkedin.com/in/tombecker",github:"https://github.com/tombecker",portfolio:"https://tombecker.design"}, gh:{repos:38,lang:"Figma 64% · Tokens 15%",stars:"1.1k"}, portfolioImgs:["Polaris tokens","A11y audit","Docs site"]},
+{id:9,score:91,name:"Riya Sharma",role:"Senior Product Designer",company:"Figma",tenure:"4y · Systems",applied:"Applied 3d ago",loc:"Bengaluru · Remote",avatar:"RS",avatarUrl:"https://i.pravatar.cc/150?img=32",best:true,skills:{react:5,ds:4,webgl:1,scope:4},usp:"Figma community plugins",gap:"Slight brand gap",src:"Figma files",links:{linkedin:"https://linkedin.com/in/riyasharma",github:"https://github.com/riyasharma",portfolio:"https://riyasharma.design"}, gh:{repos:27,lang:"Figma 70% · Proto 20%",stars:"980"}, portfolioImgs:["Plugin system","Auto-layout","Tokens"]},
+{id:10,score:79,name:"Kenji Tanaka",role:"Product Designer",company:"Linear",tenure:"3y · Brand",applied:"Applied 5d ago",loc:"Tokyo · Remote",avatar:"KT",avatarUrl:"https://i.pravatar.cc/150?img=14",best:false,skills:{react:3,ds:3,webgl:2,scope:3},usp:"Brand + product blend",gap:"DS depth light",src:"Portfolio",links:{linkedin:"https://linkedin.com/in/kenjitanaka",github:"https://github.com/kenjitanaka",portfolio:"https://kenjitanaka.design"}, gh:{repos:21,lang:"Figma 60% · Brand 25%",stars:"420"}, portfolioImgs:["Brand refresh","Design tokens","Motion"]},
+{id:11,score:85,name:"Elena Rossi",role:"Product Designer",company:"Spotify",tenure:"3y · Design ops",applied:"Applied 4d ago",loc:"Berlin · Remote",avatar:"ER",avatarUrl:"https://i.pravatar.cc/150?img=23",best:false,skills:{react:4,ds:4,webgl:1,scope:3},usp:"Ops at scale",gap:"Proto gap",src:"Case study",links:{linkedin:"https://linkedin.com/in/elenarossi",github:"https://github.com/elenarossi",portfolio:"https://elenarossi.design"}, gh:{repos:24,lang:"Figma 62% · Ops 20%",stars:"560"}, portfolioImgs:["Ops handbook","Research wall","Handoff"]},
+{id:12,score:74,name:"Omar Khan",role:"Product Designer",company:"Swiggy",tenure:"2y · Systems",applied:"Applied 6d ago",loc:"Mumbai · Remote",avatar:"OK",avatarUrl:"https://i.pravatar.cc/150?img=18",best:false,skills:{react:3,ds:3,webgl:1,scope:2},usp:"High-velocity startup",gap:"Seniority light",src:"Portfolio",links:{linkedin:"https://linkedin.com/in/omarkhan",github:"https://github.com/omarkhan",portfolio:"https://omarkhan.design"}, gh:{repos:19,lang:"Figma 65% · Proto 15%",stars:"310"}, portfolioImgs:["Swiggy DS","Checkout flow","Illustrations"]},
+{id:13,score:90,name:"Sofia Lee",role:"Staff Product Designer",company:"Notion",tenure:"4y · Systems",applied:"Applied 2d ago",loc:"Paris · Remote",avatar:"SL2",avatarUrl:"https://i.pravatar.cc/150?img=27",best:true,skills:{react:5,ds:5,webgl:1,scope:5},usp:"Notion systems scale",gap:"Proto light",src:"Portfolio",links:{linkedin:"https://linkedin.com/in/sofialee",github:"https://github.com/sofialee",portfolio:"https://sofialee.design"}, gh:{repos:33,lang:"Figma 68% · Systems 20%",stars:"1.3k"}, portfolioImgs:["Notion DS","Templates","Collaboration"]},
+{id:14,score:82,name:"Marcus Cole",role:"Product Designer",company:"Coinbase",tenure:"3y · Platform",applied:"Applied 5d ago",loc:"Remote · US",avatar:"MC",avatarUrl:"https://i.pravatar.cc/150?img=11",best:false,skills:{react:4,ds:3,webgl:2,scope:4},usp:"Crypto platform craft",gap:"DS gap",src:"Case studies",links:{linkedin:"https://linkedin.com/in/marcuscole",github:"https://github.com/marcuscole",portfolio:"https://marcuscole.design"}, gh:{repos:26,lang:"Figma 60% · Web3 20%",stars:"610"}, portfolioImgs:["Wallet flow","Design system","Onboarding"]},
+{id:15,score:69,name:"Aisha Patel",role:"Product Designer",company:"Zomato",tenure:"2y · Product",applied:"Applied 7d ago",loc:"Delhi · Remote",avatar:"AP",avatarUrl:"https://i.pravatar.cc/150?img=31",best:false,skills:{react:3,ds:2,webgl:1,scope:2},usp:"Consumer scale",gap:"Systems gap",src:"Portfolio",links:{linkedin:"https://linkedin.com/in/aishapatel",github:"https://github.com/aishapatel",portfolio:"https://aishapatel.design"}, gh:{repos:16,lang:"Figma 58% · Research 20%",stars:"280"}, portfolioImgs:["Zomato app","Menu design","Research"]},
+{id:16,score:87,name:"Lucas Meyer",role:"Senior Product Designer",company:"Framer",tenure:"3y · Prototyping",applied:"Applied 3d ago",loc:"Amsterdam · Remote",avatar:"LM",avatarUrl:"https://i.pravatar.cc/150?img=20",best:false,skills:{react:4,ds:4,webgl:3,scope:4},usp:"Framer prototyping expert",gap:"DS scale light",src:"Portfolio + Framer",links:{linkedin:"https://linkedin.com/in/lucasmeyer",github:"https://github.com/lucasmeyer",portfolio:"https://lucasmeyer.design"}, gh:{repos:30,lang:"Framer 55% · Figma 30%",stars:"890"}, portfolioImgs:["Framer motion","Interactive proto","Code override"]},
+];
+let selected=new Set(), bookmarked=new Set(), expanded=false;
+function dotRow(v){ let h=''; for(let i=0;i<5;i++) h+=`<span class="dot ${i<v?'on':'off'}" aria-hidden="true"></span>`; return `<span style="display:inline-flex;gap:4px" aria-label="${v} out of 5">${h}</span>` }
+function rowHTML(c){
+  const sel=selected.has(c.id), sl=bookmarked.has(c.id);
+  return `<div class="row ${sel?'selected':''} ${sl?'bookmarked':''}" role="button" tabindex="0" aria-label="View ${c.name}, ${c.role}" onclick="openDrawer(${c.id})" onkeydown="if(event.key==='Enter')openDrawer(${c.id})" style="display:flex;align-items:center;gap:12px;padding:0 12px;height:48px">
+    <button class="cb ${sel?'on':''}" aria-label="${sel?'Remove from compare':'Add to compare'} ${c.name}" aria-pressed="${sel}" onclick="event.stopPropagation();toggleSelect(${c.id})" style="width:20px;height:20px">${sel?'✓':''}</button>
+    <div class="avatar" style="width:28px;height:28px;flex-shrink:0;overflow:hidden" aria-hidden="true"><img src="${c.avatarUrl}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover"></div>
+    <div style="flex:1;min-width:140px;display:flex;align-items:center;gap:6px;overflow:hidden"><span style="font-weight:700;font-size:13px;white-space:nowrap">${c.name}</span><i class="ph ph-caret-right" aria-hidden="true" style="color:var(--beige-800);font-size:12px;flex-shrink:0"></i></div>
+    <span style="width:50px;text-align:center;font-size:12px;color:var(--fg1);flex-shrink:0">${c.tenure.split('·')[0].trim()}</span>
+    <span style="flex:1;min-width:140px;font-size:12px;color:var(--fg2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.company} · ${c.role}</span>
+    <span style="width:60px;text-align:center;flex-shrink:0"><i class="ph ${c.skills.react>=3?'ph-check':'ph-x'}" aria-hidden="true" style="color:${c.skills.react>=3?'var(--fg1)':'var(--fg1)'}";font-size:14px;font-weight:700"></i></span>
+    <span style="width:60px;text-align:center;flex-shrink:0"><i class="ph ${c.skills.ds>=3?'ph-check':'ph-x'}" aria-hidden="true" style="color:${c.skills.ds>=3?'var(--fg1)':'var(--fg1)'}";font-size:14px;font-weight:700"></i></span>
+    <span style="width:60px;text-align:center;flex-shrink:0"><i class="ph ${c.skills.webgl>=2?'ph-check':'ph-x'}" aria-hidden="true" style="color:${c.skills.webgl>=2?'var(--fg1)':'var(--fg1)'}";font-size:14px;font-weight:700"></i></span>
+    <span style="width:80px;display:flex;justify-content:center;flex-shrink:0"><span class="match-pill ${c.score>=75?'high':c.score>=50?'mid':'low'}" style="font-size:10px;padding:2px 8px">${c.score}%</span></span>
+    <button class="iconbtn ${sl?'active':''}" aria-label="${sl?'Remove bookmark':'Bookmark'} ${c.name}" aria-pressed="${sl}" onclick="event.stopPropagation();toggleBookmarks(${c.id})" style="margin-left:0;width:32px;height:32px;flex-shrink:0"><i class="ph ${sl?'ph-fill ph-bookmark':'ph ph-bookmark'}" aria-hidden="true"></i></button>
+  </div>`;
+}
+function renderTiers(){
+  const head=`<div class="table-head" aria-hidden="true" style="display:flex;align-items:center;gap:12px;padding:0 12px;height:32px;font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--beige-800);border-bottom:1px solid var(--beige-300);margin-bottom:0;border-radius:0"><span style="width:20px"></span><span style="width:28px"></span><span style="flex:1;min-width:140px">Name</span><span style="width:50px;text-align:center">YoE</span><span style="flex:1;min-width:140px">Company · Role</span><span style="width:60px;text-align:center">Figma</span><span style="width:60px;text-align:center">DS</span><span style="width:60px;text-align:center">Proto</span><span style="width:80px;text-align:center">Match</span><span style="width:32px"></span></div>`;
+  const sorted=[...candidates].sort((a,b)=>b.score-a.score);
+  document.getElementById('tiers').innerHTML=head + sorted.map(c=>rowHTML(c)).join('');
+}
+function openDrawer(id){
+  const c=candidates.find(x=>x.id===id);
+  document.getElementById('dAvatar').innerHTML=`<img src="${c.avatarUrl}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover">`;
+  document.getElementById('dName').innerHTML=`<span style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px">${c.name}<button class="iconbtn ${bookmarked.has(c.id)?'active':''}" aria-label="${bookmarked.has(c.id)?'Remove bookmark':'Bookmark'} ${c.name}" onclick="event.stopPropagation();toggleBookmarks(${c.id});openDrawer(${c.id})" style="width:28px;height:28px;flex-shrink:0"><i class="ph ${bookmarked.has(c.id)?'ph-fill ph-bookmark':'ph ph-bookmark'}" aria-hidden="true"></i></button></span><span style="display:flex;align-items:center;gap:8px"><span class="match-pill ${c.score>=75?'high':c.score>=50?'mid':'low'}" style="font-size:11px;padding:4px 10px">${c.score}% match</span><button aria-label="Close" onclick="closeDrawer()" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;cursor:pointer;color:var(--fg1)"><i class="ph ph-x" aria-hidden="true" style="font-size:16px"></i></button></span>`;
+  document.getElementById('dRole').innerHTML=`<div style="font-size:12px;color:var(--fg1);margin-top:6px">${c.tenure.split('·')[0].trim()} YoE · ${c.company} · ${c.role}</div><div style="font-size:12px;margin-top:6px"><a href="${c.links.linkedin}" target="_blank" rel="noopener" style="font-weight:700;text-decoration:underline;color:var(--fg1)">LinkedIn</a> <span style="color:var(--beige-400)">·</span> <a href="${c.links.github}" target="_blank" rel="noopener" style="font-weight:700;text-decoration:underline;color:var(--fg1)">GitHub</a> <span style="color:var(--beige-400)">·</span> <a href="${c.links.portfolio}" target="_blank" rel="noopener" style="font-weight:700;text-decoration:underline;color:var(--fg1)">Portfolio</a> <span style="color:var(--beige-400)">·</span> <a href="#" onclick="event.preventDefault();toast('Resume — coming soon')" style="font-weight:700;text-decoration:underline;color:var(--fg1)">Resume</a></div>`;
+  document.getElementById('drawerBody').innerHTML=`
+    <div style="padding:0 0 16px;border-bottom:1px solid var(--beige-300)">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--beige-800);margin-bottom:12px;display:flex;align-items:center;gap:8px"><i class="ph ph-star" aria-hidden="true"></i> Details</div>
+      <div style="background:var(--green-50);border:1px solid var(--green-200);border-radius:8px;padding:12px;margin-bottom:12px"><div style="font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--green-900);margin-bottom:4px">USP</div><div style="font-size:13px;font-weight:600">${c.usp}</div><div class="source">Source: ${c.src}</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px;margin-bottom:12px">
+        <div><div style="font-weight:700">Experience</div><div>${c.tenure} · ${c.company}</div><div class="source">${c.role}</div></div>
+        <div><div style="font-weight:700">Resume highlights</div><div>8y Product Design · Design Systems · Figma expert</div><div class="source">Resume · Updated 2w ago</div></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"><span class="badge ok"><i class="ph ph-check" aria-hidden="true"></i> Figma</span><span class="badge ok"><i class="ph ph-check" aria-hidden="true"></i> Design Systems</span><span class="badge ${c.skills.webgl>=2?'ok':'gap'}"><i class="ph ${c.skills.webgl>=2?'ph-check':'ph-x'}" aria-hidden="true"></i> Prototyping</span><span class="badge ok">Research</span><span class="badge ok">Typography</span></div>
+      <div style="font-size:12px;color:var(--fg1)"><b>Gap:</b> ${c.gap}</div>
+    </div>
+    <div style="padding:16px 0;border-bottom:1px solid var(--beige-300)">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--beige-800);margin-bottom:12px;display:flex;align-items:center;gap:8px"><i class="ph ph-images" aria-hidden="true"></i> Portfolio — 3 case studies</div>
+      <div class="snap-body" style="display:grid;grid-template-columns:1fr;gap:12px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+          <div style="background:var(--white);border:1px solid var(--beige-300);border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06)"><img src="https://images.unsplash.com/photo-1558655146-d09347e92766?w=360&h=220&fit=crop&crop=center" alt="${c.portfolioImgs[0]}" onerror="this.src='https://picsum.photos/seed/a1/360/220'" style="width:100%;height:120px;object-fit:cover"><div style="padding:8px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px"><i class="ph ph-device-mobile" aria-hidden="true"></i> ${c.portfolioImgs[0]}</div></div>
+          <div style="background:var(--white);border:1px solid var(--beige-300);border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06)"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=360&h=220&fit=crop&crop=center" alt="${c.portfolioImgs[1]}" onerror="this.src='https://picsum.photos/seed/b1/360/220'" style="width:100%;height:110px;object-fit:cover"><div style="padding:6px 8px;font-size:11px;font-weight:600">${c.portfolioImgs[1]}</div></div>
+          <div style="background:var(--white);border:1px solid var(--beige-300);border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06)"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=360&h=220&fit=crop&crop=center" alt="${c.portfolioImgs[2]}" onerror="this.src='https://picsum.photos/seed/c1/360/220'" style="width:100%;height:110px;object-fit:cover"><div style="padding:6px 8px;font-size:11px;font-weight:600">${c.portfolioImgs[2]}</div></div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">${c.portfolioImgs.map(img=>`<span style="background:var(--beige-100);border:1px solid var(--beige-300);border-radius:999px;padding:4px 10px;font-size:11px">${img}</span>`).join('')}</div>
+        <div style="font-size:12px"><b>USP:</b> ${c.usp} <span class="source">· ${c.src}</span></div>
+        <div style="display:flex;gap:8px;font-size:12px"><span><i class="ph ph-check" aria-hidden="true" style="color:var(--fg1)"></i> Figma</span><span><i class="ph ph-check" aria-hidden="true" style="color:var(--fg1)"></i> Design Systems</span><span><i class="ph ${c.skills.webgl>=2?'ph-check':'ph-x'}" aria-hidden="true"></i> Prototyping</span></div>
+      </div>
+    </div>
+    <div style="padding:16px 0">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--beige-800);margin-bottom:12px;display:flex;align-items:center;gap:8px"><i class="ph ph-github-logo" aria-hidden="true"></i> GitHub</div>
+      <div class="snap-body"><div style="display:flex;gap:16px;font-size:12px"><span><b>${c.gh.repos}</b> repos</span><span><b>${c.gh.stars}</b> stars</span><span>${c.gh.lang}</span></div><div style="background:var(--white);border:1px solid var(--beige-300);border-radius:8px;padding:8px"><div style="display:grid;grid-template-columns:repeat(14,1fr);gap:2px"><span style="width:100%;aspect-ratio:1;background:var(--green-800);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--beige-100);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-300);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-600);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-300);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-800);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-600);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--beige-100);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-300);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-600);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-800);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--beige-100);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-600);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--beige-100);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-300);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-800);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-300);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--beige-100);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-600);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--beige-100);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-800);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-600);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-300);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--beige-100);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-600);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-800);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-300);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-600);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-300);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--beige-100);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-800);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--beige-100);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-300);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-600);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-300);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-800);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-600);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--beige-100);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-300);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-600);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--green-800);border-radius:2px;border:1px solid var(--beige-300)"></span><span style="width:100%;aspect-ratio:1;background:var(--beige-100);border-radius:2px;border:1px solid var(--beige-300)"></span></div><div style="font-size:10px;color:var(--beige-800);margin-top:6px;display:flex;justify-content:space-between"><span>Less</span><span style="display:flex;gap:2px;align-items:center"><span style="width:10px;height:10px;background:var(--beige-100);border:1px solid var(--beige-300);border-radius:2px"></span><span style="width:10px;height:10px;background:var(--green-300);border-radius:2px"></span><span style="width:10px;height:10px;background:var(--green-600);border-radius:2px"></span><span style="width:10px;height:10px;background:var(--green-800);border-radius:2px"></span></span><span>More</span></div></div><div class="source">Source: GitHub · Updated 2 weeks ago</div></div>
+    </div>
+    <div style="position:sticky;bottom:0;background:var(--white);border-top:1px solid var(--beige-300);padding:16px 20px;margin:0 -20px -20px;display:flex;gap:8px;align-items:center">
+      <input id="drawerNote" placeholder="Add note for recruiter..." style="flex:1;height:36px;border:1px solid var(--beige-400);border-radius:8px;padding:0 12px;font-size:13px;background:var(--white)" aria-label="Note for recruiter">
+      <button class="btn btn-primary" style="height:36px" onclick="const v=document.getElementById('drawerNote').value; if(v) toast('Note saved');">Save</button>
+    </div>
+  `;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawer').setAttribute('aria-hidden','false');
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow='hidden';
+  document.documentElement.style.overflow='hidden';
+}
+function closeDrawer(){ document.getElementById('drawer').classList.remove('open'); document.getElementById('drawer').setAttribute('aria-hidden','true'); document.getElementById('overlay').classList.remove('show'); document.body.style.overflow=''; document.documentElement.style.overflow=''; }
+function toggleSelect(id){
+  if(selected.has(id)) selected.delete(id); else { if(selected.size>=3){ toast("Max 3 to compare"); return } selected.add(id); }
+  renderTiers(); updateCompare(); requestAnimationFrame(()=>go(2));
+}
+function toggleBookmarks(id){
+  if(bookmarked.has(id)) bookmarked.delete(id); else bookmarked.add(id);
+  renderTiers(); updateCompare(); requestAnimationFrame(()=>go(2)); updateWizard(); updateBookmarkBar(); if(document.getElementById('pageShortlist').style.display!=='none') renderShortlist();
+  toast(bookmarked.has(id)?"Bookmarked":"Removed bookmark");
+}
+function updateBookmarkBar(){ const bbar=document.getElementById('bookmarkBar'); const n=bookmarked.size; if(!bbar) return; const onRanked=document.getElementById('pageRanked').style.display!=='none'; if(n>0 && onRanked){ bbar.style.display='flex'; document.getElementById('bookmarkCount').textContent=`${n} shortlisted`; } else bbar.style.display='none'; }
+function updateCompare(){
+  const bar=document.getElementById('compareBar'), chips=document.getElementById('compareChips'), cnt=document.getElementById('compareCount');
+  cnt.textContent=selected.size; const c2=document.getElementById("compareCount2"); if(c2) c2.textContent=selected.size;
+  chips.innerHTML=[...selected].map(id=>{const c=candidates.find(x=>x.id===id); return `<span class="pill" style="height:24px;font-size:12px;padding:0 8px;gap:4px;display:inline-flex;align-items:center">${c.avatar} ${c.name.split(' ')[0]} <span style="display:inline-flex;align-items:center;cursor:pointer;padding:2px" aria-label="Remove ${c.name} from compare" onclick="event.stopPropagation();toggleSelect(${id})"><i class="ph ph-x" aria-hidden="true" style="font-size:12px"></i></span></span>`}).join('');
+  if(selected.size>0) bar.classList.add('open'); else {bar.classList.remove('open'); expanded=false; document.getElementById('compareExpanded').style.display='none'; document.getElementById('expandLabel').textContent='Expand ↑';}
+  if(expanded) renderCompareTable();
+  // similarities removed 
+}
+function toggleCompare(){
+  if(selected.size===0) return;
+  expanded=!expanded;
+  document.getElementById('compareExpanded').style.display=expanded?'block':'none';
+  document.getElementById('compareCollapsed').style.display=expanded?'none':'flex';
+  const c2=document.getElementById('compareCount2'); if(c2) c2.textContent=document.getElementById('compareCount').textContent;
+  if(expanded) renderCompareTable();
+}
+function clearCompare(){ selected.clear(); expanded=false; document.getElementById('compareExpanded').style.display='none'; updateCompare(); renderTiers(); }
+function renderCompareTable(){
+  const arr=[...selected].map(id=>candidates.find(c=>c.id===id));
+  let html=`<table class="diff-table"><thead><tr><th scope="col" style="width:140px">Name</th>${arr.map(c=>`<th scope="col"><div style="display:flex;align-items:center;gap:8px"><button class="iconbtn ${bookmarked.has(c.id)?'active':''}" aria-label="${bookmarked.has(c.id)?'Remove bookmark':'Bookmark'} ${c.name}" onclick="event.stopPropagation();toggleBookmarks(${c.id});renderCompareTable()" style="width:32px;height:32px;flex-shrink:0"><i class="ph ${bookmarked.has(c.id)?'ph-fill ph-bookmark':'ph ph-bookmark'}" aria-hidden="true"></i></button> <span>${c.name}</span> <span class="match-pill ${c.score>=75?'high':c.score>=50?'mid':'low'}" style="font-size:10px;padding:2px 8px">${c.score}%</span><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--beige-930);font-size:12px">${c.company}</span></div></th>`).join('')}</tr></thead><tbody>`;
+  const rows=[
+    ["USP", arr.map(c=>`<div style="font-size:13px"><b>${c.usp}</b><div class="source">${c.src}</div><div style="margin-top:8px"><a href="${c.links.portfolio}" target="_blank" style="font-size:12px">View portfolio →</a></div></div>`)],
+    ["Figma", arr.map(c=>`<i class="ph ${c.skills.react>=3?'ph-check':'ph-x'}" aria-hidden="true" style="color:${c.skills.react>=3?'var(--fg1)':'var(--beige-400)'}"></i> ${c.skills.react>=3?'Expert':'Gap'} <span class="source">· ${c.gh.lang}</span>`)],
+    ["Design Systems", arr.map(c=>`<i class="ph ${c.skills.ds>=3?'ph-check':'ph-x'}" aria-hidden="true" style="color:${c.skills.ds>=3?'var(--fg1)':'var(--beige-400)'}"></i> ${c.skills.ds>=3?'Strong':'Partial'} <span class="source">· ${c.tenure}</span>`)],
+    ["Prototyping", arr.map(c=>`<i class="ph ${c.skills.webgl>=2?'ph-check':'ph-x'}" aria-hidden="true" style="color:${c.skills.webgl>=2?'var(--fg1)':'var(--beige-400)'}"></i> ${c.skills.webgl>=2?'Has':'Gap'}`)],
+    ["Typography", arr.map(c=>`<span style="font-size:12px">${c.id%2?'Strong · Editorial systems':'Good · Scale type' }<div class="source">Portfolio review</div></span>`)],
+    ["Research", arr.map(c=>`<span style="font-size:12px">${c.id%3?'Led 8 interviews · Synthesis':'Supported research'}<div class="source">Case study</div></span>`)],
+    ["Interaction", arr.map(c=>`<span style="font-size:12px">${c.id%2?'Framer · Principle':'Figma prototype'}<div class="source">Motion spec</div></span>`)],
+    ["Leadership", arr.map(c=>`<span style="font-size:12px">${c.scope||c.skills.scope>=4?'Mentored 3 designers':'IC contributor'}<div class="source">Scope</div></span>`)],
+    ["Portfolio", arr.map(c=>`<div style="display:flex;gap:6px;flex-wrap:wrap">${c.portfolioImgs.slice(0,2).map(img=>`<span style="background:var(--beige-100);border:1px solid var(--beige-300);border-radius:6px;padding:4px 8px;font-size:11px">${img}</span>`).join('')}</div>`)],
+  ];
+  rows.forEach(([label,cols])=>{
+    html+=`<tr><th scope="row" style="font-weight:700;background:var(--white)">${label}</th>${cols.map(v=>`<td>${v}</td>`).join('')}</tr>`;
+  });
+  html+=`</tbody></table>`;
+  document.getElementById('compareTableWrap').innerHTML=html;
+  // hide similarities if present
+  const sim=document.getElementById('simBanner'); if(sim) sim.style.display='none';
+}
+function updateWizard(){
+  const n=bookmarked.size;
+  // Show count next to wizard, no tick until handoff
+  const sc=document.getElementById('shortCount'); if(sc) sc.textContent=n?`· ${n}`:'';
+  const sl=document.getElementById('slCount'); if(sl) sl.textContent=n?`· ${n}`:'';
+  const bbar=document.getElementById('bookmarkBar'); if(bbar){ const bc=document.getElementById('bookmarkCount'); if(bc) bc.textContent=`${n} bookmarked`; bbar.style.display=n?'flex':'none'; }
+}
+function renderShortlist(){
+  const arr=[...bookmarked].map(id=>candidates.find(c=>c.id===id));
+  const grid=document.getElementById('shortlistGrid'), empty=document.getElementById('shortlistEmpty'), bar=document.getElementById('handoffBar');
+  const bbar=document.getElementById('bookmarkBar');
+  if(arr.length===0){ grid.innerHTML=''; empty.style.display='block'; bar.style.display='none'; if(bbar) bbar.style.display='none'; return;}
+  empty.style.display='none'; bar.style.display='flex';
+  if(bbar) bbar.style.display='none';
+  document.getElementById('handoffText').textContent=`Pass on ${arr.length} profiles to recruiter`;
+  document.getElementById('handoffBar').style.display='flex';
+  grid.innerHTML=arr.map(c=>`
+    <div class="s-card" style="background:var(--white);border:1px solid var(--beige-300);border-radius:12px;padding:16px">
+      <div class="head" style="display:flex;align-items:center;gap:12px">
+        <div class="avatar" aria-hidden="true" style="width:36px;height:36px;overflow:hidden"><img src="${c.avatarUrl}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover"></div>
+        <div style="flex:1"><div style="font-weight:700;display:flex;align-items:center;gap:8px">${c.name} <span class="match-pill ${c.score>=75?'high':c.score>=50?'mid':'low'}" style="font-size:10px;padding:2px 8px">${c.score}%</span></div><div style="font-size:12px;color:var(--beige-930)">${c.company} · ${c.role} · ${c.tenure.split('·')[0].trim()} YoE</div></div>
+        <button class="iconbtn" style="margin-left:auto" aria-label="Remove ${c.name}" onclick="toggleBookmarks(${c.id});renderShortlist()"><i class="ph ph-x" aria-hidden="true"></i></button>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="badge ${c.skills.react>=3?'ok':'gap'}"><i class="ph ${c.skills.react>=3?'ph-check':'ph-x'}" aria-hidden="true"></i> Figma</span><span class="badge ${c.skills.ds>=3?'ok':'gap'}"><i class="ph ${c.skills.ds>=3?'ph-check':'ph-x'}" aria-hidden="true"></i> Design Systems</span><span class="badge ${c.skills.webgl>=2?'ok':'gap'}"><i class="ph ${c.skills.webgl>=2?'ph-check':'ph-x'}" aria-hidden="true"></i> Prototyping</span></div>
+      <div style="font-size:12px"><b>USP:</b> ${c.usp}<br><b>Gap:</b> ${c.gap} <span class="source">· ${c.src}</span></div>
+      <div style="display:flex;gap:8px"><a href="${c.links.linkedin}" target="_blank" rel="noopener" style="font-size:12px">LinkedIn</a><a href="${c.links.github}" target="_blank" rel="noopener" style="font-size:12px">GitHub</a><a href="${c.links.portfolio}" target="_blank" rel="noopener" style="font-size:12px">Portfolio</a></div>
+      <label for="note-${c.id}" style="font-size:11px;font-weight:700;color:var(--beige-930)">Note for recruiter</label>
+      <input id="note-${c.id}" class="note" aria-label="Note for recruiter for ${c.name}" placeholder="e.g. loves DS, needs Staff scope" />
+    </div>`).join('');
+}
+function go(step){
+  if(step===1) return;
+  document.getElementById('pageRanked').style.display=step===2?'block':'none';
+  document.getElementById('pageShortlist').style.display=step===3?'block':'none';
+  document.getElementById('pageHandoff').style.display=step===4?'block':'none';
+  document.getElementById('filterBar').style.display=step===2?'flex':'none';
+  const bbar=document.getElementById('bookmarkBar'); if(bbar) bbar.style.display=(step===2 && bookmarked.size>0)?'flex':'none';
+  const hbar=document.getElementById('handoffBar'); if(hbar && step!==3) hbar.style.display='none';
+  document.querySelectorAll('.step-item').forEach(el=>{
+    const s=parseInt(el.dataset.step);
+    if(s===1){ el.className='step-item done'; el.setAttribute('aria-current','false'); const dot=el.querySelector('.step-dot'); dot.className='step-dot done'; dot.innerHTML='✓'; return; }
+
+    el.className='step-item '+(s===step?'active':s<step?'done':'pending');
+    el.setAttribute('aria-current',s===step?'step':'false');
+    const dot=el.querySelector('.step-dot'); if(dot){ if(s===step){dot.className='step-dot active';dot.textContent=s;} else if(s<step){dot.className='step-dot done';dot.innerHTML='✓';} else {dot.className='step-dot pending';dot.textContent=s;} }
+  });
+  // progress bar synced to dot center (where text ends)
+  requestAnimationFrame(()=>{ const dots=document.querySelectorAll('.step-dot'); const track=document.querySelector('.progress-track'); const pf=document.getElementById('progressFill'); if(dots[step-1] && track && pf){ const tr=track.getBoundingClientRect(); const dr=dots[step-1].getBoundingClientRect(); const pct=((dr.left + dr.width/2 - tr.left)/tr.width)*100; pf.style.width=Math.max(0,Math.min(100,pct))+'%'; } else if(pf){ pf.style.width=((step-1)/3)*100+'%'; } });
+  if(step===3) renderShortlist();
+  closeDrawer();
+}
+document.getElementById('wizard').addEventListener('click',e=>{ const it=e.target.closest('.step-item'); if(it) go(parseInt(it.dataset.step)); });
+document.getElementById('wizard').addEventListener('keydown',e=>{ if(e.key==='Enter'&&e.target.closest('.step-item')) go(parseInt(e.target.closest('.step-item').dataset.step)); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeDrawer(); });
+function passToRecruiter(){
+  if(bookmarked.size===0) return;
+  go(3);
+  document.getElementById('handoffEmpty').style.display='none';
+  document.getElementById('handoffList').style.display='block';
+  document.getElementById('handoffN').textContent=bookmarked.size+' candidates';
+  const arr=[...bookmarked].map(id=>candidates.find(c=>c.id===id));
+  document.getElementById('trackerRows').innerHTML=arr.map(c=>`
+    <div class="row" style="cursor:default">
+      <div class="avatar" aria-hidden="true">${c.avatar}</div>
+      <div class="main"><div class="name">${c.name}</div><div class="title">${c.role} · Handed to recruiter</div></div>
+      <span class="badge" style="background:var(--yellow-50);border-color:var(--yellow-400);color:var(--yellow-960)"><span style="width:8px;height:8px;border-radius:50%;background:var(--yellow-800);display:inline-block" aria-hidden="true"></span> Contacted</span>
+      <span style="font-size:11px;color:var(--fg3)">Updates notify HM</span>
+    </div>`).join('') + `<div style="margin-top:16px;background:var(--green-50);border:1px solid var(--green-300);border-radius:8px;padding:12px;font-size:13px"><i class="ph ph-check-circle" aria-hidden="true" style="color:var(--green-800)"></i> Handoff complete. Recruiter will contact. You’ll get notifications on reply / interview.</div>`;
+  toast("Passed "+bookmarked.size+" to recruiter");
+}
+function toast(t){ const el=document.getElementById('toast'); el.textContent=t; el.style.display='block'; setTimeout(()=>el.style.display='none',2200); }
+renderTiers(); updateCompare(); requestAnimationFrame(()=>go(2));
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Components · DebouncedSearchInput" subtitle="idle · loading spinner · results + clear" viewport="700x440" --><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="_base.css">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"/>
+<style>
+.section{font-size:12px;line-height:16px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--fg3);margin:10px 0 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
+.col{display:flex;flex-direction:column;gap:8px}
+.lbl{font-size:12px;font-weight:500;line-height:16px;color:var(--fg2);margin-bottom:4px;display:block}
+.lbl .req{color:var(--red-800)}
+.hint-default{font-size:11px;color:var(--gray-800);margin-top:3px}
+.hint-success{font-size:11px;color:var(--green-930);margin-top:3px}
+.hint-error{font-size:11px;color:var(--red-930);margin-top:3px}
+.inp{height:36px;padding:0 14px;border:1px solid var(--beige-500);border-radius:8px;font-family:inherit;font-size:14px;outline:none;color:var(--fg1);background:#fff;width:100%;box-sizing:border-box}
+.inp:focus{border-color:var(--green-500);box-shadow:0 0 0 3px var(--green-200)}
+.inp.error{border-color:var(--red-500)}
+.inp.success{border-color:var(--green-500)}
+.inp.disabled{background:var(--beige-100);border-color:var(--beige-300);color:var(--beige-800);cursor:not-allowed}
+.inp-sm{height:28px;font-size:12px}
+.inp-lg{height:44px;font-size:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 16px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;border:0}
+.btn-sm{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.btn-lg{height:44px;padding:0 16px;font-size:16px;border-radius:8px}
+.btn-primary{background:var(--green-800);color:#fff}
+.btn-secondary{background:#fff;color:var(--fg1);border:1px solid var(--beige-500)}
+.btn-ghost{background:transparent;color:var(--fg1)}
+
+</style></head><body style="padding:14px 16px">
+<div class="section">DebouncedSearchInput · search + debounce hook · loading state · clear</div>
+<div class="col" style="max-width:420px;gap:16px">
+  <div>
+    <label class="lbl">Idle</label>
+    <div style="position:relative;display:flex;align-items:center">
+      <i class="ph ph-magnifying-glass" style="position:absolute;left:12px;font-size:16px;color:var(--fg3)"></i>
+      <input class="inp" style="padding-left:38px" placeholder="Search runs, policies, people…"/>
+    </div>
+    <div class="hint-default">Debounced — waits 300ms after last keystroke.</div>
+  </div>
+  <div>
+    <label class="lbl">Loading (waiting for results)</label>
+    <div style="position:relative;display:flex;align-items:center">
+      <i class="ph ph-magnifying-glass" style="position:absolute;left:12px;font-size:16px;color:var(--fg3)"></i>
+      <input class="inp" style="padding-left:38px;padding-right:38px" value="tier-1" readonly/>
+      <svg style="position:absolute;right:10px;width:16px;height:16px;animation:spin .7s linear infinite" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g stroke-width="1.875" clip-path="url(#da)">
+          <path stroke="url(#db)" d="M1 10a9 9 0 0 1 18 0"/>
+          <path stroke="url(#dc)" d="M19 10.001a9 9 0 1 1-18 0"/>
+        </g>
+        <defs>
+          <linearGradient id="db" x1="1" x2="19" y1="1" y2="1" gradientUnits="userSpaceOnUse"><stop stop-opacity="0" stop-color="currentColor"/><stop offset="1" stop-opacity=".5" stop-color="currentColor"/></linearGradient>
+          <linearGradient id="dc" x1="1" x2="19" y1="10" y2="10" gradientUnits="userSpaceOnUse"><stop stop-color="currentColor"/><stop offset="1" stop-opacity=".5" stop-color="currentColor"/></linearGradient>
+          <clipPath id="da"><path fill="currentColor" d="M0 0h20v20H0z"/></clipPath>
+        </defs>
+      </svg>
+    </div>
+  </div>
+  <div>
+    <label class="lbl">With results — clear button</label>
+    <div style="position:relative;display:flex;align-items:center">
+      <i class="ph ph-magnifying-glass" style="position:absolute;left:12px;font-size:16px;color:var(--fg3)"></i>
+      <input class="inp" style="padding-left:38px;padding-right:34px" value="billing policy" readonly/>
+      <button style="position:absolute;right:8px;border:0;background:transparent;cursor:pointer;width:20px;height:20px;display:flex;align-items:center;justify-content:center;border-radius:4px;color:var(--fg3)"><i class="ph ph-x" style="font-size:14px"></i></button>
+    </div>
+    <div style="margin-top:4px;background:#fff;border:1px solid var(--beige-400);border-radius:8px;box-shadow:0 4px 6px -1px rgba(35,33,25,.08);padding:4px">
+      
+      <div style="padding:8px 12px;font-size:14px;border-radius:6px;cursor:pointer;color:var(--fg1)" onmouseover="this.style.background='var(--beige-100)'" onmouseout="this.style.background=''">Billing policy v4</div>
+      <div style="padding:8px 12px;font-size:14px;border-radius:6px;cursor:pointer;color:var(--fg1)" onmouseover="this.style.background='var(--beige-100)'" onmouseout="this.style.background=''">Billing escalation rules</div>
+    </div>
+  </div>
+</div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+</body></html>
