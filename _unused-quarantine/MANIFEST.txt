@@ -1,0 +1,230 @@
+UNUSED MEDIA QUARANTINE
+Created: 2026-09-09 18:21
+All files below were moved here because no .html/.css/.js/.json/.xml/.md/.py/.csv
+file in the repo references their filename. All are tracked by git.
+
+TO RESTORE EVERYTHING:   git checkout -- . && rm -rf _unused-quarantine
+TO RESTORE ONE FILE:     git checkout -- <original path>
+TO DELETE FOR GOOD:      rm -rf _unused-quarantine   (then commit the deletions)
+
+──────────────────────────────────────────────────────────────
+SIZE       ORIGINAL PATH
+──────────────────────────────────────────────────────────────
+21973.8K   assets/mainimages/safefoodmobile.mp4
+11848.7K   assets/side/blood.gif
+11326.2K   assets/side/coolcam.gif
+10511.9K   assets/side/trip2.mov
+9055.1K    assets/side/maps.gif
+7757.8K    assets/side/coolcam2.gif
+4939.7K    assets/side/island2.mov
+3356.7K    assets/portfolioimages/table pivot.gif
+3356.7K    assets/caseStudyImages/table pivot/tbvid2.gif
+3356.7K    assets/caseStudyImages/table pivot/tb1.gif
+3255.4K    assets/side/nutrition2.mov
+2734.9K    assets/mepic.png
+2639.8K    blogging/assets/july26updateslearnings/Untitled_Artwork.jpg
+1897.5K    assets/side/bf2.mov
+1657.1K    assets/portfolioimages/map.png
+1590.8K    assets/portfolioimages/maps thumbnail.png
+1590.8K    assets/caseStudyImages/whats nearby/Desktop - 12.png
+1240.3K    assets/side/coolcomp.gif
+1192.5K    assets/side/mitskiviz.png
+1050.5K    assets/portfolioimages/key driver.gif
+1050.5K    assets/caseStudyImages/keyDriverAnalaysis/Screen Recording 2023-01-22 at 6.48.31 PM.gif
+963.8K     assets/side/coolcamnew.gif
+934.7K     sideProjects/TreePhotos/Tree pictures/images/full/PXL_20240212_051049222-2.webp
+831.5K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190908_123710.webp
+808.1K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190710_103655.webp
+806.5K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20191012_153417.webp
+797.4K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20200423_175855.webp
+795.8K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190908_122444.webp
+792.3K     assets/caseStudyImages/whats nearby/map5.png
+766.0K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190818_122146.webp
+716.2K     assets/caseStudyImages/What's nearby.jpg
+697.8K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190908_123712.webp
+690.9K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190908_122927.webp
+681.5K     assets/caseStudyImages/What's nearby.png
+675.0K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190922_142439.webp
+670.6K     maps.png
+670.6K     assets/side/blood.png
+640.6K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190924_132817.webp
+633.8K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20200129_133735.webp
+629.6K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190908_122235.webp
+578.7K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20191001_165906.webp
+569.0K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190908_123249.webp
+566.6K     assets/Open_Sans/OpenSans-Italic-VariableFont_wdth,wght.ttf
+517.2K     assets/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf
+470.9K     assets/caseStudyImages/table pivot/tbon3.png
+466.3K     assets/caseStudyImages/Price insights.jpg
+442.8K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20201107_091409.webp
+441.5K     assets/caseStudyImages/table pivot/tb2.gif
+435.8K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20201122_174727.webp
+406.6K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190710_104935.webp
+403.8K     assets/portfolioimages/price insights2.png
+399.6K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190908_122855.webp
+388.7K     blood.png
+388.7K     assets/side/maps.png
+383.8K     assets/caseStudyImages/table pivot/tbonb4.png
+382.5K     assets/portfolioimages/price insights mobile.png
+359.2K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20200406_201520.webp
+343.6K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20210726_130239.webp
+336.6K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190908_122852.webp
+335.3K     assets/caseStudyImages/table pivot/tbs1.png
+334.8K     assets/caseStudyImages/Price insights.png
+286.2K     assets/caseStudyImages/whats nearby/mapvid6.mp4
+281.5K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190417_140739.webp
+280.7K     assets/caseStudyImages/whats nearby/mapvid2.mp4
+268.3K     assets/portfolioimages/price insights.png
+266.0K     assets/caseStudyImages/keyDriverAnalaysis/throwout.png
+259.6K     assets/caseStudyImages/Key driver analysis.jpg
+252.8K     assets/caseStudyImages/Pivot to compare.jpg
+213.5K     assets/caseStudyImages/table pivot/tbonb1.png
+211.9K     sideProjects/TreePhotos/Tree pictures/shadowleaf.jpg
+207.7K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20190328_170658.webp
+204.1K     assets/portfolioimages/keydrivers.png
+189.6K     assets/caseStudyImages/Pivot to compare.png
+188.2K     assets/side/coolcampng.png
+179.2K     assets/caseStudyImages/keyDriverAnalaysis/explore 2.png
+174.0K     sideProjects/TreePhotos/Tree pictures/images/full/2020-06-07_09.45.43.441.webp
+171.7K     assets/caseStudyImages/table pivot/tbsol3.png
+162.8K     sideProjects/TreePhotos/Tree pictures/images/full/2022-09-18_04.58.47_1.webp
+161.3K     sideProjects/TreePhotos/Tree pictures/images/full/IMG_20201114_125259.webp
+141.3K     assets/Jost/Jost-Italic-VariableFont_wght.ttf
+134.3K     assets/Open_Sans/static/OpenSans_SemiCondensed-ExtraBoldItalic.ttf
+134.0K     assets/caseStudyImages/keyDriverAnalaysis/wf2.png
+134.0K     assets/Open_Sans/static/OpenSans_SemiCondensed-LightItalic.ttf
+133.9K     assets/Open_Sans/static/OpenSans_SemiCondensed-SemiBoldItalic.ttf
+133.8K     assets/Open_Sans/static/OpenSans_SemiCondensed-BoldItalic.ttf
+133.8K     assets/Open_Sans/static/OpenSans_SemiCondensed-MediumItalic.ttf
+133.7K     assets/Open_Sans/static/OpenSans_SemiCondensed-Italic.ttf
+133.7K     assets/Open_Sans/static/OpenSans-ExtraBoldItalic.ttf
+133.6K     assets/Open_Sans/static/OpenSans-LightItalic.ttf
+133.5K     assets/Open_Sans/static/OpenSans-MediumItalic.ttf
+133.5K     assets/Open_Sans/static/OpenSans_Condensed-SemiBoldItalic.ttf
+133.5K     assets/Open_Sans/static/OpenSans_Condensed-LightItalic.ttf
+133.5K     assets/Open_Sans/static/OpenSans-SemiBoldItalic.ttf
+133.4K     assets/Open_Sans/static/OpenSans_Condensed-MediumItalic.ttf
+133.4K     assets/Open_Sans/static/OpenSans_Condensed-ExtraBoldItalic.ttf
+133.4K     assets/Open_Sans/static/OpenSans-Italic.ttf
+133.3K     assets/Open_Sans/static/OpenSans_Condensed-Italic.ttf
+133.1K     assets/Open_Sans/static/OpenSans-BoldItalic.ttf
+133.0K     assets/Open_Sans/static/OpenSans_Condensed-BoldItalic.ttf
+132.3K     assets/Jost/Jost-VariableFont_wght.ttf
+129.8K     assets/caseStudyImages/Keydriveranalysis.png
+128.6K     assets/Open_Sans/static/OpenSans_SemiCondensed-ExtraBold.ttf
+128.1K     assets/Open_Sans/static/OpenSans-ExtraBold.ttf
+128.0K     assets/Open_Sans/static/OpenSans_SemiCondensed-Bold.ttf
+128.0K     assets/Open_Sans/static/OpenSans_SemiCondensed-Light.ttf
+127.9K     assets/Open_Sans/static/OpenSans_SemiCondensed-Medium.ttf
+127.9K     assets/Open_Sans/static/OpenSans-Medium.ttf
+127.7K     assets/Open_Sans/static/OpenSans-Bold.ttf
+127.7K     assets/Open_Sans/static/OpenSans_SemiCondensed-SemiBold.ttf
+127.7K     assets/Open_Sans/static/OpenSans_SemiCondensed-Regular.ttf
+127.7K     assets/Open_Sans/static/OpenSans-Regular.ttf
+127.7K     assets/Open_Sans/static/OpenSans_Condensed-ExtraBold.ttf
+127.7K     assets/Open_Sans/static/OpenSans-Light.ttf
+127.6K     assets/Open_Sans/static/OpenSans-SemiBold.ttf
+127.4K     assets/Open_Sans/static/OpenSans_Condensed-SemiBold.ttf
+127.4K     assets/Open_Sans/static/OpenSans_Condensed-Medium.ttf
+127.4K     assets/Open_Sans/static/OpenSans_Condensed-Regular.ttf
+127.4K     assets/Open_Sans/static/OpenSans_Condensed-Light.ttf
+127.3K     assets/font.ttf
+127.3K     assets/Open_Sans/static/OpenSans_Condensed-Bold.ttf
+126.8K     assets/caseStudyImages/keyDriverAnalaysis/wf1.png
+118.9K     blogging/assets/Libre_Baskerville/static/LibreBaskerville-SemiBoldItalic.ttf
+118.9K     assets/Libre_Baskerville/static/LibreBaskerville-SemiBoldItalic.ttf
+118.8K     blogging/assets/Libre_Baskerville/static/LibreBaskerville-MediumItalic.ttf
+118.8K     assets/Libre_Baskerville/static/LibreBaskerville-MediumItalic.ttf
+118.8K     blogging/assets/Libre_Baskerville/static/LibreBaskerville-BoldItalic.ttf
+118.8K     assets/Libre_Baskerville/static/LibreBaskerville-BoldItalic.ttf
+117.8K     assets/caseStudyImages/whats nearby/mapvid.mp4
+112.7K     assets/caseStudyImages/table pivot/tbcp3.png
+111.3K     blogging/assets/noise.png
+111.3K     assets/noise.png
+109.8K     blogging/assets/Libre_Baskerville/static/LibreBaskerville-Medium.ttf
+109.8K     assets/Libre_Baskerville/static/LibreBaskerville-Medium.ttf
+109.8K     blogging/assets/Libre_Baskerville/static/LibreBaskerville-SemiBold.ttf
+109.8K     assets/Libre_Baskerville/static/LibreBaskerville-SemiBold.ttf
+109.7K     blogging/assets/Libre_Baskerville/static/LibreBaskerville-Bold.ttf
+109.7K     assets/Libre_Baskerville/static/LibreBaskerville-Bold.ttf
+109.7K     blogging/assets/Libre_Baskerville/static/LibreBaskerville-Regular.ttf
+109.7K     assets/Libre_Baskerville/static/LibreBaskerville-Regular.ttf
+109.0K     assets/caseStudyImages/keyDriverAnalaysis/wf6.png
+107.7K     assets/caseStudyImages/keyDriverAnalaysis/wf3.png
+105.4K     assets/caseStudyImages/keyDriverAnalaysis/wf5.png
+98.6K      assets/caseStudyImages/keyDriverAnalaysis/wf4.png
+95.2K      assets/Manrope/static/Manrope-ExtraBold.ttf
+94.6K      assets/Manrope/static/Manrope-SemiBold.ttf
+94.6K      assets/Manrope/static/Manrope-Medium.ttf
+94.5K      assets/Manrope/static/Manrope-Regular.ttf
+94.4K      assets/Manrope/static/Manrope-Light.ttf
+92.7K      assets/skill islands/lil island.svg
+92.0K      assets/skill islands/full island.svg
+77.0K      assets/caseStudyImages/table pivot/tbwf2.png
+68.8K      assets/caseStudyImages/table pivot/tbwf1.png
+68.3K      assets/caseStudyImages/keyDriverAnalaysis/ui2.png
+64.6K      assets/Jost/static/Jost-MediumItalic.ttf
+64.5K      assets/Jost/static/Jost-SemiBoldItalic.ttf
+64.5K      assets/Jost/static/Jost-BlackItalic.ttf
+64.5K      assets/Jost/static/Jost-ExtraBoldItalic.ttf
+64.5K      assets/Jost/static/Jost-LightItalic.ttf
+64.5K      assets/Jost/static/Jost-Italic.ttf
+64.4K      assets/Jost/static/Jost-BoldItalic.ttf
+64.3K      assets/Jost/static/Jost-ExtraLightItalic.ttf
+64.1K      assets/Jost/static/Jost-ThinItalic.ttf
+62.5K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190818_122146.webp
+62.3K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20200423_175855.webp
+60.2K      assets/Jost/static/Jost-ExtraBold.ttf
+60.2K      assets/Jost/static/Jost-Black.ttf
+60.2K      assets/Jost/static/Jost-ExtraLight.ttf
+60.2K      sideProjects/TreePhotos/Tree pictures/images/thumb/2022-09-18_04.58.47_1.webp
+60.2K      assets/Jost/static/Jost-Medium.ttf
+60.2K      assets/Jost/static/Jost-SemiBold.ttf
+60.1K      assets/Jost/static/Jost-Light.ttf
+60.1K      assets/Jost/static/Jost-Bold.ttf
+60.1K      assets/Jost/static/Jost-Thin.ttf
+60.0K      assets/Jost/static/Jost-Regular.ttf
+57.3K      assets/mainimages/phone.svg
+57.3K      assets/mainimages/phone-frame.svg
+56.2K      sideProjects/TreePhotos/Tree pictures/images/thumb/PXL_20240212_051049222-2.webp
+55.9K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190922_142439.webp
+55.3K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20191012_153417.webp
+53.7K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190710_103655.webp
+52.8K      assets/caseStudyImages/table pivot/tbcp2.png
+51.3K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190924_132817.webp
+50.7K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190908_122927.webp
+49.6K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190908_122444.webp
+49.0K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190908_123710.webp
+47.7K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190908_123712.webp
+45.7K      assets/caseStudyImages/table pivot/tbcp1.png
+42.3K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190908_122235.webp
+42.1K      assets/caseStudyImages/table pivot/tbsol2.png
+41.9K      assets/chaos text.svg
+40.4K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20191001_165906.webp
+40.4K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20201122_174727.webp
+40.2K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190908_123249.webp
+39.4K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190417_140739.webp
+39.0K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20200129_133735.webp
+30.9K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190328_170658.webp
+30.3K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20201107_091409.webp
+29.1K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190908_122855.webp
+26.4K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190908_122852.webp
+25.1K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20190710_104935.webp
+25.0K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20200406_201520.webp
+23.2K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20210726_130239.webp
+18.3K      sideProjects/TreePhotos/Tree pictures/treepin.svg
+13.4K      sideProjects/TreePhotos/Tree pictures/images/thumb/IMG_20201114_125259.webp
+13.0K      assets/skill islands/skill islands.svg
+12.7K      sideProjects/TreePhotos/Tree pictures/images/thumb/2020-06-07_09.45.43.441.webp
+11.6K      assets/caseStudyImages/whats nearby/pin.jpg
+8.8K       assets/caseStudyImages/whats nearby/pin.png
+8.6K       assets/caseStudyImages/whats nearby/mapicon.png
+8.4K       Assignments/Ema App Design System/screenshots/textlink-debug.png
+2.1K       assets/open,new,link,open-link,box,arrow.svg
+1.3K       assets/Vector 6.svg
+.8K        assets/email-2,envelope,mail.svg
+.7K        assets/1st arrow.svg
+.6K        assets/favicon.png
+.5K        assets/opennewtab.svg
+
+TOTAL: 216 files, 142.5 MB

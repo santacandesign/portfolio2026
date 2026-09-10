@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Working files and archived media — no reason to crawl these
+Disallow: /_unused-quarantine/
+Disallow: /Assignments/
+
+Sitemap: https://santais.online/sitemap.xml

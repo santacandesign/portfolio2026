@@ -8,6 +8,12 @@ let circleRadius = 4;
 let grassBlades = [];
 let butterflies = [];
 
+// Screenshot mode: visiting index.html?og=1 freezes the canvas a few
+// frames after load — same drawing, just a single settled instant
+// instead of continuous motion — so a share-card screenshot doesn't
+// catch the mouse-follower gimmick sitting at the (nonexistent) cursor.
+let ogCapture = false;
+
 new p5((sketch) => {
   let papertexture;
   let startX, nameY;
@@ -33,6 +39,8 @@ new p5((sketch) => {
     let canvas = sketch.createCanvas(sketch.windowWidth, sketch.windowHeight);
     canvas.parent("p5jsholder");
     sketch.imageMode(sketch.CENTER);
+
+    ogCapture = new URLSearchParams(window.location.search).get("og") === "1";
 
     points = font.textToPoints(
       "Santrupti ",
@@ -297,7 +305,7 @@ new p5((sketch) => {
     sketch.stroke(204, 218, 165);
     sketch.strokeWeight(2);
 
-    if (sketch.windowWidth > 900) {
+    if (sketch.windowWidth > 900 && !ogCapture) {
       for (let y = 0; y < sketch.windowHeight; y += 2) {
         let wobble = sketch.noise(y * 0.5, sketch.frameCount * 0.001) * 4 - 2; // ±2px jitter
         sketch.point(sketch.mouseX + wobble, y);
@@ -322,7 +330,7 @@ new p5((sketch) => {
     sketch.fill(204, 218, 165);
     sketch.rectMode(sketch.CENTER);
 
-    if (sketch.windowWidth > 900) {
+    if (sketch.windowWidth > 900 && !ogCapture) {
       sketch.rect(labelX, labelY, labelWidth, labelHeight, 100);
     }
 
@@ -332,7 +340,7 @@ new p5((sketch) => {
     sketch.textAlign(sketch.CENTER, sketch.CENTER);
     sketch.textSize(14);
     sketch.textFont(jostfont); // Using your loaded jostfont
-    if (sketch.windowWidth > 900) {
+    if (sketch.windowWidth > 900 && !ogCapture) {
       sketch.text(label, labelX, labelY);
     }
     sketch.pop();
@@ -406,6 +414,13 @@ new p5((sketch) => {
         sketch.ellipse(x + xJitter, y - 180 + yJitter, sizeJitter, sizeJitter);
       }
       angle += 10;
+    }
+
+    // og=1 capture mode: let a few frames of setup settle — fonts, the
+    // background texture, grass and butterflies all in their drawn state —
+    // then stop. One clean instant instead of continuous motion.
+    if (ogCapture && sketch.frameCount >= 25) {
+      sketch.noLoop();
     }
   };
 });

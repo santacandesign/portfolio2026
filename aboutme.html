@@ -5,23 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="books.css" />
+    <link rel="stylesheet" href="night.css" />
     <!-- Playfair Display for bookshelf review cards -->
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&display=swap"
       rel="stylesheet"
     />
-    <title>Santa's Portfolio</title>
+    <title>About — Santrupti Danagaud</title>
+    <meta name="description" content="Santrupti Danagaud is a product designer with 3.5 years across Licious, PropertyGuru, Infra Market and Crux Intelligence, working on data visualisation, design systems and consumer apps." />
+    <link rel="canonical" href="https://santais.online/aboutme.html" />
+    <meta name="author" content="Santrupti Danagaud" />
+
+    <!-- Open Graph / social share cards -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Santrupti Danagaud" />
+    <meta property="og:url" content="https://santais.online/aboutme.html" />
+    <meta property="og:title" content="About — Santrupti Danagaud" />
+    <meta property="og:description" content="Santrupti Danagaud is a product designer with 3.5 years across Licious, PropertyGuru, Infra Market and Crux Intelligence, working on data visualisation, design systems and consumer apps." />
+    <meta property="og:image" content="https://santais.online/assets/caseStudyImages/Price%20insights%20-%20NG.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="About — Santrupti Danagaud" />
+    <meta name="twitter:description" content="Santrupti Danagaud is a product designer with 3.5 years across Licious, PropertyGuru, Infra Market and Crux Intelligence, working on data visualisation, design systems and consumer apps." />
+    <meta name="twitter:image" content="https://santais.online/assets/caseStudyImages/Price%20insights%20-%20NG.webp" />
     <link rel="icon" type="image/png" href="assets/dragonfly.svg" />
   </head>
-  <body>
-    <div id="loadingOverlay">
-      <p id="loadingText">
-        Loading<span class="loading-dots"
-          ><span>.</span><span>.</span><span>.</span></span
-        >
-      </p>
+  <body class="night">
+    <!-- ===== BULB LOADER: lit room → pull → lights out → fireflies ===== -->
+    <div id="bulbLoader">
+      <div class="loader-noise"></div>
+      <div class="bulb-rig" id="bulbRig">
+        <div class="bulb-cord"></div>
+        <!-- Wrapper carries the drop animation; the svg inside carries the
+             permanent flip. Kept apart so the two `transform`s never mix. -->
+        <div class="bulb-drop">
+          <svg
+            class="bulb-svg"
+            viewBox="0 0 100 130"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <!-- light flicking off the glass -->
+            <g class="bulb-rays">
+              <line x1="8" y1="34" x2="0" y2="30" />
+              <line x1="92" y1="34" x2="100" y2="30" />
+              <line x1="12" y1="14" x2="5" y2="7" />
+              <line x1="88" y1="14" x2="95" y2="7" />
+              <line x1="50" y1="4" x2="50" y2="-4" />
+            </g>
+            <!-- glass -->
+            <path
+              class="bulb-glass"
+              d="M50 8 C71 8 84 24 84 41 C84 55 74 63 69 71 C65 77 64 82 64 86 L36 86 C36 82 35 77 31 71 C26 63 16 55 16 41 C16 24 29 8 50 8 Z"
+            />
+            <path
+              class="bulb-outline"
+              d="M50 8 C71 8 84 24 84 41 C84 55 74 63 69 71 C65 77 64 82 64 86 L36 86 C36 82 35 77 31 71 C26 63 16 55 16 41 C16 24 29 8 50 8 Z"
+            />
+            <!-- filament -->
+            <path
+              class="bulb-filament"
+              d="M40 62 L40 48 C40 40 46 40 50 46 C54 52 60 52 60 44 L60 62"
+            />
+            <!-- screw cap -->
+            <path class="bulb-outline" d="M36 92 L64 92" />
+            <path class="bulb-outline" d="M36 100 L64 100" />
+            <path
+              class="bulb-outline"
+              d="M37 86 L37 104 C37 110 42 114 50 114 C58 114 63 110 63 104 L63 86"
+            />
+          </svg>
+        </div>
+      </div>
+      <p id="dimLightText">Santrupti prefers the night</p>
     </div>
-    <script src="loader.js"></script>
+
+    <div class="firefly-gutter firefly-gutter--left" id="fireflyGutterLeft"></div>
+    <div class="firefly-gutter firefly-gutter--right" id="fireflyGutterRight"></div>
+
     <div class="bgimage"></div>
 
     <!-- Static SVG filter: textured hand-drawn border on the contact box -->
@@ -76,6 +136,7 @@
       </div>
       <div class="nav-pill-bar">
         <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()">
+          <span class="nav-hamburger-label">Menu</span>
           <svg class="nav-hamburger-lines" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <line x1="3" y1="6" x2="17" y2="6" /><line x1="3" y1="10" x2="17" y2="10" /><line x1="3" y1="14" x2="17" y2="14" />
           </svg>
@@ -254,7 +315,7 @@
         <br /><br />
         <br /><br />
 
-        <div id="flower-sketch-container"></div>
+        <div id="flower-sketch-container" aria-hidden="true"></div>
       </div>
       <!-- /aboutmetext -->
 
@@ -270,6 +331,8 @@
     <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/addons/p5.sound.min.js"></script>
     <script src="aboutmesketch.js"></script>
+    <script src="fireflies-gutter.js"></script>
+    <script src="bulb-loader.js"></script>
     <script src="books.js"></script>
   </body>
 </html>

@@ -1,12 +1,28 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Santa's Portfolio</title>
+    <title>Playground — Santrupti Danagaud</title>
+    <meta name="description" content="Creative coding experiments with p5.js, three.js and d3 — data visualisation, generative art, maps and interactive toys built for fun." />
+    <link rel="canonical" href="https://santais.online/playground.html" />
+    <meta name="author" content="Santrupti Danagaud" />
+
+    <!-- Open Graph / social share cards -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Santrupti Danagaud" />
+    <meta property="og:url" content="https://santais.online/playground.html" />
+    <meta property="og:title" content="Playground — Santrupti Danagaud" />
+    <meta property="og:description" content="Creative coding experiments with p5.js, three.js and d3 — data visualisation, generative art, maps and interactive toys built for fun." />
+    <meta property="og:image" content="https://santais.online/assets/caseStudyImages/Price%20insights%20-%20NG.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Playground — Santrupti Danagaud" />
+    <meta name="twitter:description" content="Creative coding experiments with p5.js, three.js and d3 — data visualisation, generative art, maps and interactive toys built for fun." />
+    <meta name="twitter:image" content="https://santais.online/assets/caseStudyImages/Price%20insights%20-%20NG.webp" />
     <link rel="icon" type="image/png" href="assets/dragonfly.svg" />
     <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js"></script>
+    <link rel="stylesheet" href="video-controls.css" />
   </head>
   <body>
     <div id="loadingOverlay">
@@ -69,6 +85,7 @@
       </div>
       <div class="nav-pill-bar">
         <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()">
+          <span class="nav-hamburger-label">Menu</span>
           <svg class="nav-hamburger-lines" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <line x1="3" y1="6" x2="17" y2="6" /><line x1="3" y1="10" x2="17" y2="10" /><line x1="3" y1="14" x2="17" y2="14" />
           </svg>
@@ -164,7 +181,7 @@
         everything. Here are some things I'm proud of.
       </h3>
 
-      <div class="play-sketch" id="p5jsholder2"></div>
+      <div class="play-sketch" id="p5jsholder2" aria-hidden="true"></div>
 
       <div class="play-grid">
         <div class="sideproject">
@@ -206,7 +223,7 @@
             href="https://santacandesign.github.io/portfoliosite/bethecowboyviz/index.html"
             target="_blank"
           >
-            <img src="assets/side/mitskiviz.webp" />
+            <img src="assets/side/mitskiviz.webp" alt="Preview of a data visualization mapping emotions across a Mitski album" />
             <div class="tags">
               <span class="tag">data visualization</span>
               <span class="tag">D3.js</span>
@@ -288,7 +305,7 @@
             href="https://santacandesign.github.io/website/face%20and%20fun/index.html"
             target="_blank"
           >
-            <img src="assets/side/coolcamnew.webp" />
+            <img src="assets/side/coolcamnew.webp" alt="Preview of a webcam feed run through a pixel-art video filter" />
             <div class="tags">
               <span class="tag">p5.js</span>
               <span class="tag">visual design</span>
@@ -303,7 +320,7 @@
             href="https://santacandesign.github.io/website/blood/blood.html"
             target="_blank"
           >
-            <img src="assets/side/blood.webp" />
+            <img src="assets/side/blood.webp" alt="Preview of an interactive piece exploring mood through a heart-and-blood motif" />
             <div class="tags">
               <span class="tag">data visualization</span>
               <span class="tag">Javascript</span>
@@ -498,5 +515,6 @@
         requestAnimationFrame(track);
       })();
     </script>
+    <script src="video-controls.js"></script>
   </body>
 </html>

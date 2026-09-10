@@ -1,0 +1,458 @@
+/* ============================================================
+   NIGHT MODE — About page only
+   Scoped to body.night so the rest of the site stays untouched.
+   Palette lifted from the hireme fireflies cut.
+   ============================================================ */
+
+/* ─────────────── TWEAK EVERYTHING HERE ───────────────
+   The dim-light line's font size is --dimlight-size.
+   Everything else about that line is right below it.     */
+:root {
+  --dimlight-size: 26px; /* ← FONT SIZE OF THE DIM LIGHT TEXT */
+  --dimlight-size-mobile: 18px; /* ← same line, under 600px wide */
+  --dimlight-tracking: 0.02em; /* letter spacing */
+  --dimlight-lit: #111111; /* colour while the lights are still on */
+  --dimlight-dark: #ffd678; /* colour once the bulb is off (warm amber) */
+  --dimlight-gap: 54px; /* space between the bulb and the line */
+
+  /* Night sky — paperDark [10,18,44] + vignette 0.72 from fireflies.js */
+  --night-base: #0a122c;
+  --night-vignette: 0.72;
+  --night-ink: #e8e3d3; /* body text on night */
+  --night-ink-dim: rgba(232, 227, 211, 0.55);
+  --night-amber: #ffd678;
+  --night-rule: rgba(232, 227, 211, 0.16);
+  --night-panel: rgba(16, 26, 56, 0.82);
+  /* Same panel colour, no alpha — the mobile dropdown has no blur behind
+     it like the nav pill does, so translucency let paragraph text show
+     straight through. */
+  --night-panel-solid: #131f3f;
+  --night-panel-edge: rgba(14, 18, 28, 0.816); /* nav border: lighter blue */
+  --night-badge: rgba(242, 200, 76, 0.153); /* "actively looking" badge */
+  --night-badge-ink: rgb(242, 200, 76); /* ...and its text */
+  --night-noise: 0.06; /* ← GRAIN STRENGTH. 0 = perfectly smooth sky */
+
+  /* Bulb rig — unitless (both are a px length, just without the unit).
+     The pull animates by dividing one by the other for a scale ratio, and
+     CSS calc() can only divide two plain numbers, never two lengths. */
+  --cord-rest: 118; /* ← CORD LENGTH BEFORE THE PULL, in px */
+  --cord-pull: 150; /* ← CORD LENGTH AT THE BOTTOM OF THE PULL, in px */
+}
+/* ───────────────────────────────────────────────────── */
+
+/* ===== 1. THE NIGHT PAGE ===== */
+
+/* Flat colour only — the grain lives on ONE overlay below, so there's a
+   single knob for it instead of two soft-light layers stacking up. */
+body.night {
+  background-color: var(--night-base);
+  background-image: none;
+}
+
+/* Replaces the cream .bgimage with the night sky + vignette */
+body.night .bgimage {
+  background-color: var(--night-base);
+  background-image: radial-gradient(
+    ellipse 72% 62% at 50% 45%,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, var(--night-vignette)) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: normal;
+}
+
+/* The one grain layer. Tune with --night-noise. */
+body.night .bgimage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url(assets/noisemax.png);
+  background-repeat: repeat;
+  opacity: var(--night-noise);
+  pointer-events: none;
+}
+
+/* Type */
+body.night h1,
+body.night h2,
+body.night h3,
+body.night h4,
+body.night p,
+body.night .company h3,
+body.night .company h4,
+body.night .section-title h1 {
+  color: var(--night-ink);
+}
+
+body.night hr {
+  border-color: var(--night-rule);
+}
+
+body.night a {
+  color: var(--night-amber);
+}
+
+/* ===== 2. CHROME — nav pill + contact bar ===== */
+
+body.night .nav-pill-bar {
+  background: var(--night-panel);
+  border-color: var(--night-panel-edge);
+  box-shadow: 0 3px 18px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+body.night .nav-item {
+  color: rgb(140 143 152);
+}
+body.night .nav-item:hover,
+body.night .nav-item.nav-active {
+  color: var(--night-amber);
+}
+
+body.night .nav-mobile-menu {
+  background: var(--night-panel-solid);
+  border-color: var(--night-panel-edge);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+body.night .nav-mobile-item {
+  color: rgba(232, 227, 211, 0.6);
+}
+body.night .nav-mobile-item.nav-active {
+  color: var(--night-amber);
+}
+
+body.night .nav-hamburger {
+  color: rgba(232, 227, 211, 0.7);
+}
+
+/* "Actively looking" badge — the wobbled blob keeps its shape, goes firefly
+   yellow with dark ink so it still reads at 12px */
+body.night .contact-badge::before {
+  background: var(--night-badge);
+}
+body.night .contact-badge-text {
+  color: var(--night-badge-ink);
+}
+
+body.night .contact-link {
+  color: rgba(232, 227, 211, 0.5);
+}
+body.night .contact-link:hover,
+body.night .contact-email.is-active {
+  color: var(--night-amber);
+}
+
+body.night .contact-flyout {
+  background: var(--night-panel);
+  border-color: rgba(255, 214, 120, 0.28);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  color: var(--night-ink);
+}
+body.night .contact-tooltip-label {
+  color: var(--night-ink-dim);
+}
+body.night .contact-tooltip-email,
+body.night .contact-copied {
+  color: var(--night-amber);
+}
+
+/* ===== 3. FIREFLY GUTTERS ===== */
+
+.firefly-gutter {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 240px;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.firefly-gutter.is-lit {
+  opacity: 1;
+}
+/* While the loader is still up, the gutters have to sit ON TOP of it —
+   otherwise the fireflies come up behind the overlay and nobody sees them
+   arrive. Dropped back to z-index 0 the moment the page is revealed, so
+   they never draw over the contact bar in the right gutter. */
+.firefly-gutter.is-front {
+  z-index: 10000;
+}
+.firefly-gutter--left {
+  left: 0;
+}
+.firefly-gutter--right {
+  right: 0;
+}
+.firefly-gutter canvas {
+  display: block;
+}
+
+/* Content sits above the gutters */
+body.night .aboutme {
+  position: relative;
+  z-index: 1;
+}
+
+/* Gutters shrink instead of disappearing, so there's always a margin for
+   fireflies to fly in — capped at 16px on phones so it never eats into
+   the content column (.aboutme drops to 20px side padding at 800px, so
+   16px sits safely inside that gap). fireflies-gutter.js reads its own
+   per-size counts/scale/clearance off a matching breakpoint table — keep
+   the two in sync if either changes. */
+@media (max-width: 1180px) {
+  .firefly-gutter {
+    width: 64px;
+  }
+}
+@media (max-width: 600px) {
+  .firefly-gutter {
+    width: 16px;
+  }
+}
+
+/* ===== 4. THE BULB LOADER ===== */
+
+#bulbLoader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  /* Lights ON: the cream the rest of the site uses.
+     cover + no-repeat, matching .bgimage — tiling the 1080px texture put a
+     visible seam down the right side of the screen. */
+  background-color: #fffced;
+  background-image: url(assets/bgtexturefinal.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+  /* Only opacity transitions. The background SNAPS — it's a light switch,
+     and cross-fading the cream texture into the night sky just goes grey. */
+  transition: opacity 0.9s ease;
+}
+
+/* Warm pool of light thrown by the bulb while it's on */
+#bulbLoader::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 32%;
+  width: 900px;
+  height: 900px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 226, 150, 0.55) 0%,
+    rgba(255, 214, 120, 0.14) 38%,
+    rgba(255, 214, 120, 0) 68%
+  );
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.08s linear;
+}
+
+/* Lights OFF: snap to the night sky, kill the pool */
+#bulbLoader.is-off {
+  background-color: var(--night-base);
+  background-image: radial-gradient(
+    ellipse 72% 62% at 50% 45%,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, var(--night-vignette)) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: normal;
+}
+
+/* Matches the page's single grain layer, so the reveal is a clean hand-off */
+.loader-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url(assets/noisemax.png);
+  background-repeat: repeat;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+#bulbLoader.is-off .loader-noise {
+  opacity: var(--night-noise);
+}
+#bulbLoader.is-off::after {
+  opacity: 0;
+}
+
+#bulbLoader.is-gone {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── the rig: cord + bulb ── */
+.bulb-rig {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -60px;
+}
+
+.bulb-cord {
+  width: 1.6px;
+  height: calc(var(--cord-rest) * 1px);
+  background: #4b2d15;
+  transform-origin: top center;
+  transition: background-color 0.08s linear;
+}
+#bulbLoader.is-off .bulb-cord {
+  background: rgba(232, 227, 211, 0.32);
+}
+
+/* The pull: ONLY the bottom moves. Cord and bulb both animate with
+   `transform` (scaleY / translateY below) instead of `height`, so
+   .bulb-rig's actual box size never changes mid-animation — nothing
+   reflows, so the parent's flex-centering never recalculates, and the
+   cord's top anchor point (and everything above it) stays put.
+   scaleY grows the cord downward from `transform-origin: top`, and the
+   bulb wrapper below it (see .bulb-drop) translates down by the exact
+   same added length so it stays attached to the cord's new end. */
+.bulb-rig.is-pulling .bulb-cord {
+  animation: cord-stretch 900ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes cord-stretch {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  44% {
+    /* bottom of the tug */
+    transform: scaleY(calc(var(--cord-pull) / var(--cord-rest)));
+  }
+}
+
+/* Carries the drop — kept apart from .bulb-svg's permanent flip because
+   composing scaleY(-1) and translateY() in one `transform` would have the
+   flip invert the translate's direction too. Two elements, two jobs. */
+.bulb-drop {
+  display: block;
+}
+.bulb-rig.is-pulling .bulb-drop {
+  animation: bulb-drop 900ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes bulb-drop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  44% {
+    /* moves down by exactly the cord's added length — stays on the end */
+    transform: translateY(calc((var(--cord-pull) - var(--cord-rest)) * 1px));
+  }
+}
+
+/* Flipped vertically so it hangs like a real pendant: screw cap up on the
+   cord, glass bulging downward, light spilling out of the bottom. */
+.bulb-svg {
+  display: block;
+  width: 96px;
+  height: auto;
+  overflow: visible;
+  transform: scaleY(-1);
+}
+
+/* Glass + cap outlines */
+.bulb-outline {
+  fill: none;
+  stroke: #4b2d15;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.08s linear;
+}
+#bulbLoader.is-off .bulb-outline {
+  stroke: rgba(232, 227, 211, 0.45);
+}
+
+/* Glass fill — glowing while lit, empty once off */
+.bulb-glass {
+  fill: rgba(255, 214, 120, 0.85);
+  transition: fill 0.08s linear;
+}
+#bulbLoader.is-off .bulb-glass {
+  fill: rgba(232, 227, 211, 0.05);
+}
+
+/* Filament */
+.bulb-filament {
+  fill: none;
+  stroke: #b8571c;
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition:
+    stroke 0.08s linear,
+    opacity 0.08s linear;
+}
+#bulbLoader.is-off .bulb-filament {
+  stroke: rgba(232, 227, 211, 0.28);
+}
+
+/* Light rays flicking off the bulb — hidden once it's off */
+.bulb-rays {
+  stroke: #d8a24a;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  opacity: 0.75;
+  transition: opacity 0.08s linear;
+}
+#bulbLoader.is-off .bulb-rays {
+  opacity: 0;
+}
+
+/* ── the line ── */
+#dimLightText {
+  position: relative;
+  z-index: 2;
+  margin: var(--dimlight-gap) 0 0 0;
+  font-family: "Libre italic", serif;
+  font-style: italic;
+  font-size: var(--dimlight-size);
+  letter-spacing: var(--dimlight-tracking);
+  color: var(--dimlight-lit);
+  text-align: center;
+  white-space: nowrap;
+  transition: color 0.7s ease;
+}
+#bulbLoader.is-off #dimLightText {
+  color: var(--dimlight-dark);
+}
+
+@media (max-width: 600px) {
+  #dimLightText {
+    font-size: var(--dimlight-size-mobile);
+    white-space: normal;
+    padding: 0 24px;
+  }
+  .bulb-svg {
+    width: 74px;
+  }
+}
+
+/* Anyone who asked for less motion gets the page, not the show */
+@media (prefers-reduced-motion: reduce) {
+  .bulb-rig.is-pulling .bulb-cord,
+  .bulb-rig.is-pulling .bulb-drop {
+    animation: none;
+  }
+  #bulbLoader,
+  #bulbLoaderStars,
+  .firefly-gutter {
+    transition: none;
+  }
+}

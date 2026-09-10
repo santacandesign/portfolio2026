@@ -5,7 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="koi-pond.css" />
-    <title>Santa's Portfolio</title>
+    <title>Santrupti Danagaud — Product Designer</title>
+    <meta name="description" content="Product designer working on data, systems and people. Case studies on price transparency, location context, sales analytics and data comparison for PropertyGuru, Licious, Infra Market and Crux Intelligence." />
+    <link rel="canonical" href="https://santais.online/" />
+    <meta name="author" content="Santrupti Danagaud" />
+
+    <!-- Open Graph / social share cards -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Santrupti Danagaud" />
+    <meta property="og:url" content="https://santais.online/" />
+    <meta property="og:title" content="Santrupti Danagaud — Product Designer" />
+    <meta property="og:description" content="Product designer working on data, systems and people. Case studies on price transparency, location context, sales analytics and data comparison for PropertyGuru, Licious, Infra Market and Crux Intelligence." />
+    <meta property="og:image" content="https://santais.online/assets/og/homepage-og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Santrupti Danagaud — Product Designer" />
+    <meta name="twitter:description" content="Product designer working on data, systems and people. Case studies on price transparency, location context, sales analytics and data comparison for PropertyGuru, Licious, Infra Market and Crux Intelligence." />
+    <meta name="twitter:image" content="https://santais.online/assets/og/homepage-og.jpg" />
     <link rel="icon" type="image/png" href="assets/dragonfly.svg" />
     <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,6 +32,7 @@
   </head>
 
   <body>
+    <h1 class="sr-only">Santrupti Danagaud — product designer working with data, systems and people</h1>
     <div id="loadingOverlay">
       <p id="loadingText">Loading<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span></p>
     </div>
@@ -64,6 +80,7 @@
       </div>
       <div class="nav-pill-bar">
         <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()">
+          <span class="nav-hamburger-label">Menu</span>
           <svg class="nav-hamburger-lines" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <line x1="3" y1="6" x2="17" y2="6" /><line x1="3" y1="10" x2="17" y2="10" /><line x1="3" y1="14" x2="17" y2="14" />
           </svg>
@@ -77,6 +94,8 @@
         <a href="aboutme.html" class="nav-item">About</a>
       </div>
     </nav>
+
+    <main>
     <script>
       function toggleMobileNav() {
         var menu = document.getElementById("navMobileMenu");
@@ -151,7 +170,7 @@
     <script src="script.js"></script>
 
     <div class="fullscrollsnap">
-      <div class="scrollContainer"><div id="p5jsholder"></div></div>
+      <div class="scrollContainer"><div id="p5jsholder" aria-hidden="true"></div></div>
       <div class="bgimage"></div>
 
       <div class="section-title"><h1>Selected Projects</h1></div>
@@ -174,15 +193,7 @@
           <h4>
             Helping home buyers/renters make informed property decisions
           </h4>
-          <button
-            onclick="
-              window.open(
-                'case-studies/priceinsights.html',
-              )
-            "
-          >
-            Read Case Study
-          </button>
+          <a class="btn" href="case-studies/priceinsights.html" aria-label="Read the Price Insights case study">Read Case Study</a>
         </div>
       </div>
 
@@ -201,16 +212,7 @@
             Helping users understand what the neighbourhood has to offer when
             they are looking to buy/rent a new place
           </h4>
-          <button
-            onclick="
-              window.open(
-                'case-studies/whatsnearby.html',
-                '_blank',
-              )
-            "
-          >
-            Read Case Study
-          </button>
+          <a class="btn" href="case-studies/whatsnearby.html" aria-label="Read the What&apos;s Nearby case study">Read Case Study</a>
         </div>
       </div>
 
@@ -230,15 +232,7 @@
             Helping sales people know where they spent money and if it was
             useful to increase sales
           </h4>
-          <button
-            onclick="
-              window.open(
-              'case-studies/keydriveranalysis.html',
-              )
-            "
-          >
-            Read Case Study
-          </button>
+          <a class="btn" href="case-studies/keydriveranalysis.html" aria-label="Read the Key Driver Analysis case study">Read Case Study</a>
         </div>
       </div>
 
@@ -257,16 +251,7 @@
           <h4>
             Tool to help manipulate data for better comparison and consumption
           </h4>
-          <button
-            onclick="
-              window.open(
-              'case-studies/tablepivot.html',
-                '_blank',
-              )
-            "
-          >
-            Read Case Study
-          </button>
+          <a class="btn" href="case-studies/tablepivot.html" aria-label="Read the Table Pivot case study">Read Case Study</a>
         </div>
       </div>
       <!-- ── KOI POND FOOTER (see koi-pond.js / koi-pond.css) ── -->
@@ -418,5 +403,6 @@
         });
       });
     </script>
+    </main>
   </body>
 </html>

@@ -1,0 +1,109 @@
+/* ============================================================
+   VIDEO PLAY/PAUSE CONTROLS
+   WCAG 2.2.2 (Pause, Stop, Hide) — any motion that starts
+   automatically and lasts more than 5s needs a pause mechanism.
+
+   The videos autoplay as before; this adds an always-visible
+   corner button so anyone can stop them in one click.
+   ============================================================ */
+
+/* Wrapper injected around each autoplaying video by video-controls.js.
+   display:contents would break positioning, so it's a positioned box
+   that takes its size from the video itself — no layout change. */
+.vc-wrap {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  line-height: 0; /* kills the inline-block descender gap */
+}
+
+/* The wrapper must not disturb a video that was a flex/grid child
+   or was sized by its own class, so it inherits the video's width. */
+.vc-wrap > video {
+  display: block;
+  max-width: 100%;
+}
+
+.vc-btn {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* 36px comfortably clears the 24x24 WCAG 2.5.8 minimum */
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 100px;
+  background: rgba(17, 17, 17, 0.62);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  color: #fff;
+
+  cursor: pointer;
+  line-height: 0;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.vc-btn:hover {
+  background: rgba(17, 17, 17, 0.85);
+  border-color: rgba(255, 255, 255, 0.85);
+  transform: scale(1.06);
+}
+
+/* Visible keyboard focus — the site otherwise relies on UA defaults,
+   which are invisible against a dark video frame. */
+.vc-btn:focus-visible {
+  outline: 3px solid #fffced;
+  outline-offset: 2px;
+}
+
+.vc-btn svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+  pointer-events: none;
+}
+
+/* Only one of the two icons shows at a time, driven by [data-playing]. */
+.vc-btn .vc-pause {
+  display: block;
+}
+.vc-btn .vc-play {
+  display: none;
+}
+.vc-btn[data-playing="false"] .vc-pause {
+  display: none;
+}
+.vc-btn[data-playing="false"] .vc-play {
+  display: block;
+  /* The triangle's own path already sits right-of-centre in its viewBox,
+     so pull it back left rather than pushing it further right. */
+  margin-left: -2px;
+}
+
+@media (max-width: 640px) {
+  .vc-btn {
+    bottom: 8px;
+    left: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vc-btn {
+    transition: none;
+  }
+  .vc-btn:hover {
+    transform: none;
+  }
+}

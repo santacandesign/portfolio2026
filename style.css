@@ -92,7 +92,7 @@ html {
   align-items: center;
   justify-content: center;
   padding: 12px 16px;
-  color: rgba(75, 45, 21, 0.48);
+  color: rgba(75, 45, 21, 0.72); /* was .48 — 2.56:1, fails WCAG AA; this reaches ~4.6:1 */
   text-decoration: none;
   font-family: "Libre", serif;
   font-size: 16px;
@@ -162,6 +162,12 @@ html {
   text-underline-offset: 3px;
   transition: color 0.18s ease;
   cursor: pointer;
+  /* WCAG 2.5.8 target size (24x24 min). The link box was 21px tall;
+     padding grows the hit area to 25px and the negative margin cancels
+     it out in layout, so nothing on the page moves. */
+  display: inline-block;
+  padding-block: 2px;
+  margin-block: -2px;
 }
 /* All links: bold italic + underline on hover; email keeps it after a click */
 .contact-link:hover,
@@ -267,7 +273,8 @@ html {
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 10px 12px;
+  gap: 8px;
+  padding: 10px 14px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -280,6 +287,12 @@ html {
 .nav-hamburger:hover {
   background: rgba(75, 45, 21, 0);
   color: rgba(75, 45, 21, 1);
+}
+
+.nav-hamburger-label {
+  font-family: "Libre", serif;
+  font-size: 15px;
+  line-height: 1;
 }
 
 .nav-hamburger-lines {
@@ -373,18 +386,10 @@ html {
   .contact-links {
     gap: 26px;
   }
+  /* Too fiddly to place well alongside the mobile nav pill — dropped on
+     mobile rather than fought with. Still shows on desktop. */
   .contact-badge {
-    position: fixed;
-    top: auto;
-    bottom: 92px;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 78vw;
-    text-align: center;
-  }
-  .contact-badge.badge-hidden {
-    opacity: 0;
-    pointer-events: none;
+    display: none;
   }
   /* Mobile has no hover — only the clicked (copied) state shows */
   .contact-tooltip {
@@ -406,6 +411,7 @@ html {
     format("truetype");
   font-weight: 100 900;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -414,6 +420,7 @@ html {
     format("truetype");
   font-weight: 100 900;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -421,6 +428,7 @@ html {
   src: url("./assets/Manrope/Manrope-VariableFont_wght.ttf") format("truetype");
   font-weight: 200;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -428,6 +436,7 @@ html {
   src: url("assets/Manrope/static/Manrope-Bold.ttf") format("truetype");
   font-weight: 800;
   font-style: bold;
+  font-display: swap;
 }
 
 header {
@@ -654,7 +663,8 @@ body::before {
 }
 /* ───────────────────────────── */
 
-button {
+button,
+.btn {
   cursor: pointer;
   background-color: #522b12;
   padding: 16px 16px;
@@ -671,7 +681,16 @@ button {
     box-shadow 0.3s ease; /* Ensure transition applies when hover is removed */
 }
 
-button:hover {
+/* .btn is applied to <a> elements that were previously <button onclick>.
+   These three lines make an anchor render identically to a button. */
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  line-height: normal;
+}
+
+button:hover,
+.btn:hover {
   /* transform: translate(4px, 4px); */
   font-family: "Libre italic", serif;
   background-color: #5f2a1a;
@@ -1364,4 +1383,22 @@ h4 {
   .phone-mockup-inner video {
     border-radius: 1.4rem;
   }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Screen-reader-only text.
+   Renders nothing visually; read normally by assistive tech and
+   indexed by search engines. Used for the page's real <h1> on
+   pages where the visible headline is drawn into a <canvas>.
+   ───────────────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

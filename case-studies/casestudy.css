@@ -210,7 +210,7 @@
 .cs-img-caption {
   font-family: "Manrope", sans-serif;
   font-size: 13px;
-  color: #777;
+  color: #747474; /* was #777 — 4.35:1, just under WCAG AA; this clears 4.5:1 */
   margin: -16px 0 28px;
   max-width: none;
 }
@@ -240,6 +240,60 @@
 
 .cs-back:hover {
   opacity: 1;
+}
+
+/* ── End-of-case-study actions: next case study / playground ──
+   Deliberately quieter than the homepage's solid .btn — outlined,
+   not filled, so they read as secondary next-step links rather
+   than another primary call to action. */
+.cs-next-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 40px;
+  margin-top: 40px;
+  border-top: 1px solid rgba(82, 43, 18, 0.14);
+}
+
+.cs-secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border: 1.5px solid rgba(82, 43, 18, 0.35);
+  border-radius: 100px;
+  font-family: "Libre", serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: #522b12;
+  text-decoration: none;
+  background: transparent;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.cs-secondary-btn:hover {
+  background-color: rgba(82, 43, 18, 0.06);
+  border-color: rgba(82, 43, 18, 0.55);
+}
+
+.cs-secondary-btn .cs-secondary-arrow {
+  transition: transform 0.2s ease;
+}
+
+.cs-secondary-btn:hover .cs-secondary-arrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 640px) {
+  .cs-next-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cs-secondary-btn {
+    justify-content: center;
+  }
 }
 
 /* ── Responsive ── */
