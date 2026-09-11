@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Silq — Today</title>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --surface:#FFFFFF;
+    --hairline:#E4EAF1;
+    --wash:#F1F5F9;
+
+    --ink:#0F1720;
+    --ink-soft:#4C5C6B;
+    --ink-faint:#8496A6;
+
+    --blue:#2563EB;
+    --red:#D0342C;
+    --amber:#B5760B;
+    --slate:#41739C;
+    --green:#1E7A5A;
+
+    --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+    --sans:"Instrument Sans",-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1100px 520px at 12% -8%, #E9F0FB 0%, rgba(233,240,251,0) 62%),
+      radial-gradient(900px 460px at 96% 4%, #EDF3F6 0%, rgba(237,243,246,0) 58%),
+      #F2F5F9;
+    background-attachment:fixed;
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:14px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .num{font-variant-numeric:tabular-nums;}
+  .id{font-family:var(--mono);font-size:12.5px;letter-spacing:-0.015em;font-variant-numeric:tabular-nums;}
+  button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;}
+  button:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+  .one-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+  .page{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding:22px 30px 80px;}
+
+  /* ── dark hero band behind header, greeting and filters; panels overlap its bottom ── */
+  .hero-bg{
+    position:absolute;top:0;left:0;right:0;height:380px;z-index:0;overflow:hidden;
+    /* soft fade into the page instead of a hard bottom edge */
+    -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 52%,transparent 100%);
+            mask-image:linear-gradient(180deg,#000 0%,#000 52%,transparent 100%);
+    background:
+      radial-gradient(640px 320px at 82% -10%, rgba(76,132,255,.55) 0%, rgba(76,132,255,0) 70%),
+      radial-gradient(520px 260px at 8% 110%, rgba(40,86,190,.45) 0%, rgba(40,86,190,0) 70%),
+      linear-gradient(165deg,#0A1633 0%,#0F2656 52%,#163A86 100%);
+  }
+  .hero-bg::after{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);
+    background-size:44px 44px;background-position:-1px -1px;
+    -webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.55) 60%,transparent 100%);
+            mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.55) 60%,transparent 100%);
+  }
+
+  /* ── chrome ── */
+  .chrome{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px;}
+  .mark{display:flex;align-items:baseline;gap:14px;}
+  .wordmark{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:-0.035em;color:#fff;}
+  .datestamp{font-size:13.5px;color:rgba(255,255,255,.62);}
+  .who{display:flex;align-items:center;gap:9px;font-size:13.5px;color:rgba(255,255,255,.85);}
+  .who i{
+    width:30px;height:30px;border-radius:50%;font-style:normal;
+    background:linear-gradient(160deg,#3B7BF7,#1B49C4);box-shadow:0 0 0 2px rgba(255,255,255,.28);
+    color:#fff;display:grid;place-items:center;font-size:11.5px;font-weight:600;
+  }
+
+  /* ── greeting ── */
+  .greet{margin-bottom:22px;color:#fff;}
+  .greet h1{font-family:var(--display);font-weight:600;font-size:30px;letter-spacing:-0.035em;line-height:1.15;margin:0;}
+  .greet p{margin:6px 0 0;font-size:14.5px;color:rgba(255,255,255,.7);}
+  .greet p b{color:#fff;font-weight:600;}
+
+  /* ── filter toolbar (static) ── */
+  .toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+  .chip{
+    display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 11px 0 13px;
+    border-radius:999px;background:var(--surface);font-size:13px;font-weight:500;color:var(--ink);
+    box-shadow:0 0 0 1px var(--hairline),0 1px 2px rgba(15,23,32,.05);
+    transition:box-shadow .15s ease;
+  }
+  .chip:hover{box-shadow:0 0 0 1px #CBD6E1,0 4px 10px -6px rgba(15,23,32,.25);}
+  .chip svg{width:15px;height:15px;flex:none;fill:none;stroke:var(--ink-soft);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+  .chip .cv{width:13px;height:13px;stroke:var(--ink-faint);}
+  .chip.plain{background:none;box-shadow:none;padding:0 10px;color:rgba(255,255,255,.85);}
+  .chip.plain svg{stroke:rgba(255,255,255,.85);}
+  .chip.plain:hover{background:rgba(255,255,255,.1);}
+  .chip.icon{width:36px;padding:0;justify-content:center;}
+  .tb-div{width:1px;height:20px;background:rgba(255,255,255,.22);margin:0 4px;}
+  .view{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.6);}
+  .seg{
+    display:flex;padding:3px;border-radius:999px;background:var(--surface);
+    box-shadow:0 0 0 1px var(--hairline),0 1px 2px rgba(15,23,32,.05);
+  }
+  .seg button{height:30px;padding:0 15px;border-radius:999px;font-size:13px;font-weight:500;color:var(--ink-soft);}
+  .seg button:hover{color:var(--ink);}
+  .seg button[aria-pressed="true"]{
+    background:linear-gradient(180deg,#3B7BF7,#1D4FD1);color:#fff;
+    box-shadow:0 1px 1px rgba(15,23,32,.1),0 6px 14px -8px rgba(37,99,235,.85);
+  }
+
+  /* ── grid ── */
+  .grid{display:grid;grid-template-columns:1fr 372px;gap:20px;align-items:start;}
+  .panel{
+    background:var(--surface);border-radius:22px;overflow:hidden;margin-bottom:20px;
+    box-shadow:0 1px 2px rgba(15,23,32,.04),0 16px 34px -28px rgba(15,23,32,.3);
+  }
+  .phead{display:flex;align-items:baseline;gap:10px;padding:18px 24px 14px;}
+  .phead h2{font-family:var(--display);font-size:18px;font-weight:600;letter-spacing:-0.03em;margin:0;}
+  .phead .count{font-size:13px;color:var(--ink-faint);}
+  .phead .aside{margin-left:auto;font-size:12.5px;color:var(--ink-faint);}
+
+  /* ── tier bands ── */
+  .band{display:flex;align-items:center;gap:8px;padding:8px 24px;font-size:12.5px;font-weight:600;}
+  .band .dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+  .band .n{margin-left:auto;font-variant-numeric:tabular-nums;opacity:.7;}
+  .band.b1{background:linear-gradient(90deg,#FBE7E4 0%,#FDF3F1 78%);color:var(--red);}
+  .band.b2{background:linear-gradient(90deg,#FBF0DD 0%,#FDF8EF 78%);color:var(--amber);}
+  .band.b3{background:linear-gradient(90deg,#E9F0F6 0%,#F5F8FB 78%);color:var(--slate);}
+
+  /* ── milestone bar ── */
+  .ms{display:flex;align-items:center;gap:12px;margin-top:13px;}
+  .ms-port{font-family:var(--mono);font-size:10px;color:var(--ink-faint);letter-spacing:-0.01em;flex:none;}
+  .ms-track{position:relative;flex:1;height:11px;min-width:64px;}
+  .ms-rail,.ms-fill{position:absolute;top:4.5px;height:2px;border-radius:1px;}
+  .ms-rail{left:0;right:0;background:#E1E8EF;}
+  .ms-fill{left:0;background:linear-gradient(90deg,#4FA98A,#1E7A5A);}
+  .ms-node{position:absolute;top:2.5px;width:6px;height:6px;border-radius:50%;background:#DCE4EC;transform:translateX(-50%);}
+  .ms-node.done{background:#2A8064;}
+  /* ship marker — svg injected from #ship, one neutral hull for every shipment */
+  .ms-mark{
+    position:absolute;top:-6px;width:22px;height:15px;
+    transform:translateX(-50%);color:#56677A;
+    filter:drop-shadow(0 0 1.2px #fff) drop-shadow(0 0 1.2px #fff) drop-shadow(0 1px 1.5px rgba(15,23,32,.22));
+  }
+  .ms-mark > svg{display:block;width:100%;height:100%;}
+  /* anchor badge — shown on ships that are stuck in port */
+  .anc{
+    position:absolute;right:-8px;top:-7px;width:13px;height:13px;border-radius:50%;
+    background:#fff;display:grid;place-items:center;box-shadow:0 0 0 1px #DCE4EC;
+  }
+  .anc svg{width:9px;height:9px;fill:none;stroke:#0F1720;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* ── rows ── */
+  .row{
+    display:grid;grid-template-columns:214px 1fr 150px 40px;
+    gap:18px;align-items:center;
+    padding:14px 24px;border-top:1px solid var(--hairline);
+  }
+  .band + .row{border-top:none;}
+  .row .what .title{font-size:14px;font-weight:600;line-height:1.3;}
+  .row .what .sub{font-size:12.5px;color:var(--ink-soft);margin-top:2px;}
+  .clock .t{font-family:var(--mono);font-size:14px;font-weight:500;font-variant-numeric:tabular-nums;}
+  .clock.c1 .t{color:var(--red);}
+  .clock.c2 .t{color:var(--amber);}
+  .clock .u{font-size:11.5px;color:var(--ink-faint);margin-top:1px;}
+  .clock .rate{display:inline-block;margin-top:6px;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;}
+  .clock.c1 .rate{background:linear-gradient(140deg,#F8D8D3,#FBE9E6);color:var(--red);}
+  .clock.c2 .rate{background:linear-gradient(140deg,#F6E3C2,#FCF3E2);color:var(--amber);}
+  .act{display:flex;align-items:center;justify-content:flex-end;gap:6px;}
+  .more{
+    width:28px;height:28px;border-radius:50%;flex:none;
+    display:grid;place-items:center;color:var(--ink-faint);
+    transition:background .15s ease,color .15s ease;
+  }
+  .more:hover{background:var(--wash);color:var(--ink);}
+  .more svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+
+  .row.slim{grid-template-columns:214px 1fr 130px;padding:12px 24px;}
+  .row.slim .what .title{font-weight:500;font-size:13.5px;color:var(--ink-soft);}
+  .row.slim .what .title b{color:var(--ink);font-weight:600;}
+  .fyi{font-size:12px;color:var(--ink-faint);display:flex;align-items:center;justify-content:flex-end;gap:6px;}
+
+  /* ── arriving ── */
+  .row.arr{grid-template-columns:66px 132px 1fr 156px 40px;}
+  .row.arr .ms{margin-top:0;}
+  .arr-time{font-family:var(--mono);font-size:13.5px;font-variant-numeric:tabular-nums;}
+  .arr-time.done{color:var(--ink-faint);}
+  .state{font-size:12.5px;text-align:right;color:var(--ink-soft);}
+  .state.flag{color:var(--amber);font-weight:600;}
+  .state.good{color:var(--green);}
+
+  /* ── next 3 days ── */
+  .daysplit{padding:6px 24px 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .daycol h3{font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:-0.02em;margin:0 0 10px;}
+  .daycol .item{padding:11px 0;border-top:1px solid var(--hairline);}
+  .drift{
+    display:inline-block;margin-top:8px;font-size:11.5px;font-weight:600;color:var(--amber);
+    background:linear-gradient(140deg,#F8E9CE,#FDF6EA);padding:2px 9px;border-radius:999px;
+  }
+
+  /* ── map ── */
+  .side{padding:18px 22px 20px;}
+  .side h2{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:-0.025em;margin:0 0 12px;}
+  #map{height:264px;border-radius:16px;overflow:hidden;background:#FAF8F4;}
+  .maplibregl-ctrl-attrib{font-size:9px;background:rgba(255,255,255,.72);}
+  .pin{
+    width:30px;height:22px;border-radius:8px;background:#fff;cursor:pointer;
+    display:grid;place-items:center;color:#56677A;
+    box-shadow:0 2px 5px rgba(0,0,0,.25);
+  }
+  .pin > svg{width:22px;height:15px;display:block;}
+  .pin .anc{right:-5px;top:-5px;}
+  .key{display:flex;gap:16px;margin-top:12px;font-size:11.5px;color:var(--ink-soft);}
+  .key span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
+  .key .anc{position:static;}
+
+  /* ── dataviz ── */
+  .viz{padding:18px 22px;border-top:1px solid var(--hairline);}
+  .viz:first-child{border-top:none;}
+  .viz-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;}
+  .viz-top h3{font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:-0.02em;margin:0;}
+  .viz-top b{font-family:var(--display);font-size:22px;font-weight:600;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;}
+  .viz svg{display:block;width:100%;height:auto;}
+  .viz-note{font-size:12px;color:var(--ink-faint);margin:10px 0 0;line-height:1.45;}
+  .viz-note b{color:var(--ink);font-weight:600;}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:11.5px;color:var(--ink-soft);}
+  .legend span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;}
+  .legend i{width:9px;height:9px;border-radius:2px;flex:none;}
+  .legend em{font-style:normal;color:var(--ink-faint);}
+
+  @media (max-width:1080px){
+    .grid{grid-template-columns:1fr;}
+    .row,.row.arr,.row.slim{grid-template-columns:1fr;row-gap:12px;}
+    .act,.state,.fyi{text-align:left;justify-content:flex-start;}
+    .daysplit{grid-template-columns:1fr;}
+    .view{margin-left:0;}
+    .hero-bg{height:420px;}
+  }
+</style>
+</head>
+<body>
+<!-- Ship sprite: 3/4 view, bow right. Hull uses currentColor so each use takes its tier colour. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ship" viewBox="0 0 24 16">
+    <path d="M1 8.8 2.2 7.8H23.6L22.6 8.8Z" fill="currentColor" opacity=".5"/>
+    <path d="M2.6 3.4l1-.9h3.6l-1 .9z" fill="currentColor" opacity=".45"/>
+    <rect x="2.6" y="3.4" width="3.6" height="4.6" fill="#FFFFFF"/>
+    <path d="M6.2 3.4l1-.9v4.6l-1 .9z" fill="#C5D1DD"/>
+    <rect x="3.1" y="4.2" width="2.6" height="1.1" rx=".3" fill="currentColor"/>
+    <path d="M8 5.2 9 4.3h3.4l-1 .9zM11.9 5.2l1-.9h3.4l-1 .9zM15.8 5.2l1-.9h3.4l-1 .9z" fill="#FFFFFF"/>
+    <rect x="8" y="5.2" width="3.4" height="2.8" fill="#C5D1DD"/>
+    <rect x="11.9" y="5.2" width="3.4" height="2.8" fill="#E3E9EF"/>
+    <rect x="15.8" y="5.2" width="3.4" height="2.8" fill="#AEBDCB"/>
+    <path d="M19.2 5.2l1-.9v2.8l-1 .9z" fill="#8FA1B3"/>
+    <path d="M1 8.8H22.6L20 14.4H3.6Z" fill="currentColor"/>
+    <path d="M22.6 8.8 23.6 7.8 21 13.4 20 14.4Z" fill="currentColor"/>
+    <path d="M22.6 8.8 23.6 7.8 21 13.4 20 14.4Z" fill="#000" opacity=".25"/>
+    <path d="M2.9 12.8H20.7L20 14.4H3.6Z" fill="#000" opacity=".2"/>
+    <path d="M1.8 10.3H22" stroke="#fff" stroke-opacity=".55" stroke-width=".6"/>
+  </symbol>
+</svg>
+<div class="hero-bg" aria-hidden="true"></div>
+<div class="page">
+
+  <div class="chrome">
+    <div class="mark">
+      <span class="wordmark">Silq</span>
+      <span class="datestamp">Wednesday, 8 October</span>
+    </div>
+    <div class="who"><i>AR</i>Alex Ramos</div>
+  </div>
+
+  <div class="greet">
+    <h1>Good morning, Alex!</h1>
+    <p><b>2 shipments need escalating</b>, and 3 we're keeping an eye on. Good luck out there today!</p>
+  </div>
+
+  <!-- ══ FILTERS (static) ══ -->
+  <div class="toolbar" role="toolbar" aria-label="Sort and filter shipments">
+    <button class="chip" type="button"><svg viewBox="0 0 24 24"><path d="M7 4v16M4 7l3-3 3 3M17 20V4M14 17l3 3 3-3"/></svg>Relevance<svg class="cv" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+    <span class="tb-div"></span>
+    <button class="chip" type="button"><svg viewBox="0 0 24 24"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h7.5a3.5 3.5 0 0 0 0-7h-7a3.5 3.5 0 0 1 0-7H16"/></svg>Mode<svg class="cv" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+    <button class="chip" type="button"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Status<svg class="cv" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+    <button class="chip" type="button"><svg viewBox="0 0 24 24"><path d="M5 9h14M5 15h14M11 4 7 20M17 4l-4 16"/></svg>PO<svg class="cv" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+    <button class="chip" type="button"><svg viewBox="0 0 24 24"><path d="M12 9v12M4 13a8 8 0 0 0 16 0M21 13h-2M5 13H3"/><circle cx="12" cy="6" r="3"/></svg>Origin Port<svg class="cv" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
+    <button class="chip plain" type="button"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>More filters</button>
+    <button class="chip icon" type="button" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+    <div class="view">View
+      <div class="seg">
+        <button type="button" aria-pressed="false">Hybrid</button>
+        <button type="button" aria-pressed="false">Map</button>
+        <button type="button" aria-pressed="true">List</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- ── LEFT ── -->
+    <div>
+
+      <!-- EXCEPTIONS -->
+      <div class="panel">
+        <div class="phead">
+          <h2>Delays and exceptions</h2>
+          <span class="count num">6 open</span>
+          <span class="aside">Most urgent first</span>
+        </div>
+
+        <div class="band b1"><span class="dot"></span>Needs escalation<span class="n">2</span></div>
+
+        <div class="row">
+          <div>
+            <span class="id">MSCU4471209</span>
+            <div class="ms">
+              <span class="ms-port">CNNGB</span>
+              <div class="ms-track">
+                <i class="ms-rail"></i><i class="ms-fill" style="width:60%"></i>
+                <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+                <i class="ms-node done" style="left:40%"></i><i class="ms-node" style="left:60%"></i>
+                <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+                <i class="ms-mark stuck red" style="left:60%"></i>
+              </div>
+              <span class="ms-port">INNSA</span>
+            </div>
+          </div>
+          <div class="what">
+            <div class="title">Customs hold, broker hasn't replied</div>
+            <div class="sub one-line">MSC, held on a valuation query since Monday</div>
+          </div>
+          <div class="clock c1">
+            <div class="t">Day 2</div>
+            <div class="u">of hold</div>
+            <span class="rate num">$2,400/day</span>
+          </div>
+          <div class="act"><button class="more" type="button" aria-label="See more"><svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button></div>
+        </div>
+
+        <div class="row">
+          <div>
+            <span class="id">HLXU9903112</span>
+            <div class="ms">
+              <span class="ms-port">CNSHA</span>
+              <div class="ms-track">
+                <i class="ms-rail"></i><i class="ms-fill" style="width:80%"></i>
+                <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+                <i class="ms-node done" style="left:40%"></i><i class="ms-node done" style="left:60%"></i>
+                <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+                <i class="ms-mark stuck red" style="left:80%"></i>
+              </div>
+              <span class="ms-port">USLGB</span>
+            </div>
+          </div>
+          <div class="what">
+            <div class="title">Trucker no-showed, needs rebooking</div>
+            <div class="sub one-line">Hapag-Lloyd, missed the 07:00 delivery window</div>
+          </div>
+          <div class="clock c1">
+            <div class="t num">18 hrs</div>
+            <div class="u">of free time left</div>
+            <span class="rate num">$650/day</span>
+          </div>
+          <div class="act"><button class="more" type="button" aria-label="See more"><svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button></div>
+        </div>
+
+        <div class="band b2"><span class="dot"></span>Worth watching<span class="n">3</span></div>
+
+        <div class="row">
+          <div>
+            <span class="id">CMAU7788341</span>
+            <div class="ms">
+              <span class="ms-port">INMAA</span>
+              <div class="ms-track">
+                <i class="ms-rail"></i><i class="ms-fill" style="width:80%"></i>
+                <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+                <i class="ms-node done" style="left:40%"></i><i class="ms-node done" style="left:60%"></i>
+                <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+                <i class="ms-mark stuck amber" style="left:80%"></i>
+              </div>
+              <span class="ms-port">NLRTM</span>
+            </div>
+          </div>
+          <div class="what">
+            <div class="title">No chassis assigned yet</div>
+            <div class="sub one-line">CMA CGM, third day sitting at the terminal</div>
+          </div>
+          <div class="clock c2">
+            <div class="t num">18 hrs</div>
+            <div class="u">of free time left</div>
+            <span class="rate num">$480/day</span>
+          </div>
+          <div class="act"><button class="more" type="button" aria-label="See more"><svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button></div>
+        </div>
+
+        <div class="row">
+          <div>
+            <span class="id">ONEY2210987</span>
+            <div class="ms">
+              <span class="ms-port">LKCMB</span>
+              <div class="ms-track">
+                <i class="ms-rail"></i><i class="ms-fill" style="width:30%"></i>
+                <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+                <i class="ms-node" style="left:40%"></i><i class="ms-node" style="left:60%"></i>
+                <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+                <i class="ms-mark stuck amber" style="left:30%"></i>
+              </div>
+              <span class="ms-port">NLRTM</span>
+            </div>
+          </div>
+          <div class="what">
+            <div class="title">Missed its connection at Singapore</div>
+            <div class="sub one-line">ONE, next feeder sails Thursday</div>
+          </div>
+          <div class="clock c2">
+            <div class="t num">+1 day</div>
+            <div class="u">later than promised</div>
+          </div>
+          <div class="act"><button class="more" type="button" aria-label="See more"><svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button></div>
+        </div>
+
+        <div class="row">
+          <div>
+            <span class="id">MAEU6621450</span>
+            <div class="ms">
+              <span class="ms-port">CNSHA</span>
+              <div class="ms-track">
+                <i class="ms-rail"></i><i class="ms-fill" style="width:25%"></i>
+                <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+                <i class="ms-node" style="left:40%"></i><i class="ms-node" style="left:60%"></i>
+                <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+                <i class="ms-mark amber" style="left:25%"></i>
+              </div>
+              <span class="ms-port">USLAX</span>
+            </div>
+          </div>
+          <div class="what">
+            <div class="title">Broker wants a corrected invoice</div>
+            <div class="sub one-line">Maersk, value doesn't match the packing list</div>
+          </div>
+          <div class="clock c2">
+            <div class="t">No clock</div>
+            <div class="u">vessel still at sea</div>
+          </div>
+          <div class="act"><button class="more" type="button" aria-label="See more"><svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button></div>
+        </div>
+
+        <div class="band b3"><span class="dot"></span>Just so you know<span class="n">1</span></div>
+
+        <div class="row slim">
+          <div>
+            <span class="id">COSU3345219</span>
+            <div class="ms">
+              <span class="ms-port">CNNGB</span>
+              <div class="ms-track">
+                <i class="ms-rail"></i><i class="ms-fill" style="width:60%"></i>
+                <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+                <i class="ms-node done" style="left:40%"></i><i class="ms-node" style="left:60%"></i>
+                <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+                <i class="ms-mark slate" style="left:60%"></i>
+              </div>
+              <span class="ms-port">USLAX</span>
+            </div>
+          </div>
+          <div class="what"><div class="title one-line"><b>Turned up a day early.</b> COSCO, warehouse has been told.</div></div>
+          <div class="fyi">Nothing to do<button class="more" type="button" aria-label="See more"><svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button></div>
+        </div>
+      </div>
+
+      <!-- ARRIVING -->
+      <div class="panel">
+        <div class="phead">
+          <h2>Landing today</h2>
+          <span class="count num">6 shipments</span>
+          <span class="aside">Departed, at sea, discharged, cleared, gated out, delivered</span>
+        </div>
+
+        <div class="row arr">
+          <div class="arr-time done">03:50</div>
+          <div><span class="id">MSCU1187734</span></div>
+          <div class="ms">
+            <span class="ms-port">SGSIN</span>
+            <div class="ms-track">
+              <i class="ms-rail"></i><i class="ms-fill" style="width:80%"></i>
+              <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+              <i class="ms-node done" style="left:40%"></i><i class="ms-node done" style="left:60%"></i>
+              <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+              <i class="ms-mark stuck amber" style="left:80%"></i>
+            </div>
+            <span class="ms-port">NLRTM</span>
+          </div>
+          <div class="state flag">Waiting on a chassis</div>
+          <div class="act"><button class="more" type="button" aria-label="See more"><svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button></div>
+        </div>
+
+        <div class="row arr">
+          <div class="arr-time done">06:15</div>
+          <div><span class="id">ONEY7743210</span></div>
+          <div class="ms">
+            <span class="ms-port">CNNGB</span>
+            <div class="ms-track">
+              <i class="ms-rail"></i><i class="ms-fill" style="width:60%"></i>
+              <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+              <i class="ms-node done" style="left:40%"></i><i class="ms-node" style="left:60%"></i>
+              <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+              <i class="ms-mark stuck amber" style="left:60%"></i>
+            </div>
+            <span class="ms-port">USLGB</span>
+          </div>
+          <div class="state flag">In customs since 07:10</div>
+          <div class="act"><button class="more" type="button" aria-label="See more"><svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button></div>
+        </div>
+
+        <div class="row arr">
+          <div class="arr-time done">09:40</div>
+          <div><span class="id">MAEU5512873</span></div>
+          <div class="ms">
+            <span class="ms-port">CNSHA</span>
+            <div class="ms-track">
+              <i class="ms-rail"></i><i class="ms-fill" style="width:100%"></i>
+              <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+              <i class="ms-node done" style="left:40%"></i><i class="ms-node done" style="left:60%"></i>
+              <i class="ms-node done" style="left:80%"></i><i class="ms-node done" style="left:100%"></i>
+              <i class="ms-mark green" style="left:100%"></i>
+            </div>
+            <span class="ms-port">USLAX</span>
+          </div>
+          <div class="state good">Delivered, 40 min early</div>
+          <div class="act"><button class="more" type="button" aria-label="See more"><svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button></div>
+        </div>
+
+        <div class="row arr">
+          <div class="arr-time">11:05</div>
+          <div><span class="id">COSU3345219</span></div>
+          <div class="ms">
+            <span class="ms-port">CNNGB</span>
+            <div class="ms-track">
+              <i class="ms-rail"></i><i class="ms-fill" style="width:38%"></i>
+              <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+              <i class="ms-node" style="left:40%"></i><i class="ms-node" style="left:60%"></i>
+              <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+              <i class="ms-mark" style="left:38%"></i>
+            </div>
+            <span class="ms-port">USLAX</span>
+          </div>
+          <div class="state good">Berthed a day early</div>
+          <div class="act"><button class="more" type="button" aria-label="See more"><svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button></div>
+        </div>
+
+        <div class="row arr">
+          <div class="arr-time">14:00</div>
+          <div><span class="id">HLXU2298104</span></div>
+          <div class="ms">
+            <span class="ms-port">INNSA</span>
+            <div class="ms-track">
+              <i class="ms-rail"></i><i class="ms-fill" style="width:30%"></i>
+              <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+              <i class="ms-node" style="left:40%"></i><i class="ms-node" style="left:60%"></i>
+              <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+              <i class="ms-mark" style="left:30%"></i>
+            </div>
+            <span class="ms-port">NLRTM</span>
+          </div>
+          <div class="state">On the berth window</div>
+          <div class="act"><button class="more" type="button" aria-label="See more"><svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button></div>
+        </div>
+
+        <div class="row arr">
+          <div class="arr-time">18:20</div>
+          <div><span class="id">CMAU9982104</span></div>
+          <div class="ms">
+            <span class="ms-port">INMAA</span>
+            <div class="ms-track">
+              <i class="ms-rail"></i><i class="ms-fill" style="width:28%"></i>
+              <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+              <i class="ms-node" style="left:40%"></i><i class="ms-node" style="left:60%"></i>
+              <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+              <i class="ms-mark" style="left:28%"></i>
+            </div>
+            <span class="ms-port">NLRTM</span>
+          </div>
+          <div class="state">On the berth window</div>
+          <div class="act"><button class="more" type="button" aria-label="See more"><svg viewBox="0 0 16 16"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button></div>
+        </div>
+      </div>
+
+      <!-- NEXT 3 DAYS -->
+      <div class="panel">
+        <div class="phead">
+          <h2>Coming up</h2>
+          <span class="count num">5 shipments</span>
+          <span class="aside">To plan around, not to act on</span>
+        </div>
+        <div class="daysplit">
+          <div class="daycol">
+            <h3>Thursday</h3>
+            <div class="item">
+              <span class="id">COSU4471982</span>
+              <div class="ms"><span class="ms-port">CNNGB</span>
+                <div class="ms-track"><i class="ms-rail"></i><i class="ms-fill" style="width:34%"></i>
+                  <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+                  <i class="ms-node" style="left:40%"></i><i class="ms-node" style="left:60%"></i>
+                  <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+                  <i class="ms-mark" style="left:34%"></i></div>
+                <span class="ms-port">USLAX</span></div>
+            </div>
+            <div class="item">
+              <span class="id">MAEU3321087</span>
+              <div class="ms"><span class="ms-port">CNSHA</span>
+                <div class="ms-track"><i class="ms-rail"></i><i class="ms-fill" style="width:32%"></i>
+                  <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+                  <i class="ms-node" style="left:40%"></i><i class="ms-node" style="left:60%"></i>
+                  <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+                  <i class="ms-mark" style="left:32%"></i></div>
+                <span class="ms-port">USLAX</span></div>
+            </div>
+          </div>
+          <div class="daycol">
+            <h3>Friday</h3>
+            <div class="item">
+              <span class="id">HLXU8834021</span>
+              <div class="ms"><span class="ms-port">LKCMB</span>
+                <div class="ms-track"><i class="ms-rail"></i><i class="ms-fill" style="width:28%"></i>
+                  <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+                  <i class="ms-node" style="left:40%"></i><i class="ms-node" style="left:60%"></i>
+                  <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+                  <i class="ms-mark amber" style="left:28%"></i></div>
+                <span class="ms-port">NLRTM</span></div>
+              <span class="drift">Drifting later each day</span>
+            </div>
+          </div>
+          <div class="daycol">
+            <h3>Saturday</h3>
+            <div class="item">
+              <span class="id">MSCU5523190</span>
+              <div class="ms"><span class="ms-port">INNSA</span>
+                <div class="ms-track"><i class="ms-rail"></i><i class="ms-fill" style="width:26%"></i>
+                  <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+                  <i class="ms-node" style="left:40%"></i><i class="ms-node" style="left:60%"></i>
+                  <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+                  <i class="ms-mark" style="left:26%"></i></div>
+                <span class="ms-port">NLRTM</span></div>
+            </div>
+            <div class="item">
+              <span class="id">CMAU1145820</span>
+              <div class="ms"><span class="ms-port">INMAA</span>
+                <div class="ms-track"><i class="ms-rail"></i><i class="ms-fill" style="width:24%"></i>
+                  <i class="ms-node done" style="left:0"></i><i class="ms-node done" style="left:20%"></i>
+                  <i class="ms-node" style="left:40%"></i><i class="ms-node" style="left:60%"></i>
+                  <i class="ms-node" style="left:80%"></i><i class="ms-node" style="left:100%"></i>
+                  <i class="ms-mark" style="left:24%"></i></div>
+                <span class="ms-port">SGSIN</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── RIGHT ── -->
+    <div>
+
+      <div class="panel">
+        <div class="side">
+          <h2>Where they are</h2>
+          <div id="map"></div>
+          <div class="key">
+            <span><i class="anc"><svg viewBox="0 0 24 24"><path d="M12 9v12M4 13a8 8 0 0 0 16 0M21 13h-2M5 13H3"/><circle cx="12" cy="6" r="3"/></svg></i>Stuck in port, tap a pin for why</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+
+        <div class="viz">
+          <div class="viz-top"><h3>Arrivals</h3><b class="num">3 of 6</b></div>
+          <svg viewBox="0 0 300 98" role="img" aria-label="Of six arrivals today, three are on the ground and three are still to come. Each block is labelled with its carrier and the last four digits of its container number.">
+            <defs>
+              <linearGradient id="gGrn" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3F9B7A"/><stop offset="100%" stop-color="#15644A"/></linearGradient>
+              <linearGradient id="gAmb2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F6C04C"/><stop offset="100%" stop-color="#DE9D1F"/></linearGradient>
+            </defs>
+            <g font-family="Instrument Sans, sans-serif" font-size="11.5" fill="#8496A6">
+              <text x="0" y="10">Landed</text><text x="299" y="10" text-anchor="end">Still at sea</text>
+            </g>
+            <rect x="0"   y="18" width="44" height="44" rx="9" fill="url(#gGrn)"><title>MAEU5512873, delivered</title></rect>
+            <rect x="51"  y="18" width="44" height="44" rx="9" fill="url(#gAmb2)"><title>MSCU1187734, waiting on a chassis</title></rect>
+            <rect x="102" y="18" width="44" height="44" rx="9" fill="url(#gAmb2)"><title>ONEY7743210, in customs</title></rect>
+            <rect x="153" y="18" width="44" height="44" rx="9" fill="#E7EDF3"><title>COSU3345219, due 11:05</title></rect>
+            <rect x="204" y="18" width="44" height="44" rx="9" fill="#E7EDF3"><title>HLXU2298104, due 14:00</title></rect>
+            <rect x="255" y="18" width="44" height="44" rx="9" fill="#E7EDF3"><title>CMAU9982104, due 18:20</title></rect>
+            <g font-family="Instrument Sans, sans-serif" font-size="10.5" fill="#8496A6" text-anchor="middle">
+              <text x="22" y="78">Maersk</text><text x="73" y="78">MSC</text><text x="124" y="78">ONE</text>
+              <text x="175" y="78">COSCO</text><text x="226" y="78">Hapag</text><text x="277" y="78">CMA</text>
+            </g>
+            <g font-family="JetBrains Mono, monospace" font-size="10.5" fill="#4C5C6B" text-anchor="middle">
+              <text x="22" y="92">2873</text><text x="73" y="92">7734</text><text x="124" y="92">3210</text>
+              <text x="175" y="92">5219</text><text x="226" y="92">8104</text><text x="277" y="92">2104</text>
+            </g>
+          </svg>
+          <p class="viz-note">One delivered, <b>two stuck between the ship and the gate</b>.</p>
+        </div>
+
+        <div class="viz">
+          <div class="viz-top"><h3>Money at risk</h3><b class="num">$2,400</b></div>
+          <!-- Cumulative demurrage if nothing is fixed, stacked by shipment.
+               MSC ·1209 $2,400/day now; Hapag ·3112 $650/day and CMA ·8341 $480/day once free time ends tomorrow. -->
+          <svg viewBox="0 0 300 128" role="img" aria-label="Cumulative port fees if nothing is fixed, split by shipment: $2,400 today rising to $16,520 by Sunday. The MSC customs hold is most of it.">
+            <defs>
+              <linearGradient id="mMsc" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F2958A"/><stop offset="100%" stop-color="#D5493F"/></linearGradient>
+              <linearGradient id="mHlx" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F9CDD6"/><stop offset="100%" stop-color="#EC96A7"/></linearGradient>
+              <linearGradient id="mCma" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FFEAA6"/><stop offset="100%" stop-color="#F7C63C"/></linearGradient>
+            </defs>
+            <line x1="0" y1="106.5" x2="300" y2="106.5" stroke="#E4EAF1" stroke-width="1"/>
+            <rect x="4" y="93.2" width="44" height="12.8" rx="4" fill="url(#mMsc)"><title>Today: MSC ·1209, $2,400</title></rect>
+            <rect x="63" y="80.4" width="44" height="25.6" rx="4" fill="url(#mMsc)"><title>Thu: MSC ·1209, $4,800</title></rect>
+            <rect x="63" y="74.9" width="44" height="3.5" rx="1.75" fill="url(#mHlx)"><title>Thu: Hapag ·3112, $650</title></rect>
+            <rect x="63" y="70.3" width="44" height="2.6" rx="1.3" fill="url(#mCma)"><title>Thu: CMA ·8341, $480</title></rect>
+            <rect x="122" y="67.6" width="44" height="38.4" rx="4" fill="url(#mMsc)"><title>Fri: MSC ·1209, $7,200</title></rect>
+            <rect x="122" y="58.7" width="44" height="6.9" rx="3" fill="url(#mHlx)"><title>Fri: Hapag ·3112, $1,300</title></rect>
+            <rect x="122" y="51.6" width="44" height="5.1" rx="2.5" fill="url(#mCma)"><title>Fri: CMA ·8341, $960</title></rect>
+            <rect x="181" y="54.9" width="44" height="51.1" rx="4" fill="url(#mMsc)"><title>Sat: MSC ·1209, $9,600</title></rect>
+            <rect x="181" y="42.5" width="44" height="10.4" rx="4" fill="url(#mHlx)"><title>Sat: Hapag ·3112, $1,950</title></rect>
+            <rect x="181" y="32.8" width="44" height="7.7" rx="3.5" fill="url(#mCma)"><title>Sat: CMA ·8341, $1,440</title></rect>
+            <rect x="240" y="42.1" width="44" height="63.9" rx="4" fill="url(#mMsc)"><title>Sun: MSC ·1209, $12,000</title></rect>
+            <rect x="240" y="26.3" width="44" height="13.8" rx="4" fill="url(#mHlx)"><title>Sun: Hapag ·3112, $2,600</title></rect>
+            <rect x="240" y="14.1" width="44" height="10.2" rx="4" fill="url(#mCma)"><title>Sun: CMA ·8341, $1,920</title></rect>
+            <g font-family="Instrument Sans, sans-serif" font-size="11" fill="#8496A6" text-anchor="middle">
+              <text x="26" y="122">Today</text><text x="85" y="122">Thu</text><text x="144" y="122">Fri</text>
+              <text x="203" y="122">Sat</text><text x="262" y="122">Sun</text>
+            </g>
+            <g font-family="Bricolage Grotesque, sans-serif" font-size="11.5" font-weight="600" fill="#0F1720" text-anchor="middle">
+              <text x="26" y="87">$2,400</text><text x="262" y="9">$16,520</text>
+            </g>
+          </svg>
+          <div class="legend">
+            <span><i style="background:linear-gradient(180deg,#F2958A,#D5493F)"></i>MSC ·1209 <em>customs hold</em></span>
+            <span><i style="background:linear-gradient(180deg,#F9CDD6,#EC96A7)"></i>Hapag ·3112 <em>trucker no-show</em></span>
+            <span><i style="background:linear-gradient(180deg,#FFEAA6,#F7C63C)"></i>CMA ·8341 <em>no chassis</em></span>
+          </div>
+          <p class="viz-note">Clear the two escalations today and Sunday <b>falls to $4,320</b>.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script>
+/* Ship icon on every milestone bar and map pin. */
+var SHIP = '<svg viewBox="0 0 24 16" aria-hidden="true"><use href="#ship"/></svg>';
+var ANCHOR = '<i class="anc" title="Stuck"><svg viewBox="0 0 24 24"><path d="M12 9v12M4 13a8 8 0 0 0 16 0M21 13h-2M5 13H3"/><circle cx="12" cy="6" r="3"/></svg></i>';
+document.querySelectorAll(".ms-mark").forEach(function(m){
+  m.innerHTML = SHIP + (m.classList.contains("stuck") ? ANCHOR : "");
+});
+
+/* Style ported from the Safe Food Guide map — same OpenFreeMap tiles,
+   same palette, trimmed to the layers that read at world scale. */
+var COLOURS = { land:"#FAF8F4", water:"#99DAF6", boundary:"#E6DFD1", label:"#4A3020" };
+
+function worldStyle(c){
+  return {
+    version: 8,
+    sources: { ofm: { type:"vector", url:"https://tiles.openfreemap.org/planet" } },
+    glyphs: "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
+    layers: [
+      { id:"background", type:"background", paint:{ "background-color": c.land } },
+      { id:"water", type:"fill", source:"ofm", "source-layer":"water", paint:{ "fill-color": c.water } },
+      { id:"boundary", type:"line", source:"ofm", "source-layer":"boundary",
+        filter:["<=", ["get","admin_level"], 2],
+        paint:{ "line-color": c.boundary, "line-width":0.8 } },
+      { id:"country-label", type:"symbol", source:"ofm", "source-layer":"place",
+        filter:["==", ["get","class"], "country"],
+        layout:{ "text-field":["get","name"], "text-font":["Noto Sans Regular"],
+                 "text-size":["interpolate",["linear"],["zoom"],0,8,4,12],
+                 "text-transform":"uppercase", "text-letter-spacing":0.06 },
+        paint:{ "text-color": c.label, "text-opacity":0.42 } }
+    ]
+  };
+}
+
+var flagged = [
+  { id:"HLXU9903112", lngLat:[-118.21, 33.75], tone:"red",   note:"Trucker no-show at Long Beach" },
+  { id:"MSCU4471209", lngLat:[72.95, 18.95],   tone:"red",   note:"Customs hold at Nhava Sheva" },
+  { id:"CMAU7788341", lngLat:[4.14, 51.95],    tone:"amber", note:"No chassis at Rotterdam" },
+  { id:"ONEY2210987", lngLat:[103.85, 1.29],   tone:"slate", note:"Missed its feeder at Singapore" }
+];
+
+if (window.maplibregl) {
+  var map = new maplibregl.Map({
+    container: "map",
+    style: worldStyle(COLOURS),
+    center: [30, 26],
+    zoom: 0.55,
+    attributionControl: { compact: true },
+    dragRotate: false
+  });
+  map.scrollZoom.disable();
+
+  flagged.forEach(function(s){
+    var el = document.createElement("div");
+    el.className = "pin " + s.tone;
+    el.innerHTML = SHIP + ANCHOR;  /* every flagged pin is held somewhere */
+    new maplibregl.Marker({ element: el })
+      .setLngLat(s.lngLat)
+      .setPopup(new maplibregl.Popup({ offset: 14, closeButton: false })
+        .setHTML('<div style="font-family:JetBrains Mono,monospace;font-size:11px">' + s.id +
+                 '</div><div style="font-family:Instrument Sans,sans-serif;font-size:12px;color:#4C5C6B;margin-top:2px">' + s.note + '</div>'))
+      .addTo(map);
+  });
+} else {
+  document.getElementById("map").innerHTML =
+    '<div style="display:grid;place-content:center;height:100%;color:#8496A6;font-size:12.5px">Map needs a connection to load</div>';
+}
+</script>
+</body>
+</html>
