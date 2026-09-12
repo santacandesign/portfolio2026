@@ -1,0 +1,339 @@
+/* ============================================================================
+ * circuit-hero.css  —  "santrupti loves COMPUTERS" CRT circuit-board hero
+ * ----------------------------------------------------------------------------
+ * Exactly the original SVG hero, pulled out of aboutme.html into its own file.
+ * The three knobs you'll actually want to change live in the EDIT ME block
+ * right below. Everything under it is the original styling.
+ * ========================================================================== */
+
+/* ---- EDIT ME ------------------------------------------------------------- */
+#crtHero {
+  --dot-size: 6px; /* size of the small solder-pad dots */
+  --via-size: 4.2px; /* size of the 9 big junction dots along the bottom */
+  --current-speed: 1.5s; /* how fast current runs on hover — LOWER = faster */
+  --silk-size: 52px; /* BOARD LABEL SIZE — bigger = larger santrupti loves */
+}
+/* ------------------------------------------------------------------------- */
+
+#crtHero {
+  --amber: #ffd678;
+  --edge: #233060;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 166px 24px 52px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Jost", system-ui, sans-serif;
+  color: var(--night-ink, #e8e3d3);
+  text-align: center;
+  box-sizing: border-box;
+}
+#crtHero * {
+  box-sizing: border-box;
+}
+#crtHero .screen {
+  position: relative;
+  width: min(960px, 100%);
+  padding: 0px 28px 28px;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #0f1c3a, #0b1329);
+  border: 0.2px solid var(--edge);
+  box-shadow:
+    inset 0 0 60px rgba(0, 0, 0, 0.55),
+    0 24px 60px rgba(0, 0, 0, 0.45);
+  transition:
+    box-shadow 0.5s ease,
+    background 0.5s ease;
+  overflow: hidden;
+}
+#crtHero .screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.26) 0 1px,
+    transparent 1px 3px
+  );
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+#crtHero .screen:hover {
+  background: linear-gradient(180deg, #16264a, #0d1630);
+  box-shadow:
+    inset 0 0 40px rgba(255, 214, 120, 0.05),
+    0 0 18px rgba(255, 214, 120, 0.05),
+    0 24px 60px rgba(0, 0, 0, 0.45);
+}
+#crtHero .screen:hover::before {
+  opacity: 1;
+  animation: crtFlick 2.6s steps(60) infinite;
+}
+@keyframes crtFlick {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  47% {
+    opacity: 0.86;
+  }
+  48% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 0.92;
+  }
+  73% {
+    opacity: 1;
+  }
+}
+#crtHero .circuit {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+#crtHero .trace-base {
+  fill: none;
+  stroke: rgba(255, 214, 120, 0.16);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.5s;
+}
+#crtHero .screen:hover .trace-base {
+  stroke: rgba(255, 215, 120, 0.73);
+}
+#crtHero .trace-flow {
+  fill: none;
+  stroke: var(--amber);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 9 33;
+  opacity: 0;
+  transition: opacity 0.45s;
+}
+#crtHero .screen:hover .trace-flow {
+  opacity: 0.95;
+  animation: flow var(--current-speed) linear infinite;
+}
+@keyframes flow {
+  to {
+    stroke-dashoffset: -42;
+  }
+}
+#crtHero .pad {
+  fill: rgba(255, 214, 120, 0.2);
+  transition: fill 0.5s;
+  r: var(--dot-size);
+}
+#crtHero .screen:hover .pad {
+  fill: var(--amber);
+}
+#crtHero .via {
+  fill: rgba(255, 214, 120, 0.24);
+  stroke: rgba(255, 214, 120, 0.18);
+  stroke-width: 1.4;
+  transition: fill 0.5s;
+  r: var(--via-size);
+}
+#crtHero .screen:hover .via {
+  fill: var(--amber);
+}
+#crtHero .screen:hover .circuit {
+  filter: drop-shadow(0 0 3px rgba(255, 214, 120, 0.55));
+}
+#crtHero .hint {
+  margin-top: 22px;
+  font-size: 12px;
+  opacity: 0.45;
+  letter-spacing: 0.03em;
+}
+@media (prefers-reduced-motion: reduce) {
+  #crtHero .screen:hover::before,
+  #crtHero .screen:hover .trace-flow {
+    animation: none;
+  }
+}
+
+/* ---- tapped state (.lit) + new symbols (input/GND/power) ---------------- */
+#crtHero .screen:is(:hover, .lit) {
+  background: linear-gradient(180deg, #16264a, #0d1630);
+  box-shadow:
+    inset 0 0 40px rgba(255, 214, 120, 0.05),
+    0 0 18px rgba(255, 214, 120, 0.05),
+    0 24px 60px rgba(0, 0, 0, 0.45);
+}
+#crtHero .screen:is(:hover, .lit)::before {
+  opacity: 1;
+  animation: crtFlick 2.6s steps(60) infinite;
+}
+#crtHero .screen:is(:hover, .lit) .trace-base {
+  stroke: rgba(255, 214, 120, 0.42);
+}
+#crtHero .screen:is(:hover, .lit) .trace-flow {
+  opacity: 0.95;
+  animation: flow var(--current-speed) linear infinite;
+}
+#crtHero .screen:is(:hover, .lit) .pad {
+  fill: var(--amber);
+}
+#crtHero .screen:is(:hover, .lit) .via {
+  fill: var(--amber);
+}
+#crtHero .screen:is(:hover, .lit) .circuit {
+  filter: drop-shadow(0 0 3px rgba(255, 214, 120, 0.55));
+}
+#crtHero .gnd-bar {
+  fill: none;
+  stroke: rgba(255, 214, 120, 0.16);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke 0.5s;
+}
+#crtHero .screen:is(:hover, .lit) .gnd-bar {
+  stroke: var(--amber);
+}
+#crtHero .src-ring {
+  fill: none;
+  stroke: rgba(255, 214, 120, 0.35);
+  stroke-width: 2.4;
+  transition: stroke 0.5s;
+}
+#crtHero .src-sine {
+  fill: none;
+  stroke: rgba(255, 214, 120, 0.35);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: stroke 0.5s;
+}
+#crtHero .screen:is(:hover, .lit) .src-ring,
+#crtHero .screen:is(:hover, .lit) .src-sine {
+  stroke: var(--amber);
+}
+#crtHero .hint-mobile {
+  display: none;
+}
+#crtHero .power-btn {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 7;
+  width: 40px;
+  height: 40px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  color: rgba(255, 214, 120, 0.65);
+  background: rgba(11, 19, 41, 0.85);
+  border: 1.5px solid rgba(255, 214, 120, 0.35);
+  opacity: 1;
+  transition:
+    color 0.5s,
+    border-color 0.5s,
+    box-shadow 0.5s;
+}
+/* Width split (matches 800px nav breakpoint): narrow widths get tap hint + power */
+@media (max-width: 800px) {
+  #crtHero .screen {
+    padding: 20px 12px;
+  }
+  #crtHero .hint-desktop {
+    display: none;
+  }
+  #crtHero .hint-mobile {
+    display: block;
+  }
+  #crtHero .power-btn {
+    display: inline-flex;
+    left: 10px;
+    bottom: 10px;
+    width: 30px;
+    height: 30px;
+  }
+  #crtHero .power-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+  /* Touch: only .lit energizes. Kills sticky :hover so tapping power toggles off. */
+  #crtHero .screen:not(.lit) {
+    background: linear-gradient(180deg, #0f1c3a, #0b1329);
+    box-shadow:
+      inset 0 0 60px rgba(0, 0, 0, 0.55),
+      0 24px 60px rgba(0, 0, 0, 0.45);
+  }
+  #crtHero .screen:not(.lit)::before {
+    opacity: 0;
+    animation: none;
+  }
+  #crtHero .screen:not(.lit) .trace-base {
+    stroke: rgba(255, 214, 120, 0.16);
+  }
+  #crtHero .screen:not(.lit) .trace-flow {
+    opacity: 0;
+    animation: none;
+  }
+  #crtHero .screen:not(.lit) .pad {
+    fill: rgba(255, 214, 120, 0.2);
+  }
+  #crtHero .screen:not(.lit) .via {
+    fill: rgba(255, 214, 120, 0.24);
+  }
+  #crtHero .screen:not(.lit) .circuit {
+    filter: none;
+  }
+  #crtHero .screen:not(.lit) .src-ring,
+  #crtHero .screen:not(.lit) .src-sine {
+    stroke: rgba(255, 214, 120, 0.35);
+  }
+  #crtHero .screen:not(.lit) .gnd-bar {
+    stroke: rgba(255, 214, 120, 0.16);
+  }
+}
+#crtHero .power-btn:hover {
+  color: var(--amber);
+  border-color: var(--amber);
+}
+#crtHero .power-btn:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+#crtHero .screen.lit .power-btn {
+  color: var(--amber);
+  border-color: var(--amber);
+  box-shadow: 0 0 12px rgba(255, 214, 120, 0.45);
+}
+@media (prefers-reduced-motion: reduce) {
+  #crtHero .screen.lit::before,
+  #crtHero .screen.lit .trace-flow {
+    animation: none;
+  }
+}
+
+/* ---- silkscreen label ------------------------------------------------------ */
+#crtHero .silk {
+  font-family:
+    "VT323", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--silk-size);
+  fill: rgba(255, 214, 120, 0.55);
+  transition: fill 0.5s;
+}
+#crtHero .screen:is(:hover, .lit) .silk {
+  fill: var(--amber);
+}
+@media (max-width: 800px) {
+  #crtHero .screen:not(.lit) .silk {
+    fill: rgba(255, 214, 120, 0.55);
+  }
+}
