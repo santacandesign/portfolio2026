@@ -420,7 +420,7 @@ body.night .aboutme {
   position: relative;
   z-index: 2;
   margin: var(--dimlight-gap) 0 0 0;
-  font-family: "Libre italic", serif;
+  font-family: "Libre Baskerville", serif;
   font-style: italic;
   font-size: var(--dimlight-size);
   letter-spacing: var(--dimlight-tracking);

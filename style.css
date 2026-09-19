@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400..700;1,400..700&family=Manrope:wght@200..800&display=swap");
+
 html {
   overflow-x: hidden;
 }
@@ -29,7 +31,7 @@ html {
 }
 
 #loadingText {
-  font-family: "Libre italic", serif;
+  font-family: "Libre Baskerville", serif;
   font-style: italic;
   font-size: 22px;
   color: #325825;
@@ -92,9 +94,14 @@ html {
   align-items: center;
   justify-content: center;
   padding: 12px 16px;
-  color: rgba(75, 45, 21, 0.72); /* was .48 — 2.56:1, fails WCAG AA; this reaches ~4.6:1 */
+  color: rgba(
+    75,
+    45,
+    21,
+    0.72
+  ); /* was .48 — 2.56:1, fails WCAG AA; this reaches ~4.6:1 */
   text-decoration: none;
-  font-family: "Libre", serif;
+  font-family: "Libre Baskerville", serif;
   font-size: 16px;
   border-radius: 30px;
   transition: color 0.2s;
@@ -105,7 +112,8 @@ html {
 }
 
 .nav-item.nav-active {
-  font-family: "Libre italic", serif;
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
   font-weight: bold;
   color: #4b2d15;
 }
@@ -140,7 +148,7 @@ html {
 }
 .contact-badge-text {
   margin: 0;
-  font-family: "Libre italic", serif;
+  font-family: "Libre Baskerville", serif;
   font-style: italic;
   font-size: 12px;
   line-height: 1.4;
@@ -155,7 +163,7 @@ html {
 }
 .contact-link {
   position: relative;
-  font-family: "Libre", serif;
+  font-family: "Libre Baskerville", serif;
   font-size: 17px;
   color: rgba(75, 45, 21, 0.5);
   text-decoration: underline;
@@ -173,7 +181,7 @@ html {
 .contact-link:hover,
 .contact-email.is-active {
   color: #4b2d15;
-  font-family: "Libre italic", serif;
+  font-family: "Libre Baskerville", serif;
   font-style: italic;
   font-weight: 700;
   text-decoration: underline;
@@ -253,13 +261,13 @@ html {
   color: rgba(75, 45, 21, 0.55);
 }
 .contact-tooltip-email {
-  font-family: "Manrope bold", sans-serif;
+  font-family: "Manrope", sans-serif;
   font-weight: 800;
   font-size: 14px;
   color: #4b2d15;
 }
 .contact-copied {
-  font-family: "Manrope bold", sans-serif;
+  font-family: "Manrope", sans-serif;
   font-weight: 800;
   font-size: 14px;
   color: #4b2d15;
@@ -290,7 +298,7 @@ html {
 }
 
 .nav-hamburger-label {
-  font-family: "Libre", serif;
+  font-family: "Libre Baskerville", serif;
   font-size: 15px;
   line-height: 1;
 }
@@ -344,7 +352,7 @@ html {
   padding: 12px 16px;
   color: rgba(75, 45, 21, 0.55);
   text-decoration: none;
-  font-family: "Libre", serif;
+  font-family: "Libre Baskerville", serif;
   font-size: 16px;
   border-radius: 12px;
   transition:
@@ -358,7 +366,8 @@ html {
 }
 
 .nav-mobile-item.nav-active {
-  font-family: "Libre italic", serif;
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
   font-weight: bold;
   color: #4b2d15;
 }
@@ -405,40 +414,6 @@ html {
   }
 }
 
-@font-face {
-  font-family: "Libre";
-  src: url("./assets/Libre_Baskerville/LibreBaskerville-VariableFont_wght.ttf")
-    format("truetype");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Libre italic";
-  src: url("./assets/Libre_Baskerville/LibreBaskerville-Italic-VariableFont_wght.ttf")
-    format("truetype");
-  font-weight: 100 900;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Manrope";
-  src: url("./assets/Manrope/Manrope-VariableFont_wght.ttf") format("truetype");
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Manrope bold";
-  src: url("assets/Manrope/static/Manrope-Bold.ttf") format("truetype");
-  font-weight: 800;
-  font-style: bold;
-  font-display: swap;
-}
-
 header {
   margin: 0px auto;
   padding: 40px 40px;
@@ -465,7 +440,8 @@ hr {
 }
 
 h1 {
-  font-family: "Libre italic", serif;
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
   font-weight: 900;
   font-size: 24px;
   line-height: 1.2;
@@ -477,7 +453,8 @@ h1 {
 a {
   color: #522b12;
   cursor: pointer;
-  font-family: "Libre italic", serif;
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
 }
 
 .bgimage {
@@ -496,7 +473,8 @@ a {
 
 .section-title h1 {
   text-align: center;
-  font-family: "Libre italic", sans-serif;
+  font-family: "Libre Baskerville", sans-serif;
+  font-style: italic;
   font-weight: 900;
   font-size: 24px;
   color: #111111;
@@ -583,7 +561,8 @@ body::before {
 }
 
 .navbar a:hover {
-  font-family: "Libre italic", serif;
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
   color: #307436;
 }
 
@@ -641,7 +620,7 @@ body::before {
   font-family: "Manrope", sans-serif;
   font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.01em;
   color: rgba(75, 45, 21, 1);
   background: rgba(75, 45, 21, 0.07);
   border: 1px solid rgba(75, 45, 21, 0.1);
@@ -668,7 +647,7 @@ button,
   cursor: pointer;
   background-color: #522b12;
   padding: 16px 16px;
-  font-family: "Libre", serif;
+  font-family: "Libre Baskerville", serif;
   font-weight: 700;
   font-size: 16px;
   color: #fffced;
@@ -692,13 +671,15 @@ button,
 button:hover,
 .btn:hover {
   /* transform: translate(4px, 4px); */
-  font-family: "Libre italic", serif;
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
   background-color: #5f2a1a;
   color: #efeddf;
 }
 
 h2 {
-  font-family: "Libre italic", serif;
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
   font-size: 24px;
   font-weight: 900;
   color: #111111;
@@ -981,7 +962,7 @@ h4 {
 }
 
 .feed-hint-text {
-  font-family: "Libre italic", serif;
+  font-family: "Libre Baskerville", serif;
   font-style: italic;
   font-size: clamp(12px, 1.6vw, 15px);
   color: #4b2d15;
@@ -1289,7 +1270,7 @@ h4 {
 }
 
 .company h3 {
-  font-family: "Manrope bold", sans-serif;
+  font-family: "Manrope", sans-serif;
   font-weight: 800;
   font-size: 14px;
   color: #111111;
