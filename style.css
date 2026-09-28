@@ -372,6 +372,121 @@ html {
   color: #4b2d15;
 }
 
+/* Contact: one row that opens into a small inset panel */
+.nav-contact-toggle {
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-style: italic; /* match the <a> rows above */
+  font-weight: 100;
+}
+
+.nav-contact-chevron {
+  opacity: 0.7;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-contact-toggle[aria-expanded="true"] {
+  color: #4b2d15;
+}
+
+.nav-contact-toggle[aria-expanded="true"] .nav-contact-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-contact {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-contact.open {
+  grid-template-rows: 1fr;
+}
+
+.nav-contact-inner {
+  overflow: hidden;
+  min-height: 0;
+  margin: 0 4px;
+  border-radius: 14px;
+  background: rgba(75, 45, 21, 0.05);
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    margin 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-contact.open .nav-contact-inner {
+  margin: 2px 4px 4px;
+  opacity: 1;
+  transition-delay: 0.05s;
+}
+
+.nav-contact-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  padding: 12px 12px 6px;
+  font-family: "Manrope", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(75, 45, 21, 0.55);
+}
+
+.nav-contact-status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgb(76, 140, 60);
+  box-shadow: 0 0 0 3px rgba(76, 140, 60, 0.18);
+}
+
+.nav-contact-link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.nav-contact-link:last-child {
+  margin-bottom: 4px;
+}
+
+.nav-contact-link:hover {
+  background: rgba(75, 45, 21, 0.06);
+}
+
+.nav-contact-name {
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
+  font-size: 14px;
+  color: #4b2d15;
+}
+
+.nav-contact-meta {
+  font-family: "Manrope", sans-serif;
+  font-style: normal;
+  font-size: 11px;
+  color: rgba(75, 45, 21, 0.5);
+  white-space: nowrap;
+}
+
+.nav-contact-link.is-copied .nav-contact-meta {
+  color: rgb(50, 110, 40);
+  font-weight: 600;
+}
+
 @media (max-width: 800px) {
   /* Collapse desktop links, show hamburger */
   .nav-item {
@@ -384,33 +499,15 @@ html {
     display: flex;
   }
 
-  /* Contact: links pinned top-center, badge drops to the bottom */
+  /* Contact links move into the hamburger menu on mobile — the vertical
+     dial now runs edge to edge, so the top bar stays clear. */
   .contact-top {
-    top: 18px;
-    right: 0;
-    left: 0;
-    justify-content: center;
-    gap: 0;
-  }
-  .contact-links {
-    gap: 26px;
-  }
-  /* Too fiddly to place well alongside the mobile nav pill — dropped on
-     mobile rather than fought with. Still shows on desktop. */
-  .contact-badge {
     display: none;
   }
-  /* Mobile has no hover — only the clicked (copied) state shows */
-  .contact-tooltip {
-    display: none;
-  }
-  .contact-flyout {
-    right: auto;
-    left: 50%;
-    transform: translateX(-50%) translateY(-6px);
-  }
-  .contact-flyout.is-visible {
-    transform: translateX(-50%) translateY(0);
+  .nav-mobile-divider {
+    height: 1px;
+    margin: 6px 10px;
+    background: rgba(75, 45, 21, 0.14);
   }
 }
 
@@ -1073,7 +1170,8 @@ h4 {
   .cat-tail-sit,
   .cat-tail-walk,
   .feed-arrow,
-  .cat-actor.is-walking .cat-walk {
+  .cat-actor.is-walking .cat-walk,
+  .chaos-thumb {
     animation: none;
   }
 }
@@ -1382,4 +1480,415 @@ h4 {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BRAIN CHAOS SLIDER
+   Mobile (≤ 900px): full-height 9 am → 9 pm scale down the right edge.
+   Desktop (.is-horizontal): a ruler across the top, under the contact
+   bar, that follows the cursor. --chaos-pos is 0–100% from 9 am to 9 pm.
+   body.hero-dusk / body.hero-night (set by sketch.js) re-tint it and
+   the contact bar so they stay readable over the sunset and night sky.
+   ───────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+}
+
+.chaos-slider {
+  --chaos-pos: 50%;
+  --chaos-leaf: rgba(35, 90, 30, 0.12);
+  --chaos-fill: rgba(35, 90, 30, 0.45);
+  --chaos-ink: rgb(35, 90, 30);
+  --chaos-pill: rgb(204, 218, 165);
+  --chaos-deep: rgb(0, 92, 18);
+  --chaos-pill-bg: rgb(204, 218, 165);
+  --chaos-pill-edge: rgba(35, 90, 30, 0.28);
+  position: absolute;
+  top: 112px; /* matches the bottom gap, so the scale sits centred */
+  bottom: 112px; /* stops above the fixed Menu pill */
+  right: 16px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  width: 84px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.chaos-slider[hidden] {
+  display: none;
+}
+
+.chaos-body {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  touch-action: none;
+  cursor: grab;
+}
+
+.chaos-slider.is-dragging .chaos-body {
+  cursor: grabbing;
+}
+
+/* hour scale, left of the track */
+.chaos-ticks {
+  position: absolute;
+  inset: 0 34px 0 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chaos-tick {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transform: translateY(-50%);
+}
+
+.chaos-tick::after {
+  content: "";
+  width: 5px;
+  height: 1px;
+  border-radius: 2px;
+  background: var(--chaos-ink);
+  opacity: 0.22;
+  transition:
+    width 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.chaos-tick.is-major::after {
+  width: 9px;
+  opacity: 0.4;
+}
+
+.chaos-tick.is-active::after {
+  width: 14px;
+  opacity: 1;
+}
+
+.chaos-tick-label {
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
+  font-size: 11px;
+  color: #111111;
+  opacity: 0;
+  white-space: nowrap;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease;
+}
+
+.chaos-tick.is-major .chaos-tick-label {
+  opacity: 0.55;
+}
+
+.chaos-tick.is-active .chaos-tick-label {
+  opacity: 1;
+  color: var(--chaos-deep);
+  font-weight: 700;
+}
+
+/* track + fill (the part of the day already spent, from 9 am down) */
+.chaos-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 8px;
+  width: 18px;
+  outline: none;
+}
+
+.chaos-track::before,
+.chaos-fill {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 2px;
+  border-radius: 2px;
+  transform: translateX(-50%);
+}
+
+.chaos-track::before {
+  top: 0;
+  bottom: 0;
+  background: var(--chaos-leaf);
+}
+
+.chaos-fill {
+  top: 0;
+  height: var(--chaos-pos);
+  background: var(--chaos-fill);
+}
+
+/* The thumb is a pill that names the mood. On mobile it hangs off the
+   left of the track, its dot sitting right on the line. */
+.chaos-thumb {
+  position: absolute;
+  top: var(--chaos-pos);
+  right: -1px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 6px 5px 12px;
+  border-radius: 100px;
+  background: var(--chaos-pill-bg);
+  border: 1px solid var(--chaos-pill-edge);
+  box-shadow:
+    0 0 0 0 var(--chaos-pill),
+    0 2px 8px rgba(35, 90, 30, 0.18);
+  transform: translateY(-50%);
+  transition:
+    box-shadow 0.25s ease,
+    background 0.6s ease,
+    border-color 0.6s ease;
+}
+
+.chaos-thumb::after {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--chaos-ink);
+  transition:
+    background 0.6s ease,
+    box-shadow 0.6s ease;
+}
+
+/* First-load hint (mobile only): nudges the pill along the track a couple
+   of times so it reads as draggable. chaos-slider.js picks the direction
+   with room to move — down from the top half of the scale, up from the
+   bottom half — and adds/removes the classes below. */
+@keyframes chaos-hint-y {
+  0%,
+  100% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(calc(-50% + 100px));
+  }
+}
+
+@keyframes chaos-hint-y-reverse {
+  0%,
+  100% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(calc(-50% - 100px));
+  }
+}
+
+.chaos-slider.chaos-intro .chaos-thumb {
+  animation: chaos-hint-y 1.1s ease-in-out 2;
+}
+
+.chaos-slider.chaos-intro.chaos-intro-reverse .chaos-thumb {
+  animation-name: chaos-hint-y-reverse;
+}
+
+.chaos-mood {
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--chaos-deep);
+  white-space: nowrap;
+  transition: color 0.6s ease;
+}
+
+.chaos-slider.is-dragging .chaos-thumb,
+.chaos-track:focus-visible .chaos-thumb {
+  box-shadow:
+    0 0 0 5px var(--chaos-pill),
+    0 2px 8px rgba(35, 90, 30, 0.18);
+}
+
+/* on mobile the pill already marks the hour — keep the scale plain
+   so nothing peeks out from under it, and drop the little tick dash
+   next to each label (the hour text carries the marker on its own) */
+.chaos-slider:not(.is-horizontal) .chaos-tick.is-active .chaos-tick-label {
+  opacity: 0;
+}
+.chaos-slider:not(.is-horizontal) .chaos-tick::after {
+  display: none;
+}
+
+/* ── Night: the slider reached 9 pm ── */
+.contact-link,
+.chaos-tick-label {
+  transition:
+    color 0.6s ease,
+    opacity 0.2s ease;
+}
+
+body.hero-night .chaos-slider {
+  --chaos-leaf: rgba(255, 214, 120, 0.14);
+  --chaos-fill: rgba(255, 214, 120, 0.55);
+  --chaos-pill: rgba(255, 214, 120, 0.2);
+  --chaos-ink: #ffd678;
+  --chaos-deep: #ffd678;
+  --chaos-pill-bg: #141c3d;
+  --chaos-pill-edge: rgba(255, 214, 120, 0.45);
+}
+
+body.hero-night .chaos-tick-label {
+  color: #e8e3d3;
+}
+
+body.hero-night .chaos-thumb {
+  box-shadow:
+    0 0 0 0 var(--chaos-pill),
+    0 0 16px rgba(255, 214, 120, 0.3);
+}
+
+body.hero-night .chaos-slider.is-dragging .chaos-thumb,
+body.hero-night .chaos-track:focus-visible .chaos-thumb {
+  box-shadow:
+    0 0 0 5px var(--chaos-pill),
+    0 0 16px rgba(255, 214, 120, 0.3);
+}
+
+body.hero-night .chaos-thumb::after {
+  box-shadow: 0 0 8px rgba(255, 214, 120, 0.8);
+}
+
+body.hero-night .contact-link {
+  color: rgba(232, 227, 211, 0.5);
+}
+body.hero-night .contact-link:hover,
+body.hero-night .contact-email.is-active {
+  color: #ffd678;
+}
+
+/* ── Dusk: golden hour — firm up the words that sit over the warm sky ── */
+body.hero-dusk .contact-link {
+  color: rgba(75, 45, 21, 0.85);
+}
+
+body.hero-dusk .chaos-tick.is-major .chaos-tick-label {
+  opacity: 0.9;
+}
+
+body.hero-dusk .chaos-tick::after {
+  opacity: 0.5;
+}
+
+/* night: the "actively looking" badge, as on the About page */
+.contact-badge::before,
+.contact-badge-text {
+  transition:
+    background 0.6s ease,
+    color 0.6s ease;
+}
+
+body.hero-night .contact-badge::before {
+  background: rgba(242, 200, 76, 0.153);
+}
+
+body.hero-night .contact-badge-text {
+  color: rgb(242, 200, 76);
+}
+
+/* ── Desktop ruler ── */
+.chaos-slider.is-horizontal {
+  top: 104px;
+  bottom: auto;
+  left: 56px;
+  right: 56px;
+  width: auto;
+  height: 42px;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.chaos-slider.is-horizontal .chaos-body {
+  height: 100%;
+  cursor: default;
+}
+
+.chaos-slider.is-horizontal .chaos-ticks {
+  inset: 18px 0 0 0;
+}
+
+.chaos-slider.is-horizontal .chaos-tick {
+  top: 0;
+  right: auto;
+  flex-direction: column-reverse; /* tick mark above its label */
+  gap: 4px;
+  transform: translateX(-50%);
+}
+
+.chaos-slider.is-horizontal .chaos-tick::after {
+  width: 1px;
+  height: 5px;
+  transition:
+    height 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.chaos-slider.is-horizontal .chaos-tick.is-major::after {
+  width: 1px;
+  height: 8px;
+}
+
+.chaos-slider.is-horizontal .chaos-tick.is-active::after {
+  width: 1px;
+  height: 11px;
+}
+
+.chaos-slider.is-horizontal .chaos-tick-label {
+  font-size: 11px;
+}
+
+.chaos-slider.is-horizontal .chaos-track {
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  width: auto;
+  height: 18px;
+}
+
+.chaos-slider.is-horizontal .chaos-track::before,
+.chaos-slider.is-horizontal .chaos-fill {
+  top: 50%;
+  left: 0;
+  width: auto;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.chaos-slider.is-horizontal .chaos-track::before {
+  right: 0;
+  bottom: auto;
+}
+
+.chaos-slider.is-horizontal .chaos-fill {
+  width: var(--chaos-pos);
+}
+
+.chaos-slider.is-horizontal .chaos-thumb {
+  top: 50%;
+  right: auto;
+  left: var(--chaos-pos);
+  padding: 5px 13px;
+  transform: translate(-50%, -50%);
+}
+
+.chaos-slider.is-horizontal .chaos-thumb::after {
+  display: none; /* the canvas line hangs from the pill's centre instead */
+}
+
+/* No first-load nudge on desktop — the cursor already drives the ruler,
+   so it reads as interactive without a hint. */
+.chaos-slider.is-horizontal.chaos-intro .chaos-thumb {
+  animation: none;
 }

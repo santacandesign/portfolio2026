@@ -77,9 +77,31 @@
         <a href="playground.html" class="nav-mobile-item">Playground</a>
         <a href="media.html" class="nav-mobile-item">Media diet</a>
         <a href="aboutme.html" class="nav-mobile-item">About</a>
+        <div class="nav-mobile-divider"></div>
+        <button class="nav-mobile-item nav-contact-toggle" id="navContactToggle" aria-expanded="false" aria-controls="navContact">
+          Contact
+          <svg class="nav-contact-chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2.5,4.5 6,8 9.5,4.5" /></svg>
+        </button>
+        <div class="nav-contact" id="navContact">
+          <div class="nav-contact-inner">
+            <p class="nav-contact-status">open to new roles</p>
+            <a class="nav-contact-link" id="emailLink" href="mailto:santrupti.danagaud@gmail.com">
+              <span class="nav-contact-name">Email</span>
+              <span class="nav-contact-meta" id="emailLinkMeta">tap to copy</span>
+            </a>
+            <a class="nav-contact-link" href="https://www.linkedin.com/in/santruptip/" target="_blank" rel="noopener">
+              <span class="nav-contact-name">LinkedIn</span>
+              <span class="nav-contact-meta">&#8599;</span>
+            </a>
+            <a class="nav-contact-link" href="https://x.com/santacandesign" target="_blank" rel="noopener">
+              <span class="nav-contact-name">Twitter</span>
+              <span class="nav-contact-meta">&#8599;</span>
+            </a>
+          </div>
+        </div>
       </div>
       <div class="nav-pill-bar">
-        <button class="nav-hamburger" id="navHamburger" onclick="toggleMobileNav()">
+        <button class="nav-hamburger" id="navHamburger" onclick="toggleHomeNav()">
           <span class="nav-hamburger-label">Menu</span>
           <svg class="nav-hamburger-lines" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <line x1="3" y1="6" x2="17" y2="6" /><line x1="3" y1="10" x2="17" y2="10" /><line x1="3" y1="14" x2="17" y2="14" />
@@ -97,7 +119,9 @@
 
     <main>
     <script>
-      function toggleMobileNav() {
+      // not toggleMobileNav: script.js defines that for the other pages and
+      // would override this one
+      function toggleHomeNav() {
         var menu = document.getElementById("navMobileMenu");
         var hamburger = document.getElementById("navHamburger");
         var badge = document.querySelector(".contact-badge");
@@ -105,7 +129,35 @@
         hamburger.classList.toggle("is-open");
         if (badge)
           badge.classList.toggle("badge-hidden", menu.classList.contains("open"));
+        if (!menu.classList.contains("open")) setContactOpen(false);
       }
+
+      function setContactOpen(open) {
+        var toggle = document.getElementById("navContactToggle");
+        var panel = document.getElementById("navContact");
+        if (!toggle || !panel) return;
+        toggle.setAttribute("aria-expanded", open);
+        panel.classList.toggle("open", open);
+      }
+
+      document.getElementById("navContactToggle").addEventListener("click", function () {
+        setContactOpen(this.getAttribute("aria-expanded") !== "true");
+      });
+
+      // menu → Contact → Email copies the address instead of opening mail
+      document.getElementById("emailLink").addEventListener("click", function (e) {
+        e.preventDefault();
+        var link = this;
+        var meta = document.getElementById("emailLinkMeta");
+        navigator.clipboard.writeText("santrupti.danagaud@gmail.com").then(function () {
+          meta.textContent = "copied ✓";
+          link.classList.add("is-copied");
+          setTimeout(function () {
+            meta.textContent = "tap to copy";
+            link.classList.remove("is-copied");
+          }, 3000);
+        });
+      });
 
       (function () {
         var EMAIL = "santrupti.danagaud@gmail.com";
@@ -170,7 +222,29 @@
     <script src="script.js"></script>
 
     <div class="fullscrollsnap">
-      <div class="scrollContainer"><div id="p5jsholder" aria-hidden="true"></div></div>
+      <div class="scrollContainer hero">
+        <div id="p5jsholder" aria-hidden="true"></div>
+        <div class="chaos-slider" id="chaosSlider" hidden>
+          <div class="chaos-body">
+            <ol class="chaos-ticks" aria-hidden="true"></ol>
+            <div
+              class="chaos-track"
+              role="slider"
+              tabindex="0"
+              aria-label="brain chaos through the day"
+              aria-orientation="vertical"
+              aria-valuemin="9"
+              aria-valuemax="21"
+            >
+              <span class="chaos-fill"></span>
+              <span class="chaos-thumb">
+                <span class="chaos-mood">chaos</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="chaos-slider.js"></script>
       <div class="bgimage"></div>
 
       <div class="section-title"><h1>Selected Projects</h1></div>
@@ -258,151 +332,6 @@
       <div id="koi-pond-mount"></div>
       <script src="koi-pond.js" defer></script>
 
-    <script>
-      const navbar = document.querySelector(".navbar");
-      const projectBeginning = document.querySelector(".projectbeginning");
-
-      const observer1 = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              navbar.classList.add("white-text");
-            } // Change navbar text color to white
-            // } else {
-            //   navbar.classList.remove("white-text"); // Revert to blue
-            // }
-          });
-        },
-        { threshold: 0.5 }, // Trigger when 50% of the .projectbeginning section is visible
-      );
-
-      observer1.observe(projectBeginning);
-
-      const aboutMe = document.querySelector(".aboutme");
-      const observer2 = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              navbar.classList.remove("white-text");
-            } // Change navbar text color to white
-            // } else {
-            //   navbar.classList.remove("white-text"); // Revert to blue
-            // }
-          });
-        },
-        { threshold: 0.5 }, // Trigger when 50% of the .projectbeginning section is visible
-      );
-      observer2.observe(aboutMe);
-
-      const herotext = document.querySelector(".scrollContainer");
-      observer2.observe(herotext);
-
-      const heroLink = document.getElementById("herolink");
-      const heroSection = document.querySelector(".scrollContainer");
-
-      heroLink.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        heroSection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      });
-
-      const workLink = document.getElementById("worklink");
-      const projectSection = document.querySelector(".projectbeginning");
-
-      workLink.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        projectSection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      });
-
-      const resumeLink = document.getElementById("resumelink");
-      const resumeSection = document.querySelector(".resume");
-
-      resumeLink.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        resumeSection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      });
-
-      const playLink = document.getElementById("playlink");
-      const playSection = document.querySelector(".play");
-
-      playLink.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        playSection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      });
-
-      const contactLink = document.getElementById("contactlink");
-      const aboutMeSection = document.querySelector(".aboutme-text");
-
-      contactLink.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        aboutMeSection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      });
-
-      // Gallery: hover to pause/play videos
-      document.querySelectorAll('.pretty-vid2, .pretty-vid1').forEach(function(item) {
-        var video = item.querySelector('video');
-        var icon  = item.querySelector('.pretty-pause-icon');
-        item.addEventListener('mouseenter', function() {
-          video.pause();
-          icon.classList.add('visible');
-        });
-        item.addEventListener('mouseleave', function() {
-          video.play();
-          icon.classList.remove('visible');
-        });
-      });
-
-      // Gallery: scroll-reveal stagger
-      var revealItems = document.querySelectorAll('.pretty-reveal');
-      var galleryObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('pretty-visible');
-            galleryObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.08 });
-
-      revealItems.forEach(function(el, i) {
-        el.style.transitionDelay = (i * 80) + 'ms';
-        galleryObserver.observe(el);
-      });
-
-      const emailLink = document.getElementById("emailLink");
-
-      emailLink.addEventListener("click", function (e) {
-        e.preventDefault(); // Prevent the default link behavior
-
-        const textToCopy = "santrupti.danagaud@gmail.com";
-
-        navigator.clipboard.writeText(textToCopy).then(() => {
-          emailLink.textContent = "Copied!";
-
-          setTimeout(() => {
-            emailLink.textContent = "Copy Email";
-          }, 3000);
-        });
-      });
-    </script>
     </main>
   </body>
 </html>
