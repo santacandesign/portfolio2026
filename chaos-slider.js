@@ -14,6 +14,7 @@
   const track = root.querySelector(".chaos-track");
   const mood = root.querySelector(".chaos-mood");
   const thumb = root.querySelector(".chaos-thumb");
+  const timeEl = root.querySelector(".chaos-time");
   const horizontal = window.innerWidth > 900;
   root.classList.toggle("is-horizontal", horizontal);
   if (horizontal) track.setAttribute("aria-orientation", "horizontal");
@@ -56,6 +57,8 @@
     const word = moodLabel(state.hour);
     track.setAttribute("aria-valuetext", fmt(active) + ", " + word);
     if (mood.textContent !== word) mood.textContent = word;
+    const label = fmt(active);
+    if (timeEl.textContent !== label) timeEl.textContent = label;
   }
 
   function setFromPointer(e) {

@@ -425,29 +425,6 @@ html {
   transition-delay: 0.05s;
 }
 
-.nav-contact-status {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin: 0;
-  padding: 12px 12px 6px;
-  font-family: "Manrope", sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(75, 45, 21, 0.55);
-}
-
-.nav-contact-status::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgb(76, 140, 60);
-  box-shadow: 0 0 0 3px rgba(76, 140, 60, 0.18);
-}
-
 .nav-contact-link {
   display: flex;
   align-items: baseline;
@@ -457,6 +434,10 @@ html {
   border-radius: 10px;
   text-decoration: none;
   transition: background 0.15s;
+}
+
+.nav-contact-link:first-child {
+  margin-top: 4px;
 }
 
 .nav-contact-link:last-child {
@@ -1505,7 +1486,10 @@ h4 {
   --chaos-pill-edge: rgba(35, 90, 30, 0.28);
   position: absolute;
   top: 112px; /* matches the bottom gap, so the scale sits centred */
-  bottom: 112px; /* stops above the fixed Menu pill */
+  /* ends just above the grass: roots sit ~0.9 of the hero height down and
+     sketch.js draws each blade ~4x its 28–35px height, so the tips reach
+     ~140px higher, plus a little breathing room */
+  bottom: calc(10% + 165px);
   right: 16px;
   z-index: 3;
   display: flex;
@@ -1719,6 +1703,32 @@ h4 {
 }
 .chaos-slider:not(.is-horizontal) .chaos-tick::after {
   display: none;
+}
+
+/* mobile pill: no dot; the time sits outside the pill, on its left,
+   (the pill covers the hour labels, so it would otherwise vanish) */
+.chaos-slider:not(.is-horizontal) .chaos-thumb {
+  padding-right: 12px;
+}
+.chaos-slider:not(.is-horizontal) .chaos-thumb::after {
+  display: none;
+}
+.chaos-time {
+  display: none;
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--chaos-deep);
+  white-space: nowrap;
+  font-weight: 700;
+}
+.chaos-slider:not(.is-horizontal) .chaos-time {
+  display: inline;
 }
 
 /* ── Night: the slider reached 9 pm ── */
