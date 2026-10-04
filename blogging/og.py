@@ -84,73 +84,57 @@ def _wrap(draw, text, font, max_w):
     return lines
 
 
-def make_og_image(slug, title, excerpt, date_long=""):
+def make_og_image(slug, title, description, date_long, excerpt):
     os.makedirs(OG_DIR, exist_ok=True)
 
-    # background: site texture, cover-cropped to 1200x630
+    # full-bleed site background texture, cover-cropped to 1200x630
     bg = Image.open(BG_PATH).convert("RGB")
     scale = max(W / bg.width, H / bg.height)
     bg = bg.resize((int(bg.width * scale) + 1, int(bg.height * scale) + 1), Image.LANCZOS)
-    bg = bg.crop(((bg.width - W) // 2, (bg.height - H) // 2, (bg.width - W) // 2 + W, (bg.height - H) // 2 + H))
-    canvas = bg.convert("RGBA")
+    left, top = (bg.width - W) // 2, (bg.height - H) // 2
+    canvas = bg.crop((left, top, left + W, top + H)).convert("RGBA")
 
-    # paper card with soft shadow
-    x0, y0, x1, y1 = CARD
-    cw, ch = x1 - x0, y1 - y0
-    shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    ImageDraw.Draw(shadow).rounded_rectangle((x0, y0 + 8, x1, y1 + 8), 14, fill=(0, 0, 0, 70))
-    canvas = Image.alpha_composite(canvas, shadow.filter(ImageFilter.GaussianBlur(14)))
-
-    paper = _paper_texture((cw, ch), seed=slug).convert("RGBA")
-    mask = Image.new("L", (cw, ch), 0)
-    ImageDraw.Draw(mask).rounded_rectangle((0, 0, cw - 1, ch - 1), 14, fill=255)
-    canvas.paste(paper, (x0, y0), mask)
-
-    # text layer, drawn on a transparent sheet in card coordinates
-    pad = 72
-    text_w = cw - pad * 2
-    layer = Image.new("RGBA", (cw, ch), (0, 0, 0, 0))
+    pad = 90
+    text_w = W - pad * 2
+    layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(layer)
 
-    title_font = _font(FONT_ITALIC, 64, 700)
-    title_lines = _wrap(d, title, title_font, text_w)[:3]
-    y = 64
-    for ln in title_lines:
+    title_font = _font(FONT_ITALIC, 60, 700)
+    y = 60
+    for ln in _wrap(d, title, title_font, text_w)[:2]:
         d.text((pad, y), ln, font=title_font, fill=INK + (255,))
-        y += 82
+        y += 76
+    y += 6
 
-    if date_long:
-        d.text((pad, y + 10), date_long, font=_font(FONT_REG, 20, 300), fill=MUTED + (255,))
-        y += 44
-    y += 14
+    meta_font = _font(FONT_REG, 22, 300)
+    for line in (description, date_long):
+        if not line:
+            continue
+        for ln in _wrap(d, line, meta_font, text_w)[:2]:
+            d.text((pad, y), ln, font=meta_font, fill=MUTED + (255,))
+            y += 32
+        y += 6
+    y += 22
 
     body_font = _font(FONT_REG, 28, 300)
     for ln in _wrap(d, excerpt, body_font, text_w):
-        if y > ch:
+        if y > H:
             break
         d.text((pad, y), ln, font=body_font, fill=INK + (255,))
         y += 50
 
-    # fade: text is fully visible above the fade start, gone by the bottom of the image
-    fade_start = max(y0 + 40, 330) - y0
-    fade_end = H - y0 - 8
-    fade = Image.new("L", (cw, ch), 255)
+    # fade the whole text layer out toward the bottom edge
+    fade_start, fade_end = int(H * 0.5), H - 6
+    fade = Image.new("L", (W, H), 255)
     fd = ImageDraw.Draw(fade)
-    for row in range(ch):
-        if row <= fade_start:
-            a = 255
-        elif row >= fade_end:
-            a = 0
-        else:
-            t = (row - fade_start) / (fade_end - fade_start)
-            a = int(255 * (1 - t) ** 1.4)
-        fd.line((0, row, cw, row), fill=a)
+    for row in range(fade_start, H):
+        t = min(1.0, (row - fade_start) / (fade_end - fade_start))
+        fd.line((0, row, W, row), fill=int(255 * (1 - t) ** 1.4))
     layer.putalpha(ImageChops.multiply(layer.getchannel("A"), fade))
+    canvas.alpha_composite(layer)
 
-    canvas.alpha_composite(layer, (x0, y0))
-
-    out = os.path.join(OG_DIR, f"{slug}.png")
-    canvas.convert("RGB").save(out, optimize=True)
+    out = os.path.join(OG_DIR, f"{slug}.webp")
+    canvas.convert("RGB").save(out, quality=80, method=6)
     return out
 
 
@@ -167,22 +151,40 @@ def excerpt_from_markdown(md_text, limit=420):
     return " ".join(p for p in paras if p)[:limit]
 
 
-def _from_post_html(path):
+DATE_RE = re.compile(r"^(started on |originally published on )?[A-Za-z]{3,9}\.? \d{1,2}, \d{4}$", re.I)
+
+
+def _clean(fragment):
+    fragment = re.sub(r"<img[^>]*>|<br\s*/?>", " ", fragment)
+    fragment = re.sub(r"<[^>]+>", " ", fragment)
+    return re.sub(r"\s+", " ", html.unescape(fragment)).strip()
+
+
+def parse_post_html(path):
+    """Returns (title, description, date_long, excerpt) from a generated post page."""
     src = open(path, encoding="utf-8").read()
-    title = html.unescape(re.search(r"<h1[^>]*>(.*?)</h1>", src, re.S).group(1)).strip()
-    date = re.findall(r"<h3>(.*?)</h3>", src, re.S)
-    date_long = html.unescape(date[-1]).strip() if len(date) > 1 else ""
-    body = src.split("<br /><br />", 1)[-1]
-    paras = re.findall(r"<p>(.*?)</p>", body, re.S)
-    paras = [re.sub(r"<[^>]+>", "", p) for p in paras]
-    ex = " ".join(html.unescape(re.sub(r"\s+", " ", p)).strip() for p in paras if re.sub(r"<[^>]+>|\s", "", p))
-    return title, ex[:420], date_long
+    src = src.split("<body>", 1)[-1]
+    h1 = re.search(r"<h1[^>]*>(.*?)</h1>", src, re.S)
+    title = _clean(h1.group(1))
+    rest = src[h1.end():]
+    h3s = list(re.finditer(r"<h3[^>]*>(.*?)</h3>", rest, re.S))
+    # header h3s are the ones before any body content; body starts after the last one
+    # that sits in the header block (before the first <p>/<h5>/<h2>/<li>)
+    first_body = re.search(r"<(p|h5|h2|li)[ >]", rest)
+    cut = first_body.start() if first_body else len(rest)
+    head = [m for m in h3s if m.start() < cut]
+    texts = [_clean(m.group(1)) for m in head]
+    date_long = next((t for t in texts if DATE_RE.match(t) or re.search(r"\d{4}", t) and len(t) < 40), "")
+    description = next((t for t in texts if t != date_long), "")
+    body = rest[head[-1].end():] if head else rest
+    excerpt = _clean(body)[:420]
+    return title, description, date_long, excerpt
 
 
 if __name__ == "__main__":
     blogs = os.path.join(SITE_DIR, "blogs")
     slugs = sys.argv[1:] or sorted(f[:-5] for f in os.listdir(blogs) if f.endswith(".html"))
     for slug in slugs:
-        t, ex, dl = _from_post_html(os.path.join(blogs, f"{slug}.html"))
-        make_og_image(slug, t, ex, dl)
+        t, desc, dl, ex = parse_post_html(os.path.join(blogs, f"{slug}.html"))
+        make_og_image(slug, t, desc, dl, ex)
         print("og:", slug)

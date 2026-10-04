@@ -74,6 +74,7 @@ POST_TEMPLATE = """<!doctype html>
     <meta property="og:description" content="{description}" />
     <meta property="og:url" content="{url}" />
     <meta property="og:image" content="{og_image}" />
+    <meta property="og:image:type" content="image/webp" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -245,7 +246,7 @@ def build_post_html(title, description, date_long, body_md, slug):
         description=html.escape(description),
         date_long=date_long,
         url=f"{SITE_BASE_URL}/blogs/{slug}.html",
-        og_image=f"{SITE_BASE_URL}/assets/og/{slug}.png",
+        og_image=f"{SITE_BASE_URL}/assets/og/{slug}.webp",
         body_html=body_html,
     )
 
@@ -383,7 +384,7 @@ def main():
 
         if not args.dry_run:
             os.makedirs(BLOGS_DIR, exist_ok=True)
-            og.make_og_image(slug, title, og.excerpt_from_markdown(note["body"]), fmt_date_long(date_obj))
+            og.make_og_image(slug, title, description, fmt_date_long(date_obj), og.excerpt_from_markdown(note["body"]))
             with open(post_path, "w", encoding="utf-8") as out:
                 out.write(post_html)
 
