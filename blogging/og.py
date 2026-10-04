@@ -104,7 +104,7 @@ def make_og_image(slug, title, description, date_long, excerpt):
     for ln in _wrap(d, title, title_font, text_w)[:2]:
         d.text((pad, y), ln, font=title_font, fill=INK + (255,))
         y += 76
-    y += 6
+    y += 16
 
     meta_font = _font(FONT_REG, 22, 300)
     for line in (description, date_long):
@@ -113,8 +113,8 @@ def make_og_image(slug, title, description, date_long, excerpt):
         for ln in _wrap(d, line, meta_font, text_w)[:2]:
             d.text((pad, y), ln, font=meta_font, fill=MUTED + (255,))
             y += 32
-        y += 6
-    y += 22
+        y += 26
+    y += 34
 
     body_font = _font(FONT_REG, 28, 300)
     for ln in _wrap(d, excerpt, body_font, text_w):
