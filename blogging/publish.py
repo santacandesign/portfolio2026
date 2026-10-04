@@ -27,6 +27,7 @@ import glob
 import html
 import shutil
 import argparse
+import og
 import subprocess
 import datetime as dt
 from xml.sax.saxutils import escape as xml_escape
@@ -66,6 +67,17 @@ POST_TEMPLATE = """<!doctype html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content="{description}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{title}" />
+    <meta property="og:description" content="{description}" />
+    <meta property="og:url" content="{url}" />
+    <meta property="og:image" content="{og_image}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="{og_image}" />
     <link rel="stylesheet" href="../blog.css" />
   </head>
 
@@ -232,6 +244,8 @@ def build_post_html(title, description, date_long, body_md, slug):
         title=html.escape(title),
         description=html.escape(description),
         date_long=date_long,
+        url=f"{SITE_BASE_URL}/blogs/{slug}.html",
+        og_image=f"{SITE_BASE_URL}/assets/og/{slug}.png",
         body_html=body_html,
     )
 
@@ -369,6 +383,7 @@ def main():
 
         if not args.dry_run:
             os.makedirs(BLOGS_DIR, exist_ok=True)
+            og.make_og_image(slug, title, og.excerpt_from_markdown(note["body"]), fmt_date_long(date_obj))
             with open(post_path, "w", encoding="utf-8") as out:
                 out.write(post_html)
 
@@ -400,7 +415,8 @@ def main():
         subprocess.run(["git", "-C", SITE_DIR, "push"], check=True)
         print("Pushed to git.")
     elif not args.dry_run:
-        print("Now run:  git add -A && git commit -m 'new post' && git push")
+        names = ", ".join(published).replace("'", "")
+        print(f"Now run:  git add -A && git commit -m 'new post: {names}' && git push")
 
 
 if __name__ == "__main__":
