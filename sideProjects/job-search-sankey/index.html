@@ -72,8 +72,8 @@
     background: var(--panel); color: var(--text); padding: 12px 14px 10px; font-family: var(--f-tip), sans-serif; font-size: var(--tip-body); min-width: 200px;
     border: 1px solid var(--rule); box-shadow: 0 6px 24px rgba(0,0,0,.7);
   }
-  .tip.pin { pointer-events: auto; padding-right: 34px; }
-  .tip .x { position: absolute; top: 4px; right: 4px; width: 26px; height: 26px; margin: 0; padding: 0; font-size: 20px; line-height: 1; border: 0; color: var(--muted); }
+  .tip.pin { pointer-events: auto; padding-right: 58px; }
+  .tip .x { position: absolute; top: 0; right: 0; width: 48px; height: 48px; margin: 0; padding: 0; font-size: 32px; line-height: 1; border: 0; background: transparent; color: var(--text); cursor: pointer; }
   .tip .x:hover { color: var(--bg); background: var(--text); }
   .tip .t { font-family: var(--f-tiptitle), sans-serif; font-size: var(--tip-title); letter-spacing: .02em; text-transform: uppercase; }
   .tip .t b { font-weight: 400; margin-left: 8px; color: var(--accent); }
@@ -143,7 +143,7 @@ const S = {
 const DESK = {...S};
 const MOB = {
   vScreen: 1, hit: 12, gutter: 78,
-  titleSize: 26, headSize: 16, labelSize: 16, nodeWidth: 10, nodePad: 14, lineWidth: 1.7, wobble: 3, jitter: 1,
+  titleSize: 26, headSize: 16, labelSize: 16, nodeWidth: 16, nodePad: 14, lineWidth: 1.7, wobble: 3, jitter: 1,
   titleFont: "Rock Salt", subFont: "Rock Salt", headFont: "Rock Salt", labelFont: "Reenie Beanie", countFont: "Reenie Beanie", noteFont: "Reenie Beanie",
   tipTitleFont: "Rock Salt", tipFont: "Reenie Beanie", tipTitleSize: 14, tipSize: 12, tipHeadSize: 9, tipPctSize: 10
 };
@@ -292,7 +292,18 @@ const showTip = (ev, html) => {
   tip.style("opacity", 1).html(html).classed("pin", !!pinned);
   if (pinned) tip.append("button").attr("class", "x").attr("aria-label", "Close").text("×")
     .on("click", e => { e.stopPropagation(); pinned = null; unfocus(); });
-  const n = tip.node(), x = Math.min(ev.clientX + 16, innerWidth - n.offsetWidth - 8), y = Math.min(ev.clientY + 16, innerHeight - n.offsetHeight - 8);
+  // anchored to the nodes and labels under the tooltip's own width (not the svg's empty margins), on the side nearest the pointer
+  const n = tip.node(), h = n.offsetHeight, gap = 10;
+  const x = Math.max(8, Math.min(ev.clientX + 16, innerWidth - n.offsetWidth - 8));
+  const all = [...contentG.node().children, ...labelG.node().children].map(c => c.getBoundingClientRect());
+  const under = all.filter(c => c.right > x && c.left < x + n.offsetWidth);
+  const rs = under.length ? under : all;
+  const r = {top: Math.min(...rs.map(c => c.top)), bottom: Math.max(...rs.map(c => c.bottom))};
+  const fitsAbove = r.top - h - gap >= 8, fitsBelow = r.bottom + h + gap <= innerHeight - 8;
+  const mid = (Math.min(...all.map(c => c.top)) + Math.max(...all.map(c => c.bottom))) / 2, nearTop = ev.clientY < mid;
+  const useAbove = fitsAbove && (nearTop || !fitsBelow) || (!fitsAbove && !fitsBelow && nearTop);
+  let y = useAbove ? r.top - h - gap : r.bottom + gap;
+  y = Math.max(8, Math.min(y, innerHeight - h - 8));
   tip.style("left", x + "px").style("top", y + "px");
 };
 function tally(ls, keyFn, order) {
@@ -324,7 +335,7 @@ function routeTip(l) {
     <div class="h">${same} ${same === 1 ? "opportunity" : "opportunities"} took this exact route</div>`;
 }
 
-let lineSel, svg, L;
+let lineSel, svg, L, contentG, labelG;
 function focus(pred, html, ev) {
   svg.classed("focus", true); lineSel.classed("on", pred);
   if (ev) showTip(ev, html);
@@ -395,10 +406,18 @@ function render() {
   const nodeG = svg.append("g").attr("filter", "url(#edge)").selectAll("rect").data(L.N).join("rect").attr("class", "hit")
     .attr("x", n => n.x0).attr("y", n => n.y0).attr("width", n => n.x1 - n.x0).attr("height", n => n.y1 - n.y0)
     .attr("fill", nodeFill);
-  hover(nodeG, (n, l) => l.path.includes(n.name), nodeTip);
+  nodeG.style("pointer-events", "none");
+  // invisible touch targets: at least 24x24px (WCAG 2.5.8), centred on each node
+  const MIN = 24;
+  const nodeHit = svg.append("g").selectAll("rect").data(L.N).join("rect").attr("class", "hit").attr("fill", "transparent")
+    .each(function (n) {
+      const w = Math.max(MIN, n.x1 - n.x0), h = Math.max(MIN, n.y1 - n.y0);
+      d3.select(this).attr("x", (n.x0 + n.x1) / 2 - w / 2).attr("y", (n.y0 + n.y1) / 2 - h / 2).attr("width", w).attr("height", h);
+    });
+  hover(nodeHit, (n, l) => l.path.includes(n.name), nodeTip);
 
   // labels: worn typewriter text, scratched underline, count in the accent hand
-  const labG = svg.append("g");
+  const labG = labelG = svg.append("g");
   L.N.forEach(n => {
     const r = R("label", n.name), g = labG.append("g").datum(n).attr("class", "hit");
     const t = g.append("text").attr("font-family", `'${S.labelFont}', sans-serif`).attr("font-size", S.labelSize).attr("fill", S.text).attr("filter", "url(#grit)");
@@ -432,6 +451,8 @@ function render() {
     g.attr("transform", `translate(${tx.toFixed(1)},${ty.toFixed(1)}) rotate(${(sym(r) * S.tilt * S.chaos * .3).toFixed(1)},${gb.x + gb.width / 2},${gb.y + gb.height / 2})`);
   });
   hover(labG.selectAll("g.hit"), (n, l) => l.path.includes(n.name), nodeTip);
+  contentG = svg.append("g").attr("pointer-events", "none");  // measuring only: node and label boxes the tooltip anchors to
+  contentG.selectAll("rect").data(L.N).join("rect").attr("x", n => n.x0).attr("y", n => n.y0).attr("width", n => n.x1 - n.x0).attr("height", n => n.y1 - n.y0).attr("fill", "none");
 
   // column heads
   const heads = L.vert ? [] : [["Where it started", 0, "end"], ["The rounds", 1, "start"], ["How it ended", 4, "start"]];
