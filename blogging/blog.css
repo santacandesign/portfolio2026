@@ -92,7 +92,8 @@ hr {
   margin: 24px 0;
 }
 
-h3 {
+/* subtitle / date line under a post title (and in the index listing) */
+.subtitle {
   font-family: "Libre", serif;
   font-weight: 200;
   font-size: 12px;
@@ -100,6 +101,16 @@ h3 {
   line-height: 1.4;
   margin: 0;
   text-decoration: none;
+}
+
+/* section heading inside a post: smaller than h2, still reads as a heading */
+h3 {
+  font-family: "Libre", serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #111111;
+  line-height: 1.5;
+  margin: 24px 0 8px;
 }
 
 h4 {
@@ -167,8 +178,12 @@ a {
     font-size: 18px;
   }
 
-  h3 {
+  .subtitle {
     font-size: 12px;
+  }
+
+  h3 {
+    font-size: 15px;
   }
 
   h4 {

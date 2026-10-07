@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Job Search 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&family=Reenie+Beanie&family=Rock+Salt&display=swap">
+<style>
+  :root {
+    --bg: #0d0c0b;
+    --text: #cfc8b8;
+    --muted: #8a8374;
+    --panel: #171512;
+    --rule: #3a352c;
+    --accent: #d9a441;
+    --grain: .5;
+    --paper: .05;
+    --vignette: .6;
+    --dim: .08;
+    --f-title: "Rock Salt";
+    --f-sub: "Covered By Your Grace";
+    --f-note: "Covered By Your Grace";
+    --f-count: "Covered By Your Grace";
+    --f-tiptitle: "Rock Salt";
+    --f-tip: "Covered By Your Grace";
+    --tip-title: 20px;
+    --tip-body: 14px;
+    --tip-head: 12px;
+    --tip-pct: 12px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--f-note), sans-serif;
+  }
+  /* film grain + paper fibre + vignette, over everything */
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 5; mix-blend-mode: screen; opacity: calc(var(--grain) * .06);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23g%29'/%3E%3C/svg%3E");
+    background-size: 360px 360px;
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 7;
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,var(--vignette)) 120%);
+  }
+  #paper { position: fixed; inset: 0; pointer-events: none; z-index: 4; mix-blend-mode: screen; opacity: var(--paper); background-size: 600px 600px; }
+  #distress { position: fixed; inset: 0; pointer-events: none; z-index: 3; mix-blend-mode: screen; opacity: var(--distress); background-size: 800px 800px; }
+  main { max-width: 1200px; margin: 0 auto; padding: 40px 16px 40px; position: relative; z-index: 1; }
+  h1 { margin: 0 0 10px; text-align: center; line-height: 1.25; font-weight: 400; color: var(--text); }
+  h1 span { display: inline-block; line-height: 1; font-family: var(--f-title), sans-serif; }
+  h1 .sp { width: .3em; }
+  .sub { text-align: center; font-family: var(--f-sub), sans-serif; font-size: 18px; margin: 0 0 22px; color: var(--accent); transform: rotate(-1.2deg); }
+  .sub u { text-decoration: underline; text-decoration-style: wavy; text-decoration-thickness: 1.5px; text-underline-offset: 6px; text-decoration-color: var(--muted); }
+  .legend { display: flex; flex-wrap: wrap; gap: 10px 14px; justify-content: center; margin-bottom: 6px; }
+  .legend span { padding: 5px 12px 4px; font-size: 15px; cursor: pointer; border: 1.5px solid; background: transparent; }
+  #chart { width: 100%; overflow-x: auto; }
+  svg { display: block; margin: 0 auto; width: 100%; height: auto; min-width: 0; max-width: 1200px; }
+  @media (max-width: 640px) { main { padding: 22px 6px 28px; } .sub { font-size: 15px; } .tip { max-width: calc(100vw - 16px); min-width: 0; padding: 8px 10px 7px; z-index: 30; }
+    .tip .t b { margin-left: 5px; } .tip .pct { margin-left: 5px; } .tip .h { margin: 6px 0 2px; }
+    .tip .rs { display: flex; flex-wrap: wrap; gap: 1px 12px; }
+    .tip .row { flex: 0 0 auto; gap: 5px; line-height: 1.5; }
+    .tip .row .bar { width: 10px !important; height: 5px; } .tip .row em { flex: none; } } 
+  svg .ln { transition: opacity .15s; }
+  svg.focus .ln { opacity: var(--dim); }
+  svg.focus .ln.on { opacity: 1; }
+  svg .hit { cursor: pointer; }
+  .tip {
+    position: fixed; pointer-events: none; opacity: 0; transition: opacity .1s; z-index: 10;
+    background: var(--panel); color: var(--text); padding: 12px 14px 10px; font-family: var(--f-tip), sans-serif; font-size: var(--tip-body); min-width: 200px;
+    border: 1px solid var(--rule); box-shadow: 0 6px 24px rgba(0,0,0,.7);
+  }
+  .tip.pin { pointer-events: auto; padding-right: 34px; }
+  .tip .x { position: absolute; top: 4px; right: 4px; width: 26px; height: 26px; margin: 0; padding: 0; font-size: 20px; line-height: 1; border: 0; color: var(--muted); }
+  .tip .x:hover { color: var(--bg); background: var(--text); }
+  .tip .t { font-family: var(--f-tiptitle), sans-serif; font-size: var(--tip-title); letter-spacing: .02em; text-transform: uppercase; }
+  .tip .t b { font-weight: 400; margin-left: 8px; color: var(--accent); }
+  .tip .pct { font-family: var(--f-count), sans-serif; font-size: var(--tip-pct); margin-left: 8px; color: var(--muted); }
+  .tip .h { margin: 8px 0 3px; font-size: var(--tip-head); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .tip .row { display: flex; align-items: center; gap: 6px; line-height: 1.6; }
+  .tip .row .bar { height: 7px; display: inline-block; }
+  .tip .row em { font-style: normal; flex: 1; }
+  .tip .route { font-size: calc(var(--tip-body) - 1px); line-height: 1.5; }
+  .note { display: block; width: fit-content; margin: 16px auto 0; padding: 6px 14px; font-size: 15px; font-family: var(--f-note), sans-serif; border: 1px dashed var(--rule); color: var(--text); }
+  footer { text-align: center; font-size: 13px; margin-top: 16px; color: var(--muted); }
+  .actions { text-align: center; margin-top: 14px; }
+  button {
+    font: inherit; font-size: 14px; color: var(--text); background: transparent; border: 1px solid var(--muted);
+    padding: 5px 14px; margin: 3px; cursor: pointer;
+  }
+  button:hover { color: var(--bg); background: var(--text); border-color: var(--text); }
+</style>
+</head>
+<body>
+<div id="paper"></div>
+<div id="distress"></div>
+<main>
+  <h1 id="title" aria-label="Job Search 2026"></h1>
+  <p class="sub" id="sub"></p>
+  <div id="chart"></div>
+  <p class="note" id="assign"></p>
+</main>
+<svg width="0" height="0" style="position:absolute;min-width:0" aria-hidden="true"><defs id="page-defs"></defs></svg>
+<div class="tip" id="tip"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script>
+const DATA = {"total": 75, "assignments": {"done": 5, "skipped": 2}, "links": [{"source": "Cold email", "target": "Round 1", "origin": "cold", "value": 1}, {"source": "Round 1", "target": "Round 2", "origin": "cold", "value": 1}, {"source": "Round 2", "target": "Rejected", "origin": "cold", "value": 1}, {"source": "Referral", "target": "Rejected", "origin": "referral", "value": 2}, {"source": "Cold email", "target": "No response", "origin": "cold", "value": 2}, {"source": "Referral", "target": "Round 1", "origin": "referral", "value": 4}, {"source": "Round 1", "target": "Round 2", "origin": "referral", "value": 2}, {"source": "Round 2", "target": "Round 3+", "origin": "referral", "value": 2}, {"source": "Round 3+", "target": "Offer", "origin": "referral", "value": 1}, {"source": "Offer", "target": "Accepted", "origin": "referral", "value": 1}, {"source": "Round 3+", "target": "Rejected", "origin": "referral", "value": 1}, {"source": "Round 1", "target": "Rejected", "origin": "referral", "value": 1}, {"source": "Round 1", "target": "Withdrew", "origin": "referral", "value": 1}, {"source": "Referral", "target": "No response", "origin": "referral", "value": 5}, {"source": "Recruiter", "target": "Round 1", "origin": "inbound", "value": 8}, {"source": "Round 1", "target": "Round 2", "origin": "inbound", "value": 2}, {"source": "Round 2", "target": "Rejected", "origin": "inbound", "value": 2}, {"source": "Round 1", "target": "Rejected", "origin": "inbound", "value": 3}, {"source": "Recruiter", "target": "Rejected", "origin": "inbound", "value": 2}, {"source": "Recruiter", "target": "No response", "origin": "inbound", "value": 3}, {"source": "Round 1", "target": "No response", "origin": "inbound", "value": 2}, {"source": "Round 1", "target": "Withdrew", "origin": "inbound", "value": 1}, {"source": "Recruiter", "target": "Withdrew", "origin": "inbound", "value": 3}, {"source": "Portal", "target": "Round 1", "origin": "portal", "value": 4}, {"source": "Round 1", "target": "Round 2", "origin": "portal", "value": 3}, {"source": "Round 2", "target": "Rejected", "origin": "portal", "value": 3}, {"source": "Round 1", "target": "Rejected", "origin": "portal", "value": 1}, {"source": "Portal", "target": "Withdrew", "origin": "portal", "value": 2}, {"source": "Portal", "target": "Rejected", "origin": "portal", "value": 17}, {"source": "Portal", "target": "No response", "origin": "portal", "value": 22}], "journeys": [{"origin": "cold", "path": ["Cold email", "Round 1", "Round 2", "Rejected"], "n": 1}, {"origin": "referral", "path": ["Referral", "Rejected"], "n": 2}, {"origin": "cold", "path": ["Cold email", "No response"], "n": 2}, {"origin": "referral", "path": ["Referral", "Round 1", "Round 2", "Round 3+", "Offer", "Accepted"], "n": 1}, {"origin": "referral", "path": ["Referral", "Round 1", "Round 2", "Round 3+", "Rejected"], "n": 1}, {"origin": "referral", "path": ["Referral", "Round 1", "Rejected"], "n": 1}, {"origin": "referral", "path": ["Referral", "Round 1", "Withdrew"], "n": 1}, {"origin": "referral", "path": ["Referral", "No response"], "n": 5}, {"origin": "inbound", "path": ["Recruiter", "Round 1", "Round 2", "Rejected"], "n": 2}, {"origin": "inbound", "path": ["Recruiter", "Round 1", "Rejected"], "n": 3}, {"origin": "inbound", "path": ["Recruiter", "Rejected"], "n": 2}, {"origin": "inbound", "path": ["Recruiter", "No response"], "n": 3}, {"origin": "inbound", "path": ["Recruiter", "Round 1", "No response"], "n": 2}, {"origin": "inbound", "path": ["Recruiter", "Round 1", "Withdrew"], "n": 1}, {"origin": "inbound", "path": ["Recruiter", "Withdrew"], "n": 3}, {"origin": "portal", "path": ["Portal", "Round 1", "Round 2", "Rejected"], "n": 3}, {"origin": "portal", "path": ["Portal", "Round 1", "Rejected"], "n": 1}, {"origin": "portal", "path": ["Portal", "Withdrew"], "n": 2}, {"origin": "portal", "path": ["Portal", "Rejected"], "n": 17}, {"origin": "portal", "path": ["Portal", "No response"], "n": 22}]};
+
+const ORIGINS = {cold: "Cold email", referral: "Referral", inbound: "Recruiter", portal: "Portal"};
+const ORIGIN_ORDER = ["cold", "referral", "inbound", "portal"];
+const LAYER = {
+  "Cold email": 0, "Portal": 0, "Recruiter": 0, "Referral": 0,
+  "Round 1": 1, "Round 2": 2, "Round 3+": 3,
+  "Offer": 4, "Withdrew": 4, "Rejected": 4, "No response": 4,
+  "Accepted": 5
+};
+const ORDER = ["Cold email", "Referral", "Recruiter", "Portal",
+  "Round 1", "Round 2", "Round 3+",
+  "Offer", "Withdrew", "Rejected", "No response", "Accepted"];
+const FONTS = ["Rock Salt", "Covered By Your Grace", "Reenie Beanie"];
+const END_KEY = {"Offer": "offer", "Accepted": "accepted", "Rejected": "rejected", "No response": "noresponse", "Withdrew": "withdrew"};
+
+// Final look, baked in from the dial panel.
+const S = {
+  seed: 7,
+  chaos: 1, tilt: 3, sizeVar: 0.18, drift: 0.12,
+  titleFont: "Rock Salt", subFont: "Covered By Your Grace", headFont: "Rock Salt", labelFont: "Covered By Your Grace", countFont: "Covered By Your Grace",
+  noteFont: "Covered By Your Grace", tipTitleFont: "Rock Salt", tipFont: "Covered By Your Grace",
+  titleSize: 39, headSize: 12, labelSize: 16,
+  texture: 0.22,
+  height: 1, tipTitleSize: 20, tipSize: 14, tipHeadSize: 12, tipPctSize: 12,
+  lineWidth: 2.3, lineOpacity: 0.9, passes: 2, wobble: 10, wobbleFreq: 1.7, jitter: 2.1, bend: 0.32, bleed: 1,
+  rough: 2.6, distress: 0.55, grain: 0.35, paper: 0.05, vignette: 0.6, dim: 0.08,
+  gap: 6, nodeWidth: 18, nodePad: 33,
+  cold: "#ff6a2b", referral: "#4fbf86", inbound: "#e8458b", portal: "#4f78ff",
+  bg: "#050505", text: "#cfc8b8", muted: "#8a8374", accent: "#d9a441", panel: "#171512", rule: "#3a352c",
+  node: "#a39c8a", offer: "#d9a441", accepted: "#f0d27a", rejected: "#8c2f27", noresponse: "#4a463e", withdrew: "#7d6a4a"
+};
+// Phone profile: the chart runs top to bottom (started, rounds, ended) on a canvas the size of the screen, so sizes below are real pixels.
+const DESK = {...S};
+const MOB = {
+  vScreen: 1, hit: 12, gutter: 78,
+  titleSize: 26, headSize: 16, labelSize: 16, nodeWidth: 10, nodePad: 14, lineWidth: 1.7, wobble: 3, jitter: 1,
+  titleFont: "Rock Salt", subFont: "Rock Salt", headFont: "Rock Salt", labelFont: "Reenie Beanie", countFont: "Reenie Beanie", noteFont: "Reenie Beanie",
+  tipTitleFont: "Rock Salt", tipFont: "Reenie Beanie", tipTitleSize: 14, tipSize: 12, tipHeadSize: 9, tipPctSize: 10
+};
+const mq = matchMedia("(max-width: 640px)");
+const applyProfile = () => { Object.assign(S, DESK, mq.matches ? MOB : {}); S.W = S.W || 1200; };
+applyProfile();
+
+// seeded randomness: each element gets its own stream, so one dial never reshuffles the rest
+function mulberry32(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function R(...keys) { let h = 2166136261 ^ S.seed; for (const c of keys.join("|")) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return mulberry32(h >>> 0); }
+const sym = r => r() * 2 - 1;
+function inkOn(hex) {  // readable text colour on a given fill
+  const n = parseInt(hex.slice(1), 16), l = (0.299 * (n >> 16) + 0.587 * (n >> 8 & 255) + 0.114 * (n & 255)) / 255;
+  return l < 0.55 ? S.text : S.bg;
+}
+const nodeFill = n => n.layer === 0 ? S[n.lines[0].origin] : S[END_KEY[n.name] || "node"];
+
+// one line per opportunity
+const LINES = [];
+DATA.journeys
+  .sort((a, b) => ORIGIN_ORDER.indexOf(a.origin) - ORIGIN_ORDER.indexOf(b.origin) || ORDER.indexOf(a.path.at(-1)) - ORDER.indexOf(b.path.at(-1)))
+  .forEach(j => { for (let k = 0; k < j.n; k++) LINES.push({id: LINES.length, origin: j.origin, path: j.path, end: j.path.at(-1), route: j.origin + ":" + j.path.join(">")}); });
+const total = DATA.total;
+const pct = v => `${Math.round(v / total * 100)}%`;
+
+function layout() {
+  const vert = mq.matches;
+  let g = S.gap * S.height, W = S.W, M = {top: 130, right: 200, left: 230, bottom: 40};
+  const nodes = new Map();
+  LINES.forEach(l => l.path.forEach(n => {
+    if (!nodes.has(n)) nodes.set(n, {name: n, layer: LAYER[n], lines: []});
+    nodes.get(n).lines.push(l);
+  }));
+  const N = [...nodes.values()].sort((a, b) => ORDER.indexOf(a.name) - ORDER.indexOf(b.name));
+  // x0/x1 run along the flow (columns left to right, or rows top to bottom on a phone), y0/y1 across it; swapped at the end for phones
+  const mx = vert ? 12 + S.gutter : 12, padC = vert ? S.nodePad : S.nodePad * S.height, top = vert ? 92 : 100, bottom = 80;
+  let HT = 0;
+  if (vert) {
+    W = Math.round(document.getElementById("chart").clientWidth || innerWidth);
+    // fill what is left of the screen below the title, leaving room for the hint underneath
+    const room = innerHeight - (document.getElementById("chart").getBoundingClientRect().top + scrollY) - 76;
+    HT = Math.max(420, Math.round(room * S.vScreen));
+    g = Math.min(7, ...[0, 1, 2, 3, 4, 5].map(k => { const row = N.filter(n => n.layer === k); return row.length ? (W - mx - 12 - (row.length - 1) * padC) / (row.reduce((t, n) => t + n.lines.length, 0) + .8 * row.length) : 99; }));
+  }
+  const step = vert ? (HT - top - bottom - S.nodeWidth) / 5 : (W - M.left - M.right - S.nodeWidth) / 5, colY = {};
+  N.forEach(n => {
+    n.x0 = (vert ? top : M.left) + n.layer * step; n.x1 = n.x0 + S.nodeWidth;
+    n.h = n.lines.length * g + g * .8;
+    n.y0 = colY[n.layer] ?? (vert ? mx : M.top); n.y1 = n.y0 + n.h;
+    colY[n.layer] = n.y1 + padC;
+    n.isEnd = n.lines.every(l => l.end === n.name);
+  });
+  // Accepted sits one column right of Offer, level with it
+  const offer = nodes.get("Offer"), acc = nodes.get("Accepted");
+  if (offer && acc) { acc.y0 = offer.y0; acc.y1 = acc.y0 + acc.h; }
+
+  // slots: each line enters and leaves each node at its own height, ordered to keep crossings down
+  const inY = new Map(), outY = new Map(), key = (l, n) => l.id + "|" + n;
+  const slot = (n, i) => n.y0 + g * .4 + (i + .5) * g;
+  const oRank = l => ORIGIN_ORDER.indexOf(l.origin);
+  for (let layer = 0; layer <= 5; layer++) N.filter(n => n.layer === layer).forEach(n => {
+    const prev = l => l.path[l.path.indexOf(n.name) - 1], next = l => l.path[l.path.indexOf(n.name) + 1];
+    n.lines.filter(prev)
+      .sort((a, b) => outY.get(key(a, prev(a))) - outY.get(key(b, prev(b))) || oRank(a) - oRank(b))
+      .forEach((l, i) => inY.set(key(l, n.name), slot(n, i)));
+    const ny = l => nodes.get(next(l)).y0, iy = l => inY.get(key(l, n.name)) ?? 0;
+    n.lines.filter(next)
+      .sort((a, b) => ny(a) - ny(b) || ORDER.indexOf(a.end) - ORDER.indexOf(b.end) || iy(a) - iy(b) || oRank(a) - oRank(b))
+      .forEach((l, i) => outY.set(key(l, n.name), slot(n, i)));
+  });
+  const H = vert ? HT : Math.max(...N.map(n => n.y1)) + M.bottom;
+  N.forEach(n => {
+    n.a0 = n.x0; n.a1 = n.x1;
+    if (vert) [n.x0, n.x1, n.y0, n.y1] = [n.y0, n.y1, n.x0, n.x1];
+  });
+  return {nodes, N, inY, outY, key, step, W, M, H, vert};
+}
+
+const curve = d3.line().curve(d3.curveCatmullRom.alpha(.5));
+function linePath(l, pass, L) {
+  const r = R("line", l.id, pass), c = S.chaos;
+  const ph1 = r() * 6.283, ph2 = r() * 6.283, f = S.wobbleFreq * (.7 + r() * .6);
+  let d = "";
+  for (let s = 0; s < l.path.length - 1; s++) {
+    const a = L.nodes.get(l.path[s]), b = L.nodes.get(l.path[s + 1]);
+    const x0 = a.a1 - 4, y0 = L.outY.get(L.key(l, a.name)), x1 = b.a0 + 4, y1 = L.inY.get(L.key(l, b.name));
+    const dx = x1 - x0, cx0 = x0 + dx * S.bend, cx1 = x1 - dx * S.bend, cols = dx / L.step;
+    const m = Math.max(6, Math.round(dx / 14)), pts = [];
+    for (let i = 0; i <= m; i++) {
+      const t = i / m, u = 1 - t, env = Math.sin(Math.PI * t);
+      let x = u * u * u * x0 + 3 * u * u * t * cx0 + 3 * u * t * t * cx1 + t * t * t * x1;
+      let y = (u * u * u + 3 * u * u * t) * y0 + (3 * u * t * t + t * t * t) * y1;
+      const w = Math.PI * 2 * f * cols * t;
+      y += c * env * (S.wobble * (.7 * Math.sin(w + ph1 + s * 1.7) + .3 * Math.sin(w * 2.7 + ph2)) + S.jitter * sym(r));
+      x += c * env * S.jitter * sym(r) * .6;
+      pts.push(L.vert ? [y, x] : [x, y]);
+    }
+    d += curve(pts);
+  }
+  return d;
+}
+
+// scratchy lettering: per-glyph tilt, size and baseline wander, no backing paper
+function gritSVG(parent, text, size, id, fill) {
+  const t = parent.append("text").attr("font-family", `'${S.headFont}', sans-serif`).attr("fill", fill).attr("filter", "url(#grit)");
+  const rot = [], dys = [];
+  let prev = 0;
+  [...text].forEach((ch, i) => {
+    const r = R("glyph", id, i), dy = sym(r) * size * S.drift * S.chaos;
+    const ts = t.append("tspan").attr("font-size", (size * (1 + S.sizeVar * sym(r) * S.chaos)).toFixed(1)).text(ch.toUpperCase());
+    dys.push((dy - prev).toFixed(1)); prev = dy;
+    rot.push((sym(r) * S.tilt * S.chaos).toFixed(1));
+    ts.attr("dy", dys[i]);
+  });
+  t.attr("rotate", rot.join(" "));
+  return t;
+}
+function gritHTML(el, text, size, id) {
+  el.innerHTML = "";
+  [...text].forEach((ch, i) => {
+    const s = document.createElement("span");
+    if (ch === " ") { s.className = "sp"; s.innerHTML = "&nbsp;"; el.append(s); return; }
+    const r = R("glyph", id, i);
+    s.setAttribute("aria-hidden", "true");
+    s.textContent = ch.toUpperCase();
+    Object.assign(s.style, {
+      fontSize: (size * (1 + S.sizeVar * sym(r) * S.chaos)).toFixed(1) + "px",
+      transform: `translateY(${(sym(r) * size * S.drift * S.chaos).toFixed(1)}px) rotate(${(sym(r) * S.tilt * S.chaos).toFixed(1)}deg)`
+    });
+    el.append(s);
+  });
+}
+// one filter does the roughening and the scratched-out holes; page copy and chart copy share it
+function gritFilter(sel, id) {
+  sel.append("filter").attr("id", id).attr("x", "-10%").attr("y", "-30%").attr("width", "120%").attr("height", "160%").html(
+    `<feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="${S.seed}" result="w"/>
+     <feDisplacementMap in="SourceGraphic" in2="w" scale="${(S.rough * S.chaos).toFixed(2)}" xChannelSelector="R" yChannelSelector="G" result="d"/>
+     <feTurbulence type="fractalNoise" baseFrequency="0.7 0.35" numOctaves="2" seed="${S.seed + 5}" result="n"/>
+     <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  22 0 0 0 ${(-22 * S.distress * .5).toFixed(2)}" result="m"/>
+     <feComposite in="d" in2="m" operator="in"/>`);
+}
+
+const tip = d3.select("#tip");
+let pinned = null;
+const showTip = (ev, html) => {
+  tip.style("opacity", 1).html(html).classed("pin", !!pinned);
+  if (pinned) tip.append("button").attr("class", "x").attr("aria-label", "Close").text("×")
+    .on("click", e => { e.stopPropagation(); pinned = null; unfocus(); });
+  const n = tip.node(), x = Math.min(ev.clientX + 16, innerWidth - n.offsetWidth - 8), y = Math.min(ev.clientY + 16, innerHeight - n.offsetHeight - 8);
+  tip.style("left", x + "px").style("top", y + "px");
+};
+function tally(ls, keyFn, order) {
+  const m = new Map(); ls.forEach(l => m.set(keyFn(l), (m.get(keyFn(l)) || 0) + 1));
+  return [...m].sort((a, b) => order.indexOf(a[0]) - order.indexOf(b[0]));
+}
+function rows(list, colour, name) {
+  const max = Math.max(...list.map(d => d[1]));
+  return "<div class=\"rs\">" + list.map(([k, v]) => `<div class="row"><span class="bar" style="width:${Math.max(4, v / max * 70)}px;background:${colour(k)}"></span><em>${name(k)}</em><b>${v}</b></div>`).join("") + "</div>";
+}
+const started = ls => `<div class="h">where they started</div>` + rows(tally(ls, l => l.origin, ORIGIN_ORDER), o => S[o], o => ORIGINS[o]);
+const ended = ls => {
+  // each ending bar is coloured by the origin that dominates it
+  const list = tally(ls, l => l.end, ORDER);
+  return `<div class="h">how they ended</div>` + rows(list, e => S[tally(ls.filter(l => l.end === e), l => l.origin, ORIGIN_ORDER).sort((a, b) => b[1] - a[1])[0][0]], e => e);
+};
+function nodeTip(n) {
+  const ls = n.lines;
+  let html = `<div class="t">${n.name}<b>${ls.length}</b><span class="pct">${pct(ls.length)} of ${total}</span></div>`;
+  if (n.layer === 0) html += ended(ls);
+  else if (n.isEnd) html += started(ls);
+  else html += started(ls) + ended(ls);
+  return html;
+}
+function routeTip(l) {
+  const same = LINES.filter(o => o.route === l.route).length;
+  return `<div class="t" style="color:${S[l.origin]}">${ORIGINS[l.origin]}</div>
+    <div class="route">${l.path.slice(1).map(p => "→ " + p).join("<br>")}</div>
+    <div class="h">${same} ${same === 1 ? "opportunity" : "opportunities"} took this exact route</div>`;
+}
+
+let lineSel, svg, L;
+function focus(pred, html, ev) {
+  svg.classed("focus", true); lineSel.classed("on", pred);
+  if (ev) showTip(ev, html);
+}
+function unfocus() {
+  if (pinned) return;
+  svg.classed("focus", false); lineSel.classed("on", false); tip.style("opacity", 0).classed("pin", false);
+}
+function hover(sel, pred, html) {
+  sel.on("mousemove", (ev, d) => { if (!pinned) focus(l => pred(d, l), html(d), ev); })
+    .on("mouseleave", unfocus)
+    .on("click", (ev, d) => { ev.stopPropagation(); pinned = d; focus(l => pred(d, l), html(d), ev); });
+}
+
+function render() {
+  const root = document.documentElement.style;
+  ["bg", "text", "muted", "accent", "panel", "rule"].forEach(k => root.setProperty("--" + k, S[k]));
+  root.setProperty("--grain", S.grain); root.setProperty("--vignette", S.vignette); root.setProperty("--dim", S.dim);
+  const fv = {title: S.titleFont, sub: S.subFont, note: S.noteFont, count: S.countFont, tiptitle: S.tipTitleFont, tip: S.tipFont};
+  Object.entries(fv).forEach(([k, v]) => root.setProperty("--f-" + k, `"${v}"`));
+  root.setProperty("--tip-title", S.tipTitleSize + "px"); root.setProperty("--tip-body", S.tipSize + "px");
+  root.setProperty("--tip-head", S.tipHeadSize + "px"); root.setProperty("--tip-pct", S.tipPctSize + "px");
+
+  document.getElementById("paper").style.backgroundImage = "url(\"data:image/svg+xml," + encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><filter id='p' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.045' numOctaves='5' seed='${S.seed}' stitchTiles='stitch' result='t'/><feDiffuseLighting in='t' surfaceScale='1.6' diffuseConstant='1' lighting-color='#fff'><feDistantLight azimuth='45' elevation='60'/></feDiffuseLighting></filter><rect width='100%' height='100%' filter='url(#p)'/></svg>`) + "\")";
+  root.setProperty("--paper", S.paper);
+  const tex = `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='800'>
+    <filter id='b' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.008 0.012' numOctaves='5' seed='${S.seed + 11}' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .62  0 0 0 0 .58  0 0 0 0 .5  2.2 0 0 0 -0.9'/></filter>
+    <filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.03 0.6' numOctaves='3' seed='${S.seed + 3}' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .8  0 0 0 0 .77  0 0 0 0 .7  0 9 0 0 -6.4'/></filter>
+    <filter id='s' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2' seed='${S.seed + 7}' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .85  0 0 0 0 .82  0 0 0 0 .75  0 0 14 0 -10.6'/></filter>
+    <rect width='100%' height='100%' filter='url(#b)' opacity='.55'/><rect width='100%' height='100%' filter='url(#f)' opacity='.5'/><rect width='100%' height='100%' filter='url(#s)'/></svg>`;
+  document.getElementById("distress").style.backgroundImage = `url("data:image/svg+xml,${encodeURIComponent(tex)}")`;
+  root.setProperty("--distress", S.texture);
+
+  const pageDefs = d3.select("#page-defs"); pageDefs.selectAll("*").remove(); gritFilter(pageDefs, "gritH");
+  const titleEl = document.getElementById("title");
+  gritHTML(titleEl, "Job Search 2026", S.titleSize, "title");
+  titleEl.style.filter = "url(#gritH)";
+  document.getElementById("sub").innerHTML = `<u>${total} opportunities</u>, January → October`;
+
+  L = layout();
+  d3.select("#chart").selectAll("*").remove();
+  svg = d3.select("#chart").append("svg").attr("xmlns", "http://www.w3.org/2000/svg").attr("viewBox", `0 0 ${L.W} ${L.H}`);
+  svg.on("click", () => { pinned = null; unfocus(); });
+  svg.append("rect").attr("class", "bg").attr("width", L.W).attr("height", L.H).attr("fill", "transparent");
+  const defs = svg.append("defs");
+  defs.append("filter").attr("id", "ink").attr("x", "-5%").attr("y", "-5%").attr("width", "110%").attr("height", "110%")
+    .html(`<feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="${S.seed}" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="${S.bleed}" xChannelSelector="R" yChannelSelector="G"/>`);
+  gritFilter(defs, "grit");
+  defs.append("filter").attr("id", "edge").attr("x", "-20%").attr("y", "-5%").attr("width", "140%").attr("height", "110%")
+    .html(`<feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="${S.seed + 2}" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="${(S.rough * S.chaos * 1.5).toFixed(2)}" xChannelSelector="R" yChannelSelector="G"/>`);
+
+  // lines
+  lineSel = svg.append("g").attr("fill", "none").attr("stroke-linecap", "round").attr("stroke-linejoin", "round")
+    .attr("filter", S.bleed > 0 ? "url(#ink)" : null)
+    .selectAll("g").data(LINES).join("g").attr("class", "ln").attr("stroke", l => S[l.origin]);
+  lineSel.each(function (l) {
+    const g = d3.select(this);
+    for (let p = 0; p < S.passes; p++) g.append("path").attr("d", linePath(l, p, L))
+      .attr("stroke-width", p ? S.lineWidth * .55 : S.lineWidth).attr("stroke-opacity", p ? S.lineOpacity * .6 : S.lineOpacity);
+  });
+  const hits = svg.append("g").selectAll("path").data(LINES).join("path").attr("class", "hit")
+    .attr("d", l => linePath(l, 0, L)).attr("fill", "none").attr("stroke", "transparent").attr("stroke-width", Math.max(S.hit || 5, S.gap));
+  hover(hits, (d, l) => l.route === d.route, routeTip);
+
+  // nodes: flat slabs with ragged edges; sources carry their line colour, endings their own
+  const nodeG = svg.append("g").attr("filter", "url(#edge)").selectAll("rect").data(L.N).join("rect").attr("class", "hit")
+    .attr("x", n => n.x0).attr("y", n => n.y0).attr("width", n => n.x1 - n.x0).attr("height", n => n.y1 - n.y0)
+    .attr("fill", nodeFill);
+  hover(nodeG, (n, l) => l.path.includes(n.name), nodeTip);
+
+  // labels: worn typewriter text, scratched underline, count in the accent hand
+  const labG = svg.append("g");
+  L.N.forEach(n => {
+    const r = R("label", n.name), g = labG.append("g").datum(n).attr("class", "hit");
+    const t = g.append("text").attr("font-family", `'${S.labelFont}', sans-serif`).attr("font-size", S.labelSize).attr("fill", S.text).attr("filter", "url(#grit)");
+    t.text(n.name);
+    if (L.vert) t.attr("stroke", S.bg).attr("stroke-width", 3).attr("paint-order", "stroke").attr("stroke-linejoin", "round");
+    const b = t.node().getBBox();
+    const ul = g.insert("path", "text").attr("fill", "none").attr("stroke", n.layer === 0 ? S[n.lines[0].origin] : S.muted).attr("stroke-width", 1.2).attr("stroke-linecap", "round").attr("filter", "url(#grit)")
+      .attr("d", `M${b.x - 2},${(b.y + b.height + 2 + sym(r) * 1.5).toFixed(1)}Q${b.x + b.width * .5},${(b.y + b.height + 4 + sym(r) * 3 * S.chaos).toFixed(1)} ${b.x + b.width + 4},${(b.y + b.height + 1 + sym(r) * 2).toFixed(1)}`);
+    const ct = g.append("text").attr("font-family", `'${S.countFont}', sans-serif`).attr("font-size", S.labelSize - 1).attr("fill", n.layer === 0 ? S[n.lines[0].origin] : S.accent)
+      .attr("filter", "url(#grit)").attr("stroke", L.vert ? S.bg : null).attr("stroke-width", 3).attr("paint-order", "stroke").attr("x", b.x + b.width + 10).attr("y", 0).attr("transform", `rotate(${(sym(r) * S.tilt * S.chaos).toFixed(1)},${b.x + b.width + 10},0)`).text(n.lines.length);
+    const gb = g.node().getBBox(), above = (n.layer >= 1 && n.layer <= 3) || n.name === "Offer";
+    let tx, ty;
+    if (L.vert) {
+      // top to bottom: sources label above, endings below, both staggered so neighbours don't collide; rounds label to the right
+      const i = L.N.filter(m => m.layer === n.layer).indexOf(n), lh = S.labelSize * 1.5;
+      tx = n.x0 - gb.x;
+      if (n.layer === 0 && i > 0) {
+        // Portal, the last and widest, right-aligns to the edge of its slab
+        if (n.name === "Portal" || n.name === "Referral") tx = n.x1 - gb.x - gb.width;  // pushed left so Recruiter fits on the same line
+        ty = n.y0 - 10 - (gb.y + gb.height);
+      } else if (n.layer === 4 && n.name !== "Offer") {
+        // endings share one baseline; Withdrew and No response align to their slab edge so neighbours fit
+        const cx = (n.x0 + n.x1) / 2;
+        tx = n.name === "No response" || n.name === "Withdrew" ? n.x1 - gb.x - gb.width : Math.min(Math.max(cx - (gb.x + gb.width / 2), 4 - gb.x), L.W - 4 - gb.width - gb.x);
+        ty = n.y1 + 10 - gb.y;
+      } else { tx = 6 - gb.x; ty = (n.y0 + n.y1) / 2 - (gb.y + gb.height / 2); }  // Cold email, rounds, Offer and Accepted: left gutter
+    } else {
+      tx = n.layer === 0 ? n.x0 - 14 - (gb.x + gb.width) : above ? n.x0 - 6 - gb.x : n.x1 + 14 - gb.x;
+      ty = above ? n.y0 - 12 - (gb.y + gb.height) : (n.y0 + n.y1) / 2 - (gb.y + gb.height / 2);
+    }
+    g.attr("transform", `translate(${tx.toFixed(1)},${ty.toFixed(1)}) rotate(${(sym(r) * S.tilt * S.chaos * .3).toFixed(1)},${gb.x + gb.width / 2},${gb.y + gb.height / 2})`);
+  });
+  hover(labG.selectAll("g.hit"), (n, l) => l.path.includes(n.name), nodeTip);
+
+  // column heads
+  const heads = L.vert ? [] : [["Where it started", 0, "end"], ["The rounds", 1, "start"], ["How it ended", 4, "start"]];
+  heads.forEach(([text, layer, anchor]) => {
+    const n = L.N.find(n => n.layer === layer), t = gritSVG(svg, text, S.headSize, text, S.text), b = t.node().getBBox();
+    if (L.vert) {
+      // Started on the left above the sources; Rounds and Ended hug the right edge
+      const x = layer === 0 ? 12 - b.x : L.W - 12 - b.width - b.x;
+      t.attr("x", x.toFixed(1)).attr("y", layer === 0 ? 20 : (layer === 2 ? n.y0 + S.nodeWidth / 2 + b.height / 3 : n.y0 - 12))
+        .attr("stroke", S.bg).attr("stroke-width", 3).attr("paint-order", "stroke");
+      return;
+    }
+    const x = anchor === "end" ? n.x1 - b.width - b.x : n.x0 - b.x;
+    t.attr("x", x.toFixed(1)).attr("y", 42);
+  });
+
+  document.getElementById("assign").textContent = "hover / tap to interact";
+}
+
+function loadFont(f) { return document.fonts.load(`20px "${f}"`).catch(() => {}); }
+// glyphs must be loaded before the lettering is measured
+let lastW = innerWidth, rt;
+addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if (innerWidth !== lastW) { lastW = innerWidth; applyProfile(); render(); } }, 150); });
+mq.addEventListener("change", () => { applyProfile(); render(); });
+Promise.all(FONTS.map(loadFont)).then(render);
+</script>
+</body>
+</html>
