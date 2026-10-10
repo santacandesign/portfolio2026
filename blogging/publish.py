@@ -85,9 +85,9 @@ POST_TEMPLATE = """<!doctype html>
   <body>
     <a href="../index.html" class="back">Back to blog</a>
     <h1 style="padding-bottom: 8px">{title}</h1>
-    <h3>{description}</h3>
+    <p class="subtitle">{description}</p>
     <br />
-    <h3>{date_long}</h3>
+    <p class="subtitle">{date_long}</p>
     <br /><br />
     {body_html}
   </body>
@@ -152,7 +152,7 @@ def write_status(path, new_status):
 # ---------------------------------------------------------------------------
 # Formatting helpers
 # ---------------------------------------------------------------------------
-def fmt_date_long(d):   # "Mar 7, 2026"  (post page h3)
+def fmt_date_long(d):   # "Mar 7, 2026"  (post page subtitle)
     return f"{d.strftime('%b')} {d.day}, {d.year}"
 
 
@@ -254,7 +254,7 @@ def build_post_html(title, description, date_long, body_md, slug):
 def build_index_card(title, description, slug, date_short):
     title = html.escape(title)
     description = html.escape(description)
-    subtitle = f"\n          <h3>{description}</h3>" if description else ""
+    subtitle = f'\n          <p class="subtitle">{description}</p>' if description else ""
     return f"""
     <a href="/blogging/blogs/{slug}.html">
         <div class="blogpost">
