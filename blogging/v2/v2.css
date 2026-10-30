@@ -1,0 +1,396 @@
+/* ============================================================
+   BLOG LANDING v2 — ink on paper
+   Same paper texture and palette as v1 (../blog.css).
+   ============================================================ */
+
+@font-face {
+  font-family: "Libre";
+  src: url(../assets/Libre_Baskerville/LibreBaskerville-VariableFont_wght.ttf);
+  font-weight: 400 700;
+}
+@font-face {
+  font-family: "Libre italic";
+  src: url(../assets/Libre_Baskerville/LibreBaskerville-Italic-VariableFont_wght.ttf);
+  font-weight: 400 700;
+}
+
+:root {
+  /* palette from the traits poster */
+  --paper: #f2eda2; /* poster yellow */
+  --red: #e7402a;
+  --orange: #f0621f;
+  --blue: #9cb5e8;
+  --olive: #9ba62e;
+  --ink: #3a2214; /* espresso brown, so text sits in the yellow */
+  --ink-dim: #7a4f2e; /* warm sienna-brown, ~5:1 on the paper */
+  --tag-bg: var(--blue);
+  --tag-ink: var(--ink); /* espresso on blue, ~8:1 */
+  --pen: var(--red); /* links and accents */
+  --hot: var(--orange); /* link hover */
+  --rule: rgba(90, 52, 24, 0.28);
+  --wash: rgba(231, 64, 42, 0.1); /* red tint: hover rows + chips share the link hue */
+  --gut: 240px;
+}
+@media (max-width: 1180px) {
+  :root {
+    --gut: 64px;
+  }
+}
+@media (max-width: 600px) {
+  :root {
+    --gut: 16px;
+  }
+}
+
+html {
+  background: var(--paper);
+  overscroll-behavior-y: none;
+}
+body.v2 {
+  margin: 0;
+  position: relative;
+  min-height: 100vh;
+  color: var(--ink);
+  background-color: var(--paper);
+}
+/* the paper grain, multiplied over the yellow so the colour stays */
+body.v2::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: url(../assets/bgtexturefinal.jpg) center / cover no-repeat;
+  mix-blend-mode: multiply;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  max-width: calc(1000px + var(--gut) * 2);
+  margin: 0 auto;
+  padding: 24px calc(var(--gut) + 16px) 96px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative;
+  min-height: 360px;
+  pointer-events: none; /* the hero overhangs the list when the bottom spacing is negative */
+}
+@media (min-width: 640px) {
+  .hero {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+}
+html,
+body {
+  overflow-x: hidden;
+}
+.hero canvas {
+  display: block;
+  margin: 0 auto;
+}
+.hero-fallback {
+  font-family: "Libre italic", serif;
+  font-size: 40px;
+  text-align: center;
+  color: var(--ink);
+  padding: 120px 0;
+}
+
+.replay {
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  /* the glyph is 14px; the hit area is 44px */
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink-dim);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.8s ease,
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+.replay.is-ready {
+  opacity: 0.7;
+  pointer-events: auto;
+}
+.replay:hover,
+.replay:focus-visible {
+  opacity: 1;
+  color: var(--pen);
+  background: var(--wash);
+}
+.replay:focus-visible {
+  outline: 1px solid var(--pen);
+}
+
+/* ---------- landing grid ----------
+   Two columns at 3:7 — intro (sticky) : posts. 8px vertical rhythm. */
+.landing {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
+  column-gap: 48px;
+  row-gap: 48px;
+  align-items: start;
+  margin-top: 48px;
+}
+.intro {
+  grid-column: 1;
+  position: sticky;
+  top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.posts {
+  grid-column: 2;
+  min-width: 0;
+}
+
+.intro-body {
+  font-family: "Libre", serif;
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+  color: var(--ink);
+}
+.intro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 8px;
+}
+.v2 .link {
+  font-family: "Libre italic", serif;
+  font-size: 13px;
+  color: var(--pen);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+.v2 .link:hover,
+.v2 .link:focus-visible {
+  color: var(--hot);
+}
+
+/* ---------- filter ---------- */
+.filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 16px;
+  border-bottom: 0.5px solid var(--rule);
+}
+.chip {
+  min-height: 32px;
+  padding: 0 14px;
+  border: 1px solid var(--ink-dim);
+  border-radius: 999px;
+  background: transparent;
+  font-family: "Libre", serif;
+  font-size: 12px;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+.chip:hover {
+  color: var(--pen);
+  border-color: var(--pen);
+  background: var(--wash);
+}
+.chip[aria-pressed="true"] {
+  color: var(--paper);
+  border-color: var(--pen);
+  background: var(--pen);
+}
+.chip:focus-visible {
+  outline: 1px solid var(--pen);
+  outline-offset: 2px;
+}
+.filter-count {
+  margin-left: auto;
+  font-family: "Libre italic", serif;
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+
+/* ---------- post list ---------- */
+.posts .blogpost {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  column-gap: 24px;
+  padding: 16px 12px 24px;
+  border-bottom: 0.5px solid var(--rule);
+  text-decoration: none;
+  transition: background-color 0.25s ease;
+}
+.posts .blogpost[hidden] {
+  display: none;
+}
+.posts .blogpost:hover {
+  background: var(--wash);
+  border-radius: 8px;
+}
+
+.posts h2 {
+  font-family: "Libre", serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.5;
+  margin: 0;
+  color: var(--ink);
+  transition: color 0.25s ease;
+}
+.posts .blogpost:hover h2 {
+  color: var(--pen);
+}
+.posts .subtitle {
+  font-family: "Libre", serif;
+  font-weight: 200;
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 4px 0 0;
+  color: var(--ink-dim);
+}
+.posts .meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  padding-top: 6px;
+}
+.posts h4 {
+  font-family: "Libre", serif;
+  font-weight: 200;
+  font-size: 12px;
+  margin: 0;
+  white-space: nowrap;
+  color: var(--ink-dim);
+}
+.tags {
+  display: flex;
+  gap: 4px;
+}
+.tag {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--tag-bg);
+  font-family: "Libre italic", serif;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--tag-ink);
+}
+
+/* tablet: intro on top, full width; posts underneath */
+@media (max-width: 900px) {
+  .landing {
+    margin-top: 32px;
+  }
+  .intro {
+    grid-column: 1 / -1;
+    position: static;
+    max-width: 520px;
+  }
+  .posts {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding-bottom: 64px;
+  }
+  .posts h2 {
+    font-size: 18px;
+  }
+  .posts .blogpost {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .posts .meta {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 0;
+  }
+  .filter-count {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .replay {
+    display: none;
+  }
+}
+
+/* email: hover shows the address, click copies it (same behaviour as the main site) */
+.email-wrap {
+  position: relative;
+}
+.email-flyout {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 14px;
+  white-space: nowrap;
+  font-family: "Libre", serif;
+  font-size: 13px;
+  color: var(--ink-dim);
+  background: #f8f5c4;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(90, 52, 24, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 4px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s;
+  pointer-events: none;
+}
+.email-flyout strong {
+  font-weight: 400;
+  color: var(--pen);
+}
+.email-flyout.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
