@@ -3,434 +3,346 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="../assets/" />
-    <link rel="stylesheet" href="blog.css" />
-    <link rel="alternate" type="application/rss+xml" title="Santa writes to think" href="https://santais.online/blogging/feed.xml">
-    <script src="script.js"></script>
-    </div>
+    <title>Santa writes to think</title>
+    <link rel="icon" type="image/png" href="../assets/dragonfly.svg" />
+    <link rel="alternate" type="application/rss+xml" title="Santa writes to think" href="https://santais.online/blogging/feed.xml" />
+    <!-- Hero fonts: Instrument Serif Italic types "writes", Jost Heavy is what the shapes gather into -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Jost:wght@800&display=swap" />
+    <link rel="stylesheet" href="home.css" />
+  </head>
+  <body class="v2">
+    <main class="page">
+      <header class="hero" id="hero">
+        <h1 class="sr-only">Santa writes to think</h1>
+        <noscript><p class="hero-fallback">Santa writes to think</p></noscript>
+      </header>
 
-    <body>
 
+      <div class="landing">
+        <aside class="intro">
+          <p class="intro-body">Welcome to my mind! Designer at job, neurodivergent, has 328,238 things to do off-duty. This is an archive of my thoughts.</p>
+          <div class="intro-actions">
+            <span class="email-wrap">
+              <a href="mailto:blueskiesandblossoms@gmail.com" id="emailLink" class="link">Email me</a>
+              <span class="email-flyout" id="emailTooltip">
+                <span>Click on email to copy!</span>
+                <strong>blueskiesandblossoms@gmail.com</strong>
+              </span>
+              <span class="email-flyout" id="emailCopied">Email copied to clipboard.</span>
+            </span>
+            <a href="https://santais.online/blogging/feed.xml" class="link">Subscribe to my RSS</a>
+            <a class="link" href="https://santais.online">Back to main site</a>
+          </div>
+        </aside>
 
-    <a href="https://santais.online" class="back">Back to main site</a>
-      <h1>Santa writes to think</h1>
-
-    <a href="/blogging/blogs/oct-3026.html">
-        <div class="blogpost">
-          <div>
+        <section class="posts" aria-label="Posts">
+          <div class="filter" role="group" aria-label="Filter posts by tag">
+            <!-- chips:start -->
+            <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="chip" data-filter="personal" aria-pressed="false">Personal</button>
+            <button type="button" class="chip" data-filter="design" aria-pressed="false">Design</button>
+            <button type="button" class="chip" data-filter="weeknotes" aria-pressed="false">Weeknotes</button>
+            <button type="button" class="chip" data-filter="review" aria-pressed="false">Reviews</button>
+            <!-- chips:end -->
+            <span class="filter-count" id="filterCount" aria-live="polite"></span>
+          </div>
+      <!-- posts:start -->
+      <a href="/blogging/blogs/what-would-I-do.html" class="blogpost" data-tags="personal">
+        <div>
+          <h2>What would I do?</h2>
+        </div>
+        <div class="meta"><h4>Nov 2, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
+      </a>
+      <a href="/blogging/blogs/oct-3026.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>Oct 30, 2026</h2>
           <p class="subtitle">unwelcome sad thoughts welcomed</p>
-          </div>
-            <h4>Oct 30, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Oct 30, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-
-    <a href="/blogging/blogs/life-meaning.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/life-meaning.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>What is the meaning of my life?</h2>
           <p class="subtitle">thought exploration</p>
-          </div>
-            <h4>Oct 10, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Oct 10, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-
-    <a href="/blogging/blogs/10months-unemployment.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/10months-unemployment.html" class="blogpost" data-tags="personal design">
+        <div>
           <h2>Getting a job after 10 months of unemployment</h2>
           <p class="subtitle">how I got a job + current experience of unemployment in 2026</p>
-          </div>
-            <h4>Oct 5, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Oct 5, 26</h4><span class="tags"><span class="tag">personal</span><span class="tag">design</span></span></div>
       </a>
-
-
-    <a href="/blogging/blogs/day-at-the-er.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/day-at-the-er.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>A day at the ER</h2>
           <p class="subtitle">hospital &amp; vomit cope</p>
-          </div>
-            <h4>Oct 4, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Oct 4, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-
-    <a href="/blogging/blogs/oct-2.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/oct-2.html" class="blogpost" data-tags="weeknotes">
+        <div>
           <h2>Oct 2, 2026</h2>
           <p class="subtitle">another morning page</p>
-          </div>
-            <h4>Oct 2, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Oct 2, 26</h4><span class="tags"><span class="tag">weeknotes</span></span></div>
       </a>
-
-
-    <a href="/blogging/blogs/oct-thoughts.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/oct-thoughts.html" class="blogpost" data-tags="weeknotes">
+        <div>
           <h2>Oct 1, 2026</h2>
           <p class="subtitle">many thoughts and many anxieties</p>
-          </div>
-            <h4>Oct 1, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Oct 1, 26</h4><span class="tags"><span class="tag">weeknotes</span></span></div>
       </a>
-
-
-    <a href="/blogging/blogs/bowlify.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/bowlify.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>Bowlify</h2>
           <p class="subtitle">random lunch thoughts</p>
-          </div>
-            <h4>Sep 30, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Sep 30, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-
-
-    <a href="/blogging/blogs/gaalipata.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/gaalipata.html" class="blogpost" data-tags="personal review">
+        <div>
           <h2>Justice for Soumya</h2>
           <p class="subtitle">I watched another movie I need to yap about</p>
-          </div>
-            <h4>Sep 27, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Sep 27, 26</h4><span class="tags"><span class="tag">personal</span><span class="tag">review</span></span></div>
       </a>
-
-
-    <a href="/blogging/blogs/concerning-things.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/concerning-things.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>Concerning things about my life that concern me</h2>
           <p class="subtitle">2016 version of &quot;50 facts about me&quot; in blog style</p>
-          </div>
-            <h4>Sep 24, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Sep 24, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-
-
-    <a href="/blogging/blogs/the-indies-docu.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/the-indies-docu.html" class="blogpost" data-tags="personal review">
+        <div>
           <h2>I watched the independents (documentary)</h2>
           <p class="subtitle">my thoughts on the documentary and my saturday</p>
-          </div>
-            <h4>Sep 12, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Sep 12, 26</h4><span class="tags"><span class="tag">personal</span><span class="tag">review</span></span></div>
       </a>
-
-
-    <a href="/blogging/blogs/attention-is-light.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/attention-is-light.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>Attention is light</h2>
           <p class="subtitle">Lover of attention and hater of light</p>
-          </div>
-            <h4>Sep 5, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Sep 5, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <a href="/blogging/blogs/august-daynotes.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/august-daynotes.html" class="blogpost" data-tags="weeknotes">
+        <div>
           <h2>August day notes</h2>
           <p class="subtitle">yapping everyday in August</p>
-          </div>
-            <h4>Jul 29, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Jul 29, 26</h4><span class="tags"><span class="tag">weeknotes</span></span></div>
       </a>
-
-
-
-
-
-
-
-    <a href="/blogging/blogs/july26updateslearnings.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/july26updateslearnings.html" class="blogpost" data-tags="weeknotes personal">
+        <div>
           <h2>July 26 - Learnings &amp; Updates</h2>
           <p class="subtitle">This post is political</p>
-          </div>
-            <h4>Jul 28, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Jul 28, 26</h4><span class="tags"><span class="tag">weeknotes</span><span class="tag">personal</span></span></div>
       </a>
-
-
-    <a href="/blogging/blogs/musicpain.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/musicpain.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>Music for a painful life</h2>
           <p class="subtitle">a playlist included</p>
-          </div>
-            <h4>July 18, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>July 18, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-        <a href="/blogging/blogs/weeknotejul18.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/weeknotejul18.html" class="blogpost" data-tags="weeknotes">
+        <div>
           <h2>Weeknote 12 - 17 July, 26</h2>
-          </div>
-            <h4>July 18, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>July 18, 26</h4><span class="tags"><span class="tag">weeknotes</span></span></div>
       </a>
-
-
-      <a href="/blogging/blogs/attention.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/attention.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>The most valuable thing you can offer</h2>
-          </div>
-            <h4>July 18, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>July 18, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-
-    <a href="/blogging/blogs/isolation.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/isolation.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>Isolation shaped by hallucinatory glass windows</h2>
-          </div>
-            <h4>July 18, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>July 18, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-
-    <a href="/blogging/blogs/Devilwearsprada2.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/Devilwearsprada2.html" class="blogpost" data-tags="personal review">
+        <div>
           <h2>Devil wears Prada 2</h2>
           <p class="subtitle">couldn't suspend my disbelief</p>
-          </div>
-            <h4>July 13, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>July 13, 26</h4><span class="tags"><span class="tag">personal</span><span class="tag">review</span></span></div>
       </a>
-
-
-        <a href="/blogging/blogs/DAAS.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/DAAS.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>Dissatisfaction as a service (DAAS) aka Sunday</h2>
           <p class="subtitle">I can't do this anymore</p>
-          </div>
-            <h4>July 6, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>July 6, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-
-        <a href="/blogging/blogs/weeknote29jun3jul.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/weeknote29jun3jul.html" class="blogpost" data-tags="weeknotes">
+        <div>
           <h2>Weeknote 29 Jun - 3 Jul, 26</h2>
           <p class="subtitle">umm, ya I existed this week</p>
-          </div>
-            <h4>July 4, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>July 4, 26</h4><span class="tags"><span class="tag">weeknotes</span></span></div>
       </a>
-
-        <a href="/blogging/blogs/jhamkhanditrip.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/jhamkhanditrip.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>Jhamkhandi trip on July 1, 2026</h2>
           <p class="subtitle">curated parts of a 1 day trip</p>
-          </div>
-            <h4>July 2, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>July 2, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-        <a href="/blogging/blogs/weeknotejune.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/weeknotejune.html" class="blogpost" data-tags="weeknotes">
+        <div>
           <h2>Weeknote June 22- 28, 2026</h2>
           <p class="subtitle">cubbon reads inspired me to write this and then it went downhill</p>
-          </div>
-            <h4>Jun 28, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Jun 28, 26</h4><span class="tags"><span class="tag">weeknotes</span></span></div>
       </a>
-
-
-
-        <a href="/blogging/blogs/birthday.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/birthday.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>Turning 27</h2>
           <p class="subtitle">some thoughts and feelings</p>
-          </div>
-            <h4>Jun 12, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Jun 12, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-        <a href="/blogging/blogs/summer2026.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/summer2026.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>The summer of 2026</h2>
           <p class="subtitle">a misery post</p>
-          </div>
-            <h4>Jun 8, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Jun 8, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-
-        <a href="/blogging/blogs/atomoxetine.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/atomoxetine.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>2 months on Strattera/Atomoxetine</h2>
-          </div>
-            <h4>May 2, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>May 2, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-
-        <a href="/blogging/blogs/eventfulnight.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/eventfulnight.html" class="blogpost" data-tags="personal">
+        <div>
           <h2>An eventful night, Apr 10, '26</h2>
-          </div>
-            <h4>Apr 13, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Apr 13, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-        <a href="/blogging/blogs/blueperiod.html">
-        <div class="blogpost">
-          <div>
+      <a href="/blogging/blogs/blueperiod.html" class="blogpost" data-tags="design review">
+        <div>
           <h2>Get converted into art by Blue period</h2>
-          </div>
-            <h4>Apr 4, 26</h4>
-          </div>
         </div>
+        <div class="meta"><h4>Apr 4, 26</h4><span class="tags"><span class="tag">design</span><span class="tag">review</span></span></div>
       </a>
-
-        <a href="/blogging/blogs/loneliness.html">
-        <div class="blogpost">
-            <div>
-              <h2>Types of loneliness</h2>
-              <p class="subtitle">And help at the end!</p>
-            </div>
-            <h4>Mar 7, 26</h4>
-          </div>
+      <a href="/blogging/blogs/loneliness.html" class="blogpost" data-tags="personal">
+        <div>
+          <h2>Types of loneliness</h2>
+          <p class="subtitle">And help at the end!</p>
         </div>
+        <div class="meta"><h4>Mar 7, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-
-      <a href="/blogging/blogs/daynotesmarch.html">
-        <div class="blogpost">
-            <div>
-              <h2>Daynotes March 2026</h2>
-              <p class="subtitle">A collection of everyday notes</p>
-            </div>
-            <h4>Mar 2, 26</h4>
-          </div>
+      <a href="/blogging/blogs/daynotesmarch.html" class="blogpost" data-tags="weeknotes">
+        <div>
+          <h2>Daynotes March 2026</h2>
+          <p class="subtitle">A collection of everyday notes</p>
         </div>
+        <div class="meta"><h4>Mar 2, 26</h4><span class="tags"><span class="tag">weeknotes</span></span></div>
       </a>
-
-      <a href="/blogging/blogs/nagatakabi.html">
-        <div class="blogpost">
-            <div>
-              <h2>Please read Nagata Kabi</h2>
-              <p class="subtitle">I'm obsessed with this Manga</p>
-            </div>
-            <h4>Feb 21, 26</h4>
-          </div>
+      <a href="/blogging/blogs/nagatakabi.html" class="blogpost" data-tags="design review">
+        <div>
+          <h2>Please read Nagata Kabi</h2>
+          <p class="subtitle">I'm obsessed with this Manga</p>
         </div>
-      </a>      
-
-      <a href="/blogging/blogs/Baskerville.html">
-        <div class="blogpost">
-            <div>
-              <h2>Baskerville font</h2>
-              <p class="subtitle">Font history & my thoughts</p>
-            </div>
-            <h4>Feb 11, 26</h4>
-          </div>
-        </div>
+        <div class="meta"><h4>Feb 21, 26</h4><span class="tags"><span class="tag">design</span><span class="tag">review</span></span></div>
       </a>
-      
-      <a href="/blogging/blogs/cantwrite.html">
-        <div class="blogpost">
-            <div>
-              <h2>I can’t write but I will keep trying</h2>
-            </div>
-            <h4>Jan 17, 26</h4>
-          </div>
+      <a href="/blogging/blogs/Baskerville.html" class="blogpost" data-tags="design">
+        <div>
+          <h2>Baskerville font</h2>
+          <p class="subtitle">Font history & my thoughts</p>
         </div>
+        <div class="meta"><h4>Feb 11, 26</h4><span class="tags"><span class="tag">design</span></span></div>
       </a>
-
-       <!-- copy for new blog post -->
-      <a href="/blogging/blogs/weeknotesdec25.html">
-        <div class="blogpost">
-            <div>
-              <h2>Weeknotes</h2>
-              <p class="subtitle">What I did this week + predictions for 2026</p>
-            </div>
-            <h4>Dec 20, 25</h4>
-          </div>
+      <a href="/blogging/blogs/cantwrite.html" class="blogpost" data-tags="personal">
+        <div>
+          <h2>I can’t write but I will keep trying</h2>
         </div>
+        <div class="meta"><h4>Jan 17, 26</h4><span class="tags"><span class="tag">personal</span></span></div>
       </a>
-       <!-- copy end -->
-
-      <div style="margin: 48px 0 0 16px; display: flex; gap: 24px; flex-wrap: wrap;">
-        <a href="https://santais.online" class="back" style="margin:0;">Back to main site</a>
-        <a href="https://santais.online/blogging/feed.xml" class="back" style="margin:0;">Subscribe to my RSS feed</a>
+      <a href="/blogging/blogs/weeknotesdec25.html" class="blogpost" data-tags="weeknotes">
+        <div>
+          <h2>Weeknotes</h2>
+          <p class="subtitle">What I did this week + predictions for 2026</p>
+        </div>
+        <div class="meta"><h4>Dec 20, 25</h4><span class="tags"><span class="tag">weeknotes</span></span></div>
+      </a>
+      <!-- posts:end -->
+        </section>
       </div>
-    </body>
+    </main>
 
-  </head>
+    <script src="home.js"></script>
+    <script>
+      (function () {
+        var chips = document.querySelectorAll(".filter .chip");
+        var posts = document.querySelectorAll(".posts .blogpost");
+        var count = document.getElementById("filterCount");
+        function apply(tag) {
+          var shown = 0;
+          posts.forEach(function (p) {
+            var on = tag === "all" || p.dataset.tags.split(" ").indexOf(tag) !== -1;
+            p.hidden = !on;
+            if (on) shown++;
+          });
+          chips.forEach(function (c) { c.setAttribute("aria-pressed", c.dataset.filter === tag); });
+          count.textContent = shown + (shown === 1 ? " post" : " posts");
+        }
+        chips.forEach(function (c) {
+          c.addEventListener("click", function () { apply(c.dataset.filter); });
+        });
+        apply("all");
+      })();
+      (function () {
+        var EMAIL = "blueskiesandblossoms@gmail.com";
+        var wrap = document.querySelector(".email-wrap");
+        var link = document.getElementById("emailLink");
+        var tip = document.getElementById("emailTooltip");
+        var done = document.getElementById("emailCopied");
+        var timer;
+        function showCopied() {
+          tip.classList.remove("is-visible");
+          done.classList.add("is-visible");
+          clearTimeout(timer);
+          timer = setTimeout(function () { done.classList.remove("is-visible"); }, 2200);
+        }
+        function fallback() {
+          try {
+            var t = document.createElement("textarea");
+            t.value = EMAIL;
+            t.setAttribute("readonly", "");
+            t.style.position = "absolute";
+            t.style.left = "-9999px";
+            document.body.appendChild(t);
+            t.select();
+            document.execCommand("copy");
+            document.body.removeChild(t);
+          } catch (e) {}
+          showCopied();
+        }
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(EMAIL).then(showCopied, fallback);
+          } else fallback();
+        });
+        wrap.addEventListener("mouseenter", function () {
+          if (!done.classList.contains("is-visible")) tip.classList.add("is-visible");
+        });
+        wrap.addEventListener("mouseleave", function () { tip.classList.remove("is-visible"); });
+      })();
+    </script>
+  </body>
 </html>

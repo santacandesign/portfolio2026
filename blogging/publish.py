@@ -5,8 +5,12 @@ publish.py — ships Obsidian blog notes to santais.online
 What it does:
   1. Scans your Obsidian vault's Blog folder for notes with `status: Ready to publish`
   2. Converts each note's markdown body to HTML using your existing post template
-  3. Adds a new card to index.html and a new <item> to feed.xml
+  3. Adds a new card (with its tags) to index.html, rebuilds the filter chips
+     from the tags in use, and adds a new <item> to feed.xml
   4. Flips the note's frontmatter status to `Published` so it won't ship again
+
+Tags: add a `tags` list property in the note (Obsidian's built-in Tags
+property). A note with no tags is NOT published — the script warns and skips it.
 
 Setup (one time):
     pip3 install markdown pyyaml
@@ -59,7 +63,10 @@ ASSETS_DIR = os.path.join(SITE_DIR, "assets")
 INDEX_HTML = os.path.join(SITE_DIR, "index.html")
 FEED_XML = os.path.join(SITE_DIR, "feed.xml")
 
-INDEX_ANCHOR = "<h1>Santa writes to think</h1>"
+INDEX_ANCHOR = "<!-- posts:start -->"
+CHIPS_RE = re.compile(r"(<!-- chips:start -->\n).*?(            <!-- chips:end -->)", re.DOTALL)
+CHIP_ORDER = ["personal", "design", "weeknotes", "review"]  # shown first, in this order; other tags follow A-Z
+CHIP_LABELS = {"review": "Reviews"}  # default label is the tag, capitalised
 FEED_ANCHOR = "<link>https://santais.online/blogging/</link>"
 
 POST_TEMPLATE = """<!doctype html>
@@ -85,9 +92,9 @@ POST_TEMPLATE = """<!doctype html>
   <body>
     <a href="../index.html" class="back">Back to blog</a>
     <h1 style="padding-bottom: 8px">{title}</h1>
-    <p class="subtitle">{description}</p>
-    <br />
+    {subtitle_html}
     <p class="subtitle">{date_long}</p>
+    {tags_html}
     <br /><br />
     {body_html}
   </body>
@@ -109,6 +116,21 @@ def split_frontmatter(text):
     return match.group(1), match.group(2)
 
 
+def normalize_tags(value):
+    """Obsidian's Tags property is a YAML list; also accept a bare string
+    ("a, b" or "a b"). Lowercased, leading # stripped, duplicates dropped."""
+    if value is None:
+        return []
+    if isinstance(value, str):
+        value = re.split(r"[,\s]+", value)
+    out = []
+    for v in value:
+        t = str(v).strip().lstrip("#").strip().lower().replace(" ", "-")
+        if t and t not in out:
+            out.append(t)
+    return out
+
+
 def parse_note(path):
     with open(path, "r", encoding="utf-8") as f:
         text = f.read()
@@ -124,7 +146,10 @@ def parse_note(path):
         return None, None
 
     fields = {}
+    fields["tags"] = normalize_tags(raw.get("tags"))
     for key, value in raw.items():
+        if key == "tags":
+            continue
         # Obsidian "List" type properties come through as a YAML list even
         # when there's only one value in them — flatten to a plain string.
         if isinstance(value, list):
@@ -237,33 +262,35 @@ def process_images(md_text, slug):
 # for the RSS feed) so a title like "Learnings & Updates" doesn't produce
 # invalid markup or a broken feed.
 # ---------------------------------------------------------------------------
-def build_post_html(title, description, date_long, body_md, slug):
+def tags_spans(tags):
+    return "".join(f'<span class="tag">{html.escape(t)}</span>' for t in tags)
+
+
+def build_post_html(title, description, date_long, body_md, slug, tags):
     body_md = process_images(body_md, slug)
     body_md = normalize_lists(body_md)
     body_html = md.markdown(body_md.strip(), extensions=["extra"])
     return POST_TEMPLATE.format(
         title=html.escape(title),
-        description=html.escape(description),
+        description=html.escape(description or title),  # meta tags need something
+        subtitle_html=f'<p class="subtitle">{html.escape(description)}</p>\n    <br />' if description else "",
         date_long=date_long,
+        tags_html=f'<span class="tags post-tags">{tags_spans(tags)}</span>',
         url=f"{SITE_BASE_URL}/blogs/{slug}.html",
         og_image=f"{SITE_BASE_URL}/assets/og/{slug}.webp",
         body_html=body_html,
     )
 
 
-def build_index_card(title, description, slug, date_short):
+def build_index_card(title, description, slug, date_short, tags):
     title = html.escape(title)
     description = html.escape(description)
     subtitle = f'\n          <p class="subtitle">{description}</p>' if description else ""
-    return f"""
-    <a href="/blogging/blogs/{slug}.html">
-        <div class="blogpost">
-          <div>
+    return f"""      <a href="/blogging/blogs/{slug}.html" class="blogpost" data-tags="{html.escape(" ".join(tags))}">
+        <div>
           <h2>{title}</h2>{subtitle}
-          </div>
-            <h4>{date_short}</h4>
-          </div>
         </div>
+        <div class="meta"><h4>{date_short}</h4><span class="tags">{tags_spans(tags)}</span></div>
       </a>
 """
 
@@ -274,7 +301,7 @@ def build_feed_item(title, description, slug, pubdate):
     <item>
       <title>{xml_escape(title)}</title>
       <link>{xml_escape(link)}</link>
-      <description>{xml_escape(description)}</description>
+      <description>{xml_escape(description or title)}</description>
       <pubDate>{pubdate}</pubDate>
       <guid>{xml_escape(link)}</guid>
     </item>
@@ -288,12 +315,26 @@ def build_feed_item(title, description, slug, pubdate):
 # ---------------------------------------------------------------------------
 def upsert_index_card(index_html, slug, new_card):
     pattern = re.compile(
-        r'\n?    <a href="/blogging/blogs/' + re.escape(slug) + r'\.html">.*?</a>\n?',
+        r'[ \t]*<a href="/blogging/blogs/' + re.escape(slug) + r'\.html" class="blogpost".*?</a>\n?',
         re.DOTALL,
     )
     if pattern.search(index_html):
-        return pattern.sub("\n" + new_card, index_html, count=1)
-    return index_html.replace(INDEX_ANCHOR, INDEX_ANCHOR + "\n" + new_card, 1)
+        return pattern.sub(lambda m: new_card, index_html, count=1)
+    return index_html.replace(INDEX_ANCHOR, INDEX_ANCHOR + "\n" + new_card.rstrip("\n"), 1)
+
+
+def rebuild_chips(index_html):
+    """Filter chips = "All" + every tag used by a card, so a new tag typed in
+    Obsidian shows up as a chip automatically."""
+    used = set()
+    for m in re.finditer(r'class="blogpost" data-tags="([^"]*)"', index_html):
+        used.update(m.group(1).split())
+    ordered = [t for t in CHIP_ORDER if t in used] + sorted(used - set(CHIP_ORDER))
+    chip = '            <button type="button" class="chip" data-filter="{t}" aria-pressed="false">{label}</button>\n'
+    chips = chip.format(t="all", label="All").replace('aria-pressed="false"', 'aria-pressed="true"')
+    for t in ordered:
+        chips += chip.format(t=html.escape(t), label=html.escape(CHIP_LABELS.get(t, t.capitalize())))
+    return CHIPS_RE.sub(lambda m: m.group(1) + chips + m.group(2), index_html, count=1)
 
 
 def upsert_feed_item(feed_xml, slug, new_item):
@@ -331,7 +372,11 @@ def main():
         if fields.get("status", "").strip().lower() != READY_STATUS.lower():
             continue
 
-        missing = [k for k in ("title", "description", "date", "slug") if not fields.get(k)]
+        if not fields["tags"]:
+            print(f"WARNING: not publishing {os.path.basename(path)} — it has no tags. Add at least one in the note's Tags property.")
+            continue
+
+        missing = [k for k in ("title", "date", "slug") if not fields.get(k)]  # description is optional
         if missing:
             print(f"Skipping {os.path.basename(path)} — missing frontmatter field(s): {', '.join(missing)}")
             continue
@@ -364,7 +409,7 @@ def main():
     for note in ready_notes:
         f = note["fields"]
         title = f["title"]
-        description = f["description"]
+        description = f.get("description", "")
         slug = f["slug"]
         date_obj = note["date_obj"]
 
@@ -375,8 +420,8 @@ def main():
             print(f"Skipping '{title}' — {slug}.html is already live. Re-run with --force to push these edits.")
             continue
 
-        post_html = build_post_html(title, description, fmt_date_long(date_obj), note["body"], slug)
-        index_card = build_index_card(title, description, slug, fmt_date_short(date_obj))
+        post_html = build_post_html(title, description, fmt_date_long(date_obj), note["body"], slug, f["tags"])
+        index_card = build_index_card(title, description, slug, fmt_date_short(date_obj), f["tags"])
         feed_item = build_feed_item(title, description, slug, fmt_pubdate())
 
         action = "Updating" if already_live else "Publishing"
@@ -396,6 +441,7 @@ def main():
         published.append(title)
 
     if not args.dry_run and published:
+        index_html = rebuild_chips(index_html)
         with open(INDEX_HTML, "w", encoding="utf-8") as out:
             out.write(index_html)
         with open(FEED_XML, "w", encoding="utf-8") as out:

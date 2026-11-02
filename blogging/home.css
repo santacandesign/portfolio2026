@@ -1,16 +1,16 @@
 /* ============================================================
    BLOG LANDING v2 — ink on paper
-   Same paper texture and palette as v1 (../blog.css).
+   Same paper texture and palette as v1 (blog.css).
    ============================================================ */
 
 @font-face {
   font-family: "Libre";
-  src: url(../assets/Libre_Baskerville/LibreBaskerville-VariableFont_wght.ttf);
+  src: url(assets/Libre_Baskerville/LibreBaskerville-VariableFont_wght.ttf);
   font-weight: 400 700;
 }
 @font-face {
   font-family: "Libre italic";
-  src: url(../assets/Libre_Baskerville/LibreBaskerville-Italic-VariableFont_wght.ttf);
+  src: url(assets/Libre_Baskerville/LibreBaskerville-Italic-VariableFont_wght.ttf);
   font-weight: 400 700;
 }
 
@@ -65,7 +65,7 @@ body.v2::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: url(../assets/bgtexturefinal.jpg) center / cover no-repeat;
+  background: url(assets/bgtexturefinal.jpg) center / cover no-repeat;
   mix-blend-mode: multiply;
 }
 
@@ -113,42 +113,6 @@ body {
   text-align: center;
   color: var(--ink);
   padding: 120px 0;
-}
-
-.replay {
-  position: absolute;
-  right: 0;
-  bottom: 8px;
-  /* the glyph is 14px; the hit area is 44px */
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--ink-dim);
-  cursor: pointer;
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity 0.8s ease,
-    color 0.2s ease,
-    background-color 0.2s ease;
-}
-.replay.is-ready {
-  opacity: 0.7;
-  pointer-events: auto;
-}
-.replay:hover,
-.replay:focus-visible {
-  opacity: 1;
-  color: var(--pen);
-  background: var(--wash);
-}
-.replay:focus-visible {
-  outline: 1px solid var(--pen);
 }
 
 /* ---------- landing grid ----------
@@ -351,12 +315,6 @@ body {
   .filter-count {
     width: 100%;
     margin-left: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .replay {
-    display: none;
   }
 }
 

@@ -2,13 +2,35 @@ html {
   overscroll-behavior-y: none;
 }
 
+/* same palette as the landing page (home.css) */
+:root {
+  --paper: #f2eda2;
+  --red: #e7402a;
+  --orange: #f0621f;
+  --ink: #3a2214;
+  --ink-dim: #7a4f2e;
+  --tag-bg: #e7402a1d;
+  --tag-ink: #e7402a;
+  --rule: rgba(90, 52, 24, 0.28);
+}
+
+html {
+  background-color: var(--paper);
+}
+
+/* the paper grain, multiplied over the yellow so the colour stays */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url(assets/bgtexturefinal.jpg) center / cover no-repeat;
+  mix-blend-mode: multiply;
+}
+
 body {
   margin: 80px;
-  background-image: url(assets/bgtexturefinal.jpg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   margin-left: 22%;
   margin-right: 22%;
   max-width: 600px;
@@ -31,31 +53,18 @@ img {
   margin: 0 auto;
   border-radius: 8px;
   padding: 2px;
-  border: #a9b2c7 1px solid;
+  border: 1px solid var(--rule);
 }
 
 .back {
   font-family: "Libre italic", serif;
   text-decoration: underline;
   margin: 0 0 100px 0;
-  color: #2b50bf;
+  color: var(--red);
 
   &:hover {
     letter-spacing: 0.02cap;
-    color: #ff4545;
-  }
-}
-
-.blogpost {
-  border-bottom: 0.5px solid #cfcfcf;
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  align-items: center;
-  padding: 16px 12px 24px 12px;
-  &:hover {
-    background-color: #0000000c;
-    border-radius: 8px;
+    color: var(--orange);
   }
 }
 
@@ -63,7 +72,7 @@ h1 {
   font-family: "Libre italic", serif;
   font-weight: 700;
   font-size: 40px;
-  color: #111111;
+  color: var(--ink);
   margin: 0;
   padding: 20px 0 20px 0;
 }
@@ -72,7 +81,7 @@ h2 {
   font-family: "Libre", serif;
   font-weight: 600;
   font-size: 20px;
-  color: #111111;
+  color: var(--ink);
   margin: 0;
   line-height: 1.5;
   text-decoration: none;
@@ -88,7 +97,7 @@ body > h2 {
 
 hr {
   border: none;
-  border-top: 0.8px solid #cfcfcf;
+  border-top: 0.8px solid var(--rule);
   margin: 24px 0;
 }
 
@@ -97,7 +106,7 @@ hr {
   font-family: "Libre", serif;
   font-weight: 200;
   font-size: 12px;
-  color: #666666;
+  color: var(--ink-dim);
   line-height: 1.4;
   margin: 0;
   text-decoration: none;
@@ -108,7 +117,7 @@ h3 {
   font-family: "Libre", serif;
   font-weight: 600;
   font-size: 16px;
-  color: #111111;
+  color: var(--ink);
   line-height: 1.5;
   margin: 24px 0 8px;
 }
@@ -117,7 +126,7 @@ h4 {
   font-family: "Libre", serif;
   font-weight: 200;
   font-size: 12px;
-  color: #666666;
+  color: var(--ink-dim);
   margin: 0;
   flex-shrink: 0;
 }
@@ -126,7 +135,7 @@ h5 {
   font-family: "Libre", serif;
   font-weight: 200;
   font-size: 14px;
-  color: #111111;
+  color: var(--ink);
   margin: 0;
   line-height: 1.8;
   text-decoration: none;
@@ -146,7 +155,7 @@ li {
   font-weight: 200;
   font-size: 14px;
   line-height: 1.8;
-  color: #111111;
+  color: var(--ink);
 }
 
 p {
@@ -154,14 +163,37 @@ p {
   font-weight: 200;
   font-size: 14px;
   line-height: 1.8;
-  color: #111111;
+  color: var(--ink);
   margin: 0 0 12px 0;
 }
 
 a {
-  color: #2b50bf;
+  color: var(--red);
   font-family: "Libre italic", serif;
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--orange);
+}
+
+/* tags under the date, same pills as the landing page */
+.tags {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.tag {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--tag-bg);
+  font-family: "Libre italic", serif;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--tag-ink);
 }
 
 /* Mobile phones (portrait) */
@@ -187,16 +219,9 @@ a {
   }
 
   h4 {
-    color: #939393;
+    color: var(--ink-dim);
   }
 
-  .blogpost {
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 0px;
-    padding-right: 0px;
-    gap: 4px;
-  }
 }
 
 @media (max-width: 700px) {

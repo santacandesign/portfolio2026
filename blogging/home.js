@@ -38,7 +38,6 @@
   // ─────────────────────────────────────────
 
   var host = document.getElementById("hero");
-  var replayBtn = document.getElementById("replay");
   if (!host) return;
 
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -294,7 +293,6 @@
     // the frame's timestamp can be a hair earlier than the performance.now() taken in start()
     if (render(Math.max(0, (now - t0) / 1000), false)) {
       render(0, true);
-      replayBtn.classList.add("is-ready");
       return;
     }
     raf = requestAnimationFrame(tick);
@@ -303,7 +301,6 @@
   function start() {
     if (raf) cancelAnimationFrame(raf);
     reroll(state);
-    replayBtn.classList.remove("is-ready");
     t0 = performance.now();
     raf = requestAnimationFrame(tick);
   }
@@ -312,7 +309,6 @@
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
     render(0, true);
-    replayBtn.classList.add("is-ready");
   }
 
   function currentWidth() {
@@ -345,13 +341,9 @@
   function boot() {
     canvas = document.createElement("canvas");
     canvas.setAttribute("aria-hidden", "true");
-    host.insertBefore(canvas, replayBtn);
+    host.appendChild(canvas);
     ctx = canvas.getContext("2d");
     rebuild(true);
-
-    replayBtn.addEventListener("click", function () {
-      if (state) start();
-    });
 
     // Watch the hero itself, not the window: scrollbars and late layout shifts change
     // its width without a window resize, which left the word off-centre.
