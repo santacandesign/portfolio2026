@@ -86,7 +86,7 @@ POST_TEMPLATE = """<!doctype html>
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="{og_image}" />
-    <link rel="stylesheet" href="../blog.css" />
+    <link rel="stylesheet" href="../blog.css?v=2" />
   </head>
 
   <body>
